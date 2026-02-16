@@ -6,12 +6,14 @@ import UiControls from "@ui/UiControls.tsx";
 
 interface FeatureFlags {
     skipOtp: boolean;
+    skipAuth: boolean;
     apiDelay: boolean;
     useBlueTheme: boolean;
 }
 
 const defaultFlags: FeatureFlags = {
     skipOtp: false,
+    skipAuth: false,
     apiDelay: false,
     useBlueTheme: true,
 };
@@ -56,6 +58,10 @@ export const DevTools = () => {
         setFlags(newFlags);
         currentFlags = newFlags;
         saveFlags(newFlags);
+        
+        if (flag === 'skipAuth') {
+            window.location.reload();
+        }
     };
 
     return (
@@ -121,6 +127,13 @@ export const DevTools = () => {
                             onChange={() => handleToggle('skipOtp')}
                             title="Skip OTP"
                             description="Skips any otp operation on login"
+                        />
+
+                        <DevToolsSwitch
+                            value={flags.skipAuth}
+                            onChange={() => handleToggle('skipAuth')}
+                            title="Skip Auth"
+                            description="Bypasses login and provides a mock user context (requires page reload)"
                         />
 
                         <DevToolsSwitch
