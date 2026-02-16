@@ -1,0 +1,18 @@
+{
+  "interface": {
+    "title": "Interface",
+    "theme": "Theme",
+    "language": "Language"
+  },
+  "profile": {
+    "title": "Profile",
+    "not-specified": "Not specified",
+    "card": {
+      "phone": "Phone",
+      "fiscal-code": "Fiscal Code",
+      "user-code": "User Code",
+      "address": "Address",
+      "registration-date": "Registration date"
+    }
+  }
+}

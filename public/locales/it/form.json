@@ -1,0 +1,53 @@
+{
+  "subcontractor": {
+    "create": {
+      "title": "Inserisci nuovo terzista",
+      "description": "Inserisci i massimali del terzista",
+      "fields": {
+        "name": "Ragione sociale",
+        "email": "Email",
+        "vat": "P.IVA",
+        "phone": "Numero telefonico",
+        "country": "Paese"
+      },
+      "rules": {
+        "name": "Inserisci un nome valido",
+        "email": "Inserisci un indirizzo email valido",
+        "vat": "Inserisci un codice p.iva valido",
+        "phone": "Inserisci un numero di telefono valido"
+      }
+    },
+    "update": {
+      "title": "Aggiorna terzista",
+      "description": "Aggiorna le informazioni relative al terzista"
+    }
+  },
+  "user": {
+    "create": {
+      "title": "Crea nuovo utente",
+      "description": "Inserisci le informazioni relative all'utente",
+      "fields": {
+        "first-name": "Nome",
+        "last-name": "Cognome",
+        "fiscal-code": "Codice fiscale",
+        "phone": "Numero telefonico",
+        "address": "Indirizzo",
+        "roles": "Ruoli",
+        "roles-label": "Seleziona ruoli",
+        "roles-placeholder": "Cerca ruoli...",
+        "vat": "P.IVA"
+      },
+      "rules": {
+        "password": {
+          "pattern": "La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale",
+          "tooltip": "Genera una password sicura"
+        },
+        "roles": "Seleziona almeno un ruolo"
+      }
+    },
+    "update": {
+      "title": "Aggiorna utente",
+      "description": "Aggiorna le informazioni relative all'utente"
+    }
+  }
+}

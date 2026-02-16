@@ -1,0 +1,17 @@
+{
+  "interface": {
+    "title": "Interfaccia",
+    "theme": "Tema",
+    "language": "Lingua"
+  },
+  "profile":{
+    "title": "Profilo",
+    "not-specified": "Non specificato",
+    "card": {
+      "phone": "Telefono",
+      "fiscal-code": "Codice Fiscale",
+      "user-code": "Codice Utente",
+      "address": "Indirizzo",
+      "registration-date": "Data registrazione"
+    }
+  }}

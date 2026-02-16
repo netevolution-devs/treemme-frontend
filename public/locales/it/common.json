@@ -1,0 +1,152 @@
+{
+  "toast": {
+    "generic-error": "Qualcosa è andato storto, riprovare più tardi",
+    "network-error": "Errore di rete: impossibile contattare il server. Verifica la tua connessione e riprova.",
+    "session-expired": "Sessione scaduta. Effettua nuovamente l'accesso.",
+    "permission-denied": "Non hai i permessi necessari per questa operazione.",
+    "server-error": "Si è verificato un errore interno del server. Riprova più tardi.",
+    "bad-request": "La richiesta non è valida. Verifica i dati inseriti.",
+    "request-timeout": "La richiesta è scaduta. Il server sta impiegando troppo tempo a rispondere.",
+    "successful-upload": "File caricati con successo"
+  },
+  "role": {
+    "admin": "Admin",
+    "staff": "Staff",
+    "user": "User"
+  },
+  "menu": {
+    "group": {
+      "_default": "Menu principale",
+      "overview": "Panoramica",
+      "registry": "Anagrafica",
+      "preferences": "Preferenze",
+      "backoffice": "Backoffice",
+      "companies": "Aziende"
+    },
+    "dashboard": "Dashboard",
+    "users": "Utenti",
+    "subcontractors": "Terzisti",
+    "settings": "Impostazioni"
+  },
+  "form": {
+    "field": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "assets": {
+      "max-file-size": "Alcuni file sono troppo grandi, dimensione massima: {{maxSize}}",
+      "max-file-number": "Troppi file caricati, numero massimo di file: {{maxFiles}}",
+      "upload-document": {
+        "one": "Choose document",
+        "other": "Choose documents"
+      },
+      "to-save": {
+        "one": "{{count}} documento è da salvare!",
+        "other": "{{count}} documenti sono da salvare!"
+      },
+      "to-delete": {
+        "one": "{{count}} documento verrà eliminato.",
+        "other": "{{count}} documenti verranno eliminati."
+      }
+    },
+    "error": {
+      "required": "Campo obbligatorio",
+      "too-short": "Password troppo corta",
+      "too-long": "Limite di caratteri raggiunto",
+      "invalid-email": "Email non valida",
+      "invalid-phone": "Numero non valido",
+      "end-date-before-start-date": "Data di fine minore",
+      "at-least-one-select-required": "Selezionare almeno uno",
+      "only-numbers": "Solo numeri consentiti",
+      "unsaved_changes": "Ci sono modifiche non salvate",
+      "pending_save": "Salvataggio in corso..."
+    }
+  },
+  "search": {
+    "search-label": "Cerca...",
+    "no-results": "Nessun risultato trovato con la categoria e/o i filtri selezionati."
+  },
+  "loading": {
+    "authenticating": "Autenticazione...",
+    "wait": "Attendi un momento..."
+  },
+  "theme": {
+    "switch-to-mode": "Passa alla modalità {{mode}}",
+    "mode": {
+      "light": "chiara",
+      "dark": "scura"
+    }
+  },
+  "button": {
+    "next": "Avanti",
+    "back": "Indietro",
+    "close": "Chiudi",
+    "previous": "Precedente",
+    "submit": "Invia",
+    "submit-files": "Carica documenti selezionati",
+    "add": "Aggiungi",
+    "hide": "Nascondi",
+    "show": "Mostra",
+    "create": "Crea",
+    "cancel": "Annulla",
+    "edit": "Modifica",
+    "save": "Salva",
+    "delete": "Elimina",
+    "confirm": "Conferma",
+    "selected": "Selezionato",
+    "view": "Vedi",
+    "active": "Attivo",
+    "not-active": "Non attivo",
+    "duplicate": "Duplica",
+    "go-to-subcontractor": "Vai al terzista"
+  },
+  "filter": {
+    "status": "Stato",
+    "all": "Tutti",
+    "active": "Attivi",
+    "inactive": "Non attivi"
+  },
+  "language": {
+    "english": "Inglese",
+    "italian": "Italiano",
+    "french": "Francese",
+    "german": "Tedesco"
+  },
+  "table": {
+    "firstname": "Nome",
+    "lastname": "Cognome",
+    "roles": "Ruoli",
+    "email": "Email",
+    "actions": {
+      "create-user": "Crea nuovo utente",
+      "update-user": "Aggiorna utente",
+      "create-subcontractor": "Crea terzista",
+      "update-subcontractor": "Aggiorna terzista"
+    }
+  },
+  "edit-profile": {
+    "button": "Modifica profilo"
+  },
+  "csv": {
+    "import": "Importa CSV",
+    "export": "Esporta CSV",
+    "import-result": {
+      "success": "Importazione completata con successo",
+      "failed": "Importazione non riuscita",
+      "imported": "Record importati",
+      "imported-success": "Record importati",
+      "updated": "Record aggiornati",
+      "warnings": "Avvisi",
+      "errors": "Errori"
+    }
+  },
+  "events": "eventi",
+  "event": "evento",
+  "approved": "Approvato",
+  "to-approved": "Da approvare",
+  "calendar": {
+    "calendar-plan": "Calendario plan",
+    "list-plan": "Elenco plan"
+  },
+  "software-version": "Versione software: {{version}}"
+}

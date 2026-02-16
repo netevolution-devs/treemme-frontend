@@ -1,0 +1,53 @@
+{
+  "subcontractor": {
+    "create": {
+      "title": "Enter new subcontractor",
+      "description": "Enter subcontractor's limits",
+      "fields": {
+        "name": "Subcontractor name",
+        "email": "Email",
+        "vat": "VAT Number",
+        "phone": "Phone number",
+        "country": "Country"
+      },
+      "rules": {
+        "name": "Enter a valid name",
+        "email": "Enter a valid email address",
+        "vat": "Enter a valid VAT number",
+        "phone": "Enter a valid phone number"
+      }
+    },
+    "update": {
+      "title": "Update subcontractor",
+      "description": "Update information related to the subcontractor"
+    }
+  },
+  "user": {
+    "create": {
+      "title": "Create new user",
+      "description": "Enter user information",
+      "fields": {
+        "first-name": "First Name",
+        "last-name": "Last Name",
+        "fiscal-code": "Fiscal code",
+        "phone": "Phone number",
+        "address": "Address",
+        "roles": "Roles",
+        "roles-label": "Select roles",
+        "roles-placeholder": "Search roles...",
+        "vat": "VAT Number"
+      },
+      "rules": {
+        "password": {
+          "pattern": "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character",
+          "tooltip": "Generate a secure password"
+        },
+        "roles": "Select at least one role"
+      }
+    },
+    "update": {
+      "title": "Update user",
+      "description": "Update user information"
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "splash": {
+    "title": "NETEVOLUTION DEFAULT APP",
+    "subtitle": "Accedi alla piattaforma"
+  },
+  "form": {
+    "welcome": "Bentornato/a 👋",
+    "subtitle": "Usa le tue credenziali.",
+    "button": "Accedi",
+    "forgotPassword": "Password dimenticata? <outLink>Clicca qui</outLink>"
+  },
+  "otp": {
+    "login": {
+      "title": "Verifica codice OTP",
+      "description": "Utilizza l'app authenticator configurata sul tuo dispositivo per accedere utilizzando il codice OTP",
+      "button": "Accedi",
+      "loading": "Accesso in corso"
+    },
+    "change-password": {
+      "title": "Cambia password",
+      "description": "Per motivi di sicurezza è necessario modificare la password dopo il primo accesso.",
+      "password": "Password",
+      "confirm-password": "Conferma password",
+      "button": "Cambia password",
+      "loading": "Cambio in corso"
+    },
+    "setup": {
+      "label": "Generazione codice QR...",
+      "title": "Configura Autenticazione a Due Fattori",
+      "description": "Scansiona questo codice QR con la tua app di autenticazione",
+      "manual-code": "Codice",
+      "helper": "Problemi di configurazione?",
+      "helper-description": "Configura l'authenticator con il codice manuale",
+      "button": "Verifica dispositivo",
+      "description-help": "Per proteggere il tuo account e garantire la massima sicurezza dei tuoi dati, è necessario configurare l'autenticazione a due fattori (2FA).",
+      "description-help-2": "Per procedere, avrai bisogno di un'app di autenticazione come Google Authenticator, Microsoft Authenticator o puoi utilizzare le Password di Apple (su dispositivi Apple).",
+      "description-help-3": "Una volta configurata, dovrai inserire un codice a 6 cifre generato dall'app ogni volta che effettui l'accesso, aggiungendo un ulteriore livello di protezione al tuo account."
+    },
+    "verify": {
+      "title": "Verifica dispositivo codice OTP",
+      "description": "Utilizza l'app authenticator configurata per verificare l'accesso otp tramite il tuo dispositivo.",
+      "button": "Verifica dispositivo e accedi",
+      "loading": "Verifica in corso"
+    }
+  },
+  "reset-password": {
+    "email": {
+      "title": "Recupera Password",
+      "description": "Inserisci il tuo indirizzo email per ricevere il codice di verifica",
+      "button": "Invia Codice",
+      "loading": "Invio in corso..."
+    },
+    "verify": {
+      "title": "Verifica Codice",
+      "description": "Abbiamo inviato un codice di verifica a {{email}}",
+      "code-label": "Codice di Verifica",
+      "button": "Verifica",
+      "loading": "Verifica in corso...",
+      "error-invalid-code": "Codice non valido o scaduto",
+      "error-generic": "Errore durante la verifica del codice"
+    },
+    "change": {
+      "title": "Nuova Password",
+      "description": "Inserisci la tua nuova password",
+      "password": "Nuova Password",
+      "confirm-password": "Conferma Password",
+      "password-mismatch": "Le password non coincidono",
+      "button": "Cambia Password",
+      "loading": "Aggiornamento in corso...",
+      "privacy-consent-label": "Acconsento all'",
+      "privacy-consent-link": "informativa fornitori e nomina responsabile esterno art. 28",
+      "privacy-consent-required": "Devi accettare l'informativa per procedere"
+    },
+    "success": {
+      "title": "Password Aggiornata!",
+      "description": "La tua password è stata modificata con successo. Ora puoi effettuare il login con la nuova password.",
+      "button": "Vai al Login"
+    },
+    "back-to-login": "Torna al Login",
+    "back-to-email": "Torna indietro"
+  }
+}

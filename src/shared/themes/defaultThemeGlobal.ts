@@ -1,0 +1,327 @@
+import {createTheme, type Theme, type ThemeOptions} from '@mui/material/styles';
+
+
+const getPrimaryColors = () => {
+    return {
+        main: '#C8A96A',
+        dark: '#9B7A41',
+        light: '#E3CE98',
+    };
+};
+
+const baseTheme: ThemeOptions = {
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: (theme) => ({
+                html: {
+                    "WebkitFontSmoothing": "antialiased",
+                    "MozOsxFontSmoothing": "grayscale",
+                    height: "100%",
+                    width: "100%",
+                },
+                body: {
+                    // Custom thin golden scrollbar for all scrollable elements
+                    '*::-webkit-scrollbar': {
+                        width: '12px',
+                    },
+                    '*::-webkit-scrollbar-track': {
+                        backgroundColor: theme.palette.divider,
+                    },
+                    '*::-webkit-scrollbar-thumb': {
+                        backgroundColor: theme.palette.primary.main,
+                        borderRadius: '3px',
+                        '&:hover': {
+                            backgroundColor: theme.palette.primary.dark,
+                        },
+                    },
+                    // Firefox scrollbar
+                    '*': {
+                        scrollbarWidth: 'auto',
+                        scrollbarColor: `${theme.palette.primary.main} transparent`,
+                    },
+                }
+            }),
+        },
+
+        // Global handling for long text in Typography
+        MuiTypography: {
+            defaultProps: {
+                variantMapping: {
+                    // You can also customize variant mappings here if needed
+                },
+            },
+            styleOverrides: {
+                root: {
+                    // Prefer breaking long words anywhere to avoid layout overflow
+                    overflowWrap: 'anywhere',
+                    wordBreak: 'break-word',
+                    hyphens: 'auto',
+                    // In flex containers, allow text to actually shrink and ellipsize
+                    minWidth: 0,
+                },
+                // Override specific variants with custom sizes
+                h1: {
+                    fontSize: '2.5rem', // Default: 6rem
+                    '@media (max-width:600px)': {
+                        fontSize: '2rem',
+                    },
+                },
+                h2: {
+                    fontSize: '2rem', // Default: 3.75rem
+                    '@media (max-width:600px)': {
+                        fontSize: '1.75rem',
+                    },
+                },
+                h3: {
+                    fontSize: '1.75rem', // Default: 3rem
+                    '@media (max-width:600px)': {
+                        fontSize: '1.5rem',
+                    },
+                },
+                h4: {
+                    fontSize: '1.5rem', // Default: 2.125rem
+                    '@media (max-width:600px)': {
+                        fontSize: '1.25rem',
+                    },
+                },
+                h5: {
+                    fontSize: '1.20rem', // Default: 1.5rem
+                },
+                h6: {
+                    fontSize: '1.125rem', // Default: 1.25rem
+                },
+                subtitle1: {
+                    fontSize: '1rem', // Default: 1rem
+                },
+                subtitle2: {
+                    fontSize: '0.875rem', // Default: 0.875rem
+                },
+                body1: {
+                    fontSize: '0.9rem', // Default: 1rem
+                },
+                body2: {
+                    fontSize: '0.875rem', // Default: 0.875rem
+                },
+                button: {
+                    fontSize: '0.875rem', // Default: 0.875rem
+                },
+                caption: {
+                    fontSize: '0.75rem', // Default: 0.75rem
+                },
+                overline: {
+                    fontSize: '0.75rem', // Default: 0.75rem
+                },
+            },
+            variants: [
+                {
+                    // Ensure consistent ellipsis behavior whenever noWrap is used
+                    props: {noWrap: true},
+                    style: {
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        // Important for flex items with constrained width
+                        minWidth: 0,
+                        // Prevent accidental whitespace breaking in single-line truncation
+                        whiteSpace: 'nowrap',
+                    },
+                },
+            ],
+        },
+
+        MuiSwitch: {
+            styleOverrides: {
+                track: (props) => ({
+                        backgroundColor: props.theme.palette.action.disabledBackground,
+                        opacity: 1,
+                    }
+                )
+            },
+        },
+
+        MuiButtonBase: {
+            defaultProps: {
+                disableRipple: true,
+            },
+        },
+
+        MuiIconButton: {
+            styleOverrides: {
+                root: {
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    transition: "transform",
+                    ":hover": {
+                        backgroundColor: "transparent",
+                        transform: "scale(1.12)"
+                    },
+                },
+            },
+        },
+
+        MuiTextField: {
+            // defaultProps: {
+            //     variant: "outlined",
+            //     size: "small",
+            // },
+            styleOverrides: {
+                root: (props) => ({
+                    width: "100%",
+                    '& .Mui-disabled': {
+                        color: props.theme.palette.text.disabled,
+                    },
+                    '& .Mui-disabled .MuiAutocomplete-popupIndicator': {
+                        display: 'none',
+                    },
+                })
+            }
+        },
+
+        // MuiAutocomplete: {
+        //     defaultProps: {
+        //         size: "small",
+        //     },
+        // },
+
+        // MuiDateField: {
+        //     defaultProps: {
+        //         size: "small",
+        //     },
+        // },
+
+        MuiListItem: {
+            defaultProps: {
+                disablePadding: true,
+            },
+        },
+
+        MuiCheckbox: {
+            defaultProps: {
+                disableRipple: true,
+            }
+        }
+    },
+};
+
+const lightTheme: Theme = createTheme({
+    shape: {
+        borderRadius: 8,
+    },
+    typography: {
+        fontFamily: `'Noto Sans', sans-serif`,
+    },
+    palette: {
+        mode: 'light',
+        primary: getPrimaryColors(),
+        background: {
+            default: '#f7f8fa',
+            paper: '#ffffff',
+            topBar: '#ffffff',
+            card: {
+                default: '#ffffff',
+                notSelected: '#ececec'
+            }
+        },
+        text: {
+            primary: '#0f172a',
+            secondary: '#475569',
+            disabled: 'rgba(15,23,42,0.38)',
+        },
+        tableColors: {
+            tableRow1: '#f7f8fa',
+            tableRow2: '#ffffff',
+            border: '#e2e8f0',
+            hover: 'rgba(2,6,23,0.04)',
+        },
+        action: {
+            hover: 'rgba(2,6,23,0.04)',
+            selected: 'rgba(2,6,23,0.08)',
+            disabledBackground: 'rgba(2,6,23,0.06)',
+            disabled: 'rgba(15,23,42,0.38)',
+        },
+        divider: '#e2e8f0',
+    },
+    components: {
+        ...baseTheme.components,
+        MuiChip: {
+            defaultProps: {
+                variant: "filled",
+            },
+            variants: [
+                {
+                    props: {variant: "filled"},
+                    // @ts-expect-error style works correctly
+                    style: ({theme}) => ({
+                        color: theme.palette.text,
+                        backgroundColor: theme.palette.primary.light
+                    })
+                },
+            ]
+        },
+
+        MuiButton: {
+            variants: [
+                {
+                    props: {variant: "outlined"},
+                    style: {
+                        color: "inherit",
+                        borderColor: "inherit",
+                    }
+                }
+            ]
+        },
+    }
+});
+
+const darkTheme: Theme = createTheme({
+    shape: {
+        borderRadius: 8,
+    },
+    typography: {
+        fontFamily: 'Noto Sans, sans-serif',
+    },
+    palette: {
+        mode: 'dark',
+        primary: getPrimaryColors(),
+        background: {
+            default: '#1e1e1e',
+            paper: '#151414',
+            topBar: '#1b1f24',
+            card: {
+                default: "#151414",
+                notSelected: "#080808"
+            }
+        },
+        text: {
+            primary: 'rgba(255,255,255,0.92)',
+            secondary: 'rgba(255,255,255,0.65)',
+            disabled: 'rgba(255,255,255,0.38)',
+        },
+        tableColors: {
+            tableRow1: '#121212',
+            tableRow2: '#1e1e1e',
+            border: '#2f363d',
+            hover: 'rgba(255,255,255,0.06)',
+        },
+        action: {
+            hover: 'rgba(255,255,255,0.06)',
+            selected: 'rgba(255,255,255,0.10)',
+            disabledBackground: 'rgba(255,255,255,0.12)',
+            disabled: 'rgba(255,255,255,0.38)',
+        },
+        divider: '#545759',
+    },
+    components: {
+        MuiChip: {
+            defaultProps: {
+                variant: "outlined"
+            }
+        },
+        ...baseTheme.components,
+    }
+});
+
+export type ThemeMode = 'light' | 'dark';
+export const THEMES: Record<ThemeMode, Theme> = {
+    light: lightTheme,
+    dark: darkTheme,
+};

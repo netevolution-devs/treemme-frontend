@@ -1,0 +1,153 @@
+{
+  "toast": {
+    "generic-error": "Something went wrong, please try again later",
+    "network-error": "Network error: unable to contact the server. Check your connection and try again.",
+    "session-expired": "Session expired. Please log in again.",
+    "permission-denied": "You do not have the necessary permissions for this operation.",
+    "server-error": "An internal server error occurred. Please try again later.",
+    "bad-request": "The request is invalid. Please check the data entered.",
+    "request-timeout": "The request timed out. The server is taking too long to respond.",
+    "successful-upload": "Files uploaded successfully"
+  },
+  "role": {
+    "admin": "Admin",
+    "staff": "Staff",
+    "user": "User"
+  },
+  "menu": {
+    "group": {
+      "_default": "Main Menu",
+      "overview": "Overview",
+      "registry": "Registry",
+      "preferences": "Preferences",
+      "audit": "Audit",
+      "backoffice": "Backoffice",
+      "companies": "Companies"
+    },
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "subcontractors": "Subcontractors",
+    "settings": "Settings"
+  },
+  "form": {
+    "field": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "assets": {
+      "max-file-size": "Some files are too large, maximum size: {{maxSize}}",
+      "max-file-number": "Too many files uploaded, maximum number of files: {{maxFiles}}",
+      "upload-document": {
+        "one": "Choose document",
+        "other": "Choose documents"
+      },
+      "to-save": {
+        "one": "{{count}} document needs to be saved!",
+        "other": "{{count}} documents need to be saved!"
+      },
+      "to-delete": {
+        "one": "{{count}} document will be deleted.",
+        "other": "{{count}} documents will be deleted."
+      }
+    },
+    "error": {
+      "required": "Required field",
+      "too-short": "Password too short",
+      "too-long": "Character limit reached",
+      "invalid-email": "Invalid email",
+      "invalid-phone": "Invalid number",
+      "end-date-before-start-date": "End date before start date",
+      "at-least-one-select-required": "Select at least one",
+      "only-numbers": "Only numbers allowed",
+      "unsaved_changes": "There are unsaved changes",
+      "pending_save": "Saving in progress..."
+    }
+  },
+  "search": {
+    "search-label": "Search...",
+    "no-results": "No results found with the selected category and/or filters."
+  },
+  "loading": {
+    "authenticating": "Authenticating...",
+    "wait": "Wait a moment..."
+  },
+  "theme": {
+    "switch-to-mode": "Switch to {{mode}} mode",
+    "mode": {
+      "light": "light",
+      "dark": "dark"
+    }
+  },
+  "button": {
+    "next": "Next",
+    "back": "Back",
+    "close": "Close",
+    "previous": "Previous",
+    "submit": "Submit",
+    "submit-files": "Upload selected documents",
+    "add": "Add",
+    "hide": "Hide",
+    "show": "Show",
+    "create": "Create",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "selected": "Selected",
+    "view": "View",
+    "active": "Active",
+    "not-active": "Inactive",
+    "duplicate": "Duplicate",
+    "go-to-subcontractor": "Go to subcontractor"
+  },
+  "filter": {
+    "status": "Status",
+    "all": "All",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "language": {
+    "english": "English",
+    "italian": "Italian",
+    "french": "French",
+    "german": "German"
+  },
+  "table": {
+    "firstname": "First Name",
+    "lastname": "Last Name",
+    "roles": "Roles",
+    "email": "Email",
+    "actions": {
+      "create-user": "Create new user",
+      "update-user": "Update user",
+      "create-subcontractor": "Create subcontractor",
+      "update-subcontractor": "Update subcontractor"
+    }
+  },
+  "edit-profile": {
+    "button": "Edit profile"
+  },
+  "csv": {
+    "import": "Import CSV",
+    "export": "Export CSV",
+    "import-result": {
+      "success": "Import completed successfully",
+      "failed": "Import failed",
+      "imported": "Records imported",
+      "imported-success": "Records imported",
+      "updated": "Records updated",
+      "warnings": "Warnings",
+      "errors": "Errors"
+    }
+  },
+  "events": "events",
+  "event": "event",
+  "approved": "Approved",
+  "to-approved": "To be approved",
+  "calendar": {
+    "calendar-plan": "Calendar plan",
+    "list-plan": "List plan"
+  },
+  "software-version": "Software version: {{version}}"
+}
