@@ -28,7 +28,7 @@ const MenuToolbar = () => {
                     </Box>
                     <Box>
                         <Avatar
-                            sx={{width: 35, height: 35}}
+                            sx={{width: 35, height: 35, cursor: 'pointer'}}
                             onClick={handleProfileNavigation}
                         />
                     </Box>
