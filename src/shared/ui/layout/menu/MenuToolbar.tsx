@@ -3,6 +3,11 @@ import {MenuEntries} from "@ui/layout/menu/MenuEntries.ts";
 import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
 
 const MenuToolbar = () => {
+
+    const handlePanelOpen = (menu: string) => {
+        console.log(`Panel ${menu} opened`);
+    }
+
     // TODO: implement profile routing
     const handleProfileNavigation = () => {
         console.log('Profile navigation clicked');
@@ -17,13 +22,14 @@ const MenuToolbar = () => {
                         <MenuEntry
                             key={entry.i18nKey}
                             entry={entry}
+                            onClick={handlePanelOpen}
                         />
                     ))}
                     </Box>
                     <Box>
                         <Avatar
                             sx={{width: 35, height: 35}}
-                            onClick={() => handleProfileNavigation()}
+                            onClick={handleProfileNavigation}
                         />
                     </Box>
                 </Box>
