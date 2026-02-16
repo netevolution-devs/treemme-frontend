@@ -46,7 +46,7 @@ const MenuEntry = ({ entry, isSubMenu = false }: MenuEntryProps) => {
                             {...bindTrigger(popupState)}
                             color="inherit"
                             variant="contained"
-                            sx={{ mx: 0.5, whiteSpace: 'nowrap' }}
+                            sx={{ mx: 0.3, whiteSpace: 'nowrap' }}
                         >
                             {t(entry.i18nKey || "")}
                         </Button>

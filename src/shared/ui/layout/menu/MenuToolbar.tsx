@@ -5,7 +5,7 @@ import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
 const MenuToolbar = () => {
     return (
         <AppBar>
-            <Toolbar>
+            <Toolbar disableGutters sx={{px: 1}} variant="dense" >
                 {MenuEntries.map((entry) => (
                     <MenuEntry
                         key={entry.i18nKey}
