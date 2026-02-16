@@ -1,0 +1,98 @@
+{
+  "menu": {
+    "contatti": {
+      "self": "Contatti",
+      "cap": "CAP",
+      "nazioni": "Nazioni",
+      "province": "Province",
+      "contatti": "Gestione Contatti",
+      "porti-marittimi": "Porti Marittimi"
+    },
+    "pellami": {
+      "self": "Pellami",
+      "pesi": "Pesi",
+      "speci": "Specie",
+      "taglie": "Taglie",
+      "pellami": "Anagrafica Pellami",
+      "spessori": "Spessori",
+      "tipologie": "Tipologie",
+      "scuortature": "Scuortature",
+      "provenienze": "Provenienze",
+      "stati-lavorazione": "Stati di Lavorazione"
+    },
+    "prodotti": {
+      "self": "Prodotti",
+      "scelte": "Scelte",
+      "articoli": "Articoli",
+      "ricerca": "Ricerca Prodotti",
+      "prodotti": "Anagrafica Prodotti",
+      "categorie": "Categorie",
+      "articoli-tipo": "Tipologie Articoli"
+    },
+    "ordini": {
+      "self": "Ordini",
+      "ordini-clienti": "Ordini Clienti",
+      "ordini-fornitori": "Ordini Fornitori",
+      "ricerca-ordini-clienti": "Ricerca Ordini Clienti",
+      "scadenziario-fornitori": "Scadenziario Fornitori",
+      "ricerca-ordini-fornitori": "Ricerca Ordini Fornitori"
+    },
+    "magazzino": {
+      "self": "Magazzino",
+      "movimenti": "Movimenti di Magazzino",
+      "tipo-pallets": "Tipologie Pallets",
+      "lotte-partite": "Lotti e Partite",
+      "ricerca-lotti-partite": "Ricerca Lotti/Partite",
+      "lotti-conto-lavorazione": "Lotti in Conto Lavorazione"
+    },
+    "produzione": {
+      "self": "Produzione",
+      "lotti": "Gestione Lotti",
+      "ricette": "Ricette",
+      "macchinari": "Macchinari",
+      "produzione": "Avanzamento Produzione",
+      "lavorazioni": "Lavorazioni",
+      "disinte-base": "Distinta Base",
+      "scelta-partite": "Scelta Partite",
+      "monitor-pirovano": "Monitor Pirovano",
+      "ricettario-pirovano": "Ricettario Pirovano"
+    },
+    "ddt-fatture": {
+      "self": "DDT & Fatture",
+      "ddt": "Documenti di Trasporto",
+      "fatture": "Fatturazione",
+      "ricerca": "Ricerca Documenti"
+    },
+    "commerciale": {
+      "self": "Commerciale",
+      "clienti": "Anagrafica Clienti",
+      "fornitori": "Anagrafica Fornitori",
+      "dati-partite": "Dati Partite",
+      "costo-prodotti": "Costo Prodotti",
+      "listino-prodotti": "Listino Prodotti",
+      "rapportini-lavoro": "Rapportini di Lavoro",
+      "divise-monetarie-cambi": "Valute e Cambi"
+    },
+    "analisi": {
+      "self": "Analisi",
+      "ordini": "Analisi Ordini",
+      "vendite": "Analisi Vendite",
+      "costi-ricavi": "Costi e Ricavi",
+      "partite-lotti": "Analisi Partite/Lotti",
+      "conto-lavorazione": "Analisi Conto Lavorazione",
+      "traffico-telefonico": "Traffico Telefonico",
+      "controllo-qualita-iso": {
+        "self": "Controllo Qualità ISO",
+        "evasione-ordini": "Evasione Ordini"
+      }
+    },
+    "sistema": {
+      "self": "Sistema",
+      "info": "Informazioni di Sistema",
+      "tool": "Strumenti",
+      "console": "Console di Comando",
+      "accesso": "Gestione Accessi",
+      "fine-lavoro": "Fine Sessione"
+    }
+  }
+}
