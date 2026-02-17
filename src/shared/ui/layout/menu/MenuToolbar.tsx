@@ -14,7 +14,7 @@ const MenuToolbar = () => {
     }
 
     return (
-        <AppBar>
+        <AppBar position="static">
             <Toolbar disableGutters sx={{px: 1}} variant="dense" >
                 <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                     <Box>
