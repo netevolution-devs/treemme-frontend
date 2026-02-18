@@ -7,7 +7,7 @@ import type {IMenuEntry} from "@ui/layout/menu/MenuEntries.ts";
 interface MenuEntryProps {
     entry: IMenuEntry;
     isSubMenu?: boolean;
-    onClick?: (key: string) => void;
+    onClick?: (key: IMenuEntry) => void;
 }
 
 const MenuEntry = ({entry, isSubMenu = false, onClick}: MenuEntryProps) => {
@@ -18,7 +18,7 @@ const MenuEntry = ({entry, isSubMenu = false, onClick}: MenuEntryProps) => {
             <MenuItem
                 onClick={() => {
                     if (onClick && entry.i18nKey) {
-                        onClick(entry.i18nKey);
+                        onClick(entry);
                     }
                 }}
             >

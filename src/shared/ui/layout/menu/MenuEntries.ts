@@ -1,13 +1,14 @@
 export interface IMenuEntry {
     i18nKey: string;
     subMenu?: IMenuEntry[];
+    component?: string;
 }
 
 export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.contatti.self",
         subMenu: [
-            { i18nKey: "menu.contatti.cap" },
+            { i18nKey: "menu.contatti.cap", component: "cap" },
             { i18nKey: "menu.contatti.nazioni" },
             { i18nKey: "menu.contatti.province" },
             { i18nKey: "menu.contatti.contatti" },

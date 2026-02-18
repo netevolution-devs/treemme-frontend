@@ -1,11 +1,20 @@
 import {AppBar, Avatar, Box, Toolbar} from "@mui/material";
-import {MenuEntries} from "@ui/layout/menu/MenuEntries.ts";
+import {type IMenuEntry, MenuEntries} from "@ui/layout/menu/MenuEntries.ts";
 import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useTranslation} from "react-i18next";
 
 const MenuToolbar = () => {
+    const {t} = useTranslation(["menu"]);
+    const addPanel = useDockviewStore(state => state.addPanel);
 
-    const handlePanelOpen = (menu: string) => {
+    const handlePanelOpen = (menu: IMenuEntry) => {
         console.log(`Panel ${menu} opened`);
+        addPanel({
+            id: `${menu.component}:${crypto.randomUUID()}`,
+            title: t(menu.i18nKey),
+            component: menu.component || "not-implemented",
+        });
     }
 
     // TODO: implement profile routing
