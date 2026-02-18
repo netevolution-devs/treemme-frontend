@@ -1,7 +1,9 @@
+import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
+
 export interface IMenuEntry {
     i18nKey: string;
     subMenu?: IMenuEntry[];
-    component?: string;
+    component?: TPanelKind;
 }
 
 export const MenuEntries: IMenuEntry[] = [
@@ -10,7 +12,7 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             { i18nKey: "menu.contatti.cap", component: "cap" },
             { i18nKey: "menu.contatti.nazioni" },
-            { i18nKey: "menu.contatti.province" },
+            { i18nKey: "menu.contatti.province", component: "province" },
             { i18nKey: "menu.contatti.contatti" },
             { i18nKey: "menu.contatti.porti-marittimi" }
         ]
