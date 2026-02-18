@@ -8,14 +8,9 @@ export interface PanelState<F, U> {
 }
 
 export interface PanelActions<F, U> {
-    setFilters: (filters: F) => void;
-    updateFilters: (partial: Partial<F>) => void;
-
-    setUIState: (ui: U) => void;
-    updateUIState: (partial: Partial<U>) => void;
-
+    setFilters: (partial: Partial<F>) => void;
+    setUIState: (partial: Partial<U>) => void;
     setLoading: (loading: boolean) => void;
-
     setError: (error: string | null) => void;
 
     reset: () => void;
@@ -37,18 +32,12 @@ export const createPanelStore = <F, U>(
     return createStore<PanelState<F, U> & PanelActions<F, U>>((set) => ({
         ...merged,
 
-        setFilters: (filters) =>
-          set(() => ({ filters })),
-
-        updateFilters: (partial) =>
+        setFilters: (partial) =>
           set((s) => ({
               filters: { ...s?.filters, ...partial } as F,
           })),
 
-        setUIState: (ui) =>
-          set(() => ({ uiState: ui })),
-
-        updateUIState: (partial) =>
+        setUIState: (partial) =>
           set((s) => ({
               uiState: { ...s.uiState, ...partial } as U,
           })),

@@ -52,7 +52,7 @@
   },
 
   "province": {
-    "sigla": "Sigla",
-    "province": "Provincia"
+    "acronym": "Sigla",
+    "name": "Provincia"
   }
 }

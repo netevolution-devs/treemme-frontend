@@ -7,7 +7,7 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
 
-type IProvinceForm = Omit<IProvince, 'id'>;
+export type IProvinceForm = Omit<IProvince, 'id'>;
 
 const ProvinceForm = () => {
     const {t} = useTranslation(["form"]);
@@ -46,12 +46,12 @@ const ProvinceForm = () => {
                 />
                 <Stack sx={{mt: 3}}>
                     <TextFieldControlled<IProvinceForm>
-                        name="single"
-                        label={t("province.sigla")}
+                        name="acronym"
+                        label={t("province.acronym")}
                     />
                     <TextFieldControlled<IProvinceForm>
-                        name="province"
-                        label={t("province.province")}
+                        name="name"
+                        label={t("province.name")}
                     />
                 </Stack>
             </FormProvider>
