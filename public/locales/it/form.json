@@ -49,5 +49,10 @@
       "title": "Aggiorna utente",
       "description": "Aggiorna le informazioni relative all'utente"
     }
+  },
+
+  "province": {
+    "sigla": "Sigla",
+    "province": "Provincia"
   }
 }

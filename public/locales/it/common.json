@@ -78,6 +78,7 @@
     }
   },
   "button": {
+    "new": "Nuovo",
     "next": "Avanti",
     "back": "Indietro",
     "close": "Chiudi",
