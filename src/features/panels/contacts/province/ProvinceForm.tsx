@@ -4,15 +4,23 @@ import {FormProvider, useForm} from "react-hook-form";
 import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
 import {useTranslation} from "react-i18next";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
 
 type IProvinceForm = Omit<IProvince, 'id'>;
 
 const ProvinceForm = () => {
     const {t} = useTranslation(["form"]);
-    const methods = useForm<IProvinceForm>();
+
+    const {useStore} = usePanel<unknown, IProvinceStoreState>();
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+    const setUIState = useStore(state => state.setUIState);
+
+    const methods = useForm<IProvinceForm>({disabled: isFormDisabled});
 
     const handleNew = () => {
         console.log("new");
+        setUIState({isFormDisabled: false});
     }
 
     const handleEdit = () => {
