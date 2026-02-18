@@ -7,6 +7,9 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
 import usePostProvince from "@features/panels/contacts/province/api/usePostProvince.tsx";
+import {useEffect} from "react";
+import useGetProvince from "@features/panels/contacts/province/api/useGetProvince.tsx";
+import usePutProvince from "@features/panels/contacts/province/api/usePutProvince.tsx";
 
 export type IProvinceForm = Omit<IProvince, 'id'>;
 
@@ -18,7 +21,11 @@ const ProvinceForm = () => {
     const buttonsState = useStore(state => state.uiState.buttonsState);
     const setUIState = useStore(state => state.setUIState);
 
+    const selectedProvinceId = useStore(state => state.uiState.selectedProvinceId);
+
+    const {data: province} = useGetProvince(selectedProvinceId);
     const {mutateAsync: createProvince} = usePostProvince();
+    const {mutateAsync: updateProvince} = usePutProvince();
 
     const methods = useForm<IProvinceForm>({
         disabled: isFormDisabled,
@@ -37,7 +44,7 @@ const ProvinceForm = () => {
     }
 
     const handleEdit = () => {
-        console.log("edit");
+        setUIState({isFormDisabled: false, buttonsState: {...buttonsState, edit: false, save: true}});
     }
 
     const handleDelete = () => {
@@ -46,13 +53,32 @@ const ProvinceForm = () => {
 
     const onSubmit = async (data: IProvinceForm) => {
         if (!data.acronym || !data.name) return;
-        await createProvince({
-            name: data.name,
-            acronym: data.acronym,
-        })
-        setUIState({isFormDisabled: true, buttonsState: {...buttonsState, new: true, save: false}});
+
+        if (selectedProvinceId) {
+            await updateProvince({
+                id: selectedProvinceId,
+                payload: {
+                    name: data.name,
+                    acronym: data.acronym,
+                }
+            })
+        } else {
+            await createProvince({
+                name: data.name,
+                acronym: data.acronym,
+            })
+        }
+
+        setUIState({isFormDisabled: true, buttonsState: {...buttonsState, new: true, save: false}, selectedProvinceId: null});
         methods.reset();
     }
+
+    useEffect(() => {
+        if (selectedProvinceId && province) {
+            methods.reset({acronym: province.acronym, name: province.name});
+            setUIState({buttonsState: {...buttonsState, new: false, edit: true, save: true}});
+        }
+    }, [selectedProvinceId, province])
 
     return (
         <Box>

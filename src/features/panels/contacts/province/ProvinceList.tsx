@@ -27,6 +27,7 @@ const ProvinceList = () => {
             },
             onClick: (e: React.MouseEvent) => {
                 e.preventDefault();
+                setUIState({selectedProvinceId: row.original.id});
             },
         }),
     };

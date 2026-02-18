@@ -12,7 +12,7 @@ export interface IProvinceStoreState {
         delete: boolean,
         save: boolean
     }
-    selectedProvinceId?: number;
+    selectedProvinceId?: number | null;
 }
 
 const ProvincePanel = () => {

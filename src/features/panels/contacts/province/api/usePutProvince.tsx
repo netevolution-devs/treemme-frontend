@@ -1,18 +1,22 @@
 import useApi from "@api/useApi.ts";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
 import {PROVINCE_QUERY_KEYS} from "@features/panels/contacts/province/api/PROVINCE_QUERY_KEYS.ts";
+import type {IProvincePayload} from "@features/panels/contacts/province/api/usePostProvince.tsx";
 
-export type IProvincePayload = Omit<IProvince, 'id'>;
+type IProvinceUpdatePayload = {
+    id: number;
+    payload: IProvincePayload;
+};
 
 const usePostProvince = () => {
-    const {postEncoded: post} = useApi();
+    const {put} = useApi();
     const queryClient = useQueryClient();
 
-    const url = `/province`;
 
-    async function doPost(payload: IProvincePayload): Promise<unknown> {
-        const response = await post(url, payload);
+    async function doPost(payload: IProvinceUpdatePayload): Promise<unknown> {
+        const url = `/province/${payload.id}`;
+
+        const response = await put(url, payload.payload);
         return response.data.data;
     }
 
