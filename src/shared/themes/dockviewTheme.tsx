@@ -13,6 +13,11 @@ export const StyledDockviewWrapper = styled('div')(({ theme }) => ({
         '--dv-group-view-background-color': theme.palette.background.paper,
         '--dv-separator-border-color': theme.palette.divider,
         '--dv-tabs-and-actions-container-background-color': theme.palette.background.default,
+        '--dv-activegroup-visiblepanel-tab-background-color': theme.palette.background.paper,
+        '--dv-inactivegroup-visiblepanel-tab-background-color': theme.palette.background.paper,
+        '--dv-separator-border': `${theme.palette.divider}`,
+        '--dv-activegroup-hiddenpanel-tab-background-color': theme.palette.background.paper,
+        '--dv-color-abyss': theme.palette.background.paper,
 
         // Tabs
         '& .dv-tab': {
@@ -30,7 +35,7 @@ export const StyledDockviewWrapper = styled('div')(({ theme }) => ({
                 color: theme.palette.primary.main,
                 borderBottom: `2px solid ${theme.palette.primary.main}`,
                 fontWeight: theme.typography.fontWeightBold,
-            }
+            },
         },
 
         // Splitter
