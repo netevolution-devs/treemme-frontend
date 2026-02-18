@@ -17,11 +17,13 @@ const ProvinceForm = () => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IProvinceStoreState>();
-    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
-    const buttonsState = useStore(state => state.uiState.buttonsState);
-    const setUIState = useStore(state => state.setUIState);
+    const {
+        isFormDisabled,
+        buttonsState,
+        selectedProvinceId
+    } = useStore(state => state.uiState);
 
-    const selectedProvinceId = useStore(state => state.uiState.selectedProvinceId);
+    const setUIState = useStore(state => state.setUIState);
 
     const {data: province} = useGetProvince(selectedProvinceId);
     const {mutateAsync: createProvince} = usePostProvince();
