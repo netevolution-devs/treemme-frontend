@@ -1,6 +1,7 @@
 import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
 import useApi from "@api/useApi.ts";
 import {useQuery} from "@tanstack/react-query";
+import {PROVINCE_QUERY_KEYS} from "@features/panels/contacts/province/api/PROVINCE_QUERY_KEYS.ts";
 
 const useGetListProvince = () => {
     const {get} = useApi();
@@ -13,7 +14,7 @@ const useGetListProvince = () => {
     }
 
     return useQuery({
-        queryKey: [url],
+        queryKey: [PROVINCE_QUERY_KEYS.LIST],
         queryFn: doGet,
         staleTime: Infinity,
         gcTime: Infinity,
