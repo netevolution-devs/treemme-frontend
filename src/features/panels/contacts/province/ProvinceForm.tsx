@@ -30,9 +30,10 @@ const ProvinceForm = () => {
     });
 
     const handleNew = () => {
-        console.log("new");
-        setUIState({isFormDisabled: false});
-        setUIState({buttonsState: {...buttonsState, new: false, save: true}});
+        setUIState({
+            isFormDisabled: false,
+            buttonsState: {...buttonsState, new: false, save: true}
+        });
     }
 
     const handleEdit = () => {
