@@ -6,16 +6,13 @@ import {useTranslation} from "react-i18next";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
-import usePostProvince from "@features/panels/contacts/province/api/usePostProvince.tsx";
 import {useEffect, useRef} from "react";
-import useGetProvince from "@features/panels/contacts/province/api/useGetProvince.tsx";
-import usePutProvince from "@features/panels/contacts/province/api/usePutProvince.tsx";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import type {IDialogActions} from "@shared/ui/dialog/IDialogActions.ts";
 import {openDialog} from "@shared/ui/dialog/dialogHelper.ts";
 import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog.tsx";
-import useDeleteProvince from "@features/panels/contacts/province/api/useDeleteProvince.tsx";
+import {provinceApi} from "@features/panels/contacts/province/api/proviceApi.ts";
 
 export type IProvinceForm = Omit<IProvince, 'id'>;
 
@@ -35,10 +32,11 @@ const ProvinceForm = () => {
     const deleteRef = useRef<IDialogActions>(null);
     const saveRef = useRef<IDialogActions>(null);
 
-    const {data: province} = useGetProvince(selectedProvinceId);
-    const {mutateAsync: createProvince, isPending: isPosting} = usePostProvince();
-    const {mutateAsync: updateProvince, isPending: isPutting} = usePutProvince();
-    const {mutateAsync: deleteProvince, isPending: isDeleting} = useDeleteProvince();
+    const { useGetDetail, usePost, usePut, useDelete } = provinceApi;
+    const {data: province} = useGetDetail(selectedProvinceId);
+    const {mutateAsync: createProvince, isPending: isPosting} = usePost();
+    const {mutateAsync: updateProvince, isPending: isPutting} = usePut();
+    const {mutateAsync: deleteProvince, isPending: isDeleting} = useDelete();
 
     const isPending = isPosting || isPutting;
 

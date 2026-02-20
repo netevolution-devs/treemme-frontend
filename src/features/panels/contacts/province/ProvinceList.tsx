@@ -1,5 +1,4 @@
 import {Box} from "@mui/material";
-import useGetListProvince from "@features/panels/contacts/province/api/useGetListProvince.tsx";
 import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.ts";
 import {
     MaterialReactTable,
@@ -12,10 +11,12 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
 import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
+import {provinceApi} from "@features/panels/contacts/province/api/proviceApi.ts";
 
 const ProvinceList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: provinces, isLoading} = useGetListProvince();
+    const {useGetList} = provinceApi;
+    const {data: provinces, isLoading} = useGetList();
 
     const {useStore} = usePanel<unknown, IProvinceStoreState>();
     const {selectedProvinceId} = useStore(state => state.uiState);
