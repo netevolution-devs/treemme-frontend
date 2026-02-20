@@ -14,20 +14,6 @@
     "staff": "Staff",
     "user": "User"
   },
-  "menu": {
-    "group": {
-      "_default": "Menu principale",
-      "overview": "Panoramica",
-      "registry": "Anagrafica",
-      "preferences": "Preferenze",
-      "backoffice": "Backoffice",
-      "companies": "Aziende"
-    },
-    "dashboard": "Dashboard",
-    "users": "Utenti",
-    "subcontractors": "Terzisti",
-    "settings": "Impostazioni"
-  },
   "form": {
     "field": {
       "email": "Email",

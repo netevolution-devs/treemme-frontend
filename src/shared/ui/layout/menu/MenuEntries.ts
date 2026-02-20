@@ -8,119 +8,119 @@ export interface IMenuEntry {
 
 export const MenuEntries: IMenuEntry[] = [
     {
-        i18nKey: "menu.contatti.self",
+        i18nKey: "menu.contacts.self",
         subMenu: [
-            { i18nKey: "menu.contatti.cap", component: "cap" },
-            { i18nKey: "menu.contatti.nazioni" },
-            { i18nKey: "menu.contatti.province", component: "province" },
-            { i18nKey: "menu.contatti.contatti" },
-            { i18nKey: "menu.contatti.porti-marittimi" }
+            {i18nKey: "menu.contacts.cap", component: "cap"},
+            {i18nKey: "menu.contacts.nations", component: "nations" },
+            {i18nKey: "menu.contacts.provinces", component: "province"},
+            {i18nKey: "menu.contacts.contacts", component: "contacts" },
+            {i18nKey: "menu.contacts.seaports", component: "seaports" }
         ]
     },
     {
-        i18nKey: "menu.pellami.self",
+        i18nKey: "menu.leathers.self",
         subMenu: [
-            { i18nKey: "menu.pellami.pesi" },
-            { i18nKey: "menu.pellami.speci" },
-            { i18nKey: "menu.pellami.taglie" },
-            { i18nKey: "menu.pellami.pellami" },
-            { i18nKey: "menu.pellami.spessori" },
-            { i18nKey: "menu.pellami.tipologie" },
-            { i18nKey: "menu.pellami.scuortature" },
-            { i18nKey: "menu.pellami.provenienze" },
-            { i18nKey: "menu.pellami.stati-lavorazione" }
+            {i18nKey: "menu.leathers.weights"},
+            {i18nKey: "menu.leathers.species"},
+            {i18nKey: "menu.leathers.sizes"},
+            {i18nKey: "menu.leathers.registry"},
+            {i18nKey: "menu.leathers.thicknesses"},
+            {i18nKey: "menu.leathers.types"},
+            {i18nKey: "menu.leathers.flaying"},
+            {i18nKey: "menu.leathers.origins"},
+            {i18nKey: "menu.leathers.tanning-stages"}
         ]
     },
     {
-        i18nKey: "menu.prodotti.self",
+        i18nKey: "menu.products.self",
         subMenu: [
-            { i18nKey: "menu.prodotti.scelte" },
-            { i18nKey: "menu.prodotti.articoli" },
-            { i18nKey: "menu.prodotti.ricerca" },
-            { i18nKey: "menu.prodotti.prodotti" },
-            { i18nKey: "menu.prodotti.categorie" },
-            { i18nKey: "menu.prodotti.articoli-tipo" }
+            {i18nKey: "menu.products.grades"},
+            {i18nKey: "menu.products.articles"},
+            {i18nKey: "menu.products.search"},
+            {i18nKey: "menu.products.registry"},
+            {i18nKey: "menu.products.categories"},
+            {i18nKey: "menu.products.article-types"}
         ]
     },
     {
-        i18nKey: "menu.ordini.self",
+        i18nKey: "menu.orders.self",
         subMenu: [
-            { i18nKey: "menu.ordini.ordini-clienti" },
-            { i18nKey: "menu.ordini.ordini-fornitori" },
-            { i18nKey: "menu.ordini.ricerca-ordini-clienti" },
-            { i18nKey: "menu.ordini.scadenziario-fornitori" },
-            { i18nKey: "menu.ordini.ricerca-ordini-fornitori" }
+            {i18nKey: "menu.orders.customer-orders"},
+            {i18nKey: "menu.orders.supplier-orders"},
+            {i18nKey: "menu.orders.search-customer-orders"},
+            {i18nKey: "menu.orders.supplier-schedule"},
+            {i18nKey: "menu.orders.search-supplier-orders"}
         ]
     },
     {
-        i18nKey: "menu.magazzino.self",
+        i18nKey: "menu.warehouse.self",
         subMenu: [
-            { i18nKey: "menu.magazzino.movimenti" },
-            { i18nKey: "menu.magazzino.tipo-pallets" },
-            { i18nKey: "menu.magazzino.lotte-partite" },
-            { i18nKey: "menu.magazzino.ricerca-lotti-partite" },
-            { i18nKey: "menu.magazzino.lotti-conto-lavorazione" }
+            {i18nKey: "menu.warehouse.movements"},
+            {i18nKey: "menu.warehouse.pallet-types"},
+            {i18nKey: "menu.warehouse.lots-batches"},
+            {i18nKey: "menu.warehouse.search-lots-batches"},
+            {i18nKey: "menu.warehouse.subcontracting-lots"}
         ]
     },
     {
-        i18nKey: "menu.produzione.self",
+        i18nKey: "menu.production.self",
         subMenu: [
-            { i18nKey: "menu.produzione.lotti" },
-            { i18nKey: "menu.produzione.ricette" },
-            { i18nKey: "menu.produzione.macchinari" },
-            { i18nKey: "menu.produzione.produzione" },
-            { i18nKey: "menu.produzione.lavorazioni" },
-            { i18nKey: "menu.produzione.disinte-base" },
-            { i18nKey: "menu.produzione.scelta-partite" },
-            { i18nKey: "menu.produzione.monitor-pirovano" },
-            { i18nKey: "menu.produzione.ricettario-pirovano" }
+            {i18nKey: "menu.production.lots"},
+            {i18nKey: "menu.production.recipes"},
+            {i18nKey: "menu.production.machinery"},
+            {i18nKey: "menu.production.progress"},
+            {i18nKey: "menu.production.processes"},
+            {i18nKey: "menu.production.bom"},
+            {i18nKey: "menu.production.batch-selection"},
+            {i18nKey: "menu.production.pirovano-monitor"},
+            {i18nKey: "menu.production.pirovano-recipes"}
         ]
     },
     {
-        i18nKey: "menu.ddt-fatture.self",
+        i18nKey: "menu.shipping-invoicing.self",
         subMenu: [
-            { i18nKey: "menu.ddt-fatture.ddt" },
-            { i18nKey: "menu.ddt-fatture.fatture" },
-            { i18nKey: "menu.ddt-fatture.ricerca" }
+            {i18nKey: "menu.shipping-invoicing.delivery-notes"},
+            {i18nKey: "menu.shipping-invoicing.invoices"},
+            {i18nKey: "menu.shipping-invoicing.search"}
         ]
     },
     {
-        i18nKey: "menu.commerciale.self",
+        i18nKey: "menu.commercial.self",
         subMenu: [
-            { i18nKey: "menu.commerciale.clienti" },
-            { i18nKey: "menu.commerciale.fornitori" },
-            { i18nKey: "menu.commerciale.dati-partite" },
-            { i18nKey: "menu.commerciale.costo-prodotti" },
-            { i18nKey: "menu.commerciale.listino-prodotti" },
-            { i18nKey: "menu.commerciale.rapportini-lavoro" },
-            { i18nKey: "menu.commerciale.divise-monetarie-cambi" }
+            {i18nKey: "menu.commercial.customers"},
+            {i18nKey: "menu.commercial.suppliers"},
+            {i18nKey: "menu.commercial.batch-data"},
+            {i18nKey: "menu.commercial.product-costs"},
+            {i18nKey: "menu.commercial.price-list"},
+            {i18nKey: "menu.commercial.work-reports"},
+            {i18nKey: "menu.commercial.currencies-exchange"}
         ]
     },
     {
-        i18nKey: "menu.analisi.self",
+        i18nKey: "menu.analysis.self",
         subMenu: [
-            { i18nKey: "menu.analisi.ordini" },
-            { i18nKey: "menu.analisi.vendite" },
-            { i18nKey: "menu.analisi.costi-ricavi" },
-            { i18nKey: "menu.analisi.partite-lotti" },
-            { i18nKey: "menu.analisi.conto-lavorazione" },
-            { i18nKey: "menu.analisi.traffico-telefonico" },
+            {i18nKey: "menu.analysis.orders"},
+            {i18nKey: "menu.analysis.sales"},
+            {i18nKey: "menu.analysis.costs-revenues"},
+            {i18nKey: "menu.analysis.batches-lots"},
+            {i18nKey: "menu.analysis.subcontracting"},
+            {i18nKey: "menu.analysis.phone-traffic"},
             {
-                i18nKey: "menu.analisi.controllo-qualita-iso.self",
+                i18nKey: "menu.analysis.iso-quality.self",
                 subMenu: [
-                    { i18nKey: "menu.analisi.controllo-qualita-iso.evasione-ordini" },
+                    {i18nKey: "menu.analysis.iso-quality.order-fulfillment"},
                 ]
             },
         ]
     },
     {
-        i18nKey: "menu.sistema.self",
+        i18nKey: "menu.system.self",
         subMenu: [
-            { i18nKey: "menu.sistema.info" },
-            { i18nKey: "menu.sistema.tool" },
-            { i18nKey: "menu.sistema.console" },
-            { i18nKey: "menu.sistema.accesso" },
-            { i18nKey: "menu.sistema.fine-lavoro" },
+            {i18nKey: "menu.system.info"},
+            {i18nKey: "menu.system.tools"},
+            {i18nKey: "menu.system.console"},
+            {i18nKey: "menu.system.access-management"},
+            {i18nKey: "menu.system.logout"},
         ]
     }
 ];

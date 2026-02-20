@@ -1,98 +1,99 @@
 {
   "menu": {
-    "contatti": {
+    "contacts": {
       "self": "Contatti",
       "cap": "CAP",
-      "nazioni": "Nazioni",
-      "province": "Province",
-      "contatti": "Gestione Contatti",
-      "porti-marittimi": "Porti Marittimi"
+      "countries": "Nazioni",
+      "provinces": "Province",
+      "contacts": "Gestione Contatti",
+      "seaports": "Porti Marittimi",
+      "nations": "Nations"
     },
-    "pellami": {
+    "leathers": {
       "self": "Pellami",
-      "pesi": "Pesi",
-      "speci": "Specie",
-      "taglie": "Taglie",
-      "pellami": "Anagrafica Pellami",
-      "spessori": "Spessori",
-      "tipologie": "Tipologie",
-      "scuortature": "Scuortature",
-      "provenienze": "Provenienze",
-      "stati-lavorazione": "Stati di Lavorazione"
+      "weights": "Pesi",
+      "species": "Specie",
+      "sizes": "Taglie",
+      "registry": "Anagrafica Pellami",
+      "thicknesses": "Spessori",
+      "types": "Tipologie",
+      "flaying": "Scuortature",
+      "origins": "Provenienze",
+      "tanning-stages": "Stati di Lavorazione"
     },
-    "prodotti": {
+    "products": {
       "self": "Prodotti",
-      "scelte": "Scelte",
-      "articoli": "Articoli",
-      "ricerca": "Ricerca Prodotti",
-      "prodotti": "Anagrafica Prodotti",
-      "categorie": "Categorie",
-      "articoli-tipo": "Tipologie Articoli"
+      "grades": "Scelte",
+      "articles": "Articoli",
+      "search": "Ricerca Prodotti",
+      "registry": "Anagrafica Prodotti",
+      "categories": "Categorie",
+      "article-types": "Tipologie Articoli"
     },
-    "ordini": {
+    "orders": {
       "self": "Ordini",
-      "ordini-clienti": "Ordini Clienti",
-      "ordini-fornitori": "Ordini Fornitori",
-      "ricerca-ordini-clienti": "Ricerca Ordini Clienti",
-      "scadenziario-fornitori": "Scadenziario Fornitori",
-      "ricerca-ordini-fornitori": "Ricerca Ordini Fornitori"
+      "customer-orders": "Ordini Clienti",
+      "supplier-orders": "Ordini Fornitori",
+      "search-customer-orders": "Ricerca Ordini Clienti",
+      "supplier-schedule": "Scadenziario Fornitori",
+      "search-supplier-orders": "Ricerca Ordini Fornitori"
     },
-    "magazzino": {
+    "warehouse": {
       "self": "Magazzino",
-      "movimenti": "Movimenti di Magazzino",
-      "tipo-pallets": "Tipologie Pallets",
-      "lotte-partite": "Lotti e Partite",
-      "ricerca-lotti-partite": "Ricerca Lotti/Partite",
-      "lotti-conto-lavorazione": "Lotti in Conto Lavorazione"
+      "movements": "Movimenti di Magazzino",
+      "pallet-types": "Tipologie Pallets",
+      "lots-batches": "Lotti e Partite",
+      "search-lots-batches": "Ricerca Lotti/Partite",
+      "subcontracting-lots": "Lotti in Conto Lavorazione"
     },
-    "produzione": {
+    "production": {
       "self": "Produzione",
-      "lotti": "Gestione Lotti",
-      "ricette": "Ricette",
-      "macchinari": "Macchinari",
-      "produzione": "Avanzamento Produzione",
-      "lavorazioni": "Lavorazioni",
-      "disinte-base": "Distinta Base",
-      "scelta-partite": "Scelta Partite",
-      "monitor-pirovano": "Monitor Pirovano",
-      "ricettario-pirovano": "Ricettario Pirovano"
+      "lots": "Gestione Lotti",
+      "recipes": "Ricette",
+      "machinery": "Macchinari",
+      "progress": "Avanzamento Produzione",
+      "processes": "Lavorazioni",
+      "bom": "Distinta Base",
+      "batch-selection": "Scelta Partite",
+      "pirovano-monitor": "Monitor Pirovano",
+      "pirovano-recipes": "Ricettario Pirovano"
     },
-    "ddt-fatture": {
+    "shipping-invoicing": {
       "self": "DDT & Fatture",
-      "ddt": "Documenti di Trasporto",
-      "fatture": "Fatturazione",
-      "ricerca": "Ricerca Documenti"
+      "delivery-notes": "Documenti di Trasporto",
+      "invoices": "Fatturazione",
+      "search": "Ricerca Documenti"
     },
-    "commerciale": {
+    "commercial": {
       "self": "Commerciale",
-      "clienti": "Anagrafica Clienti",
-      "fornitori": "Anagrafica Fornitori",
-      "dati-partite": "Dati Partite",
-      "costo-prodotti": "Costo Prodotti",
-      "listino-prodotti": "Listino Prodotti",
-      "rapportini-lavoro": "Rapportini di Lavoro",
-      "divise-monetarie-cambi": "Valute e Cambi"
+      "customers": "Anagrafica Clienti",
+      "suppliers": "Anagrafica Fornitori",
+      "batch-data": "Dati Partite",
+      "product-costs": "Costo Prodotti",
+      "price-list": "Listino Prodotti",
+      "work-reports": "Rapportini di Lavoro",
+      "currencies-exchange": "Valute e Cambi"
     },
-    "analisi": {
+    "analysis": {
       "self": "Analisi",
-      "ordini": "Analisi Ordini",
-      "vendite": "Analisi Vendite",
-      "costi-ricavi": "Costi e Ricavi",
-      "partite-lotti": "Analisi Partite/Lotti",
-      "conto-lavorazione": "Analisi Conto Lavorazione",
-      "traffico-telefonico": "Traffico Telefonico",
-      "controllo-qualita-iso": {
+      "orders": "Analisi Ordini",
+      "sales": "Analisi Vendite",
+      "costs-revenues": "Costi e Ricavi",
+      "batches-lots": "Analisi Partite/Lotti",
+      "subcontracting": "Analisi Conto Lavorazione",
+      "phone-traffic": "Traffico Telefonico",
+      "iso-quality": {
         "self": "Controllo Qualità ISO",
-        "evasione-ordini": "Evasione Ordini"
+        "order-fulfillment": "Evasione Ordini"
       }
     },
-    "sistema": {
+    "system": {
       "self": "Sistema",
       "info": "Informazioni di Sistema",
-      "tool": "Strumenti",
+      "tools": "Strumenti",
       "console": "Console di Comando",
-      "accesso": "Gestione Accessi",
-      "fine-lavoro": "Fine Sessione"
+      "access-management": "Gestione Accessi",
+      "logout": "Fine Sessione"
     }
   }
 }
