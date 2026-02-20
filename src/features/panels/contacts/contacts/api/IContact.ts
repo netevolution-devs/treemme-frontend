@@ -1,5 +1,5 @@
-import type {IContactType} from "@features/panels/shared/api/contact-type/IContactType.ts";
-import type {IContactTitle} from "@features/panels/shared/api/contact-title/IContactTitle.ts";
+import type {IContactType} from "@features/panels/shared/api/contacts-type/IContactType.ts";
+import type {IContactTitle} from "@features/panels/shared/api/contacts-title/IContactTitle.ts";
 
 export interface IContact {
     id: number;
