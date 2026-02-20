@@ -10,7 +10,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
     const { baseEndpoint, queryKey } = config;
 
     return {
-        // 1. GET LIST
+        // GET LIST
         useGetList: () => {
             const { get } = useApi();
             return useQuery({
@@ -24,7 +24,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
             });
         },
 
-        // 2. GET DETAIL
+        // GET DETAIL
         useGetDetail: (id?: number | null) => {
             const { get } = useApi();
             return useQuery({
@@ -38,7 +38,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
             });
         },
 
-        // 3. POST (CREATE)
+        // POST (CREATE)
         usePost: () => {
             const { postEncoded: post } = useApi();
             const queryClient = useQueryClient();
@@ -52,7 +52,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
             });
         },
 
-        // 4. PUT (UPDATE)
+        // PUT (UPDATE)
         usePut: () => {
             const { put } = useApi();
             const queryClient = useQueryClient();
@@ -69,7 +69,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
             });
         },
 
-        // 5. DELETE
+        // DELETE
         useDelete: () => {
             const { DELETE } = useApi();
             const queryClient = useQueryClient();
