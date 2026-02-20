@@ -45,7 +45,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
 
         positionPagination: "bottom",
         initialState: {
-            density: 'comfortable',
+            density: 'compact',
             pagination: {
                 pageSize: 10,
                 pageIndex: 0,
