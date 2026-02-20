@@ -61,5 +61,11 @@
   },
   "nations": {
     "name": "Nazione"
+  },
+  "contacts": {
+    "name": "Nome",
+    "title": "Titolo",
+    "notes": "Note",
+    "type": "Tipo contatto"
   }
 }
