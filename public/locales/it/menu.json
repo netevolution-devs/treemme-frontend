@@ -3,11 +3,10 @@
     "contacts": {
       "self": "Contatti",
       "cap": "CAP",
-      "countries": "Nazioni",
+      "nations": "Nazioni",
       "provinces": "Province",
       "contacts": "Gestione Contatti",
-      "seaports": "Porti Marittimi",
-      "nations": "Nations"
+      "seaports": "Porti Marittimi"
     },
     "leathers": {
       "self": "Pellami",
