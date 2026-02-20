@@ -18,6 +18,7 @@ const ProvinceList = () => {
     const {data: provinces, isLoading} = useGetListProvince();
 
     const {useStore} = usePanel<unknown, IProvinceStoreState>();
+    const {selectedProvinceId} = useStore(state => state.uiState);
     const setUIState = useStore(state => state.setUIState);
 
     const overrideOptions: Partial<MRT_TableOptions<IProvince>> = {
@@ -35,6 +36,7 @@ const ProvinceList = () => {
                 e.preventDefault();
                 setUIState({selectedProvinceId: row.original.id});
             },
+            selected: row.original.id === selectedProvinceId,
         }),
     };
     const defaultMrtOptions = useDefaultMrtOptions<IProvince>(overrideOptions);

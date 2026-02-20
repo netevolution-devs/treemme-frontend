@@ -7,24 +7,36 @@ export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
     staticRowIndex: number,
     theme: Theme,
     isDetailPanel?: boolean,
-    overrideProps = {},
-): MUITableRowProps => ({
-    onDoubleClick: () => (table.setEditingRow(row)),
-    sx: {
-        borderRadius: 20,
-        // zebra rows
-        backgroundColor: !isDetailPanel
-            ? (staticRowIndex % 2
-                ? theme.palette.tableColors.tableRow1
-                : theme.palette.tableColors.tableRow2)
-            : undefined,
-        "&:hover": {
+    overrideProps: MUITableRowProps = {},
+): MUITableRowProps => {
+    const isSelected = overrideProps.selected;
+
+    return {
+        onDoubleClick: () => (table.setEditingRow(row)),
+        ...overrideProps,
+        sx: {
+            borderRadius: 20,
+            // zebra rows
             backgroundColor: !isDetailPanel
-                ? theme.palette.tableColors.hover
+                ? (isSelected
+                    ? `${theme.palette.primary.light} !important`
+                    : (staticRowIndex % 2
+                        ? theme.palette.tableColors.tableRow1
+                        : theme.palette.tableColors.tableRow2))
                 : undefined,
-            "& *": {
-                // color: `${theme.palette.primary.}`,
+            "&:hover": {
+                backgroundColor: !isDetailPanel
+                    ? (isSelected
+                        ? `${theme.palette.primary.main} !important`
+                        : theme.palette.tableColors.hover)
+                    : undefined,
+                "& .MuiTableCell-root": isSelected ? {
+                    color: `${theme.palette.primary.contrastText} !important`,
+                } : {},
             },
+            "& .MuiTableCell-root": isSelected ? {
+                color: `${theme.palette.primary.contrastText} !important`,
+            } : {},
             "& button.pending svg": {
                 fill: `${theme.palette.warning.main} !important`,
             },
@@ -34,20 +46,11 @@ export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
             "& button.partner-declined svg": {
                 fill: `${theme.palette.error.main} !important`,
             },
+            "& .Mui-disabled": {
+                color: 'inherit',
+                opacity: 0.5,
+            },
+            ...(overrideProps.sx instanceof Function ? overrideProps.sx(theme) : (overrideProps.sx || {})),
         },
-        "& button.pending svg": {
-            fill: `${theme.palette.warning.main} !important`,
-        },
-        "& button.partner-accepted svg": {
-            fill: `${theme.palette.primary.main} !important`,
-        },
-        "& button.partner-declined svg": {
-            fill: `${theme.palette.error.main} !important`,
-        },
-        "& .Mui-disabled": {
-            color: 'inherit',
-            opacity: 0.5,
-        },
-    },
-    ...overrideProps,
-});
+    };
+};
