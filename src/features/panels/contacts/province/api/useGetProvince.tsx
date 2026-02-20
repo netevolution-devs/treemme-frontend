@@ -16,8 +16,8 @@ const useGetProvince = (id?: number | null) => {
     return useQuery({
         queryKey: [PROVINCE_QUERY_KEYS.DETAIL, id],
         queryFn: doGet,
-        staleTime: Infinity,
-        gcTime: Infinity,
+        staleTime: 0,
+        gcTime: 0,
         retry: false,
         enabled: !!id
     })

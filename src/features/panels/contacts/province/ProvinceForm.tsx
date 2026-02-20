@@ -67,8 +67,6 @@ const ProvinceForm = () => {
         if (selectedProvinceId) {
             await deleteProvince(selectedProvinceId);
             setUIState({selectedProvinceId: null});
-            setFormState('view');
-            methods.reset();
         }
     }
 
@@ -106,14 +104,15 @@ const ProvinceForm = () => {
         }
 
         setUIState({selectedProvinceId: null});
-        setFormState('view');
-        methods.reset();
     }
 
     useEffect(() => {
         if (selectedProvinceId && province) {
             methods.reset({acronym: province.acronym, name: province.name});
             setFormState('selected');
+        } else if (selectedProvinceId === null) {
+            methods.reset({acronym: '', name: ''});
+            setFormState('cancel');
         }
     }, [selectedProvinceId, province])
 
