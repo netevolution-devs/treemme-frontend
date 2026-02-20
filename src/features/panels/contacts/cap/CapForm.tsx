@@ -152,7 +152,7 @@ const CapForm = () => {
                     <Stack sx={{mt: 3}} spacing={2}>
                         <SelectFieldControlled<ICapForm>
                             name="province_id"
-                            label={t("cap.province")}
+                            label={t("province.name")}
                             options={provinces?.map(p => ({
                                 value: p.id,
                                 label: `${p.acronym} - ${p.name}`

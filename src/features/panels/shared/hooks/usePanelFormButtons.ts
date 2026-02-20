@@ -54,7 +54,7 @@ export const usePanelFormButtons = <F, U extends IPanelUIState>() => {
                 setUIState({
                     isFormDisabled: true,
                     buttonsState: {
-                        new: true,
+                        new: false,
                         edit: true,
                         delete: true,
                         cancel: true,
