@@ -3,15 +3,9 @@ import {Box} from "@mui/material";
 import ProvinceForm from "@features/panels/contacts/province/ProvinceForm.tsx";
 import ProvinceList from "@features/panels/contacts/province/ProvinceList.tsx";
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 
-export interface IProvinceStoreState {
-    isFormDisabled: boolean;
-    buttonsState: {
-        new: boolean,
-        edit: boolean,
-        delete: boolean,
-        save: boolean
-    }
+export interface IProvinceStoreState extends IPanelUIState {
     selectedProvinceId?: number | null;
 }
 
@@ -23,7 +17,7 @@ const ProvincePanel = () => {
             kind={"province"}
             initialState={{uiState: initialUiState}}
         >
-            <Box sx={{p: 1, display: "flex", gap: 1}}>
+            <Box sx={{p: 1, display: "flex", flexDirection: "column", gap: 1}}>
                 <ProvinceList />
                 <ProvinceForm />
             </Box>
