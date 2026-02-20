@@ -1,80 +1,40 @@
-import {Box} from "@mui/material";
-import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.ts";
-import {
-    MaterialReactTable,
-    type MRT_ColumnDef,
-    type MRT_TableOptions,
-    useMaterialReactTable
-} from "material-react-table";
-import React, {useMemo} from "react";
-import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
-import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
-import {provinceApi} from "@features/panels/contacts/province/api/proviceApi.ts";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { usePanel } from "@ui/panel/PanelContext.tsx";
+import { provinceApi } from "@features/panels/contacts/province/api/proviceApi.ts";
+import type { MRT_ColumnDef } from "material-react-table";
+import type { IProvinceStoreState } from "@features/panels/contacts/province/ProvincePanel.tsx";
+import type { IProvince } from "@features/panels/contacts/province/api/IProvince.ts";
+import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const ProvinceList = () => {
-    const {t} = useTranslation(["form"]);
-    const {useGetList} = provinceApi;
-    const {data: provinces, isLoading} = useGetList();
+    const { t } = useTranslation(["form"]);
+    const { data: provinces, isLoading } = provinceApi.useGetList();
 
-    const {useStore} = usePanel<unknown, IProvinceStoreState>();
-    const {selectedProvinceId} = useStore(state => state.uiState);
+    const { useStore } = usePanel<unknown, IProvinceStoreState>();
+    const selectedProvinceId = useStore(state => state.uiState.selectedProvinceId);
     const setUIState = useStore(state => state.setUIState);
 
-    const overrideOptions: Partial<MRT_TableOptions<IProvince>> = {
-        enablePagination: false,
-        muiTableContainerProps: {
-            sx: {
-                maxHeight: '400px',
-            },
+    const columns = useMemo<MRT_ColumnDef<IProvince>[]>(() => [
+        {
+            accessorKey: "acronym",
+            header: t("province.acronym")
         },
-        muiTableBodyRowProps: ({row}) => ({
-            onDoubleClick: () => {
-                setUIState({selectedProvinceId: row.original.id});
-            },
-            onClick: (e: React.MouseEvent) => {
-                e.preventDefault();
-                setUIState({selectedProvinceId: row.original.id});
-            },
-            selected: row.original.id === selectedProvinceId,
-        }),
-    };
-    const defaultMrtOptions = useDefaultMrtOptions<IProvince>(overrideOptions);
-
-    const columns = useMemo<MRT_ColumnDef<IProvince>[]>(
-        () => [
-            {
-                accessorKey: "acronym",
-                header: t("province.acronym")
-            },
-            {
-                accessorKey: "name",
-                header: t("province.name")
-            }
-        ],
-        [t]
-    );
-
-    const table = useMaterialReactTable<IProvince>({
-        ...defaultMrtOptions,
-        columns,
-        data: provinces || [],
-        enableRowActions: false,
-        autoResetPageIndex: false,
-        state: {
-            isLoading: isLoading
-        },
-        enableRowVirtualization: true,
-        enableTopToolbar: false,
-        enableBottomToolbar: false,
-    })
+        {
+            accessorKey: "name",
+            header: t("province.name")
+        }
+    ], [t]);
 
     return (
-        <Box>
-            <MaterialReactTable table={table}/>
-        </Box>
-    )
-}
+        <GenericList<IProvince>
+            data={provinces}
+            isLoading={isLoading}
+            columns={columns}
+            selectedId={selectedProvinceId}
+            onRowSelect={(id) => setUIState({ selectedProvinceId: id })}
+        />
+    );
+};
 
 export default ProvinceList;
