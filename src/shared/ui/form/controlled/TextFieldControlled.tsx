@@ -42,6 +42,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                         onBlur={composedOnBlur}
                         label={formattedLabel}
                         fullWidth
+                        size={"small"}
                         error={!!error}
                         helperText={error?.message ?? (showHelperRow ? " " : "")}
                         slotProps={{
