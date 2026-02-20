@@ -65,7 +65,6 @@ const ProvinceList = () => {
         enableRowVirtualization: true,
         enableTopToolbar: false,
         enableBottomToolbar: false,
-        // enableTableHead:false
     })
 
     return (
