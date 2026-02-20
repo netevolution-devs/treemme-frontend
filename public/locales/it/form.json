@@ -58,5 +58,8 @@
   "cap": {
     "code": "CAP",
     "name": "Località"
+  },
+  "nations": {
+    "name": "Nazione"
   }
 }
