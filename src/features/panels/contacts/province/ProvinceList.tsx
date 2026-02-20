@@ -21,6 +21,12 @@ const ProvinceList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const overrideOptions: Partial<MRT_TableOptions<IProvince>> = {
+        enablePagination: false,
+        muiTableContainerProps: {
+            sx: {
+                maxHeight: '400px',
+            },
+        },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
                 setUIState({selectedProvinceId: row.original.id});
@@ -58,6 +64,7 @@ const ProvinceList = () => {
         },
         enableRowVirtualization: true,
         enableTopToolbar: false,
+        enableBottomToolbar: false,
         // enableTableHead:false
     })
 

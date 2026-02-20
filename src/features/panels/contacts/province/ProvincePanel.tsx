@@ -17,7 +17,7 @@ const ProvincePanel = () => {
             kind={"province"}
             initialState={{uiState: initialUiState}}
         >
-            <Box sx={{p: 1, display: "flex", flexDirection: "column", gap: 1}}>
+            <Box sx={{p: 1, display: "flex", flexDirection: "column", gap: 2}}>
                 <ProvinceList />
                 <ProvinceForm />
             </Box>
