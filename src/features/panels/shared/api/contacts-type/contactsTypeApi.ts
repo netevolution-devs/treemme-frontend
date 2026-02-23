@@ -2,6 +2,6 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {IContactType} from "@features/panels/shared/api/contacts-type/IContactType.ts";
 
 export const contactsTypeApi = createPanelApi<IContactType>({
-    baseEndpoint: "/contact_type",
+    baseEndpoint: "/contact-type",
     queryKey: "CONTACT_TYPE"
 })

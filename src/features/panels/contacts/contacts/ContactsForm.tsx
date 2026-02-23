@@ -7,6 +7,8 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {contactsTitleApi} from "@features/panels/shared/api/contacts-title/contactsTitleApi.ts";
+import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
+import {contactsTypeApi} from "@features/panels/shared/api/contacts-type/contactsTypeApi.ts";
 
 export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type'> & {
     contact_title_id: number;
@@ -29,6 +31,9 @@ const ContactsForm = () => {
     const {useGetList: useGetContactTitles} = contactsTitleApi;
     const {data: contactTitles} = useGetContactTitles();
 
+    const {useGetList: useGetContactTypes} = contactsTypeApi;
+    const {data: contactTypes} = useGetContactTypes();
+
     return (
         <GenericForm<IContactForm, IContact, IContactsStoreState>
             selectedId={selectedContactId}
@@ -43,7 +48,7 @@ const ContactsForm = () => {
                 name: x.name,
                 contact_note: x.contact_note,
                 contact_title_id: x.contact_title.id,
-                contact_type_id: x.contact_type.id
+                contact_type_id: Number(x.contact_type.id)
             })}
             create={(payload) => createContact(payload)}
             update={(id, payload) => updateContact({ id, payload })}
@@ -54,6 +59,15 @@ const ContactsForm = () => {
             validateBeforeSave={(v) => !!v.name && !!v.contact_title_id && !!v.contact_type_id}
             renderFields={() => (
                 <>
+                    <RadioFieldControlled<IContactForm>
+                        name="contact_type_id"
+                        label={t("contacts.type")}
+                        options={contactTypes?.map((x) => ({
+                            value: x.id,
+                            label: x.name
+                        })) || []}
+                        showHelperRow={false}
+                    />
                     <SelectFieldControlled<IContactForm>
                         name="contact_title_id"
                         label={t("contacts.title")}
