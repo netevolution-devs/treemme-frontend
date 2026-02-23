@@ -18,6 +18,7 @@ interface GenericListProps<TData extends BaseEntity> {
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
     onRowSelect: (id: TData["id"]) => void;
+    onRowDoubleClick?: (id: TData["id"]) => void;
     additionalOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
 }
@@ -28,6 +29,7 @@ const GenericList = <TData extends BaseEntity>({
                                                    columns,
                                                    selectedId,
                                                    onRowSelect,
+                                                   onRowDoubleClick,
                                                    additionalOptions,
                                                    maxHeight = '400px'
                                                }: GenericListProps<TData>) => {
@@ -38,7 +40,10 @@ const GenericList = <TData extends BaseEntity>({
             sx: { maxHeight },
         },
         muiTableBodyRowProps: ({ row }) => ({
-            onDoubleClick: () => onRowSelect(row.original.id),
+            onDoubleClick: () => {
+                onRowSelect(row.original.id);
+                onRowDoubleClick?.(row.original.id);
+            },
             onClick: (e: React.MouseEvent) => {
                 e.preventDefault();
                 onRowSelect(row.original.id);

@@ -65,10 +65,11 @@ function BaseDialogWrapper({
                         maxHeight: '90vh',
                         display: 'flex',
                         flexDirection: 'column',
+                        ...sx
                     },
                 },
             }}
-            sx={{...sx, m: 2}}
+            sx={{m: 2}}
         >
             {children}
         </Dialog>

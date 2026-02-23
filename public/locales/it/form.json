@@ -80,9 +80,9 @@
       "list": "Lista recapiti",
       "types": {
         "code": "Sigla",
-        "name": "Nome"
+        "type": "Tipologia"
       },
-      "value": "Valore",
+      "value": "Recapito",
       "note": "Note"
     }
   }

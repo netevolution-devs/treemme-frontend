@@ -56,7 +56,11 @@ const ContactsForm = () => {
             remove={(id) => deleteContact(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
-            onClearSelection={() => setUIState({ selectedContactId: null })}
+            onClearSelection={() => setUIState({
+                selectedContactId: null,
+                selectedAddressId: null,
+                selectedDetailId: null
+            })}
             validateBeforeSave={(v) => !!v.name && !!v.contact_title_id && !!v.contact_type_id}
             renderFields={() => (
                 <>

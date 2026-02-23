@@ -1,5 +1,5 @@
-import { Box, Button } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import {Box, Button} from "@mui/material";
+import {useTranslation} from "react-i18next";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -22,6 +22,12 @@ interface FormButtonsProps {
     onCancel: () => void;
     onSave?: () => void;
     buttonState: IButtonState;
+    hideNew?: boolean;
+    hideEdit?: boolean;
+    hideDelete?: boolean;
+    hideCancel?: boolean;
+    hideSave?: boolean;
+    overrideButtonState?: boolean
 }
 
 export interface IButtonState {
@@ -40,8 +46,8 @@ export const BaseButtonState: IButtonState = {
     cancel: false
 };
 
-const CustomButton = ({ label, onClick, color, isSubmit = false, isEnable = true, icon }: CustomButtonProps) => {
-    const { t } = useTranslation(["common"]);
+const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon}: CustomButtonProps) => {
+    const {t} = useTranslation(["common"]);
 
     return (
         <Button
@@ -64,7 +70,20 @@ const CustomButton = ({ label, onClick, color, isSubmit = false, isEnable = true
 };
 
 
-const FormButtons = ({ onNew, onEdit, onDelete, onCancel, onSave, buttonState }: FormButtonsProps) => {
+const FormButtons = ({
+                         onNew,
+                         onEdit,
+                         onDelete,
+                         onCancel,
+                         onSave,
+                         buttonState,
+                         hideNew = false,
+                         hideEdit = false,
+                         hideDelete = false,
+                         hideCancel = false,
+                         hideSave = false,
+                         overrideButtonState = false
+                     }: FormButtonsProps) => {
     return (
         <Box sx={{
             display: "flex",
@@ -74,45 +93,52 @@ const FormButtons = ({ onNew, onEdit, onDelete, onCancel, onSave, buttonState }:
             top: 0,
             zIndex: 10,
         }}>
-            <CustomButton
-                onClick={onNew}
-                label={"button.new"}
-                color={"primary"}
-                icon={<AddIcon />}
-                isEnable={buttonState.new}
-            />
-            <CustomButton
-                onClick={onEdit}
-                label={"button.edit"}
-                color={"warning"}
-                icon={<EditIcon />}
-                isEnable={buttonState.edit}
-            />
-            <CustomButton
-                onClick={onDelete}
-                label={"button.delete"}
-                color={"error"}
-                icon={<DeleteIcon />}
-                isEnable={buttonState.delete}
-            />
-
-            <>
+            {!hideNew && (
+                <CustomButton
+                    onClick={onNew}
+                    label={"button.new"}
+                    color={"primary"}
+                    icon={<AddIcon/>}
+                    isEnable={buttonState.new || overrideButtonState}
+                />
+            )}
+            {!hideEdit && (
+                <CustomButton
+                    onClick={onEdit}
+                    label={"button.edit"}
+                    color={"warning"}
+                    icon={<EditIcon/>}
+                    isEnable={buttonState.edit || overrideButtonState}
+                />
+            )}
+            {!hideDelete && (
+                <CustomButton
+                    onClick={onDelete}
+                    label={"button.delete"}
+                    color={"error"}
+                    icon={<DeleteIcon/>}
+                    isEnable={buttonState.delete || overrideButtonState}
+                />
+            )}
+            {!hideCancel && (
                 <CustomButton
                     onClick={onCancel}
                     label={"button.cancel"}
                     color={"inherit"}
-                    icon={<CloseIcon />}
-                    isEnable={buttonState.cancel}
+                    icon={<CloseIcon/>}
+                    isEnable={buttonState.cancel || overrideButtonState}
                 />
+            )}
+            {!hideSave && (
                 <CustomButton
                     onClick={() => onSave?.()}
                     label={"button.save"}
                     color={"success"}
-                    icon={<SaveIcon />}
+                    icon={<SaveIcon/>}
                     isSubmit
-                    isEnable={buttonState.save}
+                    isEnable={buttonState.save || overrideButtonState}
                 />
-            </>
+            )}
         </Box>
     );
 };

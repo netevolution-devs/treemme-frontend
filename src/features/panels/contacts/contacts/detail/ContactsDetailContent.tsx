@@ -16,12 +16,10 @@ const ContactsDetailContent = () => {
     }
 
     return (
-        <Box>
+        <Box sx={{width: '100%'}}>
             <Typography variant="h6">{t("contacts.details.list")}</Typography>
-            <Box sx={{display: "flex", flexDirection: "row", gap: 2, flex: 1}}>
                 <ContactsDetailList />
                 {/*<ContactsDetailForm />*/}
-            </Box>
         </Box>
     )
 }

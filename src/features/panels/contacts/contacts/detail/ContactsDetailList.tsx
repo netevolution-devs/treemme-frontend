@@ -2,10 +2,13 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailForm.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import {openDialog} from "@ui/dialog/dialogHelper.ts";
 
 const ContactsDetailList = () => {
     const {t} = useTranslation(["form"]);
@@ -24,7 +27,7 @@ const ContactsDetailList = () => {
         },
         {
             accessorKey: "detail_type.name",
-            header: t("form:contacts.details.types.name"),
+            header: t("form:contacts.details.types.type"),
         },
         {
             accessorKey: "name",
@@ -34,20 +37,27 @@ const ContactsDetailList = () => {
             accessorKey: "note",
             header: t("form:contacts.details.note")
         }
-    ], [t])
+    ], [t]);
+
+    const editDialogRef = useRef<IDialogActions | null>(null);
 
     if (!selectedContactId) {
         return null;
     }
 
     return (
-        <GenericList<IContactDetail>
-            data={contact?.contact_details}
-            isLoading={isLoading}
-            columns={columns}
-            selectedId={selectedDetailId}
-            onRowSelect={(id) => setUIState({ selectedDetailId: id })}
-        />
+        <>
+            <ContactsDetailFormDialog ref={editDialogRef}/>
+
+            <GenericList<IContactDetail>
+                data={contact?.contact_details}
+                isLoading={isLoading}
+                columns={columns}
+                selectedId={selectedDetailId}
+                onRowSelect={(id) => setUIState({ selectedDetailId: id })}
+                onRowDoubleClick={() => openDialog(editDialogRef)}
+            />
+        </>
     )
 }
 
