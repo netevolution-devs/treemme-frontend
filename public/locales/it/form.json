@@ -69,7 +69,12 @@
     "type": "Tipo contatto",
     "address": {
       "list": "Lista indirizzi",
-      "name": "Nome"
+      "name": "Nome",
+      "cap": "Cap e provincia",
+      "address-1": "Riga 1",
+      "address-2": "Riga 2",
+      "address-3": "Riga 3",
+      "address-4": "Riga 4"
     }
   }
 }

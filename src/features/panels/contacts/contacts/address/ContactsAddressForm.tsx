@@ -9,10 +9,12 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
 import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contacts-address/contactsAddressApi.ts";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
+import {capApi} from "@features/panels/contacts/cap/api/capApi.ts";
+import {Box, Stack} from "@mui/material";
 
-export interface IContactsStoreAddressState extends IPanelUIState {
-    selectedAddressId?: number | null | undefined;
-}
+export type IContactsStoreAddressState = IPanelUIState;
 
 export type IContactAddressForm = Omit<IContactAddress,
     'id' |
@@ -39,6 +41,9 @@ const ContactsAddressForm = () => {
     const {mutateAsync: updateAddress, isPending: isPutting} = usePut();
     const {mutateAsync: deleteAddress, isPending: isDeleting} = useDelete();
 
+    const {data: nations} = nationsApi.useGetList();
+    const {data: caps} = capApi.useGetList();
+
     if (!selectedContactId) {
         return null;
     }
@@ -46,7 +51,6 @@ const ContactsAddressForm = () => {
     const initialUiState: IContactsStoreAddressState = {
         isFormDisabled: true,
         buttonsState: BaseButtonState,
-        selectedAddressId: selectedAddressId,
     };
 
     return (
@@ -55,7 +59,7 @@ const ContactsAddressForm = () => {
             initialState={{uiState: initialUiState}}
         >
             <GenericForm<IContactAddressForm, IContactAddress, IContactsStoreAddressState>
-                selectedId={null}
+                selectedId={selectedAddressId}
                 entity={address}
                 emptyValues={{
                     address: '',
@@ -84,22 +88,48 @@ const ContactsAddressForm = () => {
                 validateBeforeSave={(v) => !!v.address && !!v.nation_id && !!v.town_id}
                 renderFields={() => (
                     <>
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address"
-                            label={t("contacts.address.address-1")}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_2"
-                            label={t("contacts.address.address-2")}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_3"
-                            label={t("contacts.address.address-3")}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_4"
-                            label={t("contacts.address.address-4")}
-                        />
+                        <Stack gap={1} sx={{mb: 2}}>
+                            <TextFieldControlled<IContactAddressForm>
+                                name="address"
+                                label={t("contacts.address.address-1")}
+                                showHelperRow={false}
+                            />
+                            <TextFieldControlled<IContactAddressForm>
+                                name="address_2"
+                                label={t("contacts.address.address-2")}
+                                showHelperRow={false}
+                            />
+                            <TextFieldControlled<IContactAddressForm>
+                                name="address_3"
+                                label={t("contacts.address.address-3")}
+                                showHelperRow={false}
+                            />
+                            <TextFieldControlled<IContactAddressForm>
+                                name="address_4"
+                                label={t("contacts.address.address-4")}
+                                showHelperRow={false}
+                            />
+                        </Stack>
+                        <Box sx={{display: 'flex', gap: 1}}>
+                            <SelectFieldControlled<IContactAddressForm>
+                                name={"town_id"}
+                                label={t("contacts.address.cap")}
+                                options={caps?.map((x) => ({
+                                    value: x.id,
+                                    label: `${x.cap} - ${x.name} - ${x.province.name}`
+                                })) || []}
+                                minWidth={400}
+                            />
+                            <SelectFieldControlled<IContactAddressForm>
+                                name={"nation_id"}
+                                label={t("nations.name")}
+                                options={nations?.map((x) => ({
+                                    value: x.id,
+                                    label: x.name
+                                })) || []}
+                                minWidth={200}
+                            />
+                        </Box>
                     </>
                 )}
             />
