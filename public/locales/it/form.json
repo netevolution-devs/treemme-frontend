@@ -75,6 +75,9 @@
       "address-2": "Riga 2",
       "address-3": "Riga 3",
       "address-4": "Riga 4"
+    },
+    "details": {
+      "list": "Lista recapiti"
     }
   }
 }

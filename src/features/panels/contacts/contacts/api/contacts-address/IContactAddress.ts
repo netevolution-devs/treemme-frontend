@@ -3,7 +3,7 @@ import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
 
 export interface IContactAddress {
     id: number;
-    address_note: string;
+    address_name: string;
     nation: INation;
     town: ICap;
     address: string;

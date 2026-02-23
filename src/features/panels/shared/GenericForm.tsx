@@ -96,10 +96,16 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
 
     const onConfirmSave = async () => {
         const data = methods.getValues();
+
+        const cleanData = Object.fromEntries(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            Object.entries(data).filter(([_, value]) => value !== null && value !== undefined)
+        ) as TForm;
+
         if (selectedId) {
-            await update(selectedId, data);
+            await update(selectedId, cleanData);
         } else {
-            await create(data);
+            await create(cleanData);
         }
         onClearSelection();
     };

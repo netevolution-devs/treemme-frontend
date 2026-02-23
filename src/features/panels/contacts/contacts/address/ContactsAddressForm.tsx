@@ -13,6 +13,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
 import {capApi} from "@features/panels/contacts/cap/api/capApi.ts";
 import {Box, Stack} from "@mui/material";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 
 export type IContactsStoreAddressState = IPanelUIState;
 
@@ -33,13 +34,13 @@ const ContactsAddressForm = () => {
     const selectedAddressId = useStore(state => state.uiState.selectedAddressId);
     const setUIState = useStore(state => state.setUIState);
 
-    // const {data: contact} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact} = contactsApi.useGetDetail(selectedContactId);
 
     const {useGetDetail, usePost, usePut, useDelete} = contactsAddressApi;
     const {data: address} = useGetDetail(selectedAddressId);
-    const {mutateAsync: createAddress, isPending: isPosting} = usePost();
-    const {mutateAsync: updateAddress, isPending: isPutting} = usePut();
-    const {mutateAsync: deleteAddress, isPending: isDeleting} = useDelete();
+    const {mutateAsync: createAddress, isPending: isPosting} = usePost({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
+    const {mutateAsync: updateAddress, isPending: isPutting} = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
+    const {mutateAsync: deleteAddress, isPending: isDeleting} = useDelete({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
 
     const {data: nations} = nationsApi.useGetList();
     const {data: caps} = capApi.useGetList();
@@ -66,7 +67,7 @@ const ContactsAddressForm = () => {
                     address_2: '',
                     address_3: '',
                     address_4: '',
-                    address_note: '',
+                    address_name: '',
                     nation_id: 0,
                     town_id: 0
                 }}
@@ -75,7 +76,7 @@ const ContactsAddressForm = () => {
                     address_2: x.address_2,
                     address_3: x.address_3,
                     address_4: x.address_4,
-                    address_note: x.address_note,
+                    address_name: x.address_name,
                     nation_id: x.nation.id,
                     town_id: x.town.id
                 })}
@@ -89,6 +90,10 @@ const ContactsAddressForm = () => {
                 renderFields={() => (
                     <>
                         <Stack gap={1} sx={{mb: 2}}>
+                            <TextFieldControlled<IContactAddressForm>
+                                name="address_name"
+                                label={t("contacts.address.name")}
+                            />
                             <TextFieldControlled<IContactAddressForm>
                                 name="address"
                                 label={t("contacts.address.address-1")}

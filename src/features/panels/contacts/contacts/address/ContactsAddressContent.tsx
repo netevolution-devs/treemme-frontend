@@ -18,7 +18,7 @@ const ContactsAddressContent = () => {
     return (
         <>
             <Typography variant="h6">{t("contacts.address.list")}</Typography>
-            <Box sx={{display: "flex", flexDirection: "row", gap: 2}}>
+            <Box sx={{display: "flex", flexDirection: "row", gap: 2, flex: 1}}>
                 <ContactsAddressList />
                 <ContactsAddressForm />
             </Box>

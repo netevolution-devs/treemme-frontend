@@ -19,7 +19,7 @@ const ContactsAddressList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IContactAddress>[]>(() => [
         {
-            accessorKey: "address_note",
+            accessorKey: "address_name",
             header: t("contacts.address.name")
         }
     ], [t]);

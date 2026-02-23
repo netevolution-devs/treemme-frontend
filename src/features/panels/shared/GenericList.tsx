@@ -67,7 +67,7 @@ const GenericList = <TData extends BaseEntity>({
     });
 
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowY: 'auto'}}>
             <MaterialReactTable table={table} />
         </Box>
     );

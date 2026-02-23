@@ -6,6 +6,10 @@ interface ApiConfig {
     queryKey: string;
 }
 
+export interface ApiOptions {
+    invalidateQueries?: string[];
+}
+
 export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) => {
     const { baseEndpoint, queryKey } = config;
 
@@ -39,7 +43,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
         },
 
         // POST (CREATE)
-        usePost: () => {
+        usePost: (options?: ApiOptions) => {
             const { postEncoded: post } = useApi();
             const queryClient = useQueryClient();
             return useMutation({
@@ -48,12 +52,20 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     const response = await post(baseEndpoint, payload!);
                     return response.data.data;
                 },
-                onSuccess: () => queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] })
+                onSuccess: () => {
+                    // Invalida la lista corrente
+                    queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
+
+                    // Invalida query extra se fornite
+                    options?.invalidateQueries?.forEach(key => {
+                        queryClient.invalidateQueries({ queryKey: [key] });
+                    });
+                }
             });
         },
 
         // PUT (UPDATE)
-        usePut: () => {
+        usePut: (options?: ApiOptions) => {
             const { put } = useApi();
             const queryClient = useQueryClient();
             return useMutation({
@@ -62,15 +74,19 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     const response = await put(`${baseEndpoint}/${id}`, payload);
                     return response.data.data;
                 },
-                onSuccess: () => {
+                onSuccess: (_, variables) => {
                     queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
-                    queryClient.invalidateQueries({ queryKey: [queryKey, 'DETAIL'] });
+                    queryClient.invalidateQueries({ queryKey: [queryKey, 'DETAIL', variables.id] });
+
+                    options?.invalidateQueries?.forEach(key => {
+                        queryClient.invalidateQueries({ queryKey: [key] });
+                    });
                 }
             });
         },
 
         // DELETE
-        useDelete: () => {
+        useDelete: (options?: ApiOptions) => {
             const { DELETE } = useApi();
             const queryClient = useQueryClient();
             return useMutation({
@@ -79,7 +95,13 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     const response = await DELETE(`${baseEndpoint}/${id}`);
                     return response.data;
                 },
-                onSuccess: () => queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] })
+                onSuccess: () => {
+                    queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
+
+                    options?.invalidateQueries?.forEach(key => {
+                        queryClient.invalidateQueries({ queryKey: [key] });
+                    });
+                }
             });
         }
     };
