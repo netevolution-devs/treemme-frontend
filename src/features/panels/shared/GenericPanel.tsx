@@ -11,16 +11,26 @@ interface GenericPanelProps<F, U> {
 }
 
 const GenericPanel = <F, U>({
-                                       kind,
-                                       initialState,
-                                       children
-                                   }: GenericPanelProps<F, U>) => {
+                                kind,
+                                initialState,
+                                children
+                            }: GenericPanelProps<F, U>) => {
     return (
         <PanelProvider<F, U>
             kind={kind}
             initialState={initialState}
         >
-            <Box sx={{ p: 1, display: "flex", flexDirection: "column", gap: 2 }}>
+            <Box sx={{
+                p: 1,
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                overflowY: "auto",
+                height: "100%",
+                minHeight: 0,
+                width: "100%",
+                boxSizing: "border-box"
+            }}>
                 {children}
             </Box>
         </PanelProvider>

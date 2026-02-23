@@ -5,15 +5,30 @@ import {DockviewReact} from "dockview";
 import {StyledDockviewWrapper} from "@themes/dockviewTheme.tsx";
 import {themeLight} from "dockview";
 import {themeDark} from "dockview";
+import {useEffect} from "react";
 
 const PanelContainerPage = () => {
-    const {handleReady} = useDockviewStore(state => state);
+    const {handleReady, api} = useDockviewStore(state => state);
     const materialTheme = useTheme();
 
     const isLightTheme = materialTheme.palette.mode === 'light';
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (api) {
+                api.layout(
+                    window.innerWidth,
+                    window.innerHeight
+                );
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [api]);
+
     return (
-        <Box height="calc(100vh - 48px)">
+        <Box height="calc(100vh - 48px)" width="100%">
             <StyledDockviewWrapper>
                 <DockviewReact
                     theme={isLightTheme
