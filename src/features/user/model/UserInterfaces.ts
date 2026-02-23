@@ -16,7 +16,7 @@ export interface IUser {
 export interface IApiUser {
     id: number;
     email: string;
-    user_roles: IApiUserRole[];
+    roles: IApiUserRole[];
     first_name: string;
     last_name: string;
     created_at: Date;
@@ -30,7 +30,7 @@ export function UserAdapter(apiUser: IApiUser): IUser {
         id: apiUser.id,
         name: `${apiUser.first_name} ${apiUser.last_name}`.trim(),
         email: apiUser.email,
-        roles: UserRoleArrayAdapter(apiUser.user_roles),
+        roles: UserRoleArrayAdapter(apiUser.roles),
         firstName: apiUser.first_name,
         lastName: apiUser.last_name,
         createdAt: apiUser.created_at,
