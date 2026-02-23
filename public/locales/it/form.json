@@ -66,6 +66,10 @@
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",
-    "type": "Tipo contatto"
+    "type": "Tipo contatto",
+    "address": {
+      "list": "Lista indirizzi",
+      "name": "Nome"
+    }
   }
 }

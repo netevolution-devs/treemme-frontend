@@ -6,12 +6,12 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {contactsTitleApi} from "@features/panels/shared/api/contacts-title/contactsTitleApi.ts";
+import {contactsTitleApi} from "@features/panels/contacts/contacts/api/contacts-title/contactsTitleApi.ts";
 import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
-import {contactsTypeApi} from "@features/panels/shared/api/contacts-type/contactsTypeApi.ts";
+import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-type/contactsTypeApi.ts";
 import {Box} from "@mui/material";
 
-export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type'> & {
+export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type' | 'contact_addresses'> & {
     contact_title_id: number;
     contact_type_id: number;
 };
@@ -49,7 +49,7 @@ const ContactsForm = () => {
                 name: x.name,
                 contact_note: x.contact_note,
                 contact_title_id: x.contact_title.id,
-                contact_type_id: Number(x.contact_type.id)
+                contact_type_id: x.contact_type.id
             })}
             create={(payload) => createContact(payload)}
             update={(id, payload) => updateContact({ id, payload })}

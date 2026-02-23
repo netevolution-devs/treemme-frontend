@@ -41,15 +41,6 @@ const RadioFieldControlled = <TFieldValues extends FieldValues>({
             render={({ field: { onChange, value, onBlur, ref }, fieldState: { error } }) => {
                 const currentValue = (value === undefined || value === null) ? "" : value;
 
-                console.log("RadioField debug:", {
-                    name,
-                    rawValue: value,
-                    typeofValue: typeof value,
-                    currentValue: (value === undefined || value === null) ? "" : value,
-                    options,
-                    matchingOption: options.find(opt => String(opt.value) === String(value))
-                });
-
                 return (
                     <FormControl error={!!error} component="fieldset" disabled={disabled} fullWidth>
                         {label && (
