@@ -15,13 +15,9 @@ const ContactsAddressContent = () => {
     }
 
     return (
-        <Box>
+        <Box sx={{width: '100%'}}>
             <Typography variant="h6">{t("contacts.address.list")}</Typography>
-            <Box sx={{display: "flex", flexDirection: "row", gap: 2}}>
-                <Box>
-                    <ContactsAddressList />
-                </Box>
-            </Box>
+            <ContactsAddressList />
         </Box>
     )
 }

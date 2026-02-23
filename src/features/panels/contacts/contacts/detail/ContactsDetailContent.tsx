@@ -18,8 +18,7 @@ const ContactsDetailContent = () => {
     return (
         <Box sx={{width: '100%'}}>
             <Typography variant="h6">{t("contacts.details.list")}</Typography>
-                <ContactsDetailList />
-                {/*<ContactsDetailForm />*/}
+            <ContactsDetailList />
         </Box>
     )
 }

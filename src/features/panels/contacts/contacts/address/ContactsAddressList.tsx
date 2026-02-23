@@ -11,6 +11,7 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import {Box, Typography} from "@mui/material";
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -30,14 +31,14 @@ const ContactsAddressList = () => {
         {
             accessorKey: "address",
             header: t("contacts.address.address"),
-            // Cell: ({row}) => (
-            //     <Box>
-            //         <Typography>{row.original.address || ""}</Typography>
-            //         <Typography>{row.original.address_2 || ""}</Typography>
-            //         <Typography>{row.original.address_3 || ""}</Typography>
-            //         <Typography>{row.original.address_4 || ""}</Typography>
-            //     </Box>
-            // )
+            Cell: ({row}) => (
+                <Box>
+                    <Typography>{row.original.address || ""}</Typography>
+                    <Typography>{row.original.address_2 || ""}</Typography>
+                    <Typography>{row.original.address_3 || ""}</Typography>
+                    <Typography>{row.original.address_4 || ""}</Typography>
+                </Box>
+            )
         },
         {
             accessorKey: "town.cap",

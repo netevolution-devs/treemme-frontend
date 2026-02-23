@@ -22,11 +22,9 @@ const ContactsPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <Stack gap={2}>
-                <Box>
-                    <ContactsList />
-                    <ContactsForm />
-                </Box>
-                <Box sx={{display: 'flex', flexDirection: "row"}}>
+                <ContactsList />
+                <ContactsForm />
+                <Box sx={{display: 'flex', flexDirection: {xl: 'row', lg: 'column'}, gap: 0.7, width: '100%'}}>
                     <ContactsAddressContent />
                     <ContactsDetailContent />
                 </Box>
