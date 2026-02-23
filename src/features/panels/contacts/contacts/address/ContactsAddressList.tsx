@@ -26,7 +26,31 @@ const ContactsAddressList = () => {
         {
             accessorKey: "address_name",
             header: t("contacts.address.name")
-        }
+        },
+        {
+            accessorKey: "address",
+            header: t("contacts.address.address"),
+            // Cell: ({row}) => (
+            //     <Box>
+            //         <Typography>{row.original.address || ""}</Typography>
+            //         <Typography>{row.original.address_2 || ""}</Typography>
+            //         <Typography>{row.original.address_3 || ""}</Typography>
+            //         <Typography>{row.original.address_4 || ""}</Typography>
+            //     </Box>
+            // )
+        },
+        {
+            accessorKey: "town.cap",
+            header: t("cap.code")
+        },
+        {
+            accessorKey: "town.name",
+            header: t("cap.name")
+        },
+        {
+            accessorKey: "nation.name",
+            header: t("nations.name")
+        },
     ], [t]);
 
     const editDialogRef = useRef<IDialogActions | null>(null);

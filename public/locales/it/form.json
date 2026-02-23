@@ -70,6 +70,7 @@
     "address": {
       "list": "Lista indirizzi",
       "name": "Nome",
+      "address": "Indirizzo",
       "cap": "Cap e provincia",
       "address-1": "Riga 1",
       "address-2": "Riga 2",
