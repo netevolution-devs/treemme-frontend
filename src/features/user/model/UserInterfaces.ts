@@ -16,7 +16,8 @@ export interface IUser {
 export interface IApiUser {
     id: number;
     email: string;
-    roles: IApiUserRole[];
+    //roles: IApiUserRole[]; TODO temp: for now roles from api are just string
+    roles: string[];
     first_name: string;
     last_name: string;
     created_at: Date;

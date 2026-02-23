@@ -1,7 +1,8 @@
 export const EnumRoles = {
     Admin: 'Admin',
     Staff: 'Staff',
-    User: 'User',
+    //TODO temp: should be real name
+    User: 'ROLE_USER',
 } as const
 
 export type IRoles = typeof EnumRoles[keyof typeof EnumRoles];
@@ -44,11 +45,13 @@ export interface IApiWorkArea {
     active: boolean;
 }
 
-export function UserRoleAdapter(apiUserRole: IApiUserRole): IUserRole {
+export function UserRoleAdapter(apiUserRole: string): IUserRole {
+
+    const tempId = 0
     return {
-        associationId: apiUserRole.id,
-        role: RoleAdapter(apiUserRole.role),
-        workArea: WorkAreaAdapter(apiUserRole.work_area)
+        associationId: tempId,
+        role: {id:tempId, name:apiUserRole, description:apiUserRole},
+        workArea: {id:tempId, name:apiUserRole, description:apiUserRole, active:true}
     }
 }
 
@@ -69,7 +72,7 @@ export function WorkAreaAdapter(apiWorkArea: IApiWorkArea): IWorkArea {
     }
 }
 
-export function UserRoleArrayAdapter(apiUserRoles: IApiUserRole[]): IUserRole[] {
+export function UserRoleArrayAdapter(apiUserRoles: string[]): IUserRole[] {
     return apiUserRoles
         .map(UserRoleAdapter)
         .sort((a, b) => a.role.id - b.role.id);
