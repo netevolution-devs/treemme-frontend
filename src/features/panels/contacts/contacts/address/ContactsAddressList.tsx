@@ -4,8 +4,13 @@ import {useTranslation} from "react-i18next";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
+import ContactsAddressFormDialog from "@features/panels/contacts/contacts/address/ContactsAddressFormDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import {NewButton} from "@features/panels/shared/CustomButton.tsx";
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -24,18 +29,29 @@ const ContactsAddressList = () => {
         }
     ], [t]);
 
-    if (!selectedContactId) {
-        return null;
+    const editDialogRef = useRef<IDialogActions | null>(null);
+
+    const handleOpenCreateDialog = () => {
+        setUIState({ selectedAddressId: null });
+        openDialog(editDialogRef);
     }
 
     return (
-        <GenericList<IContactAddress>
-            data={contact?.contact_addresses || []}
-            isLoading={isLoading}
-            columns={columns}
-            selectedId={selectedAddressId}
-            onRowSelect={(id) => setUIState({ selectedAddressId: id })}
-        />
+        <>
+            <ContactsAddressFormDialog ref={editDialogRef} />
+
+            <GenericList<IContactAddress>
+                data={contact?.contact_addresses || []}
+                isLoading={isLoading}
+                columns={columns}
+                selectedId={selectedAddressId}
+                onRowSelect={(id) => setUIState({ selectedAddressId: id })}
+                onRowDoubleClick={() => openDialog(editDialogRef)}
+                muiToolbarComponent={<ListToolbar buttons={[
+                    <NewButton onClick={() => handleOpenCreateDialog()} />
+                ]} />}
+            />
+        </>
     )
 }
 

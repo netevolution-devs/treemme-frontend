@@ -6,7 +6,7 @@ import {useMemo, useRef} from "react";
 import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList.tsx";
-import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailForm.tsx";
+import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailFormDialog.tsx";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
@@ -43,13 +43,9 @@ const ContactsDetailList = () => {
 
     const editDialogRef = useRef<IDialogActions | null>(null);
 
-    const handleOpenDialog = () => {
+    const handleOpenCreateDialog = () => {
         setUIState({ selectedDetailId: null });
         openDialog(editDialogRef);
-    }
-
-    if (!selectedContactId) {
-        return null;
     }
 
     return (
@@ -64,7 +60,7 @@ const ContactsDetailList = () => {
                 onRowSelect={(id) => setUIState({ selectedDetailId: id })}
                 onRowDoubleClick={() => openDialog(editDialogRef)}
                 muiToolbarComponent={<ListToolbar buttons={[
-                    <NewButton onClick={() => handleOpenDialog()} />
+                    <NewButton onClick={() => handleOpenCreateDialog()} />
                 ]} />}
             />
         </>

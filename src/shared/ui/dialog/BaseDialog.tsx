@@ -28,7 +28,7 @@ function BaseDialogWrapper({
                                fullscreen = false,
                                onClose,
                                minHeight,
-                               minWidth = 600,
+                               minWidth = 800,
                            }: BaseDialogProps,
                            ref: ForwardedRef<IDialogActions>
 ) {

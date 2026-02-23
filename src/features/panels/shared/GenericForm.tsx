@@ -72,10 +72,12 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
     }
 
     const handleNew = () => {
+        if (dialogMode) return;
         setFormState('new');
     };
 
     const handleEdit = () => {
+        if (dialogMode) return;
         setFormState('edit');
     };
 
@@ -94,12 +96,14 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
     const handleCancel = () => {
         if (selectedId && !isFormDisabled && entity) {
             methods.reset(mapEntityToForm(entity));
+            if (dialogMode) return;
             setFormState('selected');
         } else {
             onClearSelection();
             methods.reset(emptyValues);
-            setFormState('cancel');
             handleCloseDialog();
+            if (dialogMode) return;
+            setFormState('cancel');
         }
     };
 
@@ -128,9 +132,11 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
     useEffect(() => {
         if (selectedId && entity) {
             methods.reset(mapEntityToForm(entity));
+            if (dialogMode) return;
             setFormState('selected');
         } else if (selectedId === null) {
             methods.reset(emptyValues);
+            if (dialogMode) return;
             setFormState('cancel');
         }
     }, [selectedId, entity]);

@@ -3,7 +3,7 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {Box, Typography} from "@mui/material";
 import ContactsDetailList from "@features/panels/contacts/contacts/detail/ContactsDetailList.tsx";
-// import ContactsDetailForm from "@features/panels/contacts/contacts/detail/ContactsDetailForm.tsx";
+// import ContactsDetailForm from "@features/panels/contacts/contacts/detail/ContactsDetailFormDialog.tsx";
 
 const ContactsDetailContent = () => {
     const {t} = useTranslation(["form"]);

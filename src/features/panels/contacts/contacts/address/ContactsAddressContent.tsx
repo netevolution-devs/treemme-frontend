@@ -1,7 +1,6 @@
 import {Box, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import ContactsAddressList from "@features/panels/contacts/contacts/address/ContactsAddressList.tsx";
-import ContactsAddressForm from "@features/panels/contacts/contacts/address/ContactsAddressForm.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 
@@ -22,7 +21,6 @@ const ContactsAddressContent = () => {
                 <Box>
                     <ContactsAddressList />
                 </Box>
-                <ContactsAddressForm />
             </Box>
         </Box>
     )
