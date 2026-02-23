@@ -77,7 +77,13 @@
       "address-4": "Riga 4"
     },
     "details": {
-      "list": "Lista recapiti"
+      "list": "Lista recapiti",
+      "types": {
+        "code": "Sigla",
+        "name": "Nome"
+      },
+      "value": "Valore",
+      "note": "Note"
     }
   }
 }

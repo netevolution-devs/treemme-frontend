@@ -5,7 +5,7 @@ import ContactsList from "@features/panels/contacts/contacts/ContactsList.tsx";
 import ContactsForm from "@features/panels/contacts/contacts/ContactsForm.tsx";
 import ContactsAddressContent from "@features/panels/contacts/contacts/address/ContactsAddressContent.tsx";
 import ContactsDetailContent from "@features/panels/contacts/contacts/detail/ContactsDetailContent.tsx";
-import {Stack} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 
 export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
@@ -22,10 +22,14 @@ const ContactsPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <Stack gap={2}>
-                <ContactsList />
-                <ContactsForm />
-                <ContactsAddressContent />
-                <ContactsDetailContent />
+                <Box>
+                    <ContactsList />
+                    <ContactsForm />
+                </Box>
+                <Box sx={{display: 'flex', flexDirection: "row"}}>
+                    <ContactsAddressContent />
+                    <ContactsDetailContent />
+                </Box>
             </Stack>
         </GenericPanel>
     )
