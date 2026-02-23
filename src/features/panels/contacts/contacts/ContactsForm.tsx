@@ -9,6 +9,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import {contactsTitleApi} from "@features/panels/shared/api/contacts-title/contactsTitleApi.ts";
 import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
 import {contactsTypeApi} from "@features/panels/shared/api/contacts-type/contactsTypeApi.ts";
+import {Box} from "@mui/material";
 
 export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type'> & {
     contact_title_id: number;
@@ -68,18 +69,20 @@ const ContactsForm = () => {
                         })) || []}
                         showHelperRow={false}
                     />
-                    <SelectFieldControlled<IContactForm>
-                        name="contact_title_id"
-                        label={t("contacts.title")}
-                        options={contactTitles?.map((x) => ({
-                            value: x.id,
-                            label: x.name
-                        })) || []}
-                    />
-                    <TextFieldControlled<IContactForm>
-                        name="name"
-                        label={t("contacts.name")}
-                    />
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                        <SelectFieldControlled<IContactForm>
+                            name="contact_title_id"
+                            label={t("contacts.title")}
+                            options={contactTitles?.map((x) => ({
+                                value: x.id,
+                                label: x.name
+                            })) || []}
+                        />
+                        <TextFieldControlled<IContactForm>
+                            name="name"
+                            label={t("contacts.name")}
+                        />
+                    </Box>
                     <TextFieldControlled<IContactForm>
                         name="contact_note"
                         label={t("contacts.notes")}
