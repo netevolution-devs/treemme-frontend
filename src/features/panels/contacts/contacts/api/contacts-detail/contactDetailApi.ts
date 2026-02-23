@@ -3,6 +3,7 @@ import type {IContactDetail} from "@features/panels/contacts/contacts/api/contac
 
 export interface IContactDetailPayload extends Omit<IContactDetail, 'id' | 'detail_type'>{
     detail_type_id: number,
+    contact_id: number,
 }
 
 export const contactsDetailApi = createPanelApi<IContactDetail, IContactDetailPayload>({

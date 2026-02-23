@@ -1,4 +1,4 @@
-import React from "react";
+import React, {type ReactNode} from "react";
 import {
     MaterialReactTable,
     type MRT_ColumnDef,
@@ -21,6 +21,7 @@ interface GenericListProps<TData extends BaseEntity> {
     onRowDoubleClick?: (id: TData["id"]) => void;
     additionalOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
+    muiToolbarComponent?: ReactNode;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -31,7 +32,8 @@ const GenericList = <TData extends BaseEntity>({
                                                    onRowSelect,
                                                    onRowDoubleClick,
                                                    additionalOptions,
-                                                   maxHeight = '400px'
+                                                   maxHeight = '400px',
+                                                   muiToolbarComponent
                                                }: GenericListProps<TData>) => {
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
@@ -67,8 +69,9 @@ const GenericList = <TData extends BaseEntity>({
             ...additionalOptions?.state
         },
         enableRowVirtualization: true,
-        enableTopToolbar: false,
+        enableTopToolbar: !!muiToolbarComponent,
         enableBottomToolbar: false,
+        renderTopToolbar: () => muiToolbarComponent,
     });
 
     return (

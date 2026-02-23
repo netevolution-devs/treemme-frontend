@@ -9,6 +9,8 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailForm.tsx";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import {NewButton} from "@features/panels/shared/CustomButton.tsx";
 
 const ContactsDetailList = () => {
     const {t} = useTranslation(["form"]);
@@ -41,6 +43,11 @@ const ContactsDetailList = () => {
 
     const editDialogRef = useRef<IDialogActions | null>(null);
 
+    const handleOpenDialog = () => {
+        setUIState({ selectedDetailId: null });
+        openDialog(editDialogRef);
+    }
+
     if (!selectedContactId) {
         return null;
     }
@@ -56,6 +63,9 @@ const ContactsDetailList = () => {
                 selectedId={selectedDetailId}
                 onRowSelect={(id) => setUIState({ selectedDetailId: id })}
                 onRowDoubleClick={() => openDialog(editDialogRef)}
+                muiToolbarComponent={<ListToolbar buttons={[
+                    <NewButton onClick={() => handleOpenDialog()} />
+                ]} />}
             />
         </>
     )

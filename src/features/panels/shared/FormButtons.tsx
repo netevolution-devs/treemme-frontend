@@ -1,34 +1,10 @@
-import {Box, Button} from "@mui/material";
-import {useTranslation} from "react-i18next";
+import {Box} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-
-interface CustomButtonProps {
-    label: string;
-    onClick: () => void;
-    color: "primary" | "success" | "error" | "warning" | "inherit";
-    isSubmit?: boolean;
-    isEnable?: boolean;
-    icon: React.ReactNode;
-}
-
-interface FormButtonsProps {
-    onNew: () => void;
-    onEdit: () => void;
-    onDelete: () => void;
-    onCancel: () => void;
-    onSave?: () => void;
-    buttonState: IButtonState;
-    hideNew?: boolean;
-    hideEdit?: boolean;
-    hideDelete?: boolean;
-    hideCancel?: boolean;
-    hideSave?: boolean;
-    overrideButtonState?: boolean
-}
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
 
 export interface IButtonState {
     new: boolean;
@@ -46,29 +22,20 @@ export const BaseButtonState: IButtonState = {
     cancel: false
 };
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon}: CustomButtonProps) => {
-    const {t} = useTranslation(["common"]);
-
-    return (
-        <Button
-            variant="outlined"
-            onClick={onClick}
-            color={color}
-            size="small"
-            startIcon={icon}
-            sx={{
-                minWidth: 100,
-                fontWeight: 'bold',
-                textTransform: 'none'
-            }}
-            type={isSubmit ? "submit" : "button"}
-            disabled={!isEnable}
-        >
-            {t(label)}
-        </Button>
-    );
-};
-
+interface FormButtonsProps {
+    onNew: () => void;
+    onEdit: () => void;
+    onDelete: () => void;
+    onCancel: () => void;
+    onSave?: () => void;
+    buttonState: IButtonState;
+    hideNew?: boolean;
+    hideEdit?: boolean;
+    hideDelete?: boolean;
+    hideCancel?: boolean;
+    hideSave?: boolean;
+    overrideButtonState?: boolean
+}
 
 const FormButtons = ({
                          onNew,

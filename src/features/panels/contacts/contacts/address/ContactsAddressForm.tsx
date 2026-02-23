@@ -45,10 +45,6 @@ const ContactsAddressForm = () => {
     const {data: nations} = nationsApi.useGetList();
     const {data: caps} = capApi.useGetList();
 
-    if (!selectedContactId) {
-        return null;
-    }
-
     const initialUiState: IContactsStoreAddressState = {
         isFormDisabled: true,
         buttonsState: BaseButtonState,
@@ -80,8 +76,8 @@ const ContactsAddressForm = () => {
                     nation_id: x.nation.id,
                     town_id: x.town.id
                 })}
-                create={(payload) => createAddress({...payload, contact_id: selectedContactId})}
-                update={(id, payload) => updateAddress({id, payload: {...payload, contact_id: selectedContactId}})}
+                create={(payload) => createAddress({...payload, contact_id: selectedContactId as number})}
+                update={(id, payload) => updateAddress({id, payload: {...payload, contact_id: selectedContactId as number}})}
                 remove={(id) => deleteAddress(id)}
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}

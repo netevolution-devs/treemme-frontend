@@ -62,8 +62,8 @@ const ContactsDetailFormDialog = forwardRef<IDialogActions, Props>((_props, ref)
                     note: x.note,
                     detail_type_id: x.detail_type.id,
                 })}
-                create={(payload) => createDetail(payload)}
-                update={(id, payload) => updateDetail({id, payload})}
+                create={(payload) => createDetail({...payload, contact_id: selectedContactId as number})}
+                update={(id, payload) => updateDetail({id, payload: {...payload, contact_id: selectedContactId as number}})}
                 remove={(id) => deleteDetail(id)}
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
