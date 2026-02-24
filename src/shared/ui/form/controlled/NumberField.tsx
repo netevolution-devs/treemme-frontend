@@ -33,6 +33,7 @@ const NumberField = <TFieldValues extends FieldValues>({
                 <TextField
                     label={formattedLabel}
                     {...field}
+                    size={"small"}
                     onChange={(e) => {
                         const value = e.target.value.replace(/\D/g, '');
                         field.onChange(value);

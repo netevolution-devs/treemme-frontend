@@ -90,5 +90,15 @@
       "name": "Nome contatto",
       "detail": "Recapito"
     }
+  },
+  "leathers": {
+    "weight": {
+      "name": "Scacco peso",
+      "kg-weight": "Media KG",
+      "sqft-leather-expected": "Resa PQ/PL",
+      "kg-leather-expected": "Resa KG/PL",
+      "cost-stripped-crust-various": "Prz V crosta",
+      "cost-stripped-crust-manual": "Prz V costra M"
+    }
   }
 }
