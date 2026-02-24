@@ -30,10 +30,12 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
         enableFullScreenToggle: false,
         enableDensityToggle: false,
         enableHiding: false,
+        enablePagination: overrideProps?.enablePagination ?? false,
         enableRowActions: true,
         enableToolbarInternalActions: false,
         enableFilterMatchHighlighting: false,
         columnFilterDisplayMode: 'popover',
+        enableStickyHeader: true,
 
         positionGlobalFilter: "none",
         globalFilterFn: 'contains',
@@ -45,11 +47,12 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
 
         positionPagination: "bottom",
         initialState: {
-            density: 'comfortable',
+            density: 'compact',
             pagination: {
                 pageSize: 10,
                 pageIndex: 0,
             },
+            ...overrideProps?.initialState
         },
 
         displayColumnDefOptions: {

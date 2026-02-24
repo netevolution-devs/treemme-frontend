@@ -4,6 +4,8 @@ export const getMrtContainerProps = (theme: Theme, overrideProps?: TableContaine
     const baseSx: SxProps<Theme> = {
         borderRadius: 1,
         overflowX: 'auto',
+        overflowY: 'auto',
+        minHeight: 320,
         borderBottom: `1px solid ${theme.palette.tableColors.border}`,
         scrollbarWidth: 'thin',
         scrollbarColor: `${theme.palette.primary.main} ${theme.palette.background.default}`,

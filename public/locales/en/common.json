@@ -14,21 +14,6 @@
     "staff": "Staff",
     "user": "User"
   },
-  "menu": {
-    "group": {
-      "_default": "Main Menu",
-      "overview": "Overview",
-      "registry": "Registry",
-      "preferences": "Preferences",
-      "audit": "Audit",
-      "backoffice": "Backoffice",
-      "companies": "Companies"
-    },
-    "dashboard": "Dashboard",
-    "users": "Users",
-    "subcontractors": "Subcontractors",
-    "settings": "Settings"
-  },
   "form": {
     "field": {
       "email": "Email",

@@ -1,13 +1,13 @@
 import {Dashboard, Settings} from "@mui/icons-material";
 import type {INavBarItem} from "../../model/NavBarInterfaces.ts";
-import {EnumRoles, type IUserRole} from "@features/user/model/RoleInterfaces.ts";
+import {EnumRoles, type IAccessControl} from "@features/user/model/RoleInterfaces.ts";
 import {useMemo} from "react";
 import {useAuth} from "@features/auth/model/AuthContext.tsx";
 import {checkPermission} from "@helpers/permissionDetection.ts";
 
-function filterNavItemsByRole(items: INavBarItem[], userRoles: IUserRole[]): INavBarItem[] {
+function filterNavItemsByRole(items: INavBarItem[], accessControl: IAccessControl[]): INavBarItem[] {
     return items
-        .filter(item => checkPermission(userRoles, item.permissionGuardProps))
+        .filter(item => checkPermission(accessControl, item.permissionGuardProps))
         .map(item => {
             if (!item.subMenus) {
                 return item;
@@ -15,7 +15,7 @@ function filterNavItemsByRole(items: INavBarItem[], userRoles: IUserRole[]): INa
 
             return {
                 ...item,
-                subMenus: filterNavItemsByRole(item.subMenus, userRoles)
+                subMenus: filterNavItemsByRole(item.subMenus, accessControl)
             };
         });
 }
@@ -51,6 +51,6 @@ export function useBackofficeNavBarItemList(): INavBarItem[] {
 
     return useMemo(() => {
         if (!user) return [];
-        return filterNavItemsByRole(allNavItems, user.roles);
+        return filterNavItemsByRole(allNavItems, user.accessControl);
     }, [allNavItems, user]);
 }

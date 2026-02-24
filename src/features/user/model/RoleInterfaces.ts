@@ -1,10 +1,29 @@
 export const EnumRoles = {
     Admin: 'Admin',
     Staff: 'Staff',
-    User: 'User',
 } as const
 
 export type IRoles = typeof EnumRoles[keyof typeof EnumRoles];
+
+export interface IAccessControl {
+    group: string;
+    role: IRoles;
+    workArea: string;
+    canGet: boolean;
+    canPost: boolean;
+    canPut: boolean;
+    canDelete: boolean;
+}
+
+export interface IApiAccessControl {
+    group: string;
+    role: IRoles;
+    work_area: string;
+    can_get: boolean;
+    can_post: boolean;
+    can_put: boolean;
+    can_delete: boolean;
+}
 
 export interface IUserRole {
     associationId: number;
@@ -44,11 +63,30 @@ export interface IApiWorkArea {
     active: boolean;
 }
 
-export function UserRoleAdapter(apiUserRole: IApiUserRole): IUserRole {
+export function AccessControlAdapter(apiAccessControl: IApiAccessControl): IAccessControl {
     return {
-        associationId: apiUserRole.id,
-        role: RoleAdapter(apiUserRole.role),
-        workArea: WorkAreaAdapter(apiUserRole.work_area)
+        group: apiAccessControl.group,
+        role: apiAccessControl.role,
+        workArea: apiAccessControl.work_area,
+        canGet: apiAccessControl.can_get,
+        canPost: apiAccessControl.can_post,
+        canPut: apiAccessControl.can_put,
+        canDelete: apiAccessControl.can_delete,
+    }
+}
+
+export function AccessControlArrayAdapter(apiAccessControl: IApiAccessControl[]): IAccessControl[] {
+    return apiAccessControl.map(AccessControlAdapter);
+}
+
+export function UserRoleAdapter(apiUserRole: string): IUserRole {
+
+    const tempId = 0
+    //TODO using temp data
+    return {
+        associationId: tempId,
+        role: {id:tempId, name:apiUserRole, description:apiUserRole},
+        workArea: {id:tempId, name:apiUserRole, description:apiUserRole, active:true}
     }
 }
 
@@ -69,7 +107,7 @@ export function WorkAreaAdapter(apiWorkArea: IApiWorkArea): IWorkArea {
     }
 }
 
-export function UserRoleArrayAdapter(apiUserRoles: IApiUserRole[]): IUserRole[] {
+export function UserRoleArrayAdapter(apiUserRoles: string[]): IUserRole[] {
     return apiUserRoles
         .map(UserRoleAdapter)
         .sort((a, b) => a.role.id - b.role.id);

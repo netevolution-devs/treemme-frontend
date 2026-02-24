@@ -14,6 +14,8 @@ export const getMrtTableBodyCellProps = <TData extends MRT_RowData>(
             borderRight: columnIndex === columnsAmount ? "" : `1px solid ${theme.palette.tableColors.border}`,
             border: 0,
             paddingLeft: 1.5,
+            paddingTop: 0.5,
+            paddingBottom: 0.5,
         }
     };
 }

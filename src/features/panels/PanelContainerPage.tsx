@@ -1,0 +1,47 @@
+import {Box, useTheme} from "@mui/material";
+import {PANEL_REGISTRY} from "@features/panels/PanelRegistry.tsx";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {DockviewReact} from "dockview";
+import {StyledDockviewWrapper} from "@themes/dockviewTheme.tsx";
+import {themeLight} from "dockview";
+import {themeDark} from "dockview";
+import {useEffect} from "react";
+
+const PanelContainerPage = () => {
+    const {handleReady, api} = useDockviewStore(state => state);
+    const materialTheme = useTheme();
+
+    const isLightTheme = materialTheme.palette.mode === 'light';
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (api) {
+                api.layout(
+                    window.innerWidth,
+                    window.innerHeight
+                );
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [api]);
+
+    return (
+        <Box height="calc(100vh - 48px)" width="100%">
+            <StyledDockviewWrapper>
+                <DockviewReact
+                    theme={isLightTheme
+                        ? themeLight
+                        : themeDark
+                    }
+                    className="dockview-theme-mui"
+                    components={PANEL_REGISTRY}
+                    onReady={handleReady}
+                />
+            </StyledDockviewWrapper>
+        </Box>
+    )
+}
+
+export default PanelContainerPage;

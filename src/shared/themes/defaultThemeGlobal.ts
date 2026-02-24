@@ -5,7 +5,7 @@ const getPrimaryColors = () => {
     return {
         main: '#3c8fd3',
         dark: '#41689b',
-        light: '#a8dbea',
+        light: '#5590c3',
     };
 };
 
@@ -212,6 +212,30 @@ const lightTheme: Theme = createTheme({
     palette: {
         mode: 'light',
         primary: getPrimaryColors(),
+        success: {
+            main: '#2e7d32',
+            light: '#4caf50',
+            dark: '#1b5e20',
+            contrastText: '#ffffff',
+        },
+        error: {
+            main: '#d32f2f',
+            light: '#ef5350',
+            dark: '#c62828',
+            contrastText: '#ffffff',
+        },
+        warning: {
+            main: '#ed6c02',
+            light: '#ff9800',
+            dark: '#e65100',
+            contrastText: '#ffffff',
+        },
+        info: {
+            main: '#0288d1',
+            light: '#03a9f4',
+            dark: '#01579b',
+            contrastText: '#ffffff',
+        },
         background: {
             default: '#f7f8fa',
             paper: '#ffffff',
@@ -263,7 +287,6 @@ const lightTheme: Theme = createTheme({
                 {
                     props: {variant: "outlined"},
                     style: {
-                        color: "inherit",
                         borderColor: "inherit",
                     }
                 }

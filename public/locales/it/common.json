@@ -14,20 +14,6 @@
     "staff": "Staff",
     "user": "User"
   },
-  "menu": {
-    "group": {
-      "_default": "Menu principale",
-      "overview": "Panoramica",
-      "registry": "Anagrafica",
-      "preferences": "Preferenze",
-      "backoffice": "Backoffice",
-      "companies": "Aziende"
-    },
-    "dashboard": "Dashboard",
-    "users": "Utenti",
-    "subcontractors": "Terzisti",
-    "settings": "Impostazioni"
-  },
   "form": {
     "field": {
       "email": "Email",
@@ -78,6 +64,7 @@
     }
   },
   "button": {
+    "new": "Nuovo",
     "next": "Avanti",
     "back": "Indietro",
     "close": "Chiudi",
@@ -148,5 +135,17 @@
     "calendar-plan": "Calendario plan",
     "list-plan": "Elenco plan"
   },
-  "software-version": "Versione software: {{version}}"
+  "software-version": "Versione software: {{version}}",
+  "dialog": {
+    "delete": {
+      "title": "Conferma eliminazione",
+      "description": "Sei sicuro di voler eliminare questo elemento?",
+      "confirm-button": "Elimina"
+    },
+    "save": {
+      "title": "Conferma salvataggio",
+      "description": "Sei sicuro di voler salvare questo elemento?",
+      "confirm-button": "Salva"
+    }
+  }
 }

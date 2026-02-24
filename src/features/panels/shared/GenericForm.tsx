@@ -1,0 +1,157 @@
+import {Box, Stack} from "@mui/material";
+import FormButtons from "@features/panels/shared/FormButtons.tsx";
+import {FormProvider, useForm, type DefaultValues, type SubmitHandler} from "react-hook-form";
+import React, {useEffect, useRef} from "react";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanelFormButtons, type IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import type {IDialogActions} from "@shared/ui/dialog/IDialogActions.ts";
+import {openDialog} from "@shared/ui/dialog/dialogHelper.ts";
+import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog.tsx";
+import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog.tsx";
+import type {FieldValues} from "react-hook-form";
+
+export interface GenericFormProps<TForm extends FieldValues, TEntity> {
+    selectedId: number | null | undefined;
+    entity?: TEntity | null | undefined;
+    emptyValues: TForm;
+    mapEntityToForm: (entity: TEntity) => TForm;
+
+    create: (payload: TForm) => Promise<unknown> | unknown;
+    update: (id: number, payload: TForm) => Promise<unknown> | unknown;
+    remove: (id: number) => Promise<unknown> | unknown;
+
+    isSaving?: boolean;
+    isDeleting?: boolean;
+
+    onClearSelection: () => void;
+
+    validateBeforeSave?: (values: TForm) => boolean;
+
+    renderFields: () => React.ReactNode;
+}
+
+const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUIState>(
+    {
+        selectedId,
+        entity,
+        emptyValues,
+        mapEntityToForm,
+        create,
+        update,
+        remove,
+        isSaving = false,
+        isDeleting = false,
+        onClearSelection,
+        validateBeforeSave,
+        renderFields,
+    }: GenericFormProps<TForm, TEntity>
+) => {
+    const {useStore} = usePanel<unknown, TUI>();
+    const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
+    const {setFormState} = usePanelFormButtons<unknown, TUI>();
+
+    const deleteRef = useRef<IDialogActions>(null);
+    const saveRef = useRef<IDialogActions>(null);
+
+    const methods = useForm<TForm>({
+        disabled: isFormDisabled,
+        mode: "onSubmit",
+        defaultValues: emptyValues as DefaultValues<TForm>,
+    });
+
+    const handleNew = () => {
+        setFormState('new');
+    };
+
+    const handleEdit = () => {
+        setFormState('edit');
+    };
+
+    const handleDelete = () => {
+        openDialog(deleteRef);
+    };
+
+    const onConfirmDelete = async () => {
+        if (selectedId) {
+            await remove(selectedId);
+            onClearSelection();
+        }
+    };
+
+    const handleCancel = () => {
+        if (selectedId && !isFormDisabled && entity) {
+            methods.reset(mapEntityToForm(entity));
+            setFormState('selected');
+        } else {
+            onClearSelection();
+            methods.reset(emptyValues);
+            setFormState('cancel');
+        }
+    };
+
+    const onSubmit = (data: TForm) => {
+        if (validateBeforeSave && !validateBeforeSave(data)) return;
+        openDialog(saveRef);
+    };
+
+    const onConfirmSave = async () => {
+        const data = methods.getValues();
+        if (selectedId) {
+            await update(selectedId, data);
+        } else {
+            await create(data);
+        }
+        onClearSelection();
+    };
+
+    useEffect(() => {
+        if (selectedId && entity) {
+            methods.reset(mapEntityToForm(entity));
+            setFormState('selected');
+        } else if (selectedId === null) {
+            methods.reset(emptyValues);
+            setFormState('cancel');
+        }
+    }, [selectedId, entity]);
+
+    return (
+        <Box>
+            <FormProvider {...methods}>
+                <Stack
+                    component="form"
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        methods.handleSubmit(onSubmit as SubmitHandler<TForm>)(e);
+                    }}
+                    autoComplete="off"
+                >
+                    <FormButtons
+                        onNew={handleNew}
+                        onEdit={handleEdit}
+                        onDelete={handleDelete}
+                        onCancel={handleCancel}
+                        buttonState={buttonsState}
+                    />
+                    <Stack sx={{mt: 3}}>
+                        {renderFields()}
+                    </Stack>
+                </Stack>
+            </FormProvider>
+
+            <DeleteConfirmDialog
+                ref={deleteRef}
+                onConfirm={onConfirmDelete}
+                isPending={isDeleting}
+            />
+
+            <SaveConfirmDialog
+                ref={saveRef}
+                onConfirm={onConfirmSave}
+                isPending={isSaving}
+            />
+        </Box>
+    );
+};
+
+export default GenericForm;

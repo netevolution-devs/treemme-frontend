@@ -14,10 +14,13 @@
     "@tanstack/react-query-devtools": "^5.91.2",
     "axios": "^1.13.2",
     "dayjs": "^1.11.13",
+    "dockview": "^5.0.0",
     "i18next": "^25.8.5",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-backend": "^3.0.2",
+    "immer": "^11.1.4",
     "material-react-table": "^3.2.1",
+    "material-ui-popup-state": "^5.3.6",
     "mui-one-time-password-input": "^5.0.0",
     "notistack": "^3.0.2",
     "qrcode.react": "^4.2.0",
@@ -25,11 +28,11 @@
     "react-dom": "^19.2.3",
     "react-hook-form": "^7.71.1",
     "react-i18next": "^15.4.0",
-    "react-router": "^7.12.0"
+    "react-router": "^7.12.0",
+    "zustand": "^5.0.11"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
-
     "dev": "vite",
     "build:production": "tsc -b --noEmit && vite build --mode production",
     "build:staging": "tsc -b --noEmit && vite build --mode staging",
@@ -37,11 +40,9 @@
     "build:local:force": "vite build --mode development",
     "preview": "vite preview",
     "dev:default": "vite --open /app-default.html",
-
     "build:default:production": "set BUILD_TARGET=default&& npm run typecheck && vite build --mode production",
     "build:default:staging": "set BUILD_TARGET=default&& npm run typecheck && vite build --mode staging",
     "build:default:local": "set BUILD_TARGET=default&& npm run typecheck && vite build --mode development",
-
     "preview:default": "vite preview --open /app-default.html",
     "lint": "eslint ."
   },
