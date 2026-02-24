@@ -1,5 +1,6 @@
-import {TextField, type TextFieldProps} from "@mui/material";
-import type {ChangeEvent} from "react";
+import { TextField, type TextFieldProps, IconButton, InputAdornment } from "@mui/material";
+import { useEffect, useState, type ChangeEvent } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface TextFieldFilterProps extends Omit<TextFieldProps, 'onChange' | 'value'> {
     value: string | undefined;
@@ -7,20 +8,71 @@ interface TextFieldFilterProps extends Omit<TextFieldProps, 'onChange' | 'value'
 }
 
 const TextFieldFilter = ({ value, onFilterChange, ...props }: TextFieldFilterProps) => {
+    const [localValue, setLocalValue] = useState<string>(value ?? "");
+    const [prevValue, setPrevValue] = useState<string | undefined>(value);
+
+    if (value !== prevValue) {
+        setLocalValue(value ?? "");
+        setPrevValue(value);
+    }
+
+    useEffect(() => {
+        if (localValue === (value ?? "")) return;
+
+        const handler = setTimeout(() => {
+            onFilterChange(localValue || undefined);
+        }, 500);
+
+        return () => clearTimeout(handler);
+    }, [localValue, onFilterChange, value]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const val = event.target.value;
-        onFilterChange(val || undefined);
+        setLocalValue(event.target.value);
+    };
+
+    const handleClear = () => {
+        setLocalValue("");
+        onFilterChange(undefined);
+    };
+
+    const handleBlur = () => {
+        const trimmed = localValue.trim();
+        if (trimmed !== localValue) {
+            setLocalValue(trimmed);
+        }
+        onFilterChange(trimmed || undefined);
     };
 
     return (
         <TextField
             {...props}
-            value={value ?? ""}
+            value={localValue}
             onChange={handleChange}
+            onBlur={handleBlur}
             size="small"
             variant="outlined"
-            onBlur={(e) => onFilterChange(e.target.value.trim() || undefined)}
+            slotProps={{
+                input: {
+                    endAdornment: (
+                        <InputAdornment
+                            position="end"
+                            style={{
+                                visibility: localValue ? "visible" : "hidden",
+                                pointerEvents: localValue ? "auto" : "none"
+                            }}
+                        >
+                            <IconButton
+                                aria-label="clear filter"
+                                onClick={handleClear}
+                                edge="end"
+                                size="small"
+                            >
+                                <ClearIcon fontSize="small" />
+                            </IconButton>
+                        </InputAdornment>
+                    ),
+                },
+            }}
         />
     );
 };
