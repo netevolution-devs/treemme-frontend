@@ -43,13 +43,7 @@ const baseTheme: ThemeOptions = {
             }),
         },
 
-        // Global handling for long text in Typography
         MuiTypography: {
-            defaultProps: {
-                variantMapping: {
-                    // You can also customize variant mappings here if needed
-                },
-            },
             styleOverrides: {
                 root: {
                     // Prefer breaking long words anywhere to avoid layout overflow
@@ -159,10 +153,10 @@ const baseTheme: ThemeOptions = {
         },
 
         MuiTextField: {
-            // defaultProps: {
-            //     variant: "outlined",
-            //     size: "small",
-            // },
+            defaultProps: {
+                variant: "outlined",
+                size: "small",
+            },
             styleOverrides: {
                 root: (props) => ({
                     width: "100%",
@@ -176,17 +170,11 @@ const baseTheme: ThemeOptions = {
             }
         },
 
-        // MuiAutocomplete: {
-        //     defaultProps: {
-        //         size: "small",
-        //     },
-        // },
-
-        // MuiDateField: {
-        //     defaultProps: {
-        //         size: "small",
-        //     },
-        // },
+        MuiAutocomplete: {
+            defaultProps: {
+                size: "small",
+            },
+        },
 
         MuiListItem: {
             defaultProps: {
