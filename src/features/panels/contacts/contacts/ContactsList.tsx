@@ -36,6 +36,7 @@ const ContactsList = () => {
         {
             accessorKey: "name",
             header: t("contacts.name"),
+            enableColumnFilter: false
         }
     ], [t]);
     
