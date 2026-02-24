@@ -99,6 +99,10 @@
       "kg-leather-expected": "Resa KG/PL",
       "cost-stripped-crust-various": "Prz V crosta",
       "cost-stripped-crust-manual": "Prz V costra M"
+    },
+    "species": {
+      "code": "Codice",
+      "name": "Specie"
     }
   }
 }
