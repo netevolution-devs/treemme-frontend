@@ -15,7 +15,6 @@ export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
         onDoubleClick: () => (table.setEditingRow(row)),
         ...overrideProps,
         sx: {
-            borderRadius: 20,
             // zebra rows
             backgroundColor: !isDetailPanel
                 ? (isSelected
