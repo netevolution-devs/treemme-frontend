@@ -44,7 +44,7 @@ const ContactsDetailList = () => {
     const editDialogRef = useRef<IDialogActions | null>(null);
 
     const handleOpenCreateDialog = () => {
-        setUIState({ selectedDetailId: null });
+        setUIState({selectedDetailId: null});
         openDialog(editDialogRef);
     }
 
@@ -57,11 +57,17 @@ const ContactsDetailList = () => {
                 isLoading={isLoading}
                 columns={columns}
                 selectedId={selectedDetailId}
-                onRowSelect={(id) => setUIState({ selectedDetailId: id })}
+                onRowSelect={(id) => setUIState({selectedDetailId: id})}
                 onRowDoubleClick={() => openDialog(editDialogRef)}
-                muiToolbarComponent={<ListToolbar buttons={[
-                    <NewButton onClick={() => handleOpenCreateDialog()} />
-                ]} />}
+                additionalOptions={{
+                    enableTopToolbar: true,
+                    renderTopToolbar:
+                        <ListToolbar
+                            buttons={[
+                                <NewButton onClick={() => handleOpenCreateDialog()}/>
+                            ]}
+                        />
+                }}
             />
         </>
     )

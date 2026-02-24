@@ -57,24 +57,30 @@ const ContactsAddressList = () => {
     const editDialogRef = useRef<IDialogActions | null>(null);
 
     const handleOpenCreateDialog = () => {
-        setUIState({ selectedAddressId: null });
+        setUIState({selectedAddressId: null});
         openDialog(editDialogRef);
     }
 
     return (
         <>
-            <ContactsAddressFormDialog ref={editDialogRef} />
+            <ContactsAddressFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactAddress>
                 data={contact?.contact_addresses || []}
                 isLoading={isLoading}
                 columns={columns}
                 selectedId={selectedAddressId}
-                onRowSelect={(id) => setUIState({ selectedAddressId: id })}
+                onRowSelect={(id) => setUIState({selectedAddressId: id})}
                 onRowDoubleClick={() => openDialog(editDialogRef)}
-                muiToolbarComponent={<ListToolbar buttons={[
-                    <NewButton onClick={() => handleOpenCreateDialog()} />
-                ]} />}
+                additionalOptions={{
+                    enableTopToolbar: true,
+                    renderTopToolbar:
+                        <ListToolbar
+                            buttons={[
+                                <NewButton onClick={() => handleOpenCreateDialog()}/>
+                            ]}
+                        />
+                }}
             />
         </>
     )
