@@ -24,18 +24,24 @@ const MenuToolbar = () => {
 
     return (
         <AppBar position="static">
-            <Toolbar disableGutters sx={{px: 1}} variant="dense" >
+            <Toolbar disableGutters sx={{px: 1}} variant="dense">
                 <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                     <Box>
-                    {MenuEntries.map((entry) => (
-                        <MenuEntry
-                            key={entry.i18nKey}
-                            entry={entry}
-                            onClick={handlePanelOpen}
-                        />
-                    ))}
+                        {MenuEntries.map((entry) => (
+                            <MenuEntry
+                                key={entry.i18nKey}
+                                entry={entry}
+                                onClick={handlePanelOpen}
+                            />
+                        ))}
                     </Box>
-                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap:2, alignItems: 'center'}} >
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                        gap: 2,
+                        alignItems: 'center'
+                    }}>
                         <ThemeSwitch showText={false} size={"small"}/>
                         <Avatar
                             sx={{width: 28, height: 28, cursor: 'pointer'}}
