@@ -8,6 +8,7 @@
     "title": "Profilo",
     "not-specified": "Non specificato",
     "card": {
+      "email": "Indirizzo email",
       "phone": "Telefono",
       "fiscal-code": "Codice Fiscale",
       "user-code": "Codice Utente",
