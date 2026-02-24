@@ -55,22 +55,24 @@ const LoginPage = () => {
                 backgroundRepeat: 'no-repeat'
             }}
         >
-            <img
-                src={backgroundSrc}
-                alt="Background"
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    zIndex: -1,
-                    filter: theme.palette.mode === 'dark'
-                        ? 'grayscale(100%) brightness(0.3)'
-                        : 'none'
-                }}
-            />
+            {backgroundSrc &&
+                <img
+                    src={backgroundSrc}
+                    alt="Background"
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        zIndex: -1,
+                        filter: theme.palette.mode === 'dark'
+                            ? 'grayscale(100%) brightness(0.3)'
+                            : 'none'
+                    }}
+                />
+            }
             <Splash/>
             <Divider orientation="vertical" flexItem sx={{m: {md: 0, lg: 16}, display: {md: 'none', lg: 'flex'}}}/>
             <Stack
