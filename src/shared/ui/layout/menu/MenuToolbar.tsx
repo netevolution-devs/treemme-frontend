@@ -4,12 +4,14 @@ import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
 import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 import {useTranslation} from "react-i18next";
 import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
+import {useNavigate} from "react-router";
 
 const MenuToolbar = () => {
     const {t} = useTranslation(["menu"]);
+    const navigate = useNavigate();
     const addPanel = useDockviewStore(state => state.addPanel);
 
-    const handlePanelOpen = (menu: IMenuEntry) => {
+    const handlePanelOpen = async (menu: IMenuEntry) => {
         addPanel({
             id: `${menu.component}:${crypto.randomUUID()}`,
             title: t(menu.i18nKey),
@@ -17,9 +19,8 @@ const MenuToolbar = () => {
         });
     }
 
-    // TODO: implement profile routing
     const handleProfileNavigation = () => {
-        console.log('Profile navigation clicked');
+        navigate("/profile");
     }
 
     return (
