@@ -7,6 +7,7 @@ interface ApiConfig {
 }
 
 export interface ApiOptions {
+    queryParams?: Record<string, string | number>;
     invalidateQueries?: string[];
 }
 
@@ -15,12 +16,12 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
 
     return {
         // GET LIST
-        useGetList: () => {
+        useGetList: (options?: ApiOptions) => {
             const { get } = useApi();
             return useQuery({
-                queryKey: [queryKey, 'LIST'],
+                queryKey: [queryKey, 'LIST', options?.queryParams],
                 queryFn: async () => {
-                    const response = await get<T[]>(baseEndpoint);
+                    const response = await get<T[]>(baseEndpoint, { params: options?.queryParams });
                     return response.data.data;
                 },
                 staleTime: Infinity,
