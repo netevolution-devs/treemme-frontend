@@ -9,7 +9,6 @@ const MenuToolbar = () => {
     const addPanel = useDockviewStore(state => state.addPanel);
 
     const handlePanelOpen = (menu: IMenuEntry) => {
-        console.log(`Panel ${menu} opened`);
         addPanel({
             id: `${menu.component}:${crypto.randomUUID()}`,
             title: t(menu.i18nKey),
