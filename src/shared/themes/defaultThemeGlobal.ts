@@ -240,7 +240,7 @@ const lightTheme: Theme = createTheme({
         },
         tableColors: {
             tableRow1: '#f7f8fa',
-            tableRow2: '#ffffff',
+            tableRow2: '#ededed',
             border: '#e2e8f0',
             hover: 'rgba(2,6,23,0.04)',
         },
