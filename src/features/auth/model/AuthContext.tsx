@@ -88,9 +88,13 @@ function AuthProvider({children}: { children: ReactNode }) {
         writeStoredUserCode(value);
     };
 
+
     useEffect(() => {
         if (skipAuth) return;
-        if (isSuccess && whoami && whoami.otpEnabled === true) {
+
+        const wantsTotpSetup = typeof whoami?.otpEnabled !== "undefined" && whoami?.otpEnabled;
+
+        if (isSuccess && whoami && wantsTotpSetup) {
             navigate("/login/otp/setup");
             return;
         }
