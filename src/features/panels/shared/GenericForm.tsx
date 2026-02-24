@@ -161,7 +161,7 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
                         buttonState={buttonsState}
                         hideNew={dialogMode}
                         hideEdit={dialogMode}
-                        hideDelete={dialogMode}
+                        hideDelete={!selectedId && dialogMode}
                         overrideButtonState={dialogMode}
                     />
                     <Stack sx={{mt: 3}}>
