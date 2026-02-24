@@ -1,9 +1,11 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import SizesList from "@features/panels/leathers/sizes/SizesList.tsx";
+import SizesForm from "@features/panels/leathers/sizes/SizesForm.tsx";
 
 export interface ISizesStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedSizeId?: number | null;
 }
 
 const SizesPanel = () => {
@@ -14,8 +16,8 @@ const SizesPanel = () => {
             kind={"sizes"}
             initialState={{uiState: initialUiState}}
         >
-            <div>List placeholder for Sizes</div>
-            <div>Form placeholder for Sizes</div>
+            <SizesList />
+            <SizesForm />
         </GenericPanel>
     )
 }
