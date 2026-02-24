@@ -90,10 +90,9 @@ function AuthProvider({children}: { children: ReactNode }) {
 
     useEffect(() => {
         if (skipAuth) return;
-        if (isSuccess && whoami && !whoami.otpEnabled) {
-            //TODO temp: no otp from backend yet
-            //navigate("/login/otp/setup");
-            //return;
+        if (isSuccess && whoami && whoami.otpEnabled === true) {
+            navigate("/login/otp/setup");
+            return;
         }
         if (error) {
             logout();
