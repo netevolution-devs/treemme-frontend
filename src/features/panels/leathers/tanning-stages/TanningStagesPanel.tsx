@@ -1,9 +1,11 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import TanningStagesList from "@features/panels/leathers/tanning-stages/TanningStagesList.tsx";
+import TanningStagesForm from "@features/panels/leathers/tanning-stages/TanningStagesForm.tsx";
 
 export interface ITanningStagesStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedTanningStageId?: number | null;
 }
 
 const TanningStagesPanel = () => {
@@ -11,11 +13,11 @@ const TanningStagesPanel = () => {
 
     return (
         <GenericPanel<unknown, ITanningStagesStoreState>
-            kind={"tanning-stages"}
+            kind={"tanningStages"}
             initialState={{uiState: initialUiState}}
         >
-            <div>List placeholder for Tanning-stages</div>
-            <div>Form placeholder for Tanning-stages</div>
+            <TanningStagesList />
+            <TanningStagesForm />
         </GenericPanel>
     )
 }

@@ -112,6 +112,12 @@
       "name": "Nome tipologia",
       "code": "Codice",
       "thickness": "Spessore"
+    },
+    "status": {
+      "name": "Nome stato",
+      "code": "Codice",
+      "flower-yield-coefficient": "Coefficiente resa PSP",
+      "measurement-unit": "Unità di misura"
     }
   }
 }
