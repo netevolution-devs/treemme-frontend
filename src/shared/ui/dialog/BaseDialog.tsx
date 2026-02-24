@@ -28,7 +28,7 @@ function BaseDialogWrapper({
                                fullscreen = false,
                                onClose,
                                minHeight,
-                               minWidth = 600,
+                               minWidth = 800,
                            }: BaseDialogProps,
                            ref: ForwardedRef<IDialogActions>
 ) {
@@ -65,10 +65,11 @@ function BaseDialogWrapper({
                         maxHeight: '90vh',
                         display: 'flex',
                         flexDirection: 'column',
+                        ...sx
                     },
                 },
             }}
-            sx={{...sx, m: 2}}
+            sx={{m: 2}}
         >
             {children}
         </Dialog>

@@ -70,11 +70,21 @@
     "address": {
       "list": "Lista indirizzi",
       "name": "Nome",
+      "address": "Indirizzo",
       "cap": "Cap e provincia",
       "address-1": "Riga 1",
       "address-2": "Riga 2",
       "address-3": "Riga 3",
       "address-4": "Riga 4"
+    },
+    "details": {
+      "list": "Lista recapiti",
+      "types": {
+        "code": "Sigla",
+        "type": "Tipologia"
+      },
+      "value": "Recapito",
+      "note": "Note"
     }
   }
 }

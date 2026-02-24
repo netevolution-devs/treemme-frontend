@@ -11,7 +11,7 @@ import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
 import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-type/contactsTypeApi.ts";
 import {Box} from "@mui/material";
 
-export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type' | 'contact_addresses'> & {
+export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type' | 'contact_addresses' | 'contact_details'> & {
     contact_title_id: number;
     contact_type_id: number;
 };
@@ -56,7 +56,11 @@ const ContactsForm = () => {
             remove={(id) => deleteContact(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
-            onClearSelection={() => setUIState({ selectedContactId: null })}
+            onClearSelection={() => setUIState({
+                selectedContactId: null,
+                selectedAddressId: null,
+                selectedDetailId: null
+            })}
             validateBeforeSave={(v) => !!v.name && !!v.contact_title_id && !!v.contact_type_id}
             renderFields={() => (
                 <>

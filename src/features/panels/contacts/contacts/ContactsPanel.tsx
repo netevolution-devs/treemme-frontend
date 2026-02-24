@@ -3,18 +3,17 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import ContactsList from "@features/panels/contacts/contacts/ContactsList.tsx";
 import ContactsForm from "@features/panels/contacts/contacts/ContactsForm.tsx";
-import ContactsAddressForm from "@features/panels/contacts/contacts/address/ContactsAddressForm.tsx";
-import ContactsAddressList from "@features/panels/contacts/contacts/address/ContactsAddressList.tsx";
-import {Box, Typography} from "@mui/material";
-import {useTranslation} from "react-i18next";
+import ContactsAddressContent from "@features/panels/contacts/contacts/address/ContactsAddressContent.tsx";
+import ContactsDetailContent from "@features/panels/contacts/contacts/detail/ContactsDetailContent.tsx";
+import {Box, Stack} from "@mui/material";
 
 export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
     selectedAddressId?: number | null;
+    selectedDetailId?: number | null;
 }
 
 const ContactsPanel = () => {
-    const {t} = useTranslation(["form"]);
     const initialUiState: IContactsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -22,14 +21,14 @@ const ContactsPanel = () => {
             kind={"contacts"}
             initialState={{uiState: initialUiState}}
         >
-            <ContactsList />
-            <ContactsForm />
-
-            <Typography variant="h6">{t("address")}</Typography>
-            <Box sx={{display: "flex", flexDirection: "row", gap: 2}}>
-                <ContactsAddressList />
-                <ContactsAddressForm />
-            </Box>
+            <Stack gap={2}>
+                <ContactsList />
+                <ContactsForm />
+                <Box sx={{display: 'flex', flexDirection: {xl: 'row', lg: 'column'}, gap: 0.7, width: '100%'}}>
+                    <ContactsAddressContent />
+                    <ContactsDetailContent />
+                </Box>
+            </Stack>
         </GenericPanel>
     )
 }

@@ -1,10 +1,7 @@
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {useTranslation} from "react-i18next";
-// import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
 import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contacts-address/contactsAddressApi.ts";
@@ -13,8 +10,12 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
 import {capApi} from "@features/panels/contacts/cap/api/capApi.ts";
 import {Box, Stack} from "@mui/material";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import {forwardRef} from "react";
+import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 
-export type IContactsStoreAddressState = IPanelUIState;
+type Props = unknown;
 
 export type IContactAddressForm = Omit<IContactAddress,
     'id' |
@@ -25,7 +26,7 @@ export type IContactAddressForm = Omit<IContactAddress,
     town_id: number;
 };
 
-const ContactsAddressForm = () => {
+const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IContactsStoreState>();
@@ -33,32 +34,31 @@ const ContactsAddressForm = () => {
     const selectedAddressId = useStore(state => state.uiState.selectedAddressId);
     const setUIState = useStore(state => state.setUIState);
 
-    // const {data: contact} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact} = contactsApi.useGetDetail(selectedContactId);
 
     const {useGetDetail, usePost, usePut, useDelete} = contactsAddressApi;
     const {data: address} = useGetDetail(selectedAddressId);
-    const {mutateAsync: createAddress, isPending: isPosting} = usePost();
-    const {mutateAsync: updateAddress, isPending: isPutting} = usePut();
-    const {mutateAsync: deleteAddress, isPending: isDeleting} = useDelete();
+    const {
+        mutateAsync: createAddress,
+        isPending: isPosting
+    } = usePost({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
+    const {
+        mutateAsync: updateAddress,
+        isPending: isPutting
+    } = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
+    const {
+        mutateAsync: deleteAddress,
+        isPending: isDeleting
+    } = useDelete({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
 
     const {data: nations} = nationsApi.useGetList();
     const {data: caps} = capApi.useGetList();
 
-    if (!selectedContactId) {
-        return null;
-    }
-
-    const initialUiState: IContactsStoreAddressState = {
-        isFormDisabled: true,
-        buttonsState: BaseButtonState,
-    };
-
     return (
-        <GenericPanel<unknown, IContactsStoreAddressState>
-            kind={'contacts'}
-            initialState={{uiState: initialUiState}}
-        >
-            <GenericForm<IContactAddressForm, IContactAddress, IContactsStoreAddressState>
+        <BaseDialog ref={ref} sx={{p: 2}}>
+            <GenericForm<IContactAddressForm, IContactAddress, IPanelUIState>
+                dialogMode
+                dialogRef={ref}
                 selectedId={selectedAddressId}
                 entity={address}
                 emptyValues={{
@@ -66,7 +66,7 @@ const ContactsAddressForm = () => {
                     address_2: '',
                     address_3: '',
                     address_4: '',
-                    address_note: '',
+                    address_name: '',
                     nation_id: 0,
                     town_id: 0
                 }}
@@ -75,12 +75,15 @@ const ContactsAddressForm = () => {
                     address_2: x.address_2,
                     address_3: x.address_3,
                     address_4: x.address_4,
-                    address_note: x.address_note,
+                    address_name: x.address_name,
                     nation_id: x.nation.id,
                     town_id: x.town.id
                 })}
-                create={(payload) => createAddress({...payload, contact_id: selectedContactId})}
-                update={(id, payload) => updateAddress({id, payload: {...payload, contact_id: selectedContactId}})}
+                create={(payload) => createAddress({...payload, contact_id: selectedContactId as number})}
+                update={(id, payload) => updateAddress({
+                    id,
+                    payload: {...payload, contact_id: selectedContactId as number}
+                })}
                 remove={(id) => deleteAddress(id)}
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
@@ -89,6 +92,10 @@ const ContactsAddressForm = () => {
                 renderFields={() => (
                     <>
                         <Stack gap={1} sx={{mb: 2}}>
+                            <TextFieldControlled<IContactAddressForm>
+                                name="address_name"
+                                label={t("contacts.address.name")}
+                            />
                             <TextFieldControlled<IContactAddressForm>
                                 name="address"
                                 label={t("contacts.address.address-1")}
@@ -133,8 +140,8 @@ const ContactsAddressForm = () => {
                     </>
                 )}
             />
-        </GenericPanel>
+        </BaseDialog>
     )
-}
+})
 
-export default ContactsAddressForm;
+export default ContactsAddressFormDialog;

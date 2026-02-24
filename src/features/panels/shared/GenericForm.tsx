@@ -1,11 +1,11 @@
 import {Box, Stack} from "@mui/material";
 import FormButtons from "@features/panels/shared/FormButtons.tsx";
 import {FormProvider, useForm, type DefaultValues, type SubmitHandler} from "react-hook-form";
-import React, {useEffect, useRef} from "react";
+import React, {type ForwardedRef, useEffect, useRef} from "react";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import {usePanelFormButtons, type IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import type {IDialogActions} from "@shared/ui/dialog/IDialogActions.ts";
-import {openDialog} from "@shared/ui/dialog/dialogHelper.ts";
+import {closeDialog, openDialog} from "@shared/ui/dialog/dialogHelper.ts";
 import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog.tsx";
 import type {FieldValues} from "react-hook-form";
@@ -28,6 +28,10 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     validateBeforeSave?: (values: TForm) => boolean;
 
     renderFields: () => React.ReactNode;
+
+    // used if form data is inside a dialog
+    dialogMode?: boolean;
+    dialogRef?: ForwardedRef<IDialogActions>;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUIState>(
@@ -44,6 +48,8 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
         onClearSelection,
         validateBeforeSave,
         renderFields,
+        dialogMode = false,
+        dialogRef
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const {useStore} = usePanel<unknown, TUI>();
@@ -54,16 +60,24 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
     const saveRef = useRef<IDialogActions>(null);
 
     const methods = useForm<TForm>({
-        disabled: isFormDisabled,
+        disabled: !dialogMode && isFormDisabled,
         mode: "onSubmit",
         defaultValues: emptyValues as DefaultValues<TForm>,
     });
 
+    const handleCloseDialog = () => {
+        if (dialogRef) {
+            closeDialog(dialogRef)
+        }
+    }
+
     const handleNew = () => {
+        if (dialogMode) return;
         setFormState('new');
     };
 
     const handleEdit = () => {
+        if (dialogMode) return;
         setFormState('edit');
     };
 
@@ -75,16 +89,20 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
         if (selectedId) {
             await remove(selectedId);
             onClearSelection();
+            handleCloseDialog();
         }
     };
 
     const handleCancel = () => {
         if (selectedId && !isFormDisabled && entity) {
             methods.reset(mapEntityToForm(entity));
+            if (dialogMode) return;
             setFormState('selected');
         } else {
             onClearSelection();
             methods.reset(emptyValues);
+            handleCloseDialog();
+            if (dialogMode) return;
             setFormState('cancel');
         }
     };
@@ -96,20 +114,29 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
 
     const onConfirmSave = async () => {
         const data = methods.getValues();
+
+        const cleanData = Object.fromEntries(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            Object.entries(data).filter(([_, value]) => value !== null && value !== undefined)
+        ) as TForm;
+
         if (selectedId) {
-            await update(selectedId, data);
+            await update(selectedId, cleanData);
         } else {
-            await create(data);
+            await create(cleanData);
         }
         onClearSelection();
+        handleCloseDialog();
     };
 
     useEffect(() => {
         if (selectedId && entity) {
             methods.reset(mapEntityToForm(entity));
+            if (dialogMode) return;
             setFormState('selected');
         } else if (selectedId === null) {
             methods.reset(emptyValues);
+            if (dialogMode) return;
             setFormState('cancel');
         }
     }, [selectedId, entity]);
@@ -132,6 +159,10 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
                         onDelete={handleDelete}
                         onCancel={handleCancel}
                         buttonState={buttonsState}
+                        hideNew={dialogMode}
+                        hideEdit={dialogMode}
+                        hideDelete={!selectedId && dialogMode}
+                        overrideButtonState={dialogMode}
                     />
                     <Stack sx={{mt: 3}}>
                         {renderFields()}

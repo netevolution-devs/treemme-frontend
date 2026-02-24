@@ -31,6 +31,11 @@ const PanelContainerPage = () => {
         <Box height="calc(100vh - 48px)" width="100%">
             <StyledDockviewWrapper>
                 <DockviewReact
+                    watermarkComponent={() => (
+                        <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 48px)', width: '100%'}}>
+                            <img src={"imgs/watermark.png"} alt="Watermark" style={{opacity: 0.3}} width={600} />
+                        </Box>
+                    )}
                     theme={isLightTheme
                         ? themeLight
                         : themeDark

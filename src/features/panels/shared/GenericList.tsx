@@ -1,4 +1,4 @@
-import React from "react";
+import React, {type ReactNode} from "react";
 import {
     MaterialReactTable,
     type MRT_ColumnDef,
@@ -18,8 +18,10 @@ interface GenericListProps<TData extends BaseEntity> {
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
     onRowSelect: (id: TData["id"]) => void;
+    onRowDoubleClick?: (id: TData["id"]) => void;
     additionalOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
+    muiToolbarComponent?: ReactNode;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -28,8 +30,10 @@ const GenericList = <TData extends BaseEntity>({
                                                    columns,
                                                    selectedId,
                                                    onRowSelect,
+                                                   onRowDoubleClick,
                                                    additionalOptions,
-                                                   maxHeight = '400px'
+                                                   maxHeight = '400px',
+                                                   muiToolbarComponent
                                                }: GenericListProps<TData>) => {
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
@@ -38,7 +42,10 @@ const GenericList = <TData extends BaseEntity>({
             sx: { maxHeight },
         },
         muiTableBodyRowProps: ({ row }) => ({
-            onDoubleClick: () => onRowSelect(row.original.id),
+            onDoubleClick: () => {
+                onRowSelect(row.original.id);
+                onRowDoubleClick?.(row.original.id);
+            },
             onClick: (e: React.MouseEvent) => {
                 e.preventDefault();
                 onRowSelect(row.original.id);
@@ -62,12 +69,13 @@ const GenericList = <TData extends BaseEntity>({
             ...additionalOptions?.state
         },
         enableRowVirtualization: true,
-        enableTopToolbar: false,
+        enableTopToolbar: !!muiToolbarComponent,
         enableBottomToolbar: false,
+        renderTopToolbar: () => muiToolbarComponent,
     });
 
     return (
-        <Box>
+        <Box sx={{width: '100%', overflowY: 'auto'}}>
             <MaterialReactTable table={table} />
         </Box>
     );

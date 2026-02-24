@@ -18,7 +18,8 @@
       "types": "Tipologie",
       "flaying": "Scuortature",
       "origins": "Provenienze",
-      "tanning-stages": "Stati di Lavorazione"
+      "tanning-stages": "Stati di Lavorazione",
+      "weigths": "Weigths"
     },
     "products": {
       "self": "Prodotti",

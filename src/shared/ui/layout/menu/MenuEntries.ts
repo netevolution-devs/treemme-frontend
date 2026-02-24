@@ -28,7 +28,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.leathers.types"},
             {i18nKey: "menu.leathers.flaying"},
             {i18nKey: "menu.leathers.origins"},
-            {i18nKey: "menu.leathers.tanning-stages"}
+            {i18nKey: "menu.leathers.tanning-stages"},
         ]
     },
     {
