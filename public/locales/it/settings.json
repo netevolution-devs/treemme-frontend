@@ -2,7 +2,8 @@
   "interface": {
     "title": "Interfaccia",
     "theme": "Tema",
-    "language": "Lingua"
+    "language": "Lingua",
+    "go-back": "Indietro"
   },
   "profile":{
     "title": "Profilo",
