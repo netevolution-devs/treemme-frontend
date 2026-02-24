@@ -50,7 +50,10 @@ export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
                 color: 'inherit',
                 opacity: 0.5,
             },
-            ...(overrideProps.sx instanceof Function ? overrideProps.sx(theme) : (overrideProps.sx || {})),
+            ...(overrideProps.sx instanceof Function
+                    ? overrideProps.sx(theme)
+                    : (overrideProps.sx || {})
+            ),
         },
     };
 };

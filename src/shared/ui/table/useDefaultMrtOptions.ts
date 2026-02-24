@@ -62,7 +62,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
         },
 
         muiTableContainerProps: (props) => {
-            const overrideContainerProps = typeof overrideProps?.muiTableContainerProps === 'function'
+            const overrideContainerProps = overrideProps?.muiTableContainerProps instanceof Function
                 ? overrideProps.muiTableContainerProps(props)
                 : overrideProps?.muiTableContainerProps;
 
@@ -86,7 +86,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
                 isDetailPanel,
                 {
                     ...overrideProps?.muiTableBodyRowProps,
-                    ...(typeof overrideProps?.muiTableBodyRowProps === 'function'
+                    ...(overrideProps?.muiTableBodyRowProps instanceof Function
                         ? overrideProps.muiTableBodyRowProps({
                             table,
                             row,
