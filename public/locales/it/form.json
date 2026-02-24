@@ -103,6 +103,10 @@
     "species": {
       "code": "Codice",
       "name": "Specie"
+    },
+    "thickness": {
+      "name": "Nome spessore",
+      "mm": "Sps in MM"
     }
   }
 }
