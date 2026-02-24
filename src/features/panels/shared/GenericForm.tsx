@@ -116,8 +116,7 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
         const data = methods.getValues();
 
         const cleanData = Object.fromEntries(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            Object.entries(data).filter(([_, value]) => value !== null && value !== undefined)
+            Object.entries(data).filter(([, value]) => value !== null && value !== undefined)
         ) as TForm;
 
         if (selectedId) {
@@ -125,7 +124,6 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
         } else {
             await create(cleanData);
         }
-        onClearSelection();
         handleCloseDialog();
     };
 

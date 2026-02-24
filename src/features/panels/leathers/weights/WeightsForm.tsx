@@ -5,7 +5,7 @@ import {type IWeightPayload, weightApi} from "@features/panels/leathers/weights/
 import type {IWeight} from "@features/panels/leathers/weights/api/IWeight.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import NumberField from "@ui/form/controlled/NumberField.tsx";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box} from "@mui/material";
 
 export type IWeightForm = Omit<IWeight, 'id' | 'kg_weight' | 'cost_stripped_crust_manual' | 'cost_stripped_crust_various' | 'kg_leather_expected' | 'sqft_leather_expected'> & {
@@ -63,27 +63,27 @@ const WeightsForm = () => {
                             name={"name"}
                             label={t("leathers.weight.name")}
                         />
-                        <NumberField<IWeightForm>
+                        <NumberFieldControlled<IWeightForm>
                             name={"kg_weight"}
                             label={t("leathers.weight.kg-weight")}
                         />
                     </Box>
                     <Box sx={{display: 'flex', gap: 1}}>
-                        <NumberField<IWeightForm>
+                        <NumberFieldControlled<IWeightForm>
                             name={"sqft_leather_expected"}
                             label={t("leathers.weight.sqft-leather-expected")}
                         />
-                        <NumberField<IWeightForm>
+                        <NumberFieldControlled<IWeightForm>
                             name={"kg_leather_expected"}
                             label={t("leathers.weight.kg-leather-expected")}
                         />
                     </Box>
                     <Box sx={{display: 'flex', gap: 1}}>
-                        <NumberField<IWeightForm>
+                        <NumberFieldControlled<IWeightForm>
                             name={"cost_stripped_crust_various"}
                             label={t("leathers.weight.cost-stripped-crust-various")}
                         />
-                        <NumberField<IWeightForm>
+                        <NumberFieldControlled<IWeightForm>
                             name={"cost_stripped_crust_manual"}
                             label={t("leathers.weight.cost-stripped-crust-manual")}
                         />
