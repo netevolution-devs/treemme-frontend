@@ -8,6 +8,7 @@ interface ApiConfig {
 
 export interface ApiOptions {
     queryParams?: Record<string, string | number>;
+    staleTime?: number;
     invalidateQueries?: string[];
 }
 
@@ -24,7 +25,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     const response = await get<T[]>(baseEndpoint, { params: options?.queryParams });
                     return response.data.data;
                 },
-                staleTime: Infinity,
+                staleTime: options?.staleTime || Infinity,
                 gcTime: Infinity,
             });
         },
@@ -54,10 +55,8 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     return response.data.data;
                 },
                 onSuccess: () => {
-                    // Invalida la lista corrente
                     queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
 
-                    // Invalida query extra se fornite
                     options?.invalidateQueries?.forEach(key => {
                         queryClient.invalidateQueries({ queryKey: [key] });
                     });

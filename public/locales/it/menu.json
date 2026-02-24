@@ -13,13 +13,12 @@
       "weights": "Pesi",
       "species": "Specie",
       "sizes": "Taglie",
-      "registry": "Anagrafica Pellami",
+      "leathers": "Pellami",
       "thicknesses": "Spessori",
       "types": "Tipologie",
       "flaying": "Scuortature",
       "origins": "Provenienze",
-      "tanning-stages": "Stati di Lavorazione",
-      "weigths": "Weigths"
+      "tanning-stages": "Stati di Lavorazione"
     },
     "products": {
       "self": "Prodotti",

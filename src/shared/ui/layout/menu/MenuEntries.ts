@@ -20,15 +20,15 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.leathers.self",
         subMenu: [
-            {i18nKey: "menu.leathers.weights"},
-            {i18nKey: "menu.leathers.species"},
-            {i18nKey: "menu.leathers.sizes"},
-            {i18nKey: "menu.leathers.registry"},
-            {i18nKey: "menu.leathers.thicknesses"},
-            {i18nKey: "menu.leathers.types"},
-            {i18nKey: "menu.leathers.flaying"},
-            {i18nKey: "menu.leathers.origins"},
-            {i18nKey: "menu.leathers.tanning-stages"},
+            {i18nKey: "menu.leathers.weights", component: "weights" },
+            {i18nKey: "menu.leathers.species", component: "species" },
+            {i18nKey: "menu.leathers.sizes", component: "sizes" },
+            {i18nKey: "menu.leathers.leathers", component: "leathers" },
+            {i18nKey: "menu.leathers.thicknesses", component: "thicknesses" },
+            {i18nKey: "menu.leathers.types", component: "types" },
+            {i18nKey: "menu.leathers.flaying", component: "flaying" },
+            {i18nKey: "menu.leathers.origins", component: "origins" },
+            {i18nKey: "menu.leathers.tanning-stages", component: "tanningStages" },
         ]
     },
     {

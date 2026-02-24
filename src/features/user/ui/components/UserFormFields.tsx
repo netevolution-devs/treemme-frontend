@@ -8,7 +8,7 @@ import { useFormContext } from "react-hook-form";
 import type {IUserForm} from "@features/user/model/IUserForm.ts";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import usePasswordGenerator from "@ui/form/controlled/usePasswordGenerator.ts";
-import NumberField from "@ui/form/controlled/NumberField.tsx";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 
 interface Props {
     disablePassword?: boolean;
@@ -90,7 +90,7 @@ const UserFormFields = ({disablePassword = false, disableRoleSelect = false }: P
                 label={t("form:user.create.fields.fiscal-code")}
                 required
             />
-            <NumberField<IUserForm> 
+            <NumberFieldControlled<IUserForm>
                 name="phone"
                 label={t("form:user.create.fields.phone")}
                 required
