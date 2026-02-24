@@ -9,8 +9,8 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const ThicknessesList = () => {
     const {t} = useTranslation(["form"]);
-    const {useStore} = usePanel<unknown, IThicknessesStoreState>();
 
+    const {useStore} = usePanel<unknown, IThicknessesStoreState>();
     const selectedThicknessId = useStore(state => state.uiState.selectedThicknessId);
     const setUIState = useStore(state => state.setUIState);
 

@@ -107,6 +107,11 @@
     "thickness": {
       "name": "Nome spessore",
       "mm": "Sps in MM"
+    },
+    "type": {
+      "name": "Nome tipologia",
+      "code": "Codice",
+      "thickness": "Spessore"
     }
   }
 }
