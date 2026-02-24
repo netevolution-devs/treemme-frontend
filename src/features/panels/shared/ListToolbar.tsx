@@ -11,7 +11,7 @@ const ListToolbar = ({buttons, filters}: ListToolbarProps) => {
     return (
         <Box sx={{display: 'flex', flexDirection: "row", gap: 0.5, minHeight: 32, mb: 1, mt: 1, alignItems: 'center'}}>
             {filters && filters.length > 0 && (
-                <SearchIcon color={"primary"} fontSize={"large"} />
+                <SearchIcon color={"primary"} fontSize={"small"}/>
             )}
             <Box sx={{display: 'flex', flexDirection: "row", gap: 1}}>
                 {filters?.map((filterComponent) => (
