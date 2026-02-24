@@ -3,6 +3,7 @@ import {type IMenuEntry, MenuEntries} from "@ui/layout/menu/MenuEntries.ts";
 import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
 import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 import {useTranslation} from "react-i18next";
+import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
 
 const MenuToolbar = () => {
     const {t} = useTranslation(["menu"]);
@@ -34,9 +35,10 @@ const MenuToolbar = () => {
                         />
                     ))}
                     </Box>
-                    <Box>
+                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', gap:2, alignItems: 'center'}} >
+                        <ThemeSwitch showText={false} size={"small"}/>
                         <Avatar
-                            sx={{width: 35, height: 35, cursor: 'pointer'}}
+                            sx={{width: 28, height: 28, cursor: 'pointer'}}
                             onClick={handleProfileNavigation}
                         />
                     </Box>
