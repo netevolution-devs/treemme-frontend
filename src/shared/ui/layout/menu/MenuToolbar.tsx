@@ -5,9 +5,11 @@ import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 import {useTranslation} from "react-i18next";
 import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
 import {useNavigate} from "react-router";
+import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
 
 const MenuToolbar = () => {
     const {t} = useTranslation(["menu"]);
+    const {setShowTopBar, showTopBar} = useLayout()
     const navigate = useNavigate();
     const addPanel = useDockviewStore(state => state.addPanel);
 
@@ -20,10 +22,11 @@ const MenuToolbar = () => {
     }
 
     const handleProfileNavigation = () => {
+        setShowTopBar(false);
         navigate("/profile");
     }
 
-    return (
+    return showTopBar && (
         <AppBar position="static">
             <Toolbar disableGutters sx={{px: 1}} variant="dense">
                 <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
