@@ -55,10 +55,8 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     return response.data.data;
                 },
                 onSuccess: () => {
-                    // Invalida la lista corrente
                     queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
 
-                    // Invalida query extra se fornite
                     options?.invalidateQueries?.forEach(key => {
                         queryClient.invalidateQueries({ queryKey: [key] });
                     });
