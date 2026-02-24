@@ -29,7 +29,7 @@ const RoutingDefault = () => {
             <Route element={<AuthUserGuard/>}>
                 <Route element={
                     <PermissionGuard
-                        requiredRoles={[EnumRoles.User]}
+                        requiredRoles={[EnumRoles.Admin, EnumRoles.Staff]}
                         deniedRolesMode="any"
                         requiredRolesMode="any"
                         FallbackElement={<LogoutAndRedirect to="/login"/>}
