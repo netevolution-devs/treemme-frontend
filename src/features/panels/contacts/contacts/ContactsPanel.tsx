@@ -13,13 +13,21 @@ export interface IContactsStoreState extends IPanelUIState {
     selectedDetailId?: number | null;
 }
 
+export interface IContactsStoreFilter {
+    filterContactName?: string;
+    filterDetailName?: string;
+}
+
 const ContactsPanel = () => {
     const initialUiState: IContactsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, IContactsStoreState>
+        <GenericPanel<IContactsStoreFilter, IContactsStoreState>
             kind={"contacts"}
-            initialState={{uiState: initialUiState}}
+            initialState={{
+                filters: {},
+                uiState: initialUiState
+            }}
         >
             <Stack gap={2}>
                 <ContactsList />

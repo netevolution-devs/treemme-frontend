@@ -85,6 +85,10 @@
       },
       "value": "Recapito",
       "note": "Note"
+    },
+    "filters": {
+      "name": "Nome contatto",
+      "detail": "Recapito"
     }
   }
 }
