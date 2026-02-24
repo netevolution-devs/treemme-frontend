@@ -25,16 +25,15 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
     const {i18n} = useTranslation()
 
     return {
+        enableRowVirtualization: true,
+        autoResetPageIndex: false,
         enableColumnActions: false,
-        enableFilters: true,
         enableFullScreenToggle: false,
         enableDensityToggle: false,
         enableHiding: false,
         enablePagination: overrideProps?.enablePagination ?? false,
-        enableRowActions: true,
         enableToolbarInternalActions: false,
         enableFilterMatchHighlighting: false,
-        columnFilterDisplayMode: 'popover',
         enableStickyHeader: true,
 
         positionGlobalFilter: "none",
@@ -42,8 +41,6 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
 
         localization: tableLocale[i18n.language],
         enableEditing: false,
-        createDisplayMode: "modal",
-        editDisplayMode: "modal",
 
         positionPagination: "bottom",
         initialState: {
@@ -55,12 +52,6 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
             ...overrideProps?.initialState
         },
 
-        displayColumnDefOptions: {
-            "mrt-row-actions": {
-                size: 0,
-            },
-        },
-
         muiTableContainerProps: (props) => {
             const overrideContainerProps = overrideProps?.muiTableContainerProps instanceof Function
                 ? overrideProps.muiTableContainerProps(props)
@@ -69,14 +60,16 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
             return getMrtContainerProps(theme, overrideContainerProps);
         },
 
+        muiTablePaperProps: () => getMrtTablePaperProps(),
+
+        muiBottomToolbarProps: () => getMrtBottomToolbarProps(),
+        muiTopToolbarProps: () => getMrtTopToolbarProps(),
+
         defaultColumn: {
             muiTableHeadCellProps: () => getMrtTableHeadCellProps(),
             muiTableBodyCellProps: (props) => getMrtTableBodyCellProps<TData>(props.column, theme),
         },
-        muiBottomToolbarProps: () => getMrtBottomToolbarProps(),
-        muiTopToolbarProps: () => getMrtTopToolbarProps(),
 
-        muiTablePaperProps: () => getMrtTablePaperProps(),
         muiTableBodyRowProps: ({table, row, staticRowIndex, isDetailPanel}) =>
             getMrtTableBodyRowProps(
                 table,
