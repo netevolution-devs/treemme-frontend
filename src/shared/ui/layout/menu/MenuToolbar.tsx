@@ -4,12 +4,16 @@ import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
 import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 import {useTranslation} from "react-i18next";
 import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
+import {useNavigate} from "react-router";
+import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
 
 const MenuToolbar = () => {
     const {t} = useTranslation(["menu"]);
+    const {setShowTopBar, showTopBar} = useLayout()
+    const navigate = useNavigate();
     const addPanel = useDockviewStore(state => state.addPanel);
 
-    const handlePanelOpen = (menu: IMenuEntry) => {
+    const handlePanelOpen = async (menu: IMenuEntry) => {
         addPanel({
             id: `${menu.component}:${crypto.randomUUID()}`,
             title: t(menu.i18nKey),
@@ -17,12 +21,12 @@ const MenuToolbar = () => {
         });
     }
 
-    // TODO: implement profile routing
     const handleProfileNavigation = () => {
-        console.log('Profile navigation clicked');
+        setShowTopBar(false);
+        navigate("/profile");
     }
 
-    return (
+    return showTopBar && (
         <AppBar position="static">
             <Toolbar disableGutters sx={{px: 1}} variant="dense">
                 <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>

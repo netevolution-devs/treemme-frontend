@@ -6,26 +6,27 @@ import ButtonLogout from "@features/auth/ui/ButtonLogout.tsx";
 import {SettingsSection} from "@features/settings/ui/default/SettingsPage.tsx";
 import BaseSettingsContainer from "@ui/container/BaseSettingsContainer.tsx";
 import useGetProfile from "@features/profile/api/useGetProfile.ts";
+import UserProfileCardSkeleton from "@features/profile/ui/default/UserProfileCardSkeleton.tsx";
+import {Box} from "@mui/material";
 
 const ProfilePage = () => {
     const {t} = useTranslation(["settings"]);
-
     const {user} = useAuth();
     const {isLoading} = useGetProfile(user?.userCode as string);
 
     return (
-        <BasePage isLoading={isLoading} sx={{p: 0, mb: 3}} fullwidth>
-            {isLoading ? (
-                <></>
-                // skeleton
-            ) : (
-                <BaseSettingsContainer>
-                    <SettingsSection title={t("profile.title")}>
-                        <UserProfileCard userCode={user?.userCode as string}/>
+        <BasePage sx={{p: 20, mb: 3}} fullwidth>
+            <BaseSettingsContainer>
+                <SettingsSection title={t("profile.title")}>
+                    {isLoading
+                        ? <UserProfileCardSkeleton/>
+                        : <UserProfileCard/>
+                    }
+                    <Box>
                         <ButtonLogout/>
-                    </SettingsSection>
-                </BaseSettingsContainer>
-            )}
+                    </Box>
+                </SettingsSection>
+            </BaseSettingsContainer>
         </BasePage>
     )
 }

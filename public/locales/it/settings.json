@@ -2,12 +2,14 @@
   "interface": {
     "title": "Interfaccia",
     "theme": "Tema",
-    "language": "Lingua"
+    "language": "Lingua",
+    "go-back": "Indietro"
   },
   "profile":{
     "title": "Profilo",
     "not-specified": "Non specificato",
     "card": {
+      "email": "Indirizzo email",
       "phone": "Telefono",
       "fiscal-code": "Codice Fiscale",
       "user-code": "Codice Utente",
