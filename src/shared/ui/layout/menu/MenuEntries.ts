@@ -22,7 +22,7 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             {i18nKey: "menu.leathers.weights", component: "weights" },
             {i18nKey: "menu.leathers.species", component: "species" },
-            {i18nKey: "menu.leathers.sizes", component: "sizes" },
+            // {i18nKey: "menu.leathers.sizes", component: "sizes" },
             {i18nKey: "menu.leathers.leathers", component: "leathers" },
             {i18nKey: "menu.leathers.thicknesses", component: "thicknesses" },
             {i18nKey: "menu.leathers.types", component: "types" },
