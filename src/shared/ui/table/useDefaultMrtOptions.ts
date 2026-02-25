@@ -25,7 +25,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
     const {i18n} = useTranslation()
 
     return {
-        enableRowVirtualization: true,
+        enableRowVirtualization: overrideProps?.enableRowVirtualization ?? false,
         autoResetPageIndex: false,
         enableColumnActions: false,
         enableFullScreenToggle: false,
