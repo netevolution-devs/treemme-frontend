@@ -16,7 +16,7 @@ const ButtonGoToApp = ({label, ...props}: Props) => {
 
     function handleBackNavigation() {
         setShowTopBar(true);
-        navigate(-1);
+        navigate("/app");
     }
 
     return (
