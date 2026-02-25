@@ -4,6 +4,7 @@
     "theme": "Tema",
     "language": "Lingua",
     "go-back": "Indietro",
+    "go-to-app": "Torna all home",
     "go-to-setup-otp": "Vai alla configurazione OTP"
   },
   "profile":{

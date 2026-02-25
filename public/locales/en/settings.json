@@ -3,6 +3,7 @@
     "title": "Interface",
     "theme": "Theme",
     "language": "Language",
+    "go-to-app": "Go back to home page",
     "go-to-setup-otp": "Go to OTP setup"
   },
   "profile": {

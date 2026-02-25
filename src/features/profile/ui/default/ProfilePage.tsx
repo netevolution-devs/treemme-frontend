@@ -4,7 +4,8 @@ import UserProfileCard from "./UserProfileCard.tsx";
 import ButtonLogout from "@features/auth/ui/ButtonLogout.tsx";
 import {SettingsSection} from "@features/settings/ui/default/SettingsPage.tsx";
 import BaseSettingsContainer from "@ui/container/BaseSettingsContainer.tsx";
-import {Box} from "@mui/material";
+import {Stack} from "@mui/material";
+import ButtonStartOtpSetup from "@features/auth/ui/ButtonStartOtpSetup.tsx";
 // import useGetProfile from "@features/profile/api/useGetProfile.ts";
 // import {useAuth} from "@features/auth/model/AuthContext.tsx";
 // import UserProfileCardSkeleton from "@features/profile/ui/default/UserProfileCardSkeleton.tsx";
@@ -23,9 +24,10 @@ const ProfilePage = () => {
                     {/*    : <UserProfileCard/>*/}
                     {/*}*/}
                     <UserProfileCard/>
-                    <Box>
+                    <Stack direction={"row"} spacing={2}>
+                        <ButtonStartOtpSetup/>
                         <ButtonLogout/>
-                    </Box>
+                    </Stack>
                 </SettingsSection>
             </BaseSettingsContainer>
         </BasePage>
