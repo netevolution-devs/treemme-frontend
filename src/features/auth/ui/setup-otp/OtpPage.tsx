@@ -7,10 +7,12 @@ import {useState} from "react";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {appNs} from "../../../../i18n";
+import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
 
 const OtpPage = () => {
     const {t} = useTranslation([appNs("login"), "common"]);
     const navigate = useNavigate();
+    const {setShowTopBar} = useLayout()
 
     const {userCode} = useAuth();
     const [otp, setOtp] = useState('');
@@ -25,6 +27,7 @@ const OtpPage = () => {
                     totp_code: otp
                 })
             }
+            setShowTopBar(true)
             navigate("/", {replace: true});
         } catch (err) {
             void err

@@ -18,12 +18,14 @@ import EmailField from "../../../shared/ui/form/controlled/EmailField";
 import PasswordField from "../../../shared/ui/form/controlled/PasswordField";
 import usePostLogin from "../api/usePostLogin";
 import {useAuth} from "../model/AuthContext";
+import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
 
 const backgroundSrc = "";
 
 const LoginPage = () => {
     const {t} = useTranslation([appNs("login")]);
     const navigate = useNavigate();
+    const {setShowTopBar} = useLayout()
     const theme = useTheme();
     const {mutateAsync: loginMutation, isPending: loginIsPending} = usePostLogin();
 
@@ -41,6 +43,7 @@ const LoginPage = () => {
             navigate("/login/otp", {replace: true});
             return;
         }
+        setShowTopBar(true)
         navigate("/", {replace: true});
     });
 
