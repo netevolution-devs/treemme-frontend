@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/ITanningStage.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const TanningStagesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const TanningStagesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: tanningStages, isLoading} = tanningStageApi.useGetList();
+    const tanningStageList = useSafeArray(tanningStages)
 
     const columns = useMemo<MRT_ColumnDef<ITanningStage>[]>(() => [
         {
@@ -30,7 +32,7 @@ const TanningStagesList = () => {
 
     return (
         <GenericList<ITanningStage>
-            data={tanningStages}
+            data={tanningStageList}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedTanningStageId}

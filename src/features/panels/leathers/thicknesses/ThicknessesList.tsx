@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const ThicknessesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const ThicknessesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: thicknesses, isLoading} = thicknessApi.useGetList();
+    const thicknessList = useSafeArray(thicknesses)
 
     const columns = useMemo<MRT_ColumnDef<IThickness>[]>(() => [
         {
@@ -31,7 +33,7 @@ const ThicknessesList = () => {
 
     return (
         <GenericList<IThickness>
-            data={thicknesses}
+            data={thicknessList}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedThicknessId}
