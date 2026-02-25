@@ -1,10 +1,10 @@
 import {type ReactNode, useMemo} from "react";
 import {Route, Outlet} from "react-router";
 import {useAuth} from "@features/auth/model/AuthContext.tsx";
-import {checkPermission} from "@helpers/permissionDetection.ts";
 import type {IRouteConfig} from "@features/routing/RouteConfig.ts";
 import LogoutAndRedirect from "@features/routing/LogoutAndRedirect.tsx";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
+import {checkPermission} from "@features/access-control/permission.utils.ts";
 
 function renderRoutes(
     routes: IRouteConfig[],
@@ -13,8 +13,8 @@ function renderRoutes(
 ): ReactNode[] {
     return routes
         .filter(route => {
-            if (!route.permissionGuardProps) return true;
-            return checkPermission(accessControlList, route.permissionGuardProps);
+            if (!route.permissionCheck) return true;
+            return checkPermission(accessControlList, route.permissionCheck);
         })
         .map((route, index) => {
             const hasChildren = route.children && route.children.length > 0;
