@@ -4,7 +4,7 @@
     "theme": "Theme",
     "language": "Language",
     "go-to-app": "Go back to home page",
-    "go-to-setup-otp": "Go to OTP setup"
+    "go-to-setup-otp": "Configure OTP"
   },
   "profile": {
     "title": "Profile",

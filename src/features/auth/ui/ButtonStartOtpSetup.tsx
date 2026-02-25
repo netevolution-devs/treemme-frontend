@@ -3,6 +3,7 @@ import {useNavigate} from "react-router";
 import type {ButtonProps as MuiButtonProps} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
+import {Security} from "@mui/icons-material";
 
 interface Props extends MuiButtonProps {
     label?: string,
@@ -22,6 +23,7 @@ const ButtonStartOtpSetup = ({label, ...props}: Props) => {
         <Button
             onClick={handleStartOtpSetup}
             variant={"outlined"}
+            endIcon={<Security/>}
             {...props}
         >
             {label ?? t("interface.go-to-setup-otp")}
