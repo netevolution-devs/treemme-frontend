@@ -1,5 +1,5 @@
 import {Navigate, Route, Routes} from "react-router";
-import AuthUserGuard from "./AuthUserGuard.tsx";
+import AuthUserGuard from "../AuthUserGuard.tsx";
 import {useFilteredRoutes} from "@features/routing/ProtectedRoutes.tsx";
 import LoginPage from "@features/auth/ui/LoginPage.tsx";
 import OtpPage from "@features/auth/ui/setup-otp/OtpPage.tsx";

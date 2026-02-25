@@ -7,7 +7,7 @@ import {THEMES} from "@themes/defaultThemeGlobal.ts";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 import LayoutProvider from "@ui/layout/default/LayoutContext.tsx";
 import {DevTools} from "@shared/dev-tools/DevTools.tsx";
-import RoutingDefault from "@features/routing/RoutingDefault.tsx";
+import RoutingDefault from "@features/routing/default/RoutingDefault.tsx";
 
 const queryClient = new QueryClient();
 
