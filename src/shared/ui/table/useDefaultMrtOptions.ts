@@ -25,7 +25,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
     const {i18n} = useTranslation()
 
     return {
-        enableRowVirtualization: overrideProps?.enableRowVirtualization ?? false,
+        enableRowVirtualization: overrideProps?.enableRowVirtualization ?? false, // If true, issues displaying rows when opening before-closed dockview panels
         autoResetPageIndex: false,
         enableColumnActions: false,
         enableFullScreenToggle: false,
