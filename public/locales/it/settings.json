@@ -3,7 +3,8 @@
     "title": "Interfaccia",
     "theme": "Tema",
     "language": "Lingua",
-    "go-back": "Indietro"
+    "go-back": "Indietro",
+    "go-to-setup-otp": "Vai alla configurazione OTP"
   },
   "profile":{
     "title": "Profilo",

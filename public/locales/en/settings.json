@@ -2,7 +2,8 @@
   "interface": {
     "title": "Interface",
     "theme": "Theme",
-    "language": "Language"
+    "language": "Language",
+    "go-to-setup-otp": "Go to OTP setup"
   },
   "profile": {
     "title": "Profile",
