@@ -52,6 +52,7 @@ const GenericList = <TData extends BaseEntity>({
             selected: row.original.id === selectedId,
             sx: {cursor: 'pointer'}
         }),
+        enableRowVirtualization: data.length > 50,
         ..._overrideOptions,
     };
 
