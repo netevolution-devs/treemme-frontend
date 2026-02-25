@@ -1,5 +1,5 @@
 import type {ReactNode} from "react";
-import type {IPermissionCheck} from "@features/access-control/permission.utils.ts";
+import type {IPermissionCheck} from "@features/authz/permission.utils.ts";
 
 export interface IRouteConfig {
     path?: string;

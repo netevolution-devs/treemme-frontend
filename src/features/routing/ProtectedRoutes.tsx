@@ -4,7 +4,7 @@ import {useAuth} from "@features/auth/model/AuthContext.tsx";
 import type {IRouteConfig} from "@features/routing/RouteConfig.ts";
 import LogoutAndRedirect from "@features/routing/LogoutAndRedirect.tsx";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
-import {checkPermission} from "@features/access-control/permission.utils.ts";
+import {hasPermission} from "@features/authz/permission.utils.ts";
 
 function renderRoutes(
     routes: IRouteConfig[],
@@ -14,7 +14,7 @@ function renderRoutes(
     return routes
         .filter(route => {
             if (!route.permissionCheck) return true;
-            return checkPermission(accessControlList, route.permissionCheck);
+            return hasPermission(accessControlList, route.permissionCheck);
         })
         .map((route, index) => {
             const hasChildren = route.children && route.children.length > 0;
