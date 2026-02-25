@@ -13,7 +13,7 @@ export interface BaseEntity {
 }
 
 interface GenericListProps<TData extends BaseEntity> {
-    data: TData[] | undefined;
+    data: TData[];
     isLoading: boolean;
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
@@ -63,7 +63,7 @@ const GenericList = <TData extends BaseEntity>({
         ...defaultMrtOptions,
         ...additionalOptions,
         columns,
-        data: data || [],
+        data: data,
         state: {
             isLoading: isLoading,
             ...additionalOptions?.state
