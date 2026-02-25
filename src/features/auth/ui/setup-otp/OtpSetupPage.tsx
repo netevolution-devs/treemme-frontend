@@ -2,16 +2,15 @@ import {Box} from "@mui/material";
 import {useState} from "react";
 import {useNavigate} from "react-router";
 import BasePage from "@shared/ui/layout/BasePage";
-import ChangePassword from "./ChangePassword";
 import SetupOtp from "./SetupOtp";
 import VerifyDevice from "./VerifyDevice";
 
-type TSteps = "changePassword" | "setupOtp" | "verifyDevice";
+type TSteps = "setupOtp" | "verifyDevice";
 
 const OtpSetupPage = () => {
     const navigate = useNavigate();
 
-    const [step, setStep] = useState<TSteps>("changePassword");
+    const [step, setStep] = useState<TSteps>("setupOtp");
 
     return (
         <BasePage>
@@ -24,11 +23,6 @@ const OtpSetupPage = () => {
                     minHeight: '99vh',
                 }}
             >
-                {step === "changePassword" && (
-                    <ChangePassword
-                        onChangeSuccess={() => setStep("setupOtp")}
-                    />
-                )}
                 {step === "setupOtp" && (
                     <SetupOtp
                         onSetupSuccess={() => setStep("verifyDevice")}
