@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
 
 interface ApiConfig {
@@ -13,16 +13,16 @@ export interface ApiOptions {
 }
 
 export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) => {
-    const { baseEndpoint, queryKey } = config;
+    const {baseEndpoint, queryKey} = config;
 
     return {
         // GET LIST
         useGetList: (options?: ApiOptions) => {
-            const { get } = useApi();
+            const {get} = useApi();
             return useQuery({
                 queryKey: [queryKey, 'LIST', options?.queryParams],
                 queryFn: async () => {
-                    const response = await get<T[]>(baseEndpoint, { params: options?.queryParams });
+                    const response = await get<T[]>(baseEndpoint, {params: options?.queryParams});
                     return response.data.data;
                 },
                 staleTime: options?.staleTime || Infinity,
@@ -32,7 +32,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
 
         // GET DETAIL
         useGetDetail: (id?: number | null) => {
-            const { get } = useApi();
+            const {get} = useApi();
             return useQuery({
                 queryKey: [queryKey, 'DETAIL', id],
                 queryFn: async () => {
@@ -46,7 +46,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
 
         // POST (CREATE)
         usePost: (options?: ApiOptions) => {
-            const { postEncoded: post } = useApi();
+            const {postEncoded: post} = useApi();
             const queryClient = useQueryClient();
             return useMutation({
                 mutationKey: [queryKey, 'CREATE'],
@@ -55,10 +55,10 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     return response.data.data;
                 },
                 onSuccess: () => {
-                    queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
+                    void queryClient.invalidateQueries({queryKey: [queryKey, 'LIST']});
 
                     options?.invalidateQueries?.forEach(key => {
-                        queryClient.invalidateQueries({ queryKey: [key] });
+                        void queryClient.invalidateQueries({queryKey: [key]});
                     });
                 }
             });
@@ -66,20 +66,20 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
 
         // PUT (UPDATE)
         usePut: (options?: ApiOptions) => {
-            const { put } = useApi();
+            const {put} = useApi();
             const queryClient = useQueryClient();
             return useMutation({
                 mutationKey: [queryKey, 'UPDATE'],
-                mutationFn: async ({ id, payload }: { id: number; payload: TPayload }) => {
+                mutationFn: async ({id, payload}: { id: number; payload: TPayload }) => {
                     const response = await put(`${baseEndpoint}/${id}`, payload);
                     return response.data.data;
                 },
                 onSuccess: (_, variables) => {
-                    queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
-                    queryClient.invalidateQueries({ queryKey: [queryKey, 'DETAIL', variables.id] });
+                    void queryClient.invalidateQueries({queryKey: [queryKey, 'LIST']});
+                    void queryClient.invalidateQueries({queryKey: [queryKey, 'DETAIL', variables.id]});
 
                     options?.invalidateQueries?.forEach(key => {
-                        queryClient.invalidateQueries({ queryKey: [key] });
+                        void queryClient.invalidateQueries({queryKey: [key]});
                     });
                 }
             });
@@ -87,7 +87,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
 
         // DELETE
         useDelete: (options?: ApiOptions) => {
-            const { DELETE } = useApi();
+            const {DELETE} = useApi();
             const queryClient = useQueryClient();
             return useMutation({
                 mutationKey: [queryKey, 'DELETE'],
@@ -96,10 +96,10 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     return response.data;
                 },
                 onSuccess: () => {
-                    queryClient.invalidateQueries({ queryKey: [queryKey, 'LIST'] });
+                    void queryClient.invalidateQueries({queryKey: [queryKey, 'LIST']});
 
                     options?.invalidateQueries?.forEach(key => {
-                        queryClient.invalidateQueries({ queryKey: [key] });
+                        void queryClient.invalidateQueries({queryKey: [key]});
                     });
                 }
             });

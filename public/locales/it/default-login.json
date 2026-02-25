@@ -1,6 +1,6 @@
 {
   "splash": {
-    "title": "GESTIONALE INTERNO TREEMME",
+    "title": "TRE EMME S.R.L.",
     "subtitle": "Accedi alla piattaforma"
   },
   "form": {
@@ -34,7 +34,8 @@
       "button": "Verifica dispositivo",
       "description-help": "Per proteggere il tuo account e garantire la massima sicurezza dei tuoi dati, è necessario configurare l'autenticazione a due fattori (2FA).",
       "description-help-2": "Per procedere, avrai bisogno di un'app di autenticazione come Google Authenticator, Microsoft Authenticator o puoi utilizzare le Password di Apple (su dispositivi Apple).",
-      "description-help-3": "Una volta configurata, dovrai inserire un codice a 6 cifre generato dall'app ogni volta che effettui l'accesso, aggiungendo un ulteriore livello di protezione al tuo account."
+      "description-help-3": "Una volta configurata, dovrai inserire un codice a 6 cifre generato dall'app ogni volta che effettui l'accesso, aggiungendo un ulteriore livello di protezione al tuo account.",
+      "already-configured": "L'autenticazione a due fattori è già configurata sul tuo account."
     },
     "verify": {
       "title": "Verifica dispositivo codice OTP",

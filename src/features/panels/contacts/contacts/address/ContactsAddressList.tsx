@@ -12,6 +12,7 @@ import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
 import {Box, Typography} from "@mui/material";
+import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -57,24 +58,32 @@ const ContactsAddressList = () => {
     const editDialogRef = useRef<IDialogActions | null>(null);
 
     const handleOpenCreateDialog = () => {
-        setUIState({ selectedAddressId: null });
+        setUIState({selectedAddressId: null});
         openDialog(editDialogRef);
     }
 
+    const addressList = useSafeArray(contact?.contact_addresses)
+
     return (
         <>
-            <ContactsAddressFormDialog ref={editDialogRef} />
+            <ContactsAddressFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactAddress>
-                data={contact?.contact_addresses || []}
+                data={addressList}
                 isLoading={isLoading}
                 columns={columns}
                 selectedId={selectedAddressId}
-                onRowSelect={(id) => setUIState({ selectedAddressId: id })}
+                onRowSelect={(id) => setUIState({selectedAddressId: id})}
                 onRowDoubleClick={() => openDialog(editDialogRef)}
-                muiToolbarComponent={<ListToolbar buttons={[
-                    <NewButton onClick={() => handleOpenCreateDialog()} />
-                ]} />}
+                additionalOptions={{
+                    enableTopToolbar: true,
+                    renderTopToolbar:
+                        <ListToolbar
+                            buttons={[
+                                <NewButton onClick={() => handleOpenCreateDialog()}/>
+                            ]}
+                        />
+                }}
             />
         </>
     )

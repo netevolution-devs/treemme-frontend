@@ -2,12 +2,16 @@
   "interface": {
     "title": "Interfaccia",
     "theme": "Tema",
-    "language": "Lingua"
+    "language": "Lingua",
+    "go-back": "Indietro",
+    "go-to-app": "Torna all home",
+    "go-to-setup-otp": "Due fattori"
   },
   "profile":{
     "title": "Profilo",
     "not-specified": "Non specificato",
     "card": {
+      "email": "Indirizzo email",
       "phone": "Telefono",
       "fiscal-code": "Codice Fiscale",
       "user-code": "Codice Utente",

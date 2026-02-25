@@ -6,6 +6,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
 import type {ISpecies} from "@features/panels/leathers/species/api/ISpecies.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const SpeciesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const SpeciesList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: species, isLoading} = speciesApi.useGetList();
+    const speciesList = useSafeArray(species)
 
     const columns = useMemo<MRT_ColumnDef<ISpecies>[]>(() => [
         {
@@ -30,11 +32,11 @@ const SpeciesList = () => {
 
     return (
         <GenericList<ISpecies>
-            data={species}
+            data={speciesList}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedSpeciesId}
-            onRowSelect={(id) => setUIState({ selectedSpeciesId: id })}
+            onRowSelect={(id) => setUIState({selectedSpeciesId: id})}
         />
     );
 };

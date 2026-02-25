@@ -8,7 +8,7 @@ export type IRoles = typeof EnumRoles[keyof typeof EnumRoles];
 export interface IAccessControl {
     group: string;
     role: IRoles;
-    workArea: string;
+    resource: string;
     canGet: boolean;
     canPost: boolean;
     canPut: boolean;
@@ -67,7 +67,7 @@ export function AccessControlAdapter(apiAccessControl: IApiAccessControl): IAcce
     return {
         group: apiAccessControl.group,
         role: apiAccessControl.role,
-        workArea: apiAccessControl.work_area,
+        resource: apiAccessControl.work_area,
         canGet: apiAccessControl.can_get,
         canPost: apiAccessControl.can_post,
         canPut: apiAccessControl.can_put,

@@ -2,12 +2,15 @@
   "interface": {
     "title": "Interface",
     "theme": "Theme",
-    "language": "Language"
+    "language": "Language",
+    "go-to-app": "Go back to home page",
+    "go-to-setup-otp": "Configure OTP"
   },
   "profile": {
     "title": "Profile",
     "not-specified": "Not specified",
     "card": {
+      "email": "Email address",
       "phone": "Phone",
       "fiscal-code": "Fiscal Code",
       "user-code": "User Code",

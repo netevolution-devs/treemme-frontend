@@ -9,6 +9,7 @@ import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts"
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const ContactsList = () => {
     const {t} = useTranslation(["form"]);
@@ -31,6 +32,7 @@ const ContactsList = () => {
     );
 
     const {data: contacts, isLoading} = contactsApi.useGetList({queryParams});
+    const contactList = useSafeArray(contacts)
 
     const columns = useMemo<MRT_ColumnDef<IContact>[]>(() => [
         {
@@ -39,28 +41,34 @@ const ContactsList = () => {
             enableColumnFilter: false
         }
     ], [t]);
-    
+
     return (
         <GenericList<IContact>
-            data={contacts}
+            data={contactList}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedContactId}
-            onRowSelect={(id) => setUIState({ selectedContactId: id })}
-            muiToolbarComponent={<ListToolbar filters={[
-                <TextFieldFilter
-                    key="f-contact_name"
-                    label={t("contacts.filters.name")}
-                    value={filterContactName}
-                    onFilterChange={(val) => setFilters({ filterContactName: val as string })}
-                />,
-                <TextFieldFilter
-                    key="f-detail_name"
-                    label={t("contacts.filters.detail")}
-                    value={filterDetailName}
-                    onFilterChange={(val) => setFilters({ filterDetailName: val as string })}
-                />,
-            ]} />}
+            onRowSelect={(id) => setUIState({selectedContactId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar:
+                    <ListToolbar
+                        filters={[
+                            <TextFieldFilter
+                                key="f-contact_name"
+                                label={t("contacts.filters.name")}
+                                value={filterContactName}
+                                onFilterChange={(val) => setFilters({filterContactName: val as string})}
+                            />,
+                            <TextFieldFilter
+                                key="f-detail_name"
+                                label={t("contacts.filters.detail")}
+                                value={filterDetailName}
+                                onFilterChange={(val) => setFilters({filterDetailName: val as string})}
+                            />,
+                        ]}
+                    />
+            }}
         />
     );
 };
