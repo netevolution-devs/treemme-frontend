@@ -147,7 +147,13 @@
       "container-piece": "Nr x Cnt",
       "crust-revenue-expected": "Ricavi crosta",
       "sqft-leather-expected": "RPQ",
-      "kg-leather-expected": "RKG"
+      "kg-leather-expected": "RKG",
+      "leather-min": "Minimo",
+      "leather-max": "Massimo",
+      "leather-avg": "Media",
+      "sqft-label": "Resa PQ",
+      "kg-label": "Resa KG",
+      "statistic_update": "Aggiorna statistiche resa"
     }
   }
 }

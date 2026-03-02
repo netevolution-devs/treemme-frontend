@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
+import {type ILeatherPayload, leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
 import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
 import {originApi} from "@features/panels/leathers/origins/api/originApi.ts";
@@ -12,8 +12,9 @@ import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts"
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box} from "@mui/material";
+import {Box, TextField, Typography} from "@mui/material";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 
 export type ILeatherForm = Omit<ILeather, "id"
     | "contact"
@@ -38,7 +39,7 @@ export type ILeatherForm = Omit<ILeather, "id"
     | "container_piece"
     | "crust_revenue_expected"
 > & {
-    contact_id: number;
+    supplier_id: number;
     weight_id: number;
     thickness_id: number;
     flay_id: number;
@@ -80,7 +81,7 @@ const LeathersForm = () => {
             selectedId={selectedLeatherId}
             entity={leather}
             emptyValues={{
-                contact_id: 0,
+                supplier_id: 0,
                 weight_id: 0,
                 species_id: 0,
                 // supplier_id: 0,
@@ -96,7 +97,7 @@ const LeathersForm = () => {
                 crust_revenue_expected: null,
             }}
             mapEntityToForm={(x) => ({
-                contact_id: x.contact.id,
+                supplier_id: x.supplier.id,
                 weight_id: x.weight.id,
                 species_id: x.species.id,
                 thickness_id: x.thickness.id,
@@ -110,18 +111,84 @@ const LeathersForm = () => {
                 container_piece: x.container_piece,
                 crust_revenue_expected: x.crust_revenue_expected,
             })}
-            create={(payload) => createLeather(payload as any)}
-            update={(id, payload) => updateLeather({id, payload: payload as any})}
+            // TODO: use correct code and name
+            create={(payload) => createLeather({...payload,
+                code: "test-code-" + Date.now(),
+                name: "test-name-" + Date.now(),
+            } as ILeatherPayload)}
+            update={(id, payload) => updateLeather({id, payload: payload as ILeatherPayload})}
             remove={(id) => deleteLeather(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedLeatherId: null})}
-            validateBeforeSave={(v) => !!v.weight_id && !!v.species_id && !!v.thickness_id && !!v.flay_id && !!v.type_id && !!v.provenance_id && !!v.status_id && !!v.sqft_leather_expected && !!v.kg_leather_expected}
+            validateBeforeSave={(v) => !!v.weight_id && !!v.species_id && !!v.thickness_id && !!v.flay_id && !!v.type_id && !!v.provenance_id && !!v.status_id}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                        <TextField
+                            label={t("leathers.leather.code")}
+                            value={leather?.code}
+                            sx={{pb: 2}}
+                            disabled
+                        />
+                        <FlagCheckBoxFieldControlled<ILeatherForm>
+                            name={"statistic_update"}
+                            label={t("leathers.leather.statistic_update")}
+                        />
+                    </Box>
+
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
+                        <Box>
+                            <Typography sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
+                            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                                <TextField
+                                    label={t("leathers.leather.leather-min")}
+                                    value={leather?.sqft_leather_min}
+                                    sx={{pb: 2}}
+                                    disabled
+                                />
+                                <TextField
+                                    label={t("leathers.leather.leather-max")}
+                                    value={leather?.sqft_leather_max}
+                                    sx={{pb: 2}}
+                                    disabled
+                                />
+                                <TextField
+                                    label={t("leathers.leather.leather-avg")}
+                                    value={leather?.sqft_leather_media}
+                                    sx={{pb: 2}}
+                                    disabled
+                                />
+                            </Box>
+                        </Box>
+                        <Box>
+                            <Typography sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
+                            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                                <TextField
+                                    label={t("leathers.leather.leather-min")}
+                                    value={leather?.kg_leather_min}
+                                    sx={{pb: 2}}
+                                    disabled
+                                />
+                                <TextField
+                                    label={t("leathers.leather.leather-max")}
+                                    value={leather?.kg_leather_max}
+                                    sx={{pb: 2}}
+                                    disabled
+                                />
+                                <TextField
+                                    label={t("leathers.leather.leather-avg")}
+                                    value={leather?.kg_leather_media}
+                                    sx={{pb: 2}}
+                                    disabled
+                                />
+                            </Box>
+                        </Box>
+                    </Box>
+
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <SelectFieldControlled<ILeatherForm>
-                            name={"contact_id"}
+                            name={"supplier_id"}
                             label={t("leathers.leather.contact")}
                             options={contacts.map((x) => ({
                                 label: x.name,
