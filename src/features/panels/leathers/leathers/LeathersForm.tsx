@@ -129,6 +129,22 @@ const LeathersForm = () => {
                             label={t("leathers.leather.code")}
                             value={leather?.code}
                             sx={{pb: 2}}
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: !!leather?.code
+                                }
+                            }}
+                            disabled
+                        />
+                        <TextField
+                            label={t("leathers.leather.name")}
+                            value={leather?.name}
+                            sx={{pb: 2}}
+                            slotProps={{
+                                inputLabel: {
+                                    shrink: !!leather?.name
+                                }
+                            }}
                             disabled
                         />
                         <FlagCheckBoxFieldControlled<ILeatherForm>
