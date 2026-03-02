@@ -53,7 +53,7 @@ const TanningStagesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedTanningStageId: null})}
-            validateBeforeSave={(v) => !!v.name && !!v.code && !!v.flower_yield_coefficient && !!v.measurement_unit_id}
+            validateBeforeSave={(v) => !!v.name && !!v.code && !!v.measurement_unit_id}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', gap: 1}}>
@@ -66,6 +66,14 @@ const TanningStagesForm = () => {
                             label={t("leathers.status.name")}
                         />
                     </Box>
+                    <SelectFieldControlled<ITanningStageForm>
+                        name={"measurement_unit_id"}
+                        label={t("leathers.status.measurement-unit")}
+                        options={measurementUnits?.map(x => ({
+                            label: `${x.prefix} - ${x.name}`,
+                            value: x.id,
+                        })) || []}
+                    />
                     <Box sx={{display: 'flex', gap: 1}}>
                         <NumberFieldControlled<ITanningStageForm>
                             name={"flower_yield_coefficient"}
@@ -73,14 +81,6 @@ const TanningStagesForm = () => {
                             step={0.01}
                         />
                     </Box>
-                        <SelectFieldControlled<ITanningStageForm>
-                            name={"measurement_unit_id"}
-                            label={t("leathers.status.measurement-unit")}
-                            options={measurementUnits?.map(x => ({
-                                label: x.name,
-                                value: x.id,
-                            })) || []}
-                        />
                 </>
             )}
         />
