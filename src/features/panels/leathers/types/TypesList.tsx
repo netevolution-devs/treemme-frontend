@@ -6,7 +6,6 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ILeatherType} from "@features/panels/leathers/types/api/ILeatherType.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const TypesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,8 +14,7 @@ const TypesList = () => {
     const selectedTypeId = useStore(state => state.uiState.selectedTypeId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: types, isLoading} = leatherTypeApi.useGetList();
-    const typeList = useSafeArray(types)
+    const {data: types = [], isLoading} = leatherTypeApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<ILeatherType>[]>(() => [
         {
@@ -32,7 +30,7 @@ const TypesList = () => {
 
     return (
         <GenericList<ILeatherType>
-            data={typeList}
+            data={types}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedTypeId}

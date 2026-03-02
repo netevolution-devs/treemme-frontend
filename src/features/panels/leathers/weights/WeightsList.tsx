@@ -6,7 +6,6 @@ import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IWeight} from "@features/panels/leathers/weights/api/IWeight.ts";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const WeightsList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,8 +14,7 @@ const WeightsList = () => {
     const selectedWeightId = useStore((state) => state.uiState.selectedWeightId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: weights, isLoading} = weightApi.useGetList();
-    const weightList = useSafeArray(weights)
+    const {data: weights = [], isLoading} = weightApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IWeight>[]>(() => [
         {
@@ -27,7 +25,7 @@ const WeightsList = () => {
 
     return (
         <GenericList<IWeight>
-            data={weightList}
+            data={weights}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedWeightId}

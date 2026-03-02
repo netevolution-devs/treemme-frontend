@@ -11,7 +11,6 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const ContactsDetailList = () => {
     const {t} = useTranslation(["form"]);
@@ -49,14 +48,12 @@ const ContactsDetailList = () => {
         openDialog(editDialogRef);
     }
 
-    const contactDetail = useSafeArray(contact?.contact_details)
-
     return (
         <>
             <ContactsDetailFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactDetail>
-                data={contactDetail}
+                data={contact?.contact_details || []}
                 isLoading={isLoading}
                 columns={columns}
                 selectedId={selectedDetailId}

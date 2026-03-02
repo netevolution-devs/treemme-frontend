@@ -6,12 +6,10 @@ import type {INationsStoreState} from "@features/panels/contacts/nations/Nations
 import type {INation} from "@features/panels/contacts/nations/api/INation.ts";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList.tsx";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const NationsList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: nations, isLoading} = nationsApi.useGetList();
-    const nationList = useSafeArray(nations)
+    const {data: nations = [], isLoading} = nationsApi.useGetList();
 
     const {useStore} = usePanel<unknown, INationsStoreState>();
     const selectedNationId = useStore(state => state.uiState.selectedNationId);
@@ -26,7 +24,7 @@ const NationsList = () => {
 
     return (
         <GenericList<INation>
-            data={nationList}
+            data={nations}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedNationId}
