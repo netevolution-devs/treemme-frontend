@@ -129,7 +129,7 @@ const OriginsForm = () => {
                     </Box>
                     <SelectFieldControlled<IOriginForm>
                         name="flay_id"
-                        label={t("leathers.origins.flay")}
+                        label={t("leathers.origin.flay")}
                         options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
                         minWidth={"50%"}
                     />
