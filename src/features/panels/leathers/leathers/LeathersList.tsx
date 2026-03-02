@@ -8,12 +8,23 @@ import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts"
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
 
 interface LeatherListProps {
     enableFilters?: boolean;
+    panelFilter?:
+        "flay" |
+        "provenance" |
+        "species" |
+        "status" |
+        "thickness" |
+        "type" |
+        "weight" |
+        undefined
+    selectedQueryId?: number;
 }
 
-const LeatherList = ({enableFilters = false}: LeatherListProps) => {
+const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: LeatherListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<ILeatherStoreFilter, ILeathersStoreState>();
@@ -23,7 +34,15 @@ const LeatherList = ({enableFilters = false}: LeatherListProps) => {
 
     const filterProvenance = useStore(state => state.filters.filterProvenance);
 
-    const {data: leathers = [], isLoading} = leatherApi.useGetList();
+    const queryParams = useMemo(() => cleanFilters(
+            {
+                [panelFilter as string]: selectedQueryId,
+            }
+        ),
+        [panelFilter]
+    ) as Record<string, string | number>
+
+    const {data: leathers = [], isLoading} = leatherApi.useGetList({queryParams});
 
     const columns = useMemo<MRT_ColumnDef<ILeather>[]>(() => [
         {

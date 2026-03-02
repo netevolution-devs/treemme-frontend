@@ -6,6 +6,7 @@ import WeightsForm from "@features/panels/leathers/weights/WeightsForm.tsx";
 
 export interface IWeightsStoreState extends IPanelUIState {
     selectedWeightId?: number | null;
+    selectedLeatherId?: number | null;
 }
 
 const WeightsPanel = () => {
