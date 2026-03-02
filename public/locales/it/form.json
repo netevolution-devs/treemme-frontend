@@ -132,6 +132,22 @@
       "sea-shipment": "Spedizione mare",
       "trip-day": "Giorni viaggio",
       "flay": "Scortico predefinito"
+    },
+    "leather": {
+      "code": "Codice",
+      "name": "Nome",
+      "contact": "Fornitore",
+      "origin": "Provenienza",
+      "species": "Specie",
+      "type": "Tipo",
+      "status": "Stato lavorazione",
+      "thickness": "Spessore",
+      "weight": "Peso",
+      "flay": "Scortico",
+      "container-piece": "Nr x Cnt",
+      "crust-revenue-expected": "Ricavi crosta",
+      "sqft-leather-expected": "RPQ",
+      "kg-leather-expected": "RKG"
     }
   }
 }

@@ -38,7 +38,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
 
                 return (
                     <Autocomplete
-                        sx={{ minWidth }}
+                        sx={{ minWidth, width: "100%" }}
                         options={options}
                         disabled={disabled}
                         value={selectedOption}
