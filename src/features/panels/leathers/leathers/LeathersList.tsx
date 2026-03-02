@@ -1,18 +1,27 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
+import type {ILeathersStoreState, ILeatherStoreFilter} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
 
-const LeatherList = () => {
+interface LeatherListProps {
+    enableFilters?: boolean;
+}
+
+const LeatherList = ({enableFilters = false}: LeatherListProps) => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, ILeathersStoreState>();
+    const {useStore} = usePanel<ILeatherStoreFilter, ILeathersStoreState>();
     const selectedLeatherId = useStore(state => state.uiState.selectedLeatherId);
     const setUIState = useStore(state => state.setUIState);
+    const setFilters = useStore(state => state.setFilters);
+
+    const filterProvenance = useStore(state => state.filters.filterProvenance);
 
     const {data: leathers = [], isLoading} = leatherApi.useGetList();
 
@@ -35,6 +44,21 @@ const LeatherList = () => {
             columns={columns}
             selectedId={selectedLeatherId}
             onRowSelect={(id) => setUIState({selectedLeatherId: id})}
+            additionalOptions={{
+                enableTopToolbar: enableFilters,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        filters={[
+                            <TextFieldFilter
+                                key="f-leather_provenance"
+                                label={t("leathers.leather.provenance")}
+                                value={filterProvenance}
+                                onFilterChange={(val) => setFilters({filterProvenance: val as string})}
+                            />
+                        ]}
+                    />
+                )
+            }}
         />
     )
 }

@@ -8,6 +8,10 @@ export interface ILeathersStoreState extends IPanelUIState {
     selectedLeatherId?: number | null;
 }
 
+export interface ILeatherStoreFilter {
+    filterProvenance?: string;
+}
+
 const LeathersPanel = () => {
     const initialUiState: ILeathersStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
@@ -16,7 +20,7 @@ const LeathersPanel = () => {
             kind={"leathers"}
             initialState={{uiState: initialUiState}}
         >
-            <LeathersList />
+            <LeathersList enableFilters/>
             <LeathersForm />
         </GenericPanel>
     )
