@@ -1,9 +1,11 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import FlayingList from "@features/panels/leathers/flaying/FlayingList.tsx";
+import FlayingForm from "@features/panels/leathers/flaying/FlayingForm.tsx";
 
 export interface IFlayingStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedFlayId?: number | null;
 }
 
 const FlayingPanel = () => {
@@ -14,8 +16,8 @@ const FlayingPanel = () => {
             kind={"flaying"}
             initialState={{uiState: initialUiState}}
         >
-            <div>List placeholder for Flaying</div>
-            <div>Form placeholder for Flaying</div>
+            <FlayingList />
+            <FlayingForm />
         </GenericPanel>
     )
 }

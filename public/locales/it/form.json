@@ -116,8 +116,12 @@
     "status": {
       "name": "Nome stato",
       "code": "Codice",
-      "flower-yield-coefficient": "Coefficiente resa PSP",
+      "flower-yield-coefficient": "Fiore",
       "measurement-unit": "Unità di misura"
+    },
+    "flay": {
+      "name": "Scuoiatura",
+      "code": "Codice"
     }
   }
 }
