@@ -93,7 +93,7 @@ const LeathersForm = () => {
                 status_id: 0,
                 sqft_leather_expected: null,
                 kg_leather_expected: null,
-                statistic_update: false,
+                statistic_update: true,
                 container_piece: null,
                 crust_revenue_expected: null,
             }}
