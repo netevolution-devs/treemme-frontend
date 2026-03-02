@@ -12,9 +12,10 @@ import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts"
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box, TextField, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 
 export type ILeatherForm = Omit<ILeather, "id"
     | "contact"
@@ -125,27 +126,15 @@ const LeathersForm = () => {
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <TextField
+                        <TextFieldValue
                             label={t("leathers.leather.code")}
                             value={leather?.code}
-                            sx={{pb: 2}}
-                            slotProps={{
-                                inputLabel: {
-                                    shrink: !!leather?.code
-                                }
-                            }}
-                            disabled
+                            isFilled={!!selectedLeatherId}
                         />
-                        <TextField
+                        <TextFieldValue
                             label={t("leathers.leather.name")}
                             value={leather?.name}
-                            sx={{pb: 2}}
-                            slotProps={{
-                                inputLabel: {
-                                    shrink: !!leather?.name
-                                }
-                            }}
-                            disabled
+                            isFilled={!!selectedLeatherId}
                         />
                         <FlagCheckBoxFieldControlled<ILeatherForm>
                             name={"statistic_update"}
@@ -157,46 +146,40 @@ const LeathersForm = () => {
                         <Box>
                             <Typography sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                                <TextField
+                                <TextFieldValue
                                     label={t("leathers.leather.leather-min")}
                                     value={leather?.sqft_leather_min}
-                                    sx={{pb: 2}}
-                                    disabled
+                                    isFilled={!!selectedLeatherId && !!leather?.sqft_leather_min}
                                 />
-                                <TextField
+                                <TextFieldValue
                                     label={t("leathers.leather.leather-max")}
                                     value={leather?.sqft_leather_max}
-                                    sx={{pb: 2}}
-                                    disabled
+                                    isFilled={!!selectedLeatherId && !!leather?.sqft_leather_max}
                                 />
-                                <TextField
+                                <TextFieldValue
                                     label={t("leathers.leather.leather-avg")}
                                     value={leather?.sqft_leather_media}
-                                    sx={{pb: 2}}
-                                    disabled
+                                    isFilled={!!selectedLeatherId && !!leather?.sqft_leather_media}
                                 />
                             </Box>
                         </Box>
                         <Box>
                             <Typography sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                                <TextField
+                                <TextFieldValue
                                     label={t("leathers.leather.leather-min")}
                                     value={leather?.kg_leather_min}
-                                    sx={{pb: 2}}
-                                    disabled
+                                    isFilled={!!selectedLeatherId && !!leather?.kg_leather_min}
                                 />
-                                <TextField
+                                <TextFieldValue
                                     label={t("leathers.leather.leather-max")}
                                     value={leather?.kg_leather_max}
-                                    sx={{pb: 2}}
-                                    disabled
+                                    isFilled={!!selectedLeatherId && !!leather?.kg_leather_max}
                                 />
-                                <TextField
+                                <TextFieldValue
                                     label={t("leathers.leather.leather-avg")}
                                     value={leather?.kg_leather_media}
-                                    sx={{pb: 2}}
-                                    disabled
+                                    isFilled={!!selectedLeatherId && !!leather?.kg_leather_media}
                                 />
                             </Box>
                         </Box>
