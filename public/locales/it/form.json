@@ -122,6 +122,16 @@
     "flay": {
       "name": "Scuoiatura",
       "code": "Codice"
+    },
+    "origin": {
+      "code": "Codice",
+      "area": "Zona di provenienza",
+      "crust-yield-coefficient": "Crosta",
+      "grain-yield-coefficient": "Fiore",
+      "psp-yield-coefficient": "Coefficiente resa PSP",
+      "sea-shipment": "Spedizione mare",
+      "trip-day": "Giorni viaggio",
+      "flay": "Scortico predefinito"
     }
   }
 }
