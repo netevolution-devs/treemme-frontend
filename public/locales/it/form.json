@@ -170,5 +170,10 @@
         "gcz": "GCZ"
       }
     }
+  },
+  "production": {
+    "batch": {
+      "batch_code": "Codice lotto"
+    }
   }
 }

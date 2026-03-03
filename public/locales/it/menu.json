@@ -47,7 +47,7 @@
     },
     "production": {
       "self": "Produzione",
-      "lots": "Gestione Lotti",
+      "batches": "Lotti",
       "recipes": "Ricette",
       "machinery": "Macchinari",
       "progress": "Avanzamento Produzione",
