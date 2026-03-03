@@ -12,7 +12,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
