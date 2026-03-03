@@ -112,11 +112,13 @@ const BatchesForm = () => {
                             label={t("production.batch.sq_ft_average_expected")}
                             value={batchItem?.sq_ft_average_expected}
                             isFilled={!!selectedBatchId}
+                            precision={2}
                         />
                         <TextFieldValue
                             label={t("production.batch.sq_ft_average_found")}
                             value={batchItem?.sq_ft_average_found}
                             isFilled={!!selectedBatchId}
+                            precision={2}
                         />
                         <FlagCheckBoxFieldControlled<IBatchesForm>
                             name="sampling"
@@ -170,6 +172,7 @@ const BatchesForm = () => {
                             label={t("production.batch.stock_quantity")}
                             value={batchItem?.stock_quantity}
                             isFilled={!!selectedBatchId}
+                            precision={2}
                         />
                     </Box>
 
@@ -178,6 +181,7 @@ const BatchesForm = () => {
                             name="leather_id"
                             label={t("production.batch.leather")}
                             options={leathers.map(x => ({label: x.name, value: x.id}))}
+                            deactivated={!!batchItem}
                         />
                     </Box>
 
