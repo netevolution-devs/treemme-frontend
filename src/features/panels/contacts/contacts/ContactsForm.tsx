@@ -9,7 +9,8 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import {contactsTitleApi} from "@features/panels/contacts/contacts/api/contacts-title/contactsTitleApi.ts";
 import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
 import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-type/contactsTypeApi.ts";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 
 export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type' | 'contact_addresses' | 'contact_details'> & {
     contact_title_id: number;
@@ -43,13 +44,17 @@ const ContactsForm = () => {
                 name: '',
                 contact_note: '',
                 contact_title_id: 0,
-                contact_type_id: 0
+                contact_type_id: 0,
+                client: false,
+                supplier: false,
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
                 contact_note: x.contact_note,
                 contact_title_id: x.contact_title.id,
-                contact_type_id: x.contact_type.id
+                contact_type_id: x.contact_type.id,
+                client: x.client,
+                supplier: x.supplier,
             })}
             create={(payload) => createContact(payload)}
             update={(id, payload) => updateContact({ id, payload })}
@@ -64,6 +69,21 @@ const ContactsForm = () => {
             validateBeforeSave={(v) => !!v.name && !!v.contact_title_id && !!v.contact_type_id}
             renderFields={() => (
                 <>
+                    <Box>
+                        <Typography>{t("contacts.select")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <FlagCheckBoxFieldControlled<IContactForm>
+                                name="client"
+                                label={t("contacts.client")}
+                                width={100}
+                            />
+                            <FlagCheckBoxFieldControlled<IContactForm>
+                                name="supplier"
+                                label={t("contacts.supplier")}
+                                width={100}
+                            />
+                        </Box>
+                    </Box>
                     <RadioFieldControlled<IContactForm>
                         name="contact_type_id"
                         label={t("contacts.type")}

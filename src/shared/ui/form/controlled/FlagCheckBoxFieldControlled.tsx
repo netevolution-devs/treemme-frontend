@@ -3,11 +3,16 @@ import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldPr
 import { Checkbox, FormControlLabel, FormGroup, FormHelperText, Box } from "@mui/material";
 import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
 
+interface FlagCheckBoxFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
+    width?: number;
+}
+
 const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
                                                                            name,
                                                                            label,
                                                                            showHelperRow = true,
-                                                                       }: ControlledFieldProps<TFieldValues>) => {
+                                                                           width,
+                                                                       }: FlagCheckBoxFieldProps<TFieldValues>) => {
     const {
         control,
         formState: { disabled }
@@ -36,7 +41,7 @@ const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
                                     '& .MuiFormControlLabel-label': {
                                         fontSize: '0.875rem',
                                     },
-                                    width: "200px"
+                                    width: width || "200px"
                                 }}
                             />
                         </FormGroup>

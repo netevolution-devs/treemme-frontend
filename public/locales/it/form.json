@@ -63,6 +63,9 @@
     "name": "Nazione"
   },
   "contacts": {
+    "select": "Tipologia",
+    "client": "Cliente",
+    "supplier": "Fornitore",
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",
