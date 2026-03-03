@@ -20,7 +20,7 @@ const LeathersPanel = () => {
             kind={"leathers"}
             initialState={{uiState: initialUiState}}
         >
-            <LeathersList enableFilters/>
+            <LeathersList enableFilters={false}/>
             <LeathersForm />
         </GenericPanel>
     )

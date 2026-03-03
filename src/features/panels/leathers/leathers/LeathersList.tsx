@@ -54,13 +54,92 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
             accessorKey: "name",
             header: t("leathers.leather.name"),
         }
-    ], [t])
+    ], [t]);
+
+    const specificColumns = useMemo<MRT_ColumnDef<ILeather>[]>(() => [
+        {
+            accessorKey: "supplier.name",
+            header: t("leathers.leather.table.supplier"),
+        },
+        {
+            accessorKey: "code",
+            header: t("leathers.leather.code"),
+        },
+        {
+            accessorKey: "species.name",
+            header: t("leathers.leather.species"),
+        },
+        {
+            accessorKey: "type.name",
+            header: t("leathers.leather.type")
+        },
+        {
+            accessorKey: "status.name",
+            header: t("leathers.leather.status"),
+        },
+        {
+            accessorKey: "weight.name",
+            header: t("leathers.leather.weight"),
+        },
+        {
+            accessorKey: "provenance.code",
+            header: t("leathers.leather.provenance"),
+        },
+        {
+            accessorKey: "flay.name",
+            header: t("leathers.leather.flay"),
+        },
+        // sps ?
+        // pqp ?
+        {
+            accessorKey: "sqft_leather_expected",
+            header: t("leathers.leather.table.pqp"),
+        },
+        {
+            accessorKey: "sqft_leather_min",
+            header: t("leathers.leather.table.pqp_min"),
+        },
+        {
+            accessorKey: "sqft_leather_max",
+            header: t("leathers.leather.table.pqp_max"),
+        },
+        {
+            accessorKey: "sqft_leather_media",
+            header: t("leathers.leather.table.pqp_m"),
+        },
+        {
+            accessorKey: "sqft_leather_max",
+            header: t("leathers.leather.table.pqp_max"),
+        },
+        // kgp
+        {
+            accessorKey: "kg_leather_expected",
+            header: t("leathers.leather.table.kgp"),
+        },
+        {
+            accessorKey: "kg_leather_min",
+            header: t("leathers.leather.table.kg_min"),
+        },
+        {
+            accessorKey: "kg_leather_max",
+            header: t("leathers.leather.table.kg_max"),
+        },
+        {
+            accessorKey: "kg_leather_media",
+            header: t("leathers.leather.table.kg_m"),
+        },
+        {
+            accessorKey: "kg_leather_max",
+            header: t("leathers.leather.table.kg_max"),
+        },
+        // gcz
+    ], [t]);
 
     return (
         <GenericList<ILeather>
             data={leathers}
             isLoading={isLoading}
-            columns={columns}
+            columns={panelFilter ? specificColumns : columns}
             selectedId={selectedLeatherId}
             onRowSelect={(id) => setUIState({selectedLeatherId: id})}
             additionalOptions={{

@@ -153,7 +153,19 @@
       "leather-avg": "Media",
       "sqft-label": "Resa PQ",
       "kg-label": "Resa KG",
-      "statistic_update": "Aggiorna statistiche resa"
+      "statistic_update": "Aggiorna statistiche resa",
+      "table": {
+        "supplier": "Fornitore",
+        "pqp": "PQP",
+        "pqp_min": "PQP MIN",
+        "pqp_max": "PQP MAX",
+        "pqp_m": "PQM",
+        "kgp": "KGP",
+        "kg_min": "KG MIN",
+        "kg_max": "KG MAX",
+        "kg_m": "KGM",
+        "gcz": "GCZ"
+      }
     }
   }
 }
