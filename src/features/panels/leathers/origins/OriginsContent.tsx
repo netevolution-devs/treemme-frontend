@@ -9,7 +9,7 @@ const OriginsContent = () => {
     return (
         <>
             {selectedId && (
-                <LeathersList panelFilter={"species"} selectedQueryId={selectedId}/>
+                <LeathersList panelFilter={"provenance"} selectedQueryId={selectedId}/>
             )}
         </>
     )

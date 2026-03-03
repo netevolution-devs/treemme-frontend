@@ -9,7 +9,7 @@ const FlayingContent = () => {
     return (
         <>
             {selectedId && (
-                <LeathersList panelFilter={"species"} selectedQueryId={selectedId}/>
+                <LeathersList panelFilter={"flay"} selectedQueryId={selectedId}/>
             )}
         </>
     )
