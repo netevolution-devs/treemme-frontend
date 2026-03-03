@@ -32,9 +32,13 @@ const ContactsPanel = () => {
             <Stack gap={2}>
                 <ContactsList />
                 <ContactsForm />
-                <Box sx={{display: 'flex', flexDirection: {xl: 'row', lg: 'column'}, gap: 0.7, width: '100%'}}>
-                    <ContactsAddressContent />
-                    <ContactsDetailContent />
+        <Box sx={{display: 'flex', flexDirection: {xs: 'column', xl: 'row'}, flexWrap: 'wrap', gap: 1, width: '100%'}}>
+                    <Box sx={{flex: '1 1 450px', minWidth: 0}}>
+                        <ContactsAddressContent />
+                    </Box>
+                    <Box sx={{flex: '1 1 450px', minWidth: 0}}>
+                        <ContactsDetailContent />
+                    </Box>
                 </Box>
             </Stack>
         </GenericPanel>
