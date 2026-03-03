@@ -22,6 +22,7 @@ interface GenericListProps<TData extends BaseEntity> {
     additionalOptions?: Partial<MRT_TableOptions<TData>>;
     overrideOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
+    minHeight?: string;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -34,11 +35,12 @@ const GenericList = <TData extends BaseEntity>({
                                                    additionalOptions,
                                                    overrideOptions: _overrideOptions,
                                                    maxHeight = '400px',
+                                                   minHeight = '400px',
                                                }: GenericListProps<TData>) => {
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
         muiTableContainerProps: {
-            sx: {maxHeight},
+            sx: {maxHeight, minHeight},
         },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
@@ -72,7 +74,7 @@ const GenericList = <TData extends BaseEntity>({
     });
 
     return (
-        <Box sx={{width: '100%', overflowY: 'auto'}}>
+        <Box sx={{width: '100%', overflowY: 'auto', minHeight}}>
             <MaterialReactTable table={table}/>
         </Box>
     );

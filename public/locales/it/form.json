@@ -171,9 +171,30 @@
       }
     }
   },
-  "production": {
+    "production": {
     "batch": {
-      "batch_code": "Codice lotto"
+      "batch_code": "Lotto",
+      "batch_date": "Data",
+      "batch_type": "Tipo Lotto",
+      "leather": "Pellame",
+      "measurement_unit": "Unità di misura",
+      "pieces": "Pezzi",
+      "quantity": "Quantità",
+      "sq_ft_average_expected": "Resa PQ",
+      "sq_ft_average_found": "Media PQ trovata",
+      "stock_items": "Giacenza Pezzi",
+      "stock_quantity": "Giacenza quantità",
+      "completed": "Terminato",
+      "checked": "Controllato",
+      "sampling": "Campione",
+      "split_selected": "Spaccato",
+      "notes_section": "Note",
+      "batch_note": "Note lotto",
+      "selection_note": "Note scelta",
+      "check_section": "Controllo",
+      "check_date": "Data controllo",
+      "check_user": "Utente controllo",
+      "check_note": "Note controllo"
     }
   }
 }

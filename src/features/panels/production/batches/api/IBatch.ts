@@ -1,12 +1,14 @@
 import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
 import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
+import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType.ts";
+import type {IUser} from "@features/user/model/UserInterfaces.ts";
 
 export interface IBatch {
     id: number;
     leather: ILeather;
-    batch_type: unknown;
+    batch_type: IBatchType;
     measurement_unit: IMeasurementUnit;
-    check_user: unknown;
+    check_user: IUser;
     completed: boolean;
     checked: boolean;
     batch_code: string;
