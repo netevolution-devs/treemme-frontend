@@ -3,8 +3,10 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import WeightsList from "@features/panels/leathers/weights/WeightsList.tsx";
 import WeightsForm from "@features/panels/leathers/weights/WeightsForm.tsx";
+import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
+import WeightsContent from "@features/panels/leathers/weights/WeightsContent.tsx";
 
-export interface IWeightsStoreState extends IPanelUIState {
+export interface IWeightsStoreState extends IPanelUIState, ILeathersStoreState {
     selectedWeightId?: number | null;
 }
 
@@ -16,8 +18,9 @@ const WeightsPanel = () => {
             kind={"weights"}
             initialState={{uiState: initialUiState}}
         >
-            <WeightsList />
-            <WeightsForm />
+            <WeightsList/>
+            <WeightsForm/>
+            <WeightsContent/>
         </GenericPanel>
     )
 }

@@ -9,12 +9,12 @@ import type {IWeight} from "@features/panels/leathers/weights/api/IWeight.ts";
 
 const WeightsList = () => {
     const {t} = useTranslation(["form"]);
-    const {useStore} = usePanel<unknown, IWeightsStoreState>();
 
+    const {useStore} = usePanel<unknown, IWeightsStoreState>();
     const selectedWeightId = useStore((state) => state.uiState.selectedWeightId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: weights, isLoading} = weightApi.useGetList();
+    const {data: weights = [], isLoading} = weightApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IWeight>[]>(() => [
         {

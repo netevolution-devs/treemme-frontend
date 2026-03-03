@@ -1,9 +1,15 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import LeathersList from "@features/panels/leathers/leathers/LeathersList.tsx";
+import LeathersForm from "@features/panels/leathers/leathers/LeathersForm.tsx";
 
 export interface ILeathersStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedLeatherId?: number | null;
+}
+
+export interface ILeatherStoreFilter {
+    filterProvenance?: string;
 }
 
 const LeathersPanel = () => {
@@ -14,8 +20,8 @@ const LeathersPanel = () => {
             kind={"leathers"}
             initialState={{uiState: initialUiState}}
         >
-            <div>List placeholder for Leathers</div>
-            <div>Form placeholder for Leathers</div>
+            <LeathersList enableFilters={false}/>
+            <LeathersForm />
         </GenericPanel>
     )
 }

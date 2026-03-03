@@ -123,6 +123,8 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
             await update(selectedId, cleanData);
         } else {
             await create(cleanData);
+            methods.reset(emptyValues);
+            setFormState('init');
         }
         handleCloseDialog();
     };

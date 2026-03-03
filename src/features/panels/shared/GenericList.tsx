@@ -25,7 +25,7 @@ interface GenericListProps<TData extends BaseEntity> {
 }
 
 const GenericList = <TData extends BaseEntity>({
-                                                   data,
+                                                   data = [],
                                                    isLoading,
                                                    columns,
                                                    selectedId,
@@ -64,7 +64,7 @@ const GenericList = <TData extends BaseEntity>({
         ...defaultMrtOptions,
         ...additionalOptions,
         columns,
-        data: data,
+        data: data || [],
         state: {
             isLoading: isLoading,
             ...additionalOptions?.state

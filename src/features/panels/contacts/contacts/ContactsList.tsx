@@ -9,7 +9,6 @@ import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts"
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const ContactsList = () => {
     const {t} = useTranslation(["form"]);
@@ -31,8 +30,7 @@ const ContactsList = () => {
         [filterContactName, filterDetailName]
     );
 
-    const {data: contacts, isLoading} = contactsApi.useGetList({queryParams});
-    const contactList = useSafeArray(contacts)
+    const {data: contacts = [], isLoading} = contactsApi.useGetList({queryParams});
 
     const columns = useMemo<MRT_ColumnDef<IContact>[]>(() => [
         {
@@ -44,7 +42,7 @@ const ContactsList = () => {
 
     return (
         <GenericList<IContact>
-            data={contactList}
+            data={contacts}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedContactId}

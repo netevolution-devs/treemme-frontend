@@ -7,7 +7,6 @@ import ContactsPanel from "@features/panels/contacts/contacts/ContactsPanel.tsx"
 import SeaportsPanel from "@features/panels/contacts/seaports/SeaportsPanel.tsx";
 import WeightsPanel from "@features/panels/leathers/weights/WeightsPanel.tsx";
 import SpeciesPanel from "@features/panels/leathers/species/SpeciesPanel.tsx";
-import SizesPanel from "@features/panels/leathers/sizes/SizesPanel.tsx";
 import LeathersPanel from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import ThicknessesPanel from "@features/panels/leathers/thicknesses/ThicknessesPanel.tsx";
 import TypesPanel from "@features/panels/leathers/types/TypesPanel.tsx";
@@ -23,7 +22,6 @@ export type TPanelKind =
     | 'seaports'
     | 'weights'
     | 'species'
-    | 'sizes'
     | 'leathers'
     | 'thicknesses'
     | 'types'
@@ -42,7 +40,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     seaports: () => <SeaportsPanel />,
     weights: () => <WeightsPanel />,
     species: () => <SpeciesPanel />,
-    sizes: () => <SizesPanel />,
     leathers: () => <LeathersPanel />,
     thicknesses: () => <ThicknessesPanel />,
     types: () => <TypesPanel />,

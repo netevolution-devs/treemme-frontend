@@ -3,7 +3,7 @@ import {createTheme, type Theme, type ThemeOptions} from '@mui/material/styles';
 
 const getPrimaryColors = () => {
     return {
-        main: '#3c8fd3',
+        main: '#2b98ea',
         dark: '#41689b',
         light: '#5590c3',
     };

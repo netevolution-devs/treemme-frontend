@@ -11,4 +11,6 @@ export interface IContact {
     contact_title: IContactTitle;
     contact_addresses: IContactAddress[];
     contact_details: IContactDetail[];
+    client: boolean;
+    supplier: boolean;
 }

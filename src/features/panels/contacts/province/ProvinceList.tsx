@@ -6,12 +6,10 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
 import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const ProvinceList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: provinces, isLoading} = provinceApi.useGetList();
-    const provinceList = useSafeArray(provinces)
+    const {data: provinces = [], isLoading} = provinceApi.useGetList();
 
     const {useStore} = usePanel<unknown, IProvinceStoreState>();
     const selectedProvinceId = useStore(state => state.uiState.selectedProvinceId);
@@ -30,7 +28,7 @@ const ProvinceList = () => {
 
     return (
         <GenericList<IProvince>
-            data={provinceList}
+            data={provinces}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedProvinceId}

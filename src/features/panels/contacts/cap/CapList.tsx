@@ -6,12 +6,10 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {ICapStoreState} from "@features/panels/contacts/cap/CapPanel.tsx";
 import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
-import {useSafeArray} from "@helpers/useSafeArray.ts";
 
 const CapList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: caps, isLoading} = capApi.useGetList();
-    const capList = useSafeArray(caps)
+    const {data: caps = [], isLoading} = capApi.useGetList();
 
     const {useStore} = usePanel<unknown, ICapStoreState>();
     const {selectedCapId} = useStore(state => state.uiState);
@@ -37,7 +35,7 @@ const CapList = () => {
 
     return (
         <GenericList<ICap>
-            data={capList}
+            data={caps}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedCapId}

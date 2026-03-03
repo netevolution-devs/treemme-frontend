@@ -63,6 +63,9 @@
     "name": "Nazione"
   },
   "contacts": {
+    "select": "Tipologia",
+    "client": "Cliente",
+    "supplier": "Fornitore",
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",
@@ -103,6 +106,69 @@
     "species": {
       "code": "Codice",
       "name": "Specie"
+    },
+    "thickness": {
+      "name": "Nome spessore",
+      "mm": "Sps in MM"
+    },
+    "type": {
+      "name": "Nome tipologia",
+      "code": "Codice",
+      "thickness": "Spessore"
+    },
+    "status": {
+      "name": "Nome stato",
+      "code": "Codice",
+      "flower-yield-coefficient": "Fiore",
+      "measurement-unit": "Unità di misura"
+    },
+    "flay": {
+      "name": "Scuoiatura",
+      "code": "Codice"
+    },
+    "origin": {
+      "code": "Codice",
+      "area": "Zona di provenienza",
+      "crust-yield-coefficient": "Crosta",
+      "grain-yield-coefficient": "Fiore",
+      "psp-yield-coefficient": "Coefficiente resa PSP",
+      "sea-shipment": "Spedizione mare",
+      "trip-day": "Giorni viaggio",
+      "flay": "Scortico predefinito"
+    },
+    "leather": {
+      "code": "Codice",
+      "name": "Nome",
+      "contact": "Fornitore",
+      "origin": "Provenienza",
+      "species": "Specie",
+      "type": "Tipo",
+      "status": "Stato lavorazione",
+      "thickness": "Spessore",
+      "weight": "Peso",
+      "flay": "Scortico",
+      "container-piece": "Nr x Cnt",
+      "crust-revenue-expected": "Ricavi crosta",
+      "sqft-leather-expected": "RPQ",
+      "kg-leather-expected": "RKG",
+      "leather-min": "Minimo",
+      "leather-max": "Massimo",
+      "leather-avg": "Media",
+      "sqft-label": "Resa PQ",
+      "kg-label": "Resa KG",
+      "statistic_update": "Aggiorna statistiche resa",
+      "table": {
+        "supplier": "Fornitore",
+        "pqp": "PQP",
+        "pqp_min": "PQP MIN",
+        "pqp_max": "PQP MAX",
+        "pqp_m": "PQM",
+        "kgp": "KGP",
+        "kg_min": "KG MIN",
+        "kg_max": "KG MAX",
+        "kg_m": "KGM",
+        "gcz": "GCZ"
+      }
     }
   }
 }

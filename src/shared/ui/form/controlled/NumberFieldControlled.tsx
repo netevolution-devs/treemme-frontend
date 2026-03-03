@@ -6,6 +6,7 @@ import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldPr
 interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     precision?: number;
     step?: number;
+    maxWidth?: number | string;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -15,6 +16,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      showHelperRow = true,
                                                                      precision = 2,
                                                                      step = 1,
+                                                                     maxWidth = '100%',
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -84,6 +86,9 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                             input: { inputMode: "decimal" },
                             htmlInput: { maxLength: 255 },
                             inputLabel: { shrink: !!displayValue || undefined }
+                        }}
+                        sx={{
+                            maxWidth,
                         }}
                     />
                 );
