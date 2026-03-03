@@ -16,6 +16,7 @@ import {Box, Typography} from "@mui/material";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
+import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
 
 export type ILeatherForm = Omit<ILeather, "id"
     | "contact"
@@ -73,7 +74,7 @@ const LeathersForm = () => {
     const {data: species = []} = speciesApi.useGetList();
     const {data: types = []} = leatherTypeApi.useGetList();
     const {data: tanningStages = []} = tanningStageApi.useGetList();
-    const {data: weights = []} = thicknessApi.useGetList();
+    const {data: weights = []} = weightApi.useGetList();
     const {data: thicknesses = []} = thicknessApi.useGetList();
     const {data: flays = []} = flayApi.useGetList();
 

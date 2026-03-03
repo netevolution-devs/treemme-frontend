@@ -39,7 +39,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
                 [panelFilter as string]: selectedQueryId,
             }
         ),
-        [panelFilter]
+        [panelFilter, selectedQueryId]
     ) as Record<string, string | number>
 
     const {data: leathers = [], isLoading} = leatherApi.useGetList({queryParams});

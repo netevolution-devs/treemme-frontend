@@ -3,8 +3,10 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import TypesList from "@features/panels/leathers/types/TypesList.tsx";
 import TypesForm from "@features/panels/leathers/types/TypesForm.tsx";
+import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
+import TypesContent from "@features/panels/leathers/types/TypesContent.tsx";
 
-export interface ITypesStoreState extends IPanelUIState {
+export interface ITypesStoreState extends IPanelUIState, ILeathersStoreState {
     selectedTypeId?: number | null;
 }
 
@@ -16,8 +18,9 @@ const TypesPanel = () => {
             kind={"types"}
             initialState={{uiState: initialUiState}}
         >
-            <TypesList />
-            <TypesForm />
+            <TypesList/>
+            <TypesForm/>
+            <TypesContent/>
         </GenericPanel>
     )
 }
