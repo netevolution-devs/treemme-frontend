@@ -6,6 +6,11 @@ export interface IBatchesPayload extends Omit<IBatch, 'id'
     | 'batch_type'
     | 'measurement_unit'
     | 'check_user'
+    | 'sq_ft_average_expected'
+    | 'sq_ft_average_found'
+    | 'stock_items'
+    | 'stock_quantity'
+    | 'batch_code'
 > {
     leather_id: number;
     batch_type_id: number;

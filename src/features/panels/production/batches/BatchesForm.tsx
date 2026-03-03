@@ -13,6 +13,7 @@ import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldCo
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import {Box} from "@mui/material";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -21,7 +22,9 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'check_user'
     | 'sq_ft_average_expected'
     | 'sq_ft_average_found'
-    | 'pieces'
+    | 'stock_items'
+    | 'stock_quantity'
+    | 'batch_code'
 > & {
     leather_id: number;
     batch_type_id: number;
@@ -60,17 +63,15 @@ const BatchesForm = () => {
                 measurement_unit_id: 0,
                 completed: false,
                 checked: false,
-                batch_code: '',
                 batch_date: '',
                 quantity: 0,
-                stock_items: 0,
-                stock_quantity: 0,
                 selection_note: '',
                 batch_note: '',
                 sampling: false,
                 split_selected: false,
                 check_date: '',
                 check_note: '',
+                pieces: 0,
             }}
             mapEntityToForm={(x) => ({
                 leather_id: x.leather.id,
@@ -78,32 +79,30 @@ const BatchesForm = () => {
                 measurement_unit_id: x.measurement_unit.id,
                 completed: x.completed,
                 checked: x.checked,
-                batch_code: x.batch_code,
                 batch_date: x.batch_date,
                 quantity: x.quantity,
-                stock_items: x.stock_items,
-                stock_quantity: x.stock_quantity,
                 selection_note: x.selection_note,
                 batch_note: x.batch_note,
                 sampling: x.sampling,
                 split_selected: x.split_selected,
                 check_date: x.check_date,
                 check_note: x.check_note,
+                pieces: x.pieces,
             })}
-            create={(payload) => createBatch(payload as unknown as IBatchesPayload)}
-            update={(id, payload) => updateBatch({id, payload: payload as unknown as IBatchesPayload})}
+            create={(payload) => createBatch(payload as IBatchesPayload)}
+            update={(id, payload) => updateBatch({id, payload: payload as IBatchesPayload})}
             remove={(id) => deleteBatch(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedBatchId: null})}
-            validateBeforeSave={(v) => !!v.leather_id && !!v.batch_type_id && !!v.batch_code}
+            validateBeforeSave={(v) => !!v.leather_id && !!v.batch_type_id && !!v.quantity && !!v.pieces && !!v.measurement_unit_id && !!v.batch_date}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <TextFieldControlled<IBatchesForm>
-                            name="batch_code"
+                        <TextFieldValue
                             label={t("production.batch.batch_code")}
-                            required
+                            value={batchItem?.batch_code}
+                            isFilled={!!selectedBatchId}
                         />
                         <DateFieldControlled<IBatchesForm>
                             name="batch_date"
@@ -136,7 +135,7 @@ const BatchesForm = () => {
                             name="batch_type_id"
                             label={t("production.batch.batch_type")}
                             options={batchTypes.map(x => ({label: x.name, value: x.id}))}
-                            required
+                            deactivated={!!selectedBatchId}
                         />
                         <TextFieldValue
                             label={t("production.batch.check_user")}
@@ -146,27 +145,31 @@ const BatchesForm = () => {
                     </Box>
 
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 2, mb: 1}}>
-                        <TextFieldValue
+                        <NumberFieldControlled<IBatchesForm>
+                            name="pieces"
                             label={t("production.batch.pieces")}
-                            value={batchItem?.pieces}
-                            isFilled={!!selectedBatchId}
+                            precision={0}
                         />
-                        <TextFieldControlled<IBatchesForm>
+                        <NumberFieldControlled<IBatchesForm>
                             name="quantity"
                             label={t("production.batch.quantity")}
+                            precision={2}
+                            step={1}
                         />
                         <SelectFieldControlled<IBatchesForm>
                             name="measurement_unit_id"
                             label={t("production.batch.measurement_unit")}
                             options={measurementUnits.map(x => ({label: x.name, value: x.id}))}
                         />
-                        <TextFieldControlled<IBatchesForm>
-                            name="stock_items"
+                        <TextFieldValue
                             label={t("production.batch.stock_items")}
+                            value={batchItem?.stock_items}
+                            isFilled={!!selectedBatchId}
                         />
-                        <TextFieldControlled<IBatchesForm>
-                            name="stock_quantity"
+                        <TextFieldValue
                             label={t("production.batch.stock_quantity")}
+                            value={batchItem?.stock_quantity}
+                            isFilled={!!selectedBatchId}
                         />
                     </Box>
 
@@ -175,9 +178,7 @@ const BatchesForm = () => {
                             name="leather_id"
                             label={t("production.batch.leather")}
                             options={leathers.map(x => ({label: x.name, value: x.id}))}
-                            required
                         />
-                        {/* Pezzi scelta */}
                     </Box>
 
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>

@@ -7,6 +7,7 @@ import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
 interface SelectFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     options: { value: string | number; label: string }[];
     minWidth?: number | string;
+    deactivated?: boolean;
 }
 
 const SelectFieldControlled = <TFieldValues extends FieldValues>({
@@ -16,7 +17,8 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                      showHelperRow = true,
                                                                      options = [],
                                                                      TextFieldProps,
-                                                                     minWidth = 150
+                                                                     minWidth = 150,
+                                                                     deactivated = false
                                                                  }: SelectFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const {
@@ -40,7 +42,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                     <Autocomplete
                         sx={{ minWidth, width: "100%" }}
                         options={options}
-                        disabled={disabled}
+                        disabled={disabled || deactivated}
                         value={selectedOption}
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
