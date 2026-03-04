@@ -49,7 +49,6 @@ const DateFieldControlled = <TFieldValues extends FieldValues>({
                                     helperText: error?.message ?? (showHelperRow ? " " : ""),
                                     slotProps: {
                                         formHelperText: {
-                                            // @ts-expect-error component prop is not correctly typed in MUI
                                             component: ({ children }) => (
                                                 <ErrorFormHelperText isError={!!error}>
                                                     {children}
