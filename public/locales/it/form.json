@@ -199,7 +199,8 @@
       "selection": "Scelta",
       "selections": {
         "pieces": "Pezzi",
-        "stock_items": "Giacenza Pezzi"
+        "stock_items": "Giacenza Pezzi",
+        "selection": "Nome scelta"
       }
     }
   },
