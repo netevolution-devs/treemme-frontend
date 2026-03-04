@@ -50,7 +50,6 @@
       "description": "Aggiorna le informazioni relative all'utente"
     }
   },
-
   "province": {
     "acronym": "Sigla",
     "name": "Provincia"
@@ -171,7 +170,7 @@
       }
     }
   },
-    "production": {
+  "production": {
     "batch": {
       "batch_code": "Lotto",
       "batch_date": "Data",
@@ -196,7 +195,12 @@
       "check_user": "Utente controllo",
       "check_note": "Note controllo",
       "rework": "Rinverdimento",
-      "split": "Spaccatura"
+      "split": "Spaccatura",
+      "selection": "Scelta",
+      "selections": {
+        "pieces": "Pezzi",
+        "stock_items": "Giacenza Pezzi"
+      }
     }
   },
   "movements": {

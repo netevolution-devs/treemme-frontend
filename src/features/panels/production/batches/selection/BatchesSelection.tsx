@@ -19,7 +19,7 @@ const BatchesSelection = () => {
 
             <Box>
                 <CustomButton
-                    label={t("production.selection")}
+                    label={t("production.batch.selection")}
                     icon={<HighlightAltIcon/>}
                     color={"success"}
                     onClick={() => {openDialog(selectionDialogRef)}}
