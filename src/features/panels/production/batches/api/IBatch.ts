@@ -3,6 +3,14 @@ import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts"
 import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType.ts";
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
 
+export interface IFatherBatch {
+    id: number;
+    batch: IBatch;
+    father_batch_piece: number;
+    father_batch_quantity: number;
+    composition_note: string;
+}
+
 export interface IBatch {
     id: number;
     leather: ILeather;
@@ -25,4 +33,6 @@ export interface IBatch {
     sq_ft_average_found: number;
     check_date: string;
     check_note: string;
+    son_batches: IFatherBatch[];
+    batch_selections: unknown[];
 }

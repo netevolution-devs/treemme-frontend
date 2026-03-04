@@ -4,6 +4,7 @@ import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import BatchesList from "@features/panels/production/batches/BatchesList.tsx";
 import BatchesForm from "@features/panels/production/batches/BatchesForm.tsx";
 import GenericTabContent from "@features/panels/shared/GenericTabContent.tsx";
+import BatchesChronology from "@features/panels/production/batches/chronology/BatchesCronology.tsx";
 
 export interface IBatchesStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
@@ -21,7 +22,7 @@ const BatchesPanel = () => {
             <GenericTabContent
                 tabs={[
                     {label: "Lotto", component: <BatchesForm/>},
-                    {label: "Cronologia", component: <>Cronologia</>},
+                    {label: "Cronologia", component: <BatchesChronology/>},
                     {label: "Scelte", component: <>Scelte</>},
                     {label: "Movimenti", component: <>Movimenti</>},
                 ]}

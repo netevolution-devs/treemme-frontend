@@ -31,6 +31,8 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'stock_items'
     | 'stock_quantity'
     | 'batch_code'
+    | 'son_batches'
+    | 'batch_selections'
 > & {
     leather_id: number;
     batch_type_id: number;
