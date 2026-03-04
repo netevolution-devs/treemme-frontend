@@ -19,7 +19,7 @@ import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {useRef} from "react";
-import BatchesReworkDialog from "@features/panels/production/batches/BatchesReworkDialog.tsx";
+import BatchesReworkDialog from "@features/panels/production/batches/rework/BatchesReworkDialog.tsx";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'

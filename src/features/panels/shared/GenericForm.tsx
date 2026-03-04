@@ -16,14 +16,14 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     emptyValues: TForm;
     mapEntityToForm: (entity: TEntity) => TForm;
 
-    create: (payload: TForm) => Promise<unknown> | unknown;
-    update: (id: number, payload: TForm) => Promise<unknown> | unknown;
-    remove: (id: number) => Promise<unknown> | unknown;
+    create?: (payload: TForm) => Promise<unknown> | unknown;
+    update?: (id: number, payload: TForm) => Promise<unknown> | unknown;
+    remove?: (id: number) => Promise<unknown> | unknown;
 
     isSaving?: boolean;
     isDeleting?: boolean;
 
-    onClearSelection: () => void;
+    onClearSelection?: () => void;
 
     validateBeforeSave?: (values: TForm) => boolean;
 
@@ -34,9 +34,11 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     dialogRef?: ForwardedRef<IDialogActions>;
 
     extraButtons?: ReactNode[];
+    disabledBasicButtons?: boolean;
+    bypassConfirm?: boolean;
 }
 
-const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUIState>(
+const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUIState = IPanelUIState>(
     {
         selectedId,
         entity,
@@ -52,7 +54,9 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
         renderFields,
         dialogMode = false,
         dialogRef,
-        extraButtons
+        extraButtons,
+        disabledBasicButtons = false,
+        bypassConfirm = false
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const {useStore} = usePanel<unknown, TUI>();
@@ -90,8 +94,8 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
 
     const onConfirmDelete = async () => {
         if (selectedId) {
-            await remove(selectedId);
-            onClearSelection();
+            await remove?.(selectedId);
+            onClearSelection?.();
             handleCloseDialog();
         }
     };
@@ -102,7 +106,7 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
             if (dialogMode) return;
             setFormState('selected');
         } else {
-            onClearSelection();
+            onClearSelection?.();
             methods.reset(emptyValues);
             handleCloseDialog();
             if (dialogMode) return;
@@ -112,6 +116,10 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
 
     const onSubmit = (data: TForm) => {
         if (validateBeforeSave && !validateBeforeSave(data)) return;
+        if (bypassConfirm) {
+            onConfirmSave();
+            return;
+        }
         openDialog(saveRef);
     };
 
@@ -122,10 +130,10 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
             Object.entries(data).filter(([, value]) => value !== null && value !== undefined)
         ) as TForm;
 
-        if (selectedId) {
-            await update(selectedId, cleanData);
+        if (selectedId && !bypassConfirm) {
+            await update?.(selectedId, cleanData);
         } else {
-            await create(cleanData);
+            await create?.(cleanData);
             methods.reset(emptyValues);
             setFormState('init');
         }
@@ -165,7 +173,8 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
                             buttonState={buttonsState}
                             hideNew={dialogMode}
                             hideEdit={dialogMode}
-                            hideDelete={!selectedId && dialogMode}
+                            hideDelete={!selectedId && dialogMode || disabledBasicButtons}
+                            hideSave={disabledBasicButtons}
                             overrideButtonState={dialogMode}
                         />
                         {extraButtons?.map((button) => (

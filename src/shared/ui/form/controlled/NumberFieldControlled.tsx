@@ -1,12 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { TextField } from "@mui/material";
-import { Controller, type FieldValues, useFormContext, type Path, type PathValue } from "react-hook-form";
+import { TextField, InputAdornment, Typography } from "@mui/material";
+import { Controller, type FieldValues, useFormContext, type Path, type PathValue, type RegisterOptions } from "react-hook-form";
 import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
 
 interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     precision?: number;
     step?: number;
     maxWidth?: number | string;
+    min?: number;
+    max?: number;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -17,6 +19,8 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      precision = 2,
                                                                      step = 1,
                                                                      maxWidth = '100%',
+                                                                     min = 0,
+                                                                     max,
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -37,27 +41,42 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                 ? 0
                 : parseFloat(String(rawValue));
 
-            const newValue = e.key === 'ArrowUp' ? currentValue + step : currentValue - step;
+            let newValue = e.key === 'ArrowUp' ? currentValue + step : currentValue - step;
+
+            if (newValue < min) newValue = min;
+            if (max !== undefined && newValue > max) newValue = max;
 
             setValue(
                 name as Path<TFieldValues>,
                 toFixedString(newValue) as PathValue<TFieldValues, Path<TFieldValues>>,
-                { shouldValidate: true }
+                { shouldValidate: true, shouldDirty: true }
             );
         }
     };
+
+    const rules: RegisterOptions<TFieldValues, Path<TFieldValues>> = {
+        required: { value: required, message: t("common:form.error.required") },
+        min: { value: min, message: `${t("common:form.error.min")} ${min}` },
+    };
+
+    if (max !== undefined) {
+        rules.max = { value: max, message: `${t("common:form.error.max")} ${max}` };
+    }
 
     return (
         <Controller
             name={name}
             control={control}
-            rules={{
-                required: { value: required, message: t("common:form.error.required") },
-            }}
+            rules={rules}
             render={({ field: { onChange, onBlur, value, ...field }, fieldState: { error } }) => {
-                const displayValue = typeof value === 'number'
-                    ? toFixedString(value)
-                    : (value as string ?? "");
+                const displayValue = (value === undefined || value === null)
+                    ? ""
+                    : (typeof value === 'number' ? toFixedString(value) : value);
+
+                const getHelperText = () => {
+                    if (error) return error.message;
+                    return showHelperRow ? " " : "";
+                };
 
                 return (
                     <TextField
@@ -69,26 +88,54 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                         error={!!error}
                         onKeyDown={handleKeyDown}
                         onBlur={() => {
-                            if (displayValue !== "") {
-                                onChange(toFixedString(displayValue));
+                            if (displayValue !== "" && displayValue !== "-") {
+                                let num = parseFloat(String(displayValue));
+                                if (!isNaN(num)) {
+                                    if (num < min) num = min;
+                                    if (max !== undefined && num > max) num = max;
+                                    onChange(toFixedString(num));
+                                }
+                            } else if (displayValue === "-") {
+                                onChange("");
                             }
                             onBlur();
                         }}
                         onChange={(e) => {
                             const val = e.target.value.replace(',', '.');
-                            if (val === "" || val === "-" || /^-?\d*\.?\d*$/.test(val)) {
+                            const regex = min >= 0 ? /^\d*\.?\d*$/ : /^-?\d*\.?\d*$/;
+
+                            if (val === "" || (min < 0 && val === "-") || regex.test(val)) {
+                                if (val !== "" && val !== "-" && max !== undefined && parseFloat(val) > max) return;
+
                                 onChange(val);
                             }
                         }}
                         placeholder={toFixedString(0)}
-                        helperText={error?.message ?? (showHelperRow ? " " : "")}
+                        helperText={getHelperText()}
                         slotProps={{
-                            input: { inputMode: "decimal" },
-                            htmlInput: { maxLength: 255 },
-                            inputLabel: { shrink: !!displayValue || undefined }
+                            input: {
+                                inputMode: "decimal",
+                                endAdornment: max !== undefined ? (
+                                    <InputAdornment position="end">
+                                        <Typography color="textSecondary">
+                                            / {max}
+                                        </Typography>
+                                    </InputAdornment>
+                                ) : undefined
+                            },
+                            htmlInput: {
+                                maxLength: 255,
+                                min: min,
+                                max: max
+                            },
+                            inputLabel: { shrink: displayValue !== "" || undefined }
                         }}
                         sx={{
                             maxWidth,
+                            '& .MuiFormHelperText-root': {
+                                textAlign: 'left',
+                                fontFamily: 'monospace'
+                            }
                         }}
                     />
                 );
