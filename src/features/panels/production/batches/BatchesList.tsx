@@ -24,6 +24,14 @@ const BatchesList = () => {
         {
             accessorKey: "leather.provenance.nation.name",
             header: t("nations.name")
+        },
+        {
+            accessorKey: "pieces",
+            header: t("production.batch.pieces")
+        },
+        {
+            accessorKey: "quantity",
+            header: t("production.batch.quantity")
         }
     ], [t]);
 

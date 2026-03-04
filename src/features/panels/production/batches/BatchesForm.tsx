@@ -14,6 +14,8 @@ import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import {Box} from "@mui/material";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -96,6 +98,15 @@ const BatchesForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedBatchId: null})}
             validateBeforeSave={(v) => !!v.leather_id && !!v.batch_type_id && !!v.quantity && !!v.pieces && !!v.measurement_unit_id && !!v.batch_date}
+            extraButtons={[
+                <CustomButton
+                    label={t("production.batch.rework")}
+                    color={"success"}
+                    icon={<SettingsBackupRestoreIcon/>}
+                    isEnable={!!selectedBatchId}
+                    onClick={() => {}}
+                />
+            ]}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>

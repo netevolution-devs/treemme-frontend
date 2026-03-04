@@ -21,8 +21,9 @@ const BatchesPanel = () => {
             <GenericTabContent
                 tabs={[
                     {label: "Lotto", component: <BatchesForm/>},
-                    {label: "test", component: <>test</>},
-                    {label: "test 2", component: <>test 2</>}
+                    {label: "Cronologia", component: <>Cronologia</>},
+                    {label: "Scelte", component: <>Scelte</>},
+                    {label: "Movimenti", component: <>Movimenti</>},
                 ]}
             />
         </GenericPanel>

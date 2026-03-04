@@ -194,7 +194,8 @@
       "check_section": "Controllo",
       "check_date": "Data controllo",
       "check_user": "Utente controllo",
-      "check_note": "Note controllo"
+      "check_note": "Note controllo",
+      "rework": "Rinverdimento"
     }
   }
 }
