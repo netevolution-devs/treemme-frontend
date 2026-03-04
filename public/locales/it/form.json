@@ -198,5 +198,11 @@
       "rework": "Rinverdimento",
       "split": "Spaccatura"
     }
+  },
+  "movements": {
+    "date": "Data",
+    "reason": "Motivo",
+    "piece": "Pezzi",
+    "movement_note": "Note movimento"
   }
 }

@@ -17,7 +17,7 @@ interface GenericListProps<TData extends BaseEntity> {
     isLoading: boolean;
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
-    onRowSelect: (id: TData["id"]) => void;
+    onRowSelect?: (id: TData["id"]) => void;
     onRowDoubleClick?: (id: TData["id"]) => void;
     additionalOptions?: Partial<MRT_TableOptions<TData>>;
     overrideOptions?: Partial<MRT_TableOptions<TData>>;
@@ -44,12 +44,12 @@ const GenericList = <TData extends BaseEntity>({
         },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
-                onRowSelect(row.original.id);
+                onRowSelect?.(row.original.id);
                 onRowDoubleClick?.(row.original.id);
             },
             onClick: (e: SyntheticEvent) => {
                 e.preventDefault();
-                onRowSelect(row.original.id);
+                onRowSelect?.(row.original.id);
             },
             selected: row.original.id === selectedId,
             sx: {cursor: 'pointer'}
