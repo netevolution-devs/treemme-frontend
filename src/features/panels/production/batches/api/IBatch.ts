@@ -3,6 +3,7 @@ import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts"
 import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType.ts";
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
 import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
+import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
 
 export interface IFatherBatch {
     id: number;
@@ -35,6 +36,6 @@ export interface IBatch {
     check_date: string;
     check_note: string;
     son_batches: IFatherBatch[];
-    batch_selections: unknown[];
+    batch_selections: IBatchSelection[];
     warehouse_movements: IWarehouseMovement[];
 }

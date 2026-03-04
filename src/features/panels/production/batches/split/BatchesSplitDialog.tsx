@@ -18,7 +18,7 @@ export type ISplitForm = {
     pieces: number;
 }
 
-const BatchesSplitDialog =forwardRef<IDialogActions, Props>((_props, ref)=> {
+const BatchesSplitDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
