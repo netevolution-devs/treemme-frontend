@@ -5,7 +5,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 interface CustomButtonProps {
     label: string;
-    onClick: () => void;
+    onClick?: () => void;
     color: "primary" | "success" | "error" | "warning" | "inherit";
     isSubmit?: boolean;
     isEnable?: boolean;

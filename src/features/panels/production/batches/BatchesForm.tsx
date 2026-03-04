@@ -20,6 +20,8 @@ import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {useRef} from "react";
 import BatchesReworkDialog from "@features/panels/production/batches/rework/BatchesReworkDialog.tsx";
+import BatchesSplitDialog from "@features/panels/production/batches/split/BatchesSplitDialog.tsx";
+import CallSplitIcon from '@mui/icons-material/CallSplit';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -62,10 +64,13 @@ const BatchesForm = () => {
     const {data: measurementUnits = []} = useGetMeasurementUnits();
 
     const reworkDialogRef = useRef<IDialogActions | null>(null);
+    const splitDialogRef = useRef<IDialogActions | null>(null);
 
     return (
         <>
             <BatchesReworkDialog ref={reworkDialogRef}/>
+            <BatchesSplitDialog ref={splitDialogRef}/>
+
             <GenericForm<IBatchesForm, IBatch, IBatchesStoreState>
                 selectedId={selectedBatchId}
                 entity={batchItem}
@@ -113,8 +118,15 @@ const BatchesForm = () => {
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={!!selectedBatchId}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita"}
                         onClick={() => {openDialog(reworkDialogRef)}}
+                    />,
+                    <CustomButton
+                        label={t("production.batch.split")}
+                        color={"primary"}
+                        icon={<CallSplitIcon/>}
+                        isEnable={!!selectedBatchId}
+                        onClick={() => openDialog(splitDialogRef)}
                     />
                 ]}
                 renderFields={() => (

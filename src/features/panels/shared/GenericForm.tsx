@@ -38,7 +38,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     bypassConfirm?: boolean;
 }
 
-const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUIState = IPanelUIState>(
+const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
     {
         selectedId,
         entity,
@@ -177,11 +177,13 @@ const GenericForm = <TForm extends FieldValues, TEntity, TUI extends IPanelUISta
                             hideSave={disabledBasicButtons}
                             overrideButtonState={dialogMode}
                         />
-                        {extraButtons?.map((button) => (
-                            <>
-                                {button}
-                            </>
-                        ))}
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            {extraButtons?.map((button) => (
+                                <>
+                                    {button}
+                                </>
+                            ))}
+                        </Box>
                     </Box>
                     <Stack sx={{mt: 3}}>
                         {renderFields()}
