@@ -19,8 +19,8 @@ import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {useRef} from "react";
-import BatchesReworkDialog from "@features/panels/production/batches/rework/BatchesReworkDialog.tsx";
-import BatchesSplitDialog from "@features/panels/production/batches/split/BatchesSplitDialog.tsx";
+import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog.tsx";
+import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog.tsx";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 
 export type IBatchesForm = Omit<IBatch, 'id'
@@ -69,8 +69,8 @@ const BatchesForm = () => {
 
     return (
         <>
-            <BatchesReworkDialog ref={reworkDialogRef}/>
-            <BatchesSplitDialog ref={splitDialogRef}/>
+            <BatchesReworkFormDialog ref={reworkDialogRef}/>
+            <BatchesSplitFormDialog ref={splitDialogRef}/>
 
             <GenericForm<IBatchesForm, IBatch, IBatchesStoreState>
                 selectedId={selectedBatchId}
