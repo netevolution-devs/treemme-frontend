@@ -45,7 +45,7 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.orders.self",
         subMenu: [
-            {i18nKey: "menu.orders.customer-orders"},
+            {i18nKey: "menu.orders.customer-orders", component: "customerOrders" },
             {i18nKey: "menu.orders.supplier-orders"},
             {i18nKey: "menu.orders.search-customer-orders"},
             {i18nKey: "menu.orders.supplier-schedule"},
