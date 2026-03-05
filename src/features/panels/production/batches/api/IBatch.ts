@@ -38,4 +38,5 @@ export interface IBatch {
     son_batches: IFatherBatch[];
     batch_selections: IBatchSelection[];
     warehouse_movements: IWarehouseMovement[];
+    batch_selections_count: number;
 }

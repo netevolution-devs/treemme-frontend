@@ -91,7 +91,7 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                             name={"pieces"}
                             label={t("production.batch.selections.pieces")}
                             min={0}
-                            max={batch?.stock_items as number}
+                            max={batch?.batch_selections_count as number}
                             precision={0}
                         />
                     </>
