@@ -209,5 +209,10 @@
     "reason": "Motivo",
     "piece": "Pezzi",
     "movement_note": "Note movimento"
+  },
+  "orders": {
+    "order_number": "Numero ordine",
+    "order_date": "Data ordine",
+    "client": "Cliente"
   }
 }

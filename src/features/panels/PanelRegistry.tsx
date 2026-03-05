@@ -14,7 +14,7 @@ import FlayingPanel from "@features/panels/leathers/flaying/FlayingPanel.tsx";
 import OriginsPanel from "@features/panels/leathers/origins/OriginsPanel.tsx";
 import TanningStagesPanel from "@features/panels/leathers/tanning-stages/TanningStagesPanel.tsx";
 import BatchesPanel from "@features/panels/production/batches/BatchesPanel.tsx";
-import CustomerOrdersPanel from "@features/panels/orders/customer-orders/Customer-ordersPanel.tsx";
+import CustomerOrdersPanel from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
 
 export type TPanelKind =
     | 'cap'

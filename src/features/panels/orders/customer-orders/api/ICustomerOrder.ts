@@ -1,0 +1,27 @@
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
+import type {IUser} from "@features/user/model/UserInterfaces.ts";
+
+export interface ICustomerOrder {
+    id: number;
+    client: IContact;
+    payment: unknown; // to implement
+    check_user: IUser;
+    processed: boolean;
+    cancelled: boolean;
+    checked: boolean;
+    order_number: string;
+    order_date: string;
+    percentage_agent: number;
+    client_order_number: string;
+    client_order_date: string;
+    agent_order_number: string;
+    agent_order_date: string;
+    percentage_tolerance_quantity: number;
+    order_note: string;
+    order_note_iso: string;
+    order_note_production: string;
+    order_note_administration: string;
+    check_date: string;
+    printed: boolean;
+    print_date: string;
+}
