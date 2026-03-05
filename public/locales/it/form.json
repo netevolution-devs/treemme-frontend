@@ -65,6 +65,11 @@
     "select": "Tipologia",
     "client": "Cliente",
     "supplier": "Fornitore",
+    "agent": "Agente",
+    "agents": {
+      "list": "Lista agenti",
+      "add": "Aggiungi agente"
+    },
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",
@@ -211,8 +216,30 @@
     "movement_note": "Note movimento"
   },
   "orders": {
-    "order_number": "Numero ordine",
-    "order_date": "Data ordine",
-    "client": "Cliente"
+    "order_number": "Ordine",
+    "order_date": "Data",
+    "client": "Cliente",
+    "agent": "Agente",
+    "agent_order_number": "Ordine ag.",
+    "agent_order_date": "Data ag.",
+    "client_order_number": "Ordine cl.",
+    "client_order_date": "Data cl.",
+    "percentage_agent": "Provv. %",
+    "percentage_tolerance_quantity": "Toll. qtà %",
+    "order_note": "Note O",
+    "order_note_iso": "Note I",
+    "order_note_production": "Note P",
+    "order_note_administration": "Note A",
+    "processed": "Evaso",
+    "cancelled": "Annullato",
+    "checked": "Controllato",
+    "printed": "Stampato",
+    "check_date": "Data controllo",
+    "check_user": "Utente controllo",
+    "print_date": "Data stampa",
+    "payment": "Pagm",
+    "shipment": "Trasp",
+    "yield": "Resa",
+    "destination": "Dest"
   }
 }

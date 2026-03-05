@@ -14,7 +14,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.contacts.nations", component: "nations" },
             {i18nKey: "menu.contacts.provinces", component: "province"},
             {i18nKey: "menu.contacts.contacts", component: "contacts" },
-            {i18nKey: "menu.contacts.seaports", component: "seaports" }
+            // {i18nKey: "menu.contacts.seaports", component: "seaports" }
         ]
     },
     {

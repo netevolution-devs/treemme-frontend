@@ -1,10 +1,11 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
+import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
 
 export interface ICustomerOrder {
     id: number;
     client: IContact;
-    payment: unknown; // to implement
+    payment: IPayment;
     check_user: IUser;
     processed: boolean;
     cancelled: boolean;

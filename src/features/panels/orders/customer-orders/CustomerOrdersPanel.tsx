@@ -3,6 +3,8 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import CustomerOrdersList from "@features/panels/orders/customer-orders/CustomerOrdersList.tsx";
 
+import CustomerOrdersForm from "@features/panels/orders/customer-orders/CustomerOrdersForm.tsx";
+
 export interface ICustomerOrdersStoreState extends IPanelUIState {
     selectedCustomerOrderId?: number | null;
 }
@@ -16,7 +18,7 @@ const CustomerOrdersPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <CustomerOrdersList/>
-            <div>Form placeholder for Customer-orders</div>
+            <CustomerOrdersForm/>
         </GenericPanel>
     )
 }
