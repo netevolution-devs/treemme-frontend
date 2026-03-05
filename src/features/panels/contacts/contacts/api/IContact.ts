@@ -18,6 +18,6 @@ export interface IContact {
     client_shipment_note: string | null;
     tolerance_start_days: number;
     specific_order_reference: string | null;
-    contact_agents: IContact[];
+    contact_agents: { agent: IContact }[];
     agent_percentage: number | null;
 }

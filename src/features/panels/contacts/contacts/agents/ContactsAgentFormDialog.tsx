@@ -24,8 +24,13 @@ const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
     const {useStore} = usePanel<unknown, IContactsStoreState>();
     const selectedContactId = useStore((state) => state.uiState.selectedContactId);
 
+    const {data: client } = contactsApi.useGetDetail(selectedContactId as number);
+    const assignedAgentIds = client?.contact_agents.map(x => x.agent.id) ?? [];
+
     const {data: agents = []} = contactsApi.useGetList({queryParams: {type: 'agent'}});
-    const filteredAgents = agents.filter(agent => agent.id !== selectedContactId);
+    const filteredAgents = agents.filter(agent =>
+        !assignedAgentIds.includes(agent.id) && agent.id !== selectedContactId
+    );
 
     const {mutateAsync: addAgent, isPending} = useAddAgentToContact(selectedContactId as number) ;
 

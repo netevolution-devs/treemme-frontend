@@ -12,6 +12,7 @@ export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
     selectedAddressId?: number | null;
     selectedDetailId?: number | null;
+    selectedAgentId?: number | null;
 }
 
 export interface IContactsStoreFilter {
