@@ -12,7 +12,18 @@ import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-t
 import {Box, Typography} from "@mui/material";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 
-export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type' | 'contact_addresses' | 'contact_details'> & {
+export type IContactForm = Omit<IContact, 'id'
+    | 'contact_title'
+    | 'contact_type'
+    | 'contact_addresses'
+    | 'contact_details'
+    | 'contact_agents'
+    | 'tolerance_quantity'
+    | 'client_shipment_note'
+    | 'tolerance_start_days'
+    | 'specific_order_reference'
+    | 'agent_percentage'
+> & {
     contact_title_id: number;
     contact_type_id: number;
 };
@@ -20,7 +31,7 @@ export type IContactForm = Omit<IContact, 'id' | 'contact_title' | 'contact_type
 const ContactsForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IContactsStoreState>();
+const {useStore} = usePanel<unknown, IContactsStoreState>();
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -47,6 +58,7 @@ const ContactsForm = () => {
                 contact_type_id: 0,
                 client: false,
                 supplier: false,
+                agent: false,
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
@@ -55,6 +67,7 @@ const ContactsForm = () => {
                 contact_type_id: x.contact_type.id,
                 client: x.client,
                 supplier: x.supplier,
+                agent: x.agent,
             })}
             create={(payload) => createContact(payload)}
             update={(id, payload) => updateContact({ id, payload })}
@@ -80,6 +93,11 @@ const ContactsForm = () => {
                             <FlagCheckBoxFieldControlled<IContactForm>
                                 name="supplier"
                                 label={t("contacts.supplier")}
+                                width={100}
+                            />
+                            <FlagCheckBoxFieldControlled<IContactForm>
+                                name="agent"
+                                label={t("contacts.agent")}
                                 width={100}
                             />
                         </Box>

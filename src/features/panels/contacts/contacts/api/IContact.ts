@@ -13,4 +13,11 @@ export interface IContact {
     contact_details: IContactDetail[];
     client: boolean;
     supplier: boolean;
+    agent: boolean;
+    tolerance_quantity: number | null;
+    client_shipment_note: string | null;
+    tolerance_start_days: number;
+    specific_order_reference: string | null;
+    contact_agents: IContact[];
+    agent_percentage: number | null;
 }
