@@ -18,7 +18,7 @@ export interface ICustomerOrder {
     client_order_date: string;
     agent_order_number: string;
     agent_order_date: string;
-    percentage_tolerance_quantity: number;
+    // percentage_tolerance_quantity: number;
     order_note: string;
     order_note_iso: string;
     order_note_production: string;

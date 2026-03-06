@@ -1,7 +1,6 @@
 import {useFormContext, useWatch} from "react-hook-form";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import {Box, IconButton} from "@mui/material";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
@@ -162,21 +161,21 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
             </Box>
             */}
 
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center'}}>
-                {/* <Typography sx={{minWidth: 50}}>{t("orders.destination")}</Typography> */}
-                {/*
-                <Box sx={{flexGrow: 1, border: '1px solid #ccc', height: 32, display: 'flex', alignItems: 'center', px: 1, bgcolor: '#f5f5f5'}}>
-                     Placeholder for destination
-                </Box>
-                <IconButton size="small"><ClearIcon fontSize="small"/></IconButton>
-                */}
-                <NumberFieldControlled<ICustomerOrderForm>
-                    name={"percentage_tolerance_quantity"}
-                    label={t("orders.percentage_tolerance_quantity")}
-                    startAdornment="%"
-                />
-                <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
-            </Box>
+            {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center'}}>*/}
+            {/*    /!* <Typography sx={{minWidth: 50}}>{t("orders.destination")}</Typography> *!/*/}
+            {/*    /!**/}
+            {/*    <Box sx={{flexGrow: 1, border: '1px solid #ccc', height: 32, display: 'flex', alignItems: 'center', px: 1, bgcolor: '#f5f5f5'}}>*/}
+            {/*         Placeholder for destination*/}
+            {/*    </Box>*/}
+            {/*    <IconButton size="small"><ClearIcon fontSize="small"/></IconButton>*/}
+            {/*    *!/*/}
+            {/*    <NumberFieldControlled<ICustomerOrderForm>*/}
+            {/*        name={"percentage_tolerance_quantity"}*/}
+            {/*        label={t("orders.percentage_tolerance_quantity")}*/}
+            {/*        startAdornment="%"*/}
+            {/*    />*/}
+            {/*    <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>*/}
+            {/*</Box>*/}
 
             <Box sx={{display: 'flex', flexDirection: 'column'}}>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
@@ -236,7 +235,7 @@ const CustomerOrdersForm = () => {
                 cancelled: false,
                 checked: false,
                 percentage_agent: 0,
-                percentage_tolerance_quantity: 40,
+                // percentage_tolerance_quantity: 40,
                 order_note: "",
                 order_note_iso: "",
                 order_note_production: "",
@@ -258,7 +257,7 @@ const CustomerOrdersForm = () => {
                 cancelled: x.cancelled,
                 checked: x.checked,
                 percentage_agent: x.percentage_agent,
-                percentage_tolerance_quantity: x.percentage_tolerance_quantity ?? 40,
+                // percentage_tolerance_quantity: x.percentage_tolerance_quantity ?? 40,
                 order_note: x.order_note,
                 order_note_iso: x.order_note_iso,
                 order_note_production: x.order_note_production,
