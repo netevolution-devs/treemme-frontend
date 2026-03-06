@@ -26,8 +26,8 @@ const MenuToolbar = () => {
 
     const handleProfileNavigation = () => {
         // setShowTopBar(false);
-        hideMenu();
         navigate("/profile");
+        hideMenu();
     }
 
     return isMenuVisible && (
