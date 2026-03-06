@@ -6,7 +6,7 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import {productsApi} from "@features/panels/products/products/api/productsApi.ts";
+import {type IProductPayload, productsApi} from "@features/panels/products/products/api/productsApi.ts";
 import {productTypeApi} from "@features/panels/products/products/api/product-type/productTypeApi.ts";
 import {colorApi} from "@features/panels/products/products/api/color/colorApi.ts";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
@@ -77,8 +77,8 @@ const ProductsForm = () => {
                 thickness_measurement_id: 0,
                 contact_id: 0,
             } as IProductForm}
-            create={(payload) => createProduct(payload as IProduct)}
-            update={(id, payload) => updateProduct({id, payload: payload as IProduct})}
+            create={(payload) => createProduct(payload as IProductPayload)}
+            update={(id, payload) => updateProduct({id, payload: payload as IProductPayload})}
             remove={(id) => deleteProduct(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
