@@ -220,12 +220,12 @@
     "order_date": "Data",
     "client": "Cliente",
     "agent": "Agente",
-    "agent_order_number": "Ordine ag.",
-    "agent_order_date": "Data ag.",
-    "client_order_number": "Ordine cl.",
-    "client_order_date": "Data cl.",
+    "agent_order_number": "Codice ordine agente",
+    "agent_order_date": "Data ordine agente",
+    "client_order_number": "Codice Ordine cliente",
+    "client_order_date": "Data ordine cliente",
     "percentage_agent": "Provv. %",
-    "percentage_tolerance_quantity": "Toll. qtà %",
+    "percentage_tolerance_quantity": "Tolleranza quantità",
     "order_note": "Note O",
     "order_note_iso": "Note I",
     "order_note_production": "Note P",
@@ -237,9 +237,9 @@
     "check_date": "Data controllo",
     "check_user": "Utente controllo",
     "print_date": "Data stampa",
-    "payment": "Pagm",
-    "shipment": "Trasp",
+    "payment": "Pagamento",
+    "shipment": "Trasporto",
     "yield": "Resa",
-    "destination": "Dest"
+    "destination": "Destinazione"
   }
 }

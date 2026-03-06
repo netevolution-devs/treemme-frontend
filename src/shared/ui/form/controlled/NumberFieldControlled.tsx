@@ -9,6 +9,7 @@ interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledF
     maxWidth?: number | string;
     min?: number;
     max?: number;
+    startAdornment?: React.ReactNode;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -21,6 +22,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      maxWidth = '100%',
                                                                      min = 0,
                                                                      max,
+                                                                     startAdornment,
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -84,6 +86,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                         value={displayValue}
                         label={formattedLabel}
                         size="small"
+                        fullWidth
                         disabled={disabled}
                         error={!!error}
                         onKeyDown={handleKeyDown}
@@ -112,30 +115,39 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                         }}
                         placeholder={toFixedString(0)}
                         helperText={getHelperText()}
+                        InputProps={{
+                            startAdornment: startAdornment ? (
+                                <InputAdornment position="start">
+                                    <Typography color="textSecondary">
+                                        {startAdornment}
+                                    </Typography>
+                                </InputAdornment>
+                            ) : undefined,
+                            endAdornment: max !== undefined ? (
+                                <InputAdornment position="end">
+                                    <Typography color="textSecondary">
+                                        / {max}
+                                    </Typography>
+                                </InputAdornment>
+                            ) : undefined,
+                        }}
                         slotProps={{
-                            input: {
-                                inputMode: "decimal",
-                                endAdornment: max !== undefined ? (
-                                    <InputAdornment position="end">
-                                        <Typography color="textSecondary">
-                                            / {max}
-                                        </Typography>
-                                    </InputAdornment>
-                                ) : undefined
-                            },
                             htmlInput: {
                                 maxLength: 255,
                                 min: min,
-                                max: max
+                                max: max,
+                                inputMode: "decimal"
                             },
-                            inputLabel: { shrink: displayValue !== "" || undefined }
+                            inputLabel: { shrink: (displayValue !== "" || !!startAdornment) || undefined },
+                            formHelperText: {
+                                sx: {
+                                    textAlign: 'left',
+                                    fontFamily: 'monospace'
+                                }
+                            }
                         }}
                         sx={{
-                            maxWidth,
-                            '& .MuiFormHelperText-root': {
-                                textAlign: 'left',
-                                fontFamily: 'monospace'
-                            }
+                            maxWidth
                         }}
                     />
                 );

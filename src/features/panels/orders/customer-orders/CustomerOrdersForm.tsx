@@ -173,6 +173,7 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
                 <NumberFieldControlled<ICustomerOrderForm>
                     name={"percentage_tolerance_quantity"}
                     label={t("orders.percentage_tolerance_quantity")}
+                    startAdornment="%"
                 />
                 <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
             </Box>
