@@ -4,6 +4,7 @@ import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
 import type {
     IShipmentCondition
 } from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
 
 export interface ICustomerOrder {
     id: number;
@@ -30,4 +31,5 @@ export interface ICustomerOrder {
     printed: boolean;
     print_date: string;
     shipment_condition: IShipmentCondition;
+    address: IContactAddress;
 }
