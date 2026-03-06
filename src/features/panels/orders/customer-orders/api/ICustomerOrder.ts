@@ -5,6 +5,7 @@ import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
 export interface ICustomerOrder {
     id: number;
     client: IContact;
+    agent?: IContact;
     payment: IPayment;
     check_user: IUser;
     processed: boolean;

@@ -13,11 +13,15 @@ import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
+import {
+    customerOrderApi,
+    type ICustomerOrderPayload
+} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import dayjs from "dayjs";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -36,6 +40,8 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
     selectedCustomerOrderId: number | null | undefined
 }) => {
     const {t} = useTranslation(["form"]);
+
+
     const {setValue, control} = useFormContext<ICustomerOrderForm>();
 
     const clientId = useWatch({
@@ -43,20 +49,31 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
         name: 'client_id'
     });
 
+    const selectedClient = clients.find(c => c.id === clientId);
+
+    const agentOptions = selectedClient?.contact_agents?.map(ca => ({
+        value: ca.agent.id,
+        label: ca.agent.name
+    })) ?? [];
+
     useEffect(() => {
         if (clientId) {
             const client = clients.find(c => c.id === clientId);
             if (client && client.contact_agents && client.contact_agents.length > 0) {
-                setValue('agent_id', client.contact_agents[0].agent.id);
+                const currentAgentId = control._formValues.agent_id;
+                const isAgentInContactAgents = client.contact_agents.some(ca => ca.agent.id === currentAgentId);
+                if (!isAgentInContactAgents) {
+                    setValue('agent_id', client.contact_agents[0].agent.id);
+                }
             } else {
                 setValue('agent_id', undefined);
             }
         }
-    }, [clientId, clients, setValue]);
+    }, [clientId, clients, setValue, control]);
 
     return (
         <>
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center', mb: 1}}>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <TextFieldValue
                     label={t("orders.order_number")}
                     value={order?.order_number}
@@ -66,40 +83,26 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
                     label={t("orders.order_date")}
                     name={"order_date"}
                 />
-                <FlagCheckBoxFieldControlled<ICustomerOrderForm>
-                    name={"cancelled"}
-                    label={t("orders.cancelled")}
-                />
-                <FlagCheckBoxFieldControlled<ICustomerOrderForm>
-                    name={"processed"}
-                    label={t("orders.processed")}
-                />
-                <FlagCheckBoxFieldControlled<ICustomerOrderForm>
-                    name={"checked"}
-                    label={t("orders.checked")}
-                />
+                <Box sx={{display: 'flex', flexDirection: 'row', ml: 1.5}}>
+                    <FlagCheckBoxFieldControlled<ICustomerOrderForm>
+                        name={"cancelled"}
+                        label={t("orders.cancelled")}
+                    />
+                    <FlagCheckBoxFieldControlled<ICustomerOrderForm>
+                        name={"processed"}
+                        label={t("orders.processed")}
+                    />
+                    <FlagCheckBoxFieldControlled<ICustomerOrderForm>
+                        name={"checked"}
+                        label={t("orders.checked")}
+                    />
+                </Box>
             </Box>
 
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"client_id"}
                     label={t("orders.client")}
-                    options={clients.map(c => ({value: c.id, label: c.name}))}
-                />
-                <TextFieldControlled<ICustomerOrderForm>
-                    label={t("orders.agent_order_number")}
-                    name={"agent_order_number"}
-                />
-                <DateFieldControlled<ICustomerOrderForm>
-                    label={t("orders.agent_order_date")}
-                    name={"agent_order_date"}
-                />
-            </Box>
-
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
-                <SelectFieldControlled<ICustomerOrderForm>
-                    name={"agent_id"}
-                    label={t("orders.agent")}
                     options={clients.map(c => ({value: c.id, label: c.name}))}
                 />
                 <TextFieldControlled<ICustomerOrderForm>
@@ -107,12 +110,28 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
                     name={"client_order_number"}
                 />
                 <DateFieldControlled<ICustomerOrderForm>
+                    label={t("orders.agent_order_date")}
+                    name={"agent_order_date"}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<ICustomerOrderForm>
+                    name={"agent_id"}
+                    label={t("orders.agent")}
+                    options={agentOptions}
+                />
+                <TextFieldControlled<ICustomerOrderForm>
+                    label={t("orders.agent_order_number")}
+                    name={"agent_order_number"}
+                />
+                <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_date")}
                     name={"client_order_date"}
                 />
             </Box>
 
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
+            <Box sx={{display: 'flex', flexDirection: 'row'}}>
                 {/*
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"client_id"} // TODO: Change to contact_f_id if available
@@ -143,7 +162,7 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
             </Box>
             */}
 
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center', mb: 1}}>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center'}}>
                 {/* <Typography sx={{minWidth: 50}}>{t("orders.destination")}</Typography> */}
                 {/*
                 <Box sx={{flexGrow: 1, border: '1px solid #ccc', height: 32, display: 'flex', alignItems: 'center', px: 1, bgcolor: '#f5f5f5'}}>
@@ -158,7 +177,7 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
                 <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
             </Box>
 
-            <Box sx={{display: 'flex', flexDirection: 'column', gap: 0.5}}>
+            <Box sx={{display: 'flex', flexDirection: 'column'}}>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
                     <TextFieldControlled<ICustomerOrderForm>
                         name={"order_note"}
@@ -204,7 +223,6 @@ const CustomerOrdersForm = () => {
     const {mutateAsync: deleteOrder, isPending: isDeleting} = useDelete();
 
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: 'client'}});
-    // const
     const {data: payments = []} = paymentApi.useGetList();
 
     return (
@@ -225,7 +243,7 @@ const CustomerOrdersForm = () => {
                 printed: false,
                 print_date: "",
                 check_date: "",
-                order_date: "",
+                order_date: dayjs(Date.now()).format('YYYY-MM-DD'),
                 client_order_number: "",
                 client_order_date: "",
                 agent_order_number: "",
@@ -233,6 +251,7 @@ const CustomerOrdersForm = () => {
             } as ICustomerOrderForm}
             mapEntityToForm={(x) => ({
                 client_id: x.client?.id || 0,
+                agent_id: x.agent?.id,
                 payment_id: x.payment?.id,
                 processed: x.processed,
                 cancelled: x.cancelled,
@@ -252,8 +271,8 @@ const CustomerOrdersForm = () => {
                 agent_order_number: x.agent_order_number,
                 agent_order_date: x.agent_order_date,
             } as ICustomerOrderForm)}
-            create={(payload) => createOrder(payload as ICustomerOrder)}
-            update={(id, payload) => updateOrder({id, payload: payload as ICustomerOrder})}
+            create={(payload) => createOrder(payload as ICustomerOrderPayload)}
+            update={(id, payload) => updateOrder({id, payload: payload as ICustomerOrderPayload})}
             remove={(id) => deleteOrder(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
@@ -263,7 +282,7 @@ const CustomerOrdersForm = () => {
                 <FormFields
                     clients={clients}
                     payments={payments}
-                    order={order}
+                    order={order as ICustomerOrder}
                     selectedCustomerOrderId={selectedCustomerOrderId}
                 />
             )}

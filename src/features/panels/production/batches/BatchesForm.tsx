@@ -22,6 +22,7 @@ import {useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog.tsx";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog.tsx";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
+import dayjs from "dayjs";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -36,6 +37,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'son_batches'
     | 'batch_selections'
     | 'warehouse_movements'
+    | 'batch_selections_count'
 > & {
     leather_id: number;
     batch_type_id: number;
@@ -81,7 +83,7 @@ const BatchesForm = () => {
                     measurement_unit_id: 0,
                     completed: false,
                     checked: false,
-                    batch_date: '',
+                    batch_date: dayjs(Date.now()).format('YYYY-MM-DD'),
                     quantity: 0,
                     selection_note: '',
                     batch_note: '',
