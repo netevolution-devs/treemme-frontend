@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { TextField, InputAdornment, Typography } from "@mui/material";
 import { Controller, type FieldValues, useFormContext, type Path, type PathValue, type RegisterOptions } from "react-hook-form";
 import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
+import type {ReactNode} from "react";
 
 interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     precision?: number;
@@ -9,7 +10,7 @@ interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledF
     maxWidth?: number | string;
     min?: number;
     max?: number;
-    startAdornment?: React.ReactNode;
+    startAdornment?: ReactNode;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -115,22 +116,6 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                         }}
                         placeholder={toFixedString(0)}
                         helperText={getHelperText()}
-                        InputProps={{
-                            startAdornment: startAdornment ? (
-                                <InputAdornment position="start">
-                                    <Typography color="textSecondary">
-                                        {startAdornment}
-                                    </Typography>
-                                </InputAdornment>
-                            ) : undefined,
-                            endAdornment: max !== undefined ? (
-                                <InputAdornment position="end">
-                                    <Typography color="textSecondary">
-                                        / {max}
-                                    </Typography>
-                                </InputAdornment>
-                            ) : undefined,
-                        }}
                         slotProps={{
                             htmlInput: {
                                 maxLength: 255,
@@ -144,6 +129,22 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                     textAlign: 'left',
                                     fontFamily: 'monospace'
                                 }
+                            },
+                            input: {
+                                startAdornment: startAdornment ? (
+                                    <InputAdornment position="start">
+                                        <Typography color="textSecondary">
+                                            {startAdornment}
+                                        </Typography>
+                                    </InputAdornment>
+                                ) : undefined,
+                                endAdornment: max !== undefined ? (
+                                    <InputAdornment position="end">
+                                        <Typography color="textSecondary">
+                                            / {max}
+                                        </Typography>
+                                    </InputAdornment>
+                                ) : undefined,
                             }
                         }}
                         sx={{
