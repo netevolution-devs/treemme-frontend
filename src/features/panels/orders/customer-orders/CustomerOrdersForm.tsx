@@ -1,10 +1,9 @@
 import {useFormContext, useWatch} from "react-hook-form";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import {Box, IconButton} from "@mui/material";
+import {Box} from "@mui/material";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {paymentApi} from "@features/panels/shared/api/payment/paymentApi.ts";
 import {useEffect} from "react";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
@@ -217,28 +216,24 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                         name={"order_note"}
                         label={t("orders.order_note")}
                     />
-                    <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
                 </Box>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
                     <TextFieldControlled<ICustomerOrderForm>
                         name={"order_note_iso"}
                         label={t("orders.order_note_iso")}
                     />
-                    <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
                 </Box>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
                     <TextFieldControlled<ICustomerOrderForm>
                         name={"order_note_production"}
                         label={t("orders.order_note_production")}
                     />
-                    <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
                 </Box>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
                     <TextFieldControlled<ICustomerOrderForm>
                         name={"order_note_administration"}
                         label={t("orders.order_note_administration")}
                     />
-                    <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>
                 </Box>
             </Box>
         </>
