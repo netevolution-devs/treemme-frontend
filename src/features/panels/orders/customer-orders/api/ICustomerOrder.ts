@@ -1,6 +1,9 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
 import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {
+    IShipmentCondition
+} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
 
 export interface ICustomerOrder {
     id: number;
@@ -26,4 +29,5 @@ export interface ICustomerOrder {
     check_date: string;
     printed: boolean;
     print_date: string;
+    shipment_condition: IShipmentCondition;
 }

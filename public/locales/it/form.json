@@ -216,6 +216,7 @@
     "movement_note": "Note movimento"
   },
   "orders": {
+    "shipment-condition": "Resa",
     "order_number": "Ordine",
     "order_date": "Data",
     "client": "Cliente",

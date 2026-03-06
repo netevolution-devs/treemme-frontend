@@ -21,20 +21,29 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import dayjs from "dayjs";
+import type {
+    IShipmentCondition
+} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
+import {
+    shipmentConditionApi
+} from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
     | "check_user"
     | "payment"
+    | "shipment_condition"
 > & {
     client_id: number;
     payment_id?: number;
     agent_id?: number;
+    shipment_condition_id?: number;
 };
 
-const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
+const FormFields = ({clients, payments, shipmentConditions, order, selectedCustomerOrderId}: {
     clients: IContact[],
     payments: IPayment[],
+    shipmentConditions: IShipmentCondition[],
     order?: ICustomerOrder | null,
     selectedCustomerOrderId: number | null | undefined
 }) => {
@@ -130,7 +139,7 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
                 />
             </Box>
 
-            <Box sx={{display: 'flex', flexDirection: 'row'}}>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 {/*
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"client_id"} // TODO: Change to contact_f_id if available
@@ -143,6 +152,11 @@ const FormFields = ({clients, payments, order, selectedCustomerOrderId}: {
                     name={"payment_id"}
                     label={t("orders.payment")}
                     options={payments.map(p => ({value: p.id, label: p.name}))}
+                />
+                <SelectFieldControlled<ICustomerOrderForm>
+                    name={"shipment_condition_id"}
+                    label={t("orders.shipment-condition")}
+                    options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
                 />
             </Box>
 
@@ -224,6 +238,7 @@ const CustomerOrdersForm = () => {
 
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: 'client'}});
     const {data: payments = []} = paymentApi.useGetList();
+    const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
 
     return (
         <GenericForm<ICustomerOrderForm, ICustomerOrder, ICustomerOrdersStoreState>
@@ -231,6 +246,8 @@ const CustomerOrdersForm = () => {
             entity={order}
             emptyValues={{
                 client_id: 0,
+                agent_id: 0,
+                shipment_condition_id: 0,
                 processed: false,
                 cancelled: false,
                 checked: false,
@@ -252,6 +269,7 @@ const CustomerOrdersForm = () => {
             mapEntityToForm={(x) => ({
                 client_id: x.client?.id || 0,
                 agent_id: x.agent?.id,
+                shipment_condition_id: x.shipment_condition?.id,
                 payment_id: x.payment?.id,
                 processed: x.processed,
                 cancelled: x.cancelled,
@@ -282,6 +300,7 @@ const CustomerOrdersForm = () => {
                 <FormFields
                     clients={clients}
                     payments={payments}
+                    shipmentConditions={shipmentConditions}
                     order={order as ICustomerOrder}
                     selectedCustomerOrderId={selectedCustomerOrderId}
                 />

@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
+import dayjs from "dayjs";
 
 const CustomerOrdersList = () => {
     const {t} = useTranslation(["form"]);
@@ -25,6 +26,7 @@ const CustomerOrdersList = () => {
         {
             accessorKey: "order_date",
             header: t("orders.order_date"),
+            Cell: ({row}) => <>{dayjs(row.original.order_date).format("DD/MM/YYYY")}</>
         },
         {
             accessorKey: "client.name",
