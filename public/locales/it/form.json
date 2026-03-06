@@ -242,5 +242,29 @@
     "shipment": "Trasporto",
     "yield": "Resa",
     "destination": "Destinazione"
+  },
+  "products": {
+    "product_code": "Codice Articolo",
+    "name": "Nome",
+    "internal_name": "Nome Interno",
+    "external_name": "Nome Esterno",
+    "vendor_code": "Codice Fornitore",
+    "product_note": "Note",
+    "exclude_mrp": "Escludi MRP",
+    "alarm": "Allarme",
+    "stock_quantity": "Giacenza",
+    "weight": "Peso",
+    "thickness": "Spessore",
+    "use_coefficient": "Coeff. Utilizzo",
+    "bill_of_material_quantity": "Q.ta Distinta",
+    "last_cost": "Ultimo Costo",
+    "last_price": "Ultimo Prezzo",
+    "product_type": "Tipo Prodotto",
+    "supplier": "Fornitore",
+    "measurement_unit": "Unità di Misura",
+    "color": "Colore",
+    "weight_measurement": "U.M. Peso",
+    "thickness_measurement": "U.M. Spessore",
+    "contact": "Contatto"
   }
 }
