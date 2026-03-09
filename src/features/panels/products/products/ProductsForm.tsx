@@ -20,19 +20,21 @@ export type IProductForm = Omit<IProduct, "id"
     | "supplier"
     | "measurement_unit"
     | "color"
-    | "weight_measurement"
-    | "thickness_measurement"
+    | "weight_measurement_unit"
+    | "thickness_measurement_unit"
     | "contact"
     | "product_category"
+    | "alarm"
+    | "stock_quantity"
 > & {
     product_type_id: number;
     supplier_id: number;
     measurement_unit_id: number;
     color_id: number;
-    weight_measurement_id: number;
-    thickness_measurement_id: number;
     contact_id: number;
     product_category_id: number;
+    weight_measurement_unit_id: number;
+    thickness_measurement_unit_id: number;
 };
 
 const ProductsForm = () => {
@@ -65,20 +67,20 @@ const ProductsForm = () => {
                 vendor_code: "",
                 product_note: "",
                 exclude_mrp: false,
-                alarm: 0,
-                stock_quantity: 0,
-                weight: 0,
-                thickness: 0,
-                use_coefficient: 0,
-                bill_of_material_quantity: 0,
-                last_cost: 0,
-                last_price: 0,
+                // alarm: 0,
+                // stock_quantity: 0,
+                weight: null,
+                thickness: null,
+                use_coefficient: null,
+                bill_of_material_quantity: null,
+                last_cost: null,
+                last_price: null,
                 product_type_id: 0,
                 supplier_id: 0,
                 measurement_unit_id: 0,
                 color_id: 0,
-                weight_measurement_id: 0,
-                thickness_measurement_id: 0,
+                weight_measurement_unit_id: 0,
+                thickness_measurement_unit_id: 0,
                 product_category_id: 0,
                 contact_id: 0,
             } as IProductForm}
@@ -89,15 +91,26 @@ const ProductsForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedProductId: null})}
             mapEntityToForm={(p) => ({
-                ...p,
+                name: p.name,
+                internal_name: p.internal_name,
+                external_name: p.external_name,
+                vendor_code: p.vendor_code,
+                product_note: p.product_note,
+                exclude_mrp: p.exclude_mrp,
+                weight: p.weight,
+                thickness: p.thickness,
+                use_coefficient: p.use_coefficient,
+                bill_of_material_quantity: p.bill_of_material_quantity,
+                last_cost: p.last_cost,
+                last_price: p.last_price,
                 product_category_id: p.product_category?.id,
                 product_type_id: p.product_type?.id,
                 supplier_id: p.supplier?.id,
                 measurement_unit_id: p.measurement_unit?.id,
                 color_id: p.color?.id,
-                weight_measurement_id: p.weight_measurement?.id,
-                thickness_measurement_id: p.thickness_measurement?.id,
                 contact_id: p.contact?.id,
+                weight_measurement_unit_id: p.weight_measurement_unit?.id,
+                thickness_measurement_unit_id: p.thickness_measurement_unit?.id,
             } as IProductForm)}
             renderFields={() => (
                 <>
@@ -201,7 +214,7 @@ const ProductsForm = () => {
                             />
                             <SelectFieldControlled<IProductForm>
                                 label={t("products.weight_measurement")}
-                                name={"weight_measurement_id"}
+                                name={"weight_measurement_unit_id"}
                                 options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
                             />
                             <NumberFieldControlled<IProductForm>
@@ -210,7 +223,7 @@ const ProductsForm = () => {
                             />
                             <SelectFieldControlled<IProductForm>
                                 label={t("products.thickness_measurement")}
-                                name={"thickness_measurement_id"}
+                                name={"thickness_measurement_unit_id"}
                                 options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
                             />
                         </Box>

@@ -26,7 +26,7 @@ export interface IProduct {
     supplier: IContact;
     measurement_unit: IMeasurementUnit;
     color: IColor;
-    weight_measurement: IMeasurementUnit;
-    thickness_measurement: IMeasurementUnit;
+    weight_measurement_unit: IMeasurementUnit;
+    thickness_measurement_unit: IMeasurementUnit;
     contact: IContact;
 }
