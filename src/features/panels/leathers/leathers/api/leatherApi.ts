@@ -2,8 +2,8 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
 
 export interface ILeatherPayload extends Omit<ILeather, 'id'
-    // | "code"
-    // | "name"
+    | "code"
+    | "name"
     | "contact"
     | "weight"
     | "thickness"

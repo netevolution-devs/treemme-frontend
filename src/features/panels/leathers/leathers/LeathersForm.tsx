@@ -113,11 +113,7 @@ const LeathersForm = () => {
                 container_piece: x.container_piece,
                 crust_revenue_expected: x.crust_revenue_expected,
             })}
-            // TODO: use correct code and name
-            create={(payload) => createLeather({...payload,
-                code: "test-code-" + Date.now(),
-                name: "test-name-" + Date.now(),
-            } as ILeatherPayload)}
+            create={(payload) => createLeather({...payload} as ILeatherPayload)}
             update={(id, payload) => updateLeather({id, payload: payload as ILeatherPayload})}
             remove={(id) => deleteLeather(id)}
             isSaving={isPosting || isPutting}
