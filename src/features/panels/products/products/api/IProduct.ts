@@ -2,6 +2,7 @@ import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts"
 import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
 import type {IProductType} from "@features/panels/products/products/api/product-type/IProductType.ts";
 import type {IColor} from "@features/panels/products/products/api/color/IColor.ts";
+import type {IProductCategory} from "@features/panels/products/products/api/product-category/IProductCategory.ts";
 
 export interface IProduct {
     id: number;
@@ -21,6 +22,7 @@ export interface IProduct {
     last_cost: number | null;
     last_price: number | null;
     product_type: IProductType;
+    product_category: IProductCategory;
     supplier: IContact;
     measurement_unit: IMeasurementUnit;
     color: IColor;

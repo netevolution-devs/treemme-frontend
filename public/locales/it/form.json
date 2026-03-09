@@ -265,6 +265,9 @@
     "color": "Colore",
     "weight_measurement": "U.M. Peso",
     "thickness_measurement": "U.M. Spessore",
-    "contact": "Contatto"
+    "contact": "Contatto",
+    "generals": "Generalità",
+    "technical": "Dati tecnici",
+    "product_category": "Categoria"
   }
 }

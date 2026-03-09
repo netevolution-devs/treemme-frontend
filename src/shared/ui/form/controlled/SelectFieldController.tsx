@@ -18,7 +18,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                      options = [],
                                                                      TextFieldProps,
                                                                      minWidth = 150,
-                                                                     deactivated = false
+                                                                     deactivated = false,
                                                                  }: SelectFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const {

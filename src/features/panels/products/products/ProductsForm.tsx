@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
@@ -13,15 +13,18 @@ import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/m
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import type {IProduct} from "@features/panels/products/products/api/IProduct.ts";
 import type {IProductsStoreState} from "@features/panels/products/products/ProductsPanel.tsx";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
+import {productCategoryApi} from "@features/panels/products/products/api/product-category/productCategoryApi.ts";
 
-export type IProductForm = Omit<IProduct, "id" 
-    | "product_type" 
-    | "supplier" 
-    | "measurement_unit" 
-    | "color" 
-    | "weight_measurement" 
-    | "thickness_measurement" 
+export type IProductForm = Omit<IProduct, "id"
+    | "product_type"
+    | "supplier"
+    | "measurement_unit"
+    | "color"
+    | "weight_measurement"
+    | "thickness_measurement"
     | "contact"
+    | "product_category"
 > & {
     product_type_id: number;
     supplier_id: number;
@@ -30,6 +33,7 @@ export type IProductForm = Omit<IProduct, "id"
     weight_measurement_id: number;
     thickness_measurement_id: number;
     contact_id: number;
+    product_category_id: number;
 };
 
 const ProductsForm = () => {
@@ -43,8 +47,9 @@ const ProductsForm = () => {
     const {mutateAsync: createProduct, isPending: isPosting} = usePost();
     const {mutateAsync: updateProduct, isPending: isPutting} = usePut();
     const {mutateAsync: deleteProduct, isPending: isDeleting} = useDelete();
-    
+
     const {data: productTypes = []} = productTypeApi.useGetList();
+    const {data: productCategories = []} = productCategoryApi.useGetList();
     const {data: colors = []} = colorApi.useGetList();
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: contacts = []} = contactsApi.useGetList();
@@ -75,6 +80,7 @@ const ProductsForm = () => {
                 color_id: 0,
                 weight_measurement_id: 0,
                 thickness_measurement_id: 0,
+                product_category_id: 0,
                 contact_id: 0,
             } as IProductForm}
             create={(payload) => createProduct(payload as IProductPayload)}
@@ -85,6 +91,7 @@ const ProductsForm = () => {
             onClearSelection={() => setUIState({selectedProductId: null})}
             mapEntityToForm={(p) => ({
                 ...p,
+                product_category_id: p.product_category?.id,
                 product_type_id: p.product_type?.id,
                 supplier_id: p.supplier?.id,
                 measurement_unit_id: p.measurement_unit?.id,
@@ -95,135 +102,156 @@ const ProductsForm = () => {
             } as IProductForm)}
             renderFields={() => (
                 <>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <TextFieldControlled<IProductForm>
-                            label={t("products.product_code")}
-                            name={"product_code"}
-                        />
+                    {/* Generals */}
+                    <Box sx={{display: 'flex', gap: 1, flexDirection: 'column'}}>
+                        <Typography variant="h6">{t("products.generals")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <TextFieldValue
+                                label={t("products.product_code")}
+                                value={product?.product_code as string}
+                                isFilled={!!selectedProductId}
+                            />
+                            <TextFieldValue
+                                label={t("products.stock_quantity")}
+                                value={product?.stock_quantity as number}
+                                isFilled={!!selectedProductId}
+                                precision={2}
+                            />
+                        </Box>
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <TextFieldControlled<IProductForm>
+                                label={t("products.vendor_code")}
+                                name={"vendor_code"}
+                            />
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.supplier")}
+                                name={"supplier_id"}
+                                options={contacts.map(c => ({value: c.id, label: c.name}))}
+                            />
+                            <FlagCheckBoxFieldControlled<IProductForm>
+                                label={t("products.exclude_mrp")}
+                                name={"exclude_mrp"}
+                                width={120}
+                            />
+                        </Box>
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.product_category")}
+                                name={"product_category_id"}
+                                options={productCategories.map(pc => ({value: pc.id, label: `${pc.code} - ${pc.name}`}))}
+                            />
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.product_type")}
+                                name={"product_type_id"}
+                                options={productTypes.map(pt => ({value: pt.id, label: `${pt.code} - ${pt.name}`}))}
+                            />
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.measurement_unit")}
+                                name={"measurement_unit_id"}
+                                options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
+                            />
+                        </Box>
+
                         <TextFieldControlled<IProductForm>
                             label={t("products.name")}
                             name={"name"}
                         />
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <TextFieldControlled<IProductForm>
+                                label={t("products.internal_name")}
+                                name={"internal_name"}
+                            />
+                            <TextFieldControlled<IProductForm>
+                                label={t("products.external_name")}
+                                name={"external_name"}
+                            />
+                        </Box>
+
+                        {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+                        {/*    <SelectFieldControlled<IProductForm>*/}
+                        {/*        label={t("products.contact")}*/}
+                        {/*        name={"contact_id"}*/}
+                        {/*        options={contacts.map(c => ({value: c.id, label: c.name}))}*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.color")}
+                                name={"color_id"}
+                                options={colors.map(c => ({value: c.id, label: c.color}))}
+                            />
+                        </Box>
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+
+                        </Box>
+                        <Box>
+                            <TextFieldControlled<IProductForm>
+                                label={t("products.product_note")}
+                                name={"product_note"}
+                                TextFieldProps={{multiline: true, rows: 2}}
+                            />
+                        </Box>
                     </Box>
 
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <TextFieldControlled<IProductForm>
-                            label={t("products.internal_name")}
-                            name={"internal_name"}
-                        />
-                        <TextFieldControlled<IProductForm>
-                            label={t("products.external_name")}
-                            name={"external_name"}
-                        />
-                    </Box>
+                    {/* Technical data */}
+                    <Box sx={{display: 'flex', gap: 1, flexDirection: 'column'}}>
+                        <Typography variant="h6">{t("products.technical")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <NumberFieldControlled<IProductForm>
+                                label={t("products.weight")}
+                                name={"weight"}
+                            />
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.weight_measurement")}
+                                name={"weight_measurement_id"}
+                                options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
+                            />
+                        </Box>
 
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <TextFieldControlled<IProductForm>
-                            label={t("products.vendor_code")}
-                            name={"vendor_code"}
-                        />
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.product_type")}
-                            name={"product_type_id"}
-                            options={productTypes.map(pt => ({value: pt.id, label: pt.name}))}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.supplier")}
-                            name={"supplier_id"}
-                            options={contacts.map(c => ({value: c.id, label: c.name}))}
-                        />
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.contact")}
-                            name={"contact_id"}
-                            options={contacts.map(c => ({value: c.id, label: c.name}))}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.measurement_unit")}
-                            name={"measurement_unit_id"}
-                            options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
-                        />
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.color")}
-                            name={"color_id"}
-                            options={colors.map(c => ({value: c.id, label: c.color}))}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
                         <NumberFieldControlled<IProductForm>
                             label={t("products.alarm")}
                             name={"alarm"}
                         />
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.stock_quantity")}
-                            name={"stock_quantity"}
-                        />
-                        <FlagCheckBoxFieldControlled<IProductForm>
-                            label={t("products.exclude_mrp")}
-                            name={"exclude_mrp"}
-                            width={150}
-                        />
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <NumberFieldControlled<IProductForm>
+                                label={t("products.thickness")}
+                                name={"thickness"}
+                            />
+                            <SelectFieldControlled<IProductForm>
+                                label={t("products.thickness_measurement")}
+                                name={"thickness_measurement_id"}
+                                options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
+                            />
+                        </Box>
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <NumberFieldControlled<IProductForm>
+                                label={t("products.use_coefficient")}
+                                name={"use_coefficient"}
+                            />
+                            <NumberFieldControlled<IProductForm>
+                                label={t("products.bill_of_material_quantity")}
+                                name={"bill_of_material_quantity"}
+                            />
+                        </Box>
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <NumberFieldControlled<IProductForm>
+                                label={t("products.last_cost")}
+                                name={"last_cost"}
+                            />
+                            <NumberFieldControlled<IProductForm>
+                                label={t("products.last_price")}
+                                name={"last_price"}
+                            />
+                        </Box>
                     </Box>
 
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.weight")}
-                            name={"weight"}
-                        />
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.weight_measurement")}
-                            name={"weight_measurement_id"}
-                            options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.thickness")}
-                            name={"thickness"}
-                        />
-                        <SelectFieldControlled<IProductForm>
-                            label={t("products.thickness_measurement")}
-                            name={"thickness_measurement_id"}
-                            options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.use_coefficient")}
-                            name={"use_coefficient"}
-                        />
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.bill_of_material_quantity")}
-                            name={"bill_of_material_quantity"}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.last_cost")}
-                            name={"last_cost"}
-                        />
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.last_price")}
-                            name={"last_price"}
-                        />
-                    </Box>
-
-                    <Box sx={{mt: 1}}>
-                        <TextFieldControlled<IProductForm>
-                            label={t("products.product_note")}
-                            name={"product_note"}
-                            TextFieldProps={{multiline: true, rows: 2}}
-                        />
-                    </Box>
                 </>
             )}
         />

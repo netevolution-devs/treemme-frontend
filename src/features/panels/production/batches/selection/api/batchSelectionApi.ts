@@ -7,6 +7,6 @@ import type {
 export type IBatchSelectionPayload = IBatchSelectionForm;
 
 export const batchSelectionApi = createPanelApi<IBatchSelection, IBatchSelectionPayload>({
-    baseEndpoint: "/batch_selection",
+    baseEndpoint: "/batch-selection",
     queryKey: "BATCH-SELECTION"
 });
