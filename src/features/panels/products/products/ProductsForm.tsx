@@ -8,7 +8,6 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import {type IProductPayload, productsApi} from "@features/panels/products/products/api/productsApi.ts";
 import {productTypeApi} from "@features/panels/products/products/api/product-type/productTypeApi.ts";
-import {colorApi} from "@features/panels/products/products/api/color/colorApi.ts";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import type {IProduct} from "@features/panels/products/products/api/IProduct.ts";
@@ -50,9 +49,9 @@ const ProductsForm = () => {
 
     const {data: productTypes = []} = productTypeApi.useGetList();
     const {data: productCategories = []} = productCategoryApi.useGetList();
-    const {data: colors = []} = colorApi.useGetList();
+    // const {data: colors = []} = colorApi.useGetList();
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
-    const {data: contacts = []} = contactsApi.useGetList();
+    const {data: suppliers = []} = contactsApi.useGetList({queryParams: {type: "supplier"}});
 
     return (
         <GenericForm<IProductForm, IProduct, IProductsStoreState>
@@ -127,7 +126,7 @@ const ProductsForm = () => {
                             <SelectFieldControlled<IProductForm>
                                 label={t("products.supplier")}
                                 name={"supplier_id"}
-                                options={contacts.map(c => ({value: c.id, label: c.name}))}
+                                options={suppliers.map(c => ({value: c.id, label: c.name}))}
                             />
                             <FlagCheckBoxFieldControlled<IProductForm>
                                 label={t("products.exclude_mrp")}
@@ -177,24 +176,19 @@ const ProductsForm = () => {
                         {/*    />*/}
                         {/*</Box>*/}
 
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                            <SelectFieldControlled<IProductForm>
-                                label={t("products.color")}
-                                name={"color_id"}
-                                options={colors.map(c => ({value: c.id, label: c.color}))}
-                            />
-                        </Box>
+                        {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+                        {/*    <SelectFieldControlled<IProductForm>*/}
+                        {/*        label={t("products.color")}*/}
+                        {/*        name={"color_id"}*/}
+                        {/*        options={colors.map(c => ({value: c.id, label: c.color}))}*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
 
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-
-                        </Box>
-                        <Box>
-                            <TextFieldControlled<IProductForm>
-                                label={t("products.product_note")}
-                                name={"product_note"}
-                                TextFieldProps={{multiline: true, rows: 2}}
-                            />
-                        </Box>
+                        <TextFieldControlled<IProductForm>
+                            label={t("products.product_note")}
+                            name={"product_note"}
+                            TextFieldProps={{multiline: true, rows: 2}}
+                        />
                     </Box>
 
                     {/* Technical data */}
@@ -210,14 +204,6 @@ const ProductsForm = () => {
                                 name={"weight_measurement_id"}
                                 options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
                             />
-                        </Box>
-
-                        <NumberFieldControlled<IProductForm>
-                            label={t("products.alarm")}
-                            name={"alarm"}
-                        />
-
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                             <NumberFieldControlled<IProductForm>
                                 label={t("products.thickness")}
                                 name={"thickness"}
@@ -227,6 +213,14 @@ const ProductsForm = () => {
                                 name={"thickness_measurement_id"}
                                 options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
                             />
+                        </Box>
+
+                        {/*<NumberFieldControlled<IProductForm>*/}
+                        {/*    label={t("products.alarm")}*/}
+                        {/*    name={"alarm"}*/}
+                        {/*/>*/}
+
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         </Box>
 
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
