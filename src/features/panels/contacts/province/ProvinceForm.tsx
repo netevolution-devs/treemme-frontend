@@ -39,10 +39,12 @@ const ProvinceForm = () => {
                     <TextFieldControlled<IProvinceForm>
                         name="acronym"
                         label={t("province.acronym")}
+                        required
                     />
                     <TextFieldControlled<IProvinceForm>
                         name="name"
                         label={t("province.name")}
+                        required
                     />
                 </>
             )}
