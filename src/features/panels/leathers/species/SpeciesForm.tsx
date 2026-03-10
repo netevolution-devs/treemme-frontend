@@ -39,15 +39,18 @@ const SpeciesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedSpeciesId: null})}
+            validateBeforeSave={(v) => !!v.name && !!v.code}
             renderFields={() => (
                 <>
                     <TextFieldControlled<ISpeciesForm>
                         name={"code"}
                         label={t("leathers.species.code")}
+                        required
                     />
                     <TextFieldControlled<ISpeciesForm>
                         name={"name"}
                         label={t("leathers.species.name")}
+                        required
                     />
                 </>
             )}
