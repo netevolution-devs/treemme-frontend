@@ -5,6 +5,7 @@ import type {
     IShipmentCondition
 } from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
+import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
 
 export interface ICustomerOrder {
     id: number;
@@ -32,4 +33,5 @@ export interface ICustomerOrder {
     print_date: string;
     shipment_condition: IShipmentCondition;
     address: IContactAddress;
+    client_order_rows: IOrderRow[];
 }

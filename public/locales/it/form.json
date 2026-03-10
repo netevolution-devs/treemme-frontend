@@ -248,7 +248,8 @@
     "payment": "Pagamento",
     "shipment": "Trasporto",
     "yield": "Resa",
-    "destination": "Destinazione"
+    "destination": "Destinazione",
+    "rows": "Righe ordine"
   },
   "products": {
     "product_code": "Codice Articolo",
