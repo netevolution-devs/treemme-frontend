@@ -45,10 +45,12 @@ const FlayingForm = () => {
                     <TextFieldControlled<IFlayingForm>
                         name={"code"}
                         label={t("leathers.flay.code")}
+                        required
                     />
                     <TextFieldControlled<IFlayingForm>
                         name={"name"}
                         label={t("leathers.flay.name")}
+                        required
                     />
                 </>
             )}
