@@ -68,7 +68,7 @@ const LeathersForm = () => {
     const {mutateAsync: updateLeather, isPending: isPutting} = usePut();
     const {mutateAsync: deleteLeather, isPending: isDeleting} = useDelete();
 
-    const {data: contacts = []} = contactsApi.useGetList();
+    const {data: suppliers = []} = contactsApi.useGetList({queryParams: {type: "supplier"} });
 
     const {data: origins = []} = originApi.useGetList();
     const {data: species = []} = speciesApi.useGetList();
@@ -186,7 +186,7 @@ const LeathersForm = () => {
                         <SelectFieldControlled<ILeatherForm>
                             name={"supplier_id"}
                             label={t("leathers.leather.contact")}
-                            options={contacts.map((x) => ({
+                            options={suppliers.map((x) => ({
                                 label: x.name,
                                 value: x.id
                             }))}
