@@ -62,10 +62,12 @@ const WeightsForm = () => {
                         <TextFieldControlled<IWeightForm>
                             name={"name"}
                             label={t("leathers.weight.name")}
+                            required
                         />
                         <NumberFieldControlled<IWeightForm>
                             name={"kg_weight"}
                             label={t("leathers.weight.kg-weight")}
+                            required
                         />
                     </Box>
                     <Box sx={{display: 'flex', gap: 1}}>
