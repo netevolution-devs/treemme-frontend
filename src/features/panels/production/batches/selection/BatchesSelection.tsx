@@ -31,7 +31,10 @@ const BatchesSelection = () => {
                     icon={<HighlightAltIcon/>}
                     color={"success"}
                     onClick={() => {openDialog(selectionDialogRef)}}
-                    isEnable={!!selectedBatchId && batch?.batch_type.name === 'Spaccato'}
+                    isEnable={!!selectedBatchId
+                        && batch?.batch_type.name === 'Spaccato'
+                        && !batch.batch_code.includes("SC")
+                    }
                 />
             </Box>
             <BatchesSelectionList />
