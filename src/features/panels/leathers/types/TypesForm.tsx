@@ -49,17 +49,19 @@ const TypesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedTypeId: null})}
-            validateBeforeSave={(v) => !!v.name && !!v.code}
+            validateBeforeSave={(v) => !!v.name && !!v.code && !!v.thickness_id}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', gap: 1}}>
                         <TextFieldControlled<ITypeForm>
                             name={"code"}
                             label={t("leathers.type.code")}
+                            required
                         />
                         <TextFieldControlled<ITypeForm>
                             name={"name"}
                             label={t("leathers.type.name")}
+                            required
                         />
                     </Box>
                     <SelectFieldControlled<ITypeForm>
@@ -69,6 +71,7 @@ const TypesForm = () => {
                             label: x.name,
                             value: x.id
                         })) || []}
+                        required
                     />
                 </>
             )}
