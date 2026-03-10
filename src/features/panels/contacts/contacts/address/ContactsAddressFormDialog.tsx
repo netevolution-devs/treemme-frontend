@@ -88,33 +88,31 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedAddressId: null})}
-                validateBeforeSave={(v) => !!v.address && !!v.nation_id && !!v.town_id}
+                validateBeforeSave={(v) => !!v.address_name && !!v.address && !!v.nation_id && !!v.town_id}
                 renderFields={() => (
                     <>
-                        <Stack gap={1} sx={{mb: 2}}>
+                        <Stack gap={1} sx={{mb: 1}}>
                             <TextFieldControlled<IContactAddressForm>
                                 name="address_name"
                                 label={t("contacts.address.name")}
+                                required
                             />
                             <TextFieldControlled<IContactAddressForm>
                                 name="address"
                                 label={t("contacts.address.address-1")}
-                                showHelperRow={false}
+                                required
                             />
                             <TextFieldControlled<IContactAddressForm>
                                 name="address_2"
                                 label={t("contacts.address.address-2")}
-                                showHelperRow={false}
                             />
                             <TextFieldControlled<IContactAddressForm>
                                 name="address_3"
                                 label={t("contacts.address.address-3")}
-                                showHelperRow={false}
                             />
                             <TextFieldControlled<IContactAddressForm>
                                 name="address_4"
                                 label={t("contacts.address.address-4")}
-                                showHelperRow={false}
                             />
                         </Stack>
                         <Box sx={{display: 'flex', gap: 1}}>
@@ -126,6 +124,7 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                                     label: `${x.cap} - ${x.name} - ${x.province.name}`
                                 })) || []}
                                 minWidth={400}
+                                required
                             />
                             <SelectFieldControlled<IContactAddressForm>
                                 name={"nation_id"}
@@ -134,7 +133,7 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                                     value: x.id,
                                     label: x.name
                                 })) || []}
-                                minWidth={200}
+                                required
                             />
                         </Box>
                     </>
