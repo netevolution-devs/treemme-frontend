@@ -96,6 +96,13 @@
     "filters": {
       "name": "Nome contatto",
       "detail": "Recapito"
+    },
+    "seaports": {
+      "name": "Nome",
+      "ductible_day": "Gg. Franchigia",
+      "parking_day_cost": "Costo sosta gg.",
+      "container_deductible_day": "Gg. Franchigia Cnt.",
+      "container_parking_day_cost": "Costo sosta Cnt. gg."
     }
   },
   "leathers": {
