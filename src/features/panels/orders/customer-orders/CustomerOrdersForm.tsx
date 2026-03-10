@@ -83,7 +83,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         }
     }, [clientId, clients, setValue, control]);
 
-    const filterAdressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
+    const filterAddressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
         return addressLabels
             .filter((label): label is string => !!label && label.trim().length > 0)
             .join(', ');
@@ -122,6 +122,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"client_id"}
                     label={t("orders.client")}
                     options={clients.map(c => ({value: c.id, label: c.name}))}
+                    required
                 />
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_number")}
@@ -162,6 +163,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"payment_id"}
                     label={t("orders.payment")}
                     options={payments.map(p => ({value: p.id, label: p.name}))}
+                    required
                 />
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"shipment_condition_id"}
@@ -175,7 +177,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 label={t("orders.destination")}
                 options={clientAddresses.map(p => ({
                     value: p.id,
-                    label: `${p.address_name} - ${filterAdressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.town.name} - ${p.nation.name}`
+                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.town.name} - ${p.nation.name}`
                 }))}
             />
 
@@ -309,7 +311,7 @@ const CustomerOrdersForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
-            validateBeforeSave={(v) => !!v.client_id}
+            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id}
             renderFields={() => (
                 <FormFields
                     clients={clients}
