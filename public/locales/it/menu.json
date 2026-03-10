@@ -27,9 +27,7 @@
       "search": "Ricerca Prodotti",
       "products": "Prodotti",
       "categories": "Categorie",
-      "article-types": "Tipologie Articoli",
-      "productCategories": "ProductCategories",
-      "productTypes": "ProductTypes"
+      "article-types": "Tipologie Prodotti"
     },
     "orders": {
       "self": "Ordini",
