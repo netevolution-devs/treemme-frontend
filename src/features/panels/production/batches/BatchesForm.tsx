@@ -143,6 +143,7 @@ const BatchesForm = () => {
                             <DateFieldControlled<IBatchesForm>
                                 name="batch_date"
                                 label={t("production.batch.batch_date")}
+                                required
                             />
                             <TextFieldValue
                                 label={t("production.batch.sq_ft_average_expected")}
@@ -174,6 +175,7 @@ const BatchesForm = () => {
                                 label={t("production.batch.batch_type")}
                                 options={batchTypes.map(x => ({label: x.name, value: x.id}))}
                                 deactivated={!!selectedBatchId}
+                                required
                             />
                             <TextFieldValue
                                 label={t("production.batch.check_user")}
@@ -187,17 +189,20 @@ const BatchesForm = () => {
                                 name="pieces"
                                 label={t("production.batch.pieces")}
                                 precision={0}
+                                required
                             />
                             <NumberFieldControlled<IBatchesForm>
                                 name="quantity"
                                 label={t("production.batch.quantity")}
                                 precision={2}
                                 step={1}
+                                required
                             />
                             <SelectFieldControlled<IBatchesForm>
                                 name="measurement_unit_id"
                                 label={t("production.batch.measurement_unit")}
                                 options={measurementUnits.map(x => ({label: x.name, value: x.id}))}
+                                required
                             />
                             <TextFieldValue
                                 label={t("production.batch.stock_items")}
