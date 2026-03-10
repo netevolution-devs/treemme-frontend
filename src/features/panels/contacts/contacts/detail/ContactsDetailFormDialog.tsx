@@ -78,10 +78,12 @@ const ContactsDetailFormDialog = forwardRef<IDialogActions, Props>((_props, ref)
                                 x.name,
                                 value: x.id
                             })) || []}
+                            required
                         />
                         <TextFieldControlled<IContactDetailForm>
                             name={"name"}
                             label={t("contacts.details.value")}
+                            required
                         />
                         <TextFieldControlled<IContactDetailForm>
                             name={"note"}
