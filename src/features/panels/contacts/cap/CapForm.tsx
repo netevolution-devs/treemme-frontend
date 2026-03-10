@@ -56,14 +56,17 @@ const CapForm = () => {
                             value: p.id,
                             label: `${p.acronym} - ${p.name}`
                         })) || []}
+                        required
                     />
                     <TextFieldControlled<ICapForm>
                         name="cap"
                         label={t("cap.code")}
+                        required
                     />
                     <TextFieldControlled<ICapForm>
                         name="name"
                         label={t("cap.name")}
+                        required
                     />
                 </>
             )}
