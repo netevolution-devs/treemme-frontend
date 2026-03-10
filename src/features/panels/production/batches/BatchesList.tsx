@@ -21,9 +21,13 @@ const BatchesList = () => {
             accessorKey: "batch_code",
             header: t("production.batch.batch_code")
         },
+        // {
+        //     accessorKey: "leather.provenance.nation.name",
+        //     header: t("nations.name")
+        // },
         {
-            accessorKey: "leather.provenance.nation.name",
-            header: t("nations.name")
+            accessorKey: "leather.name",
+            header: t("leathers.leather.name")
         },
         {
             accessorKey: "pieces",
