@@ -60,10 +60,12 @@ const TanningStagesForm = () => {
                         <TextFieldControlled<ITanningStageForm>
                             name={"code"}
                             label={t("leathers.status.code")}
+                            required
                         />
                         <TextFieldControlled<ITanningStageForm>
                             name={"name"}
                             label={t("leathers.status.name")}
+                            required
                         />
                     </Box>
                     <SelectFieldControlled<ITanningStageForm>
@@ -73,6 +75,7 @@ const TanningStagesForm = () => {
                             label: `${x.prefix} - ${x.name}`,
                             value: x.id,
                         })) || []}
+                        required
                     />
                     <Box sx={{display: 'flex', gap: 1}}>
                         <NumberFieldControlled<ITanningStageForm>
