@@ -35,6 +35,8 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const setUIState = useStore(state => state.setUIState);
 
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+
     const {useGetDetail, usePost, usePut, useDelete} = contactsApi;
     const {data: contact} = useGetDetail(selectedContactId);
     const {mutateAsync: createContact, isPending: isPosting} = usePost();
@@ -83,8 +85,8 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
             renderFields={() => (
                 <>
                     <Box>
-                        <Typography>{t("contacts.select")}</Typography>
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                        <Typography color={!isFormDisabled ? "text.secondary" : "textDisabled"}>{t("contacts.select")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, ml: 1}}>
                             <FlagCheckBoxFieldControlled<IContactForm>
                                 name="client"
                                 label={t("contacts.client")}
@@ -109,7 +111,7 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
                             value: x.id,
                             label: x.name
                         })) || []}
-                        showHelperRow={false}
+                        required
                     />
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <SelectFieldControlled<IContactForm>
@@ -119,10 +121,12 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
                                 value: x.id,
                                 label: x.name
                             })) || []}
+                            required
                         />
                         <TextFieldControlled<IContactForm>
                             name="name"
                             label={t("contacts.name")}
+                            required
                         />
                     </Box>
                     <TextFieldControlled<IContactForm>
