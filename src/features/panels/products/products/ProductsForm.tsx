@@ -112,6 +112,7 @@ const ProductsForm = () => {
                 weight_measurement_unit_id: p.weight_measurement_unit?.id,
                 thickness_measurement_unit_id: p.thickness_measurement_unit?.id,
             } as IProductForm)}
+            validateBeforeSave={(v) => !!v.name && !!v.product_type_id && !!v.product_category_id && !!v.measurement_unit_id}
             renderFields={() => (
                 <>
                     {/* Generals */}
@@ -153,22 +154,26 @@ const ProductsForm = () => {
                                 label={t("products.product_category")}
                                 name={"product_category_id"}
                                 options={productCategories.map(pc => ({value: pc.id, label: `${pc.code} - ${pc.name}`}))}
+                                required
                             />
                             <SelectFieldControlled<IProductForm>
                                 label={t("products.product_type")}
                                 name={"product_type_id"}
                                 options={productTypes.map(pt => ({value: pt.id, label: `${pt.code} - ${pt.name}`}))}
+                                required
                             />
                             <SelectFieldControlled<IProductForm>
                                 label={t("products.measurement_unit")}
                                 name={"measurement_unit_id"}
                                 options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
+                                required
                             />
                         </Box>
 
                         <TextFieldControlled<IProductForm>
                             label={t("products.name")}
                             name={"name"}
+                            required
                         />
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                             <TextFieldControlled<IProductForm>
