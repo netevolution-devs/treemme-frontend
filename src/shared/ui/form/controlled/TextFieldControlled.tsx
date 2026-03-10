@@ -10,7 +10,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                                                    label,
                                                                    required = false,
                                                                    TextFieldProps,
-                                                                   showHelperRow = true,
+                                                                   showHelperRow = false,
                                                                    maxLength = 255,
                                                                }: ControlledFieldProps<TFieldValues>) => {
     const {t} = useTranslation(["common"])
@@ -52,6 +52,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                             },
                             htmlInput: {maxLength: maxLength}
                         }}
+                        sx={{mb: 1.2}}
                         disabled={disabled}
                     />
                 )

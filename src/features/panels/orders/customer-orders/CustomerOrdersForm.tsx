@@ -83,7 +83,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         }
     }, [clientId, clients, setValue, control]);
 
-    const filterAdressString = ({ addressLabels }: { addressLabels: (string | null | undefined)[] }) => {
+    const filterAdressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
         return addressLabels
             .filter((label): label is string => !!label && label.trim().length > 0)
             .join(', ');
@@ -128,8 +128,8 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"client_order_number"}
                 />
                 <DateFieldControlled<ICustomerOrderForm>
-                    label={t("orders.agent_order_date")}
-                    name={"agent_order_date"}
+                    label={t("orders.client_order_date")}
+                    name={"client_order_date"}
                 />
             </Box>
 
@@ -144,8 +144,8 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"agent_order_number"}
                 />
                 <DateFieldControlled<ICustomerOrderForm>
-                    label={t("orders.client_order_date")}
-                    name={"client_order_date"}
+                    label={t("orders.agent_order_date")}
+                    name={"agent_order_date"}
                 />
             </Box>
 
@@ -210,31 +210,28 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
             {/*    <IconButton size="small"><ChevronRightIcon fontSize="small"/></IconButton>*/}
             {/*</Box>*/}
 
-            <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
-                    <TextFieldControlled<ICustomerOrderForm>
-                        name={"order_note"}
-                        label={t("orders.order_note")}
-                    />
-                </Box>
-                <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
-                    <TextFieldControlled<ICustomerOrderForm>
-                        name={"order_note_iso"}
-                        label={t("orders.order_note_iso")}
-                    />
-                </Box>
-                <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
-                    <TextFieldControlled<ICustomerOrderForm>
-                        name={"order_note_production"}
-                        label={t("orders.order_note_production")}
-                    />
-                </Box>
-                <Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>
-                    <TextFieldControlled<ICustomerOrderForm>
-                        name={"order_note_administration"}
-                        label={t("orders.order_note_administration")}
-                    />
-                </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldControlled<ICustomerOrderForm>
+                    name={"order_note"}
+                    label={t("orders.order_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
+                />
+                <TextFieldControlled<ICustomerOrderForm>
+                    name={"order_note_production"}
+                    label={t("orders.order_note_production")}
+                    TextFieldProps={{multiline: true, rows: 2}}
+                />
+                <TextFieldControlled<ICustomerOrderForm>
+                    name={"order_note_administration"}
+                    label={t("orders.order_note_administration")}
+                    TextFieldProps={{multiline: true, rows: 2}}
+                />
+                {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 0.5, alignItems: 'center'}}>*/}
+                {/*    <TextFieldControlled<ICustomerOrderForm>*/}
+                {/*        name={"order_note_iso"}*/}
+                {/*        label={t("orders.order_note_iso")}*/}
+                {/*    />*/}
+                {/*</Box>*/}
             </Box>
         </>
     );

@@ -21,7 +21,7 @@ const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps
         <TextField
             label={label}
             value={displayValue}
-            sx={{pb: 2}}
+            sx={{mb: 0.5}}
             slotProps={{
                 inputLabel: {
                     shrink: isFilled

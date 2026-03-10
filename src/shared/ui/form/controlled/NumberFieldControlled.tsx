@@ -17,7 +17,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      name,
                                                                      label,
                                                                      required = false,
-                                                                     showHelperRow = true,
+                                                                     showHelperRow = false,
                                                                      precision = 2,
                                                                      step = 1,
                                                                      maxWidth = '100%',
@@ -148,7 +148,8 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                             }
                         }}
                         sx={{
-                            maxWidth
+                            maxWidth,
+                            mb: 1.2
                         }}
                     />
                 );

@@ -14,7 +14,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                      name,
                                                                      label,
                                                                      required = false,
-                                                                     showHelperRow = true,
+                                                                     showHelperRow = false,
                                                                      options = [],
                                                                      TextFieldProps,
                                                                      minWidth = 150,
@@ -61,6 +61,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                     label={formattedLabel}
                                     size="small"
                                     fullWidth
+                                    sx={{mb: 1.2}}
                                     error={!!error}
                                     helperText={error?.message ?? (showHelperRow ? " " : "")}
                                     slotProps={{

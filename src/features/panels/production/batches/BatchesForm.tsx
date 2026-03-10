@@ -182,7 +182,7 @@ const BatchesForm = () => {
                             />
                         </Box>
 
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 2, mb: 1}}>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                             <NumberFieldControlled<IBatchesForm>
                                 name="pieces"
                                 label={t("production.batch.pieces")}
@@ -221,7 +221,7 @@ const BatchesForm = () => {
                             />
                         </Box>
 
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mt: 1}}>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                             {/*<FlagCheckBoxFieldControlled<IBatchesForm>*/}
                             {/*    name="checked"*/}
                             {/*    label={t("production.batch.checked")}*/}
