@@ -249,7 +249,26 @@
     "shipment": "Trasporto",
     "yield": "Resa",
     "destination": "Destinazione",
-    "rows": "Righe ordine"
+    "rows": "Righe ordine",
+    "row": {
+      "product": "Prodotto",
+      "measurement_unit": "Unità di misura",
+      "quantity": "Quantità",
+      "tolerance_quantity_percentage": "Tolleranza %",
+      "delivery_date_request": "Data richiesta",
+      "delivery_date_confirmed": "Data confermata",
+      "currency_price": "Prezzo valuta",
+      "currency_exchange": "Cambio",
+      "total_currency_price": "Totale valuta",
+      "price": "Prezzo",
+      "total_price": "Totale",
+      "agent_percentage_row": "Provv. riga %",
+      "weight": "Peso",
+      "shipment_schedule": "Settimana spedizione",
+      "production_schedule": "Settimana produzione",
+      "processed": "Evasa",
+      "cancelled": "Annullata"
+    }
   },
   "products": {
     "product_code": "Codice Articolo",
