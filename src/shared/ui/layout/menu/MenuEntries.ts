@@ -67,7 +67,7 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             {i18nKey: "menu.production.batches", component: "batches" },
             {i18nKey: "menu.production.recipes"},
-            {i18nKey: "menu.production.machinery"},
+            {i18nKey: "menu.production.machinery", component: "machinery" },
             {i18nKey: "menu.production.progress"},
             {i18nKey: "menu.production.processes"},
             {i18nKey: "menu.production.bom"},
