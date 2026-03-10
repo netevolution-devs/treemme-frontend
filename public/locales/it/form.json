@@ -268,6 +268,14 @@
     "contact": "Contatto",
     "generals": "Generalità",
     "technical": "Dati tecnici",
-    "product_category": "Categoria"
+    "product_category": "Categoria",
+    "categories": {
+      "code": "Codice",
+      "name": "Nome"
+    },
+    "types": {
+      "code": "Codice",
+      "name": "Nome"
+    }
   }
 }

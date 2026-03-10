@@ -17,6 +17,7 @@ import BatchesPanel from "@features/panels/production/batches/BatchesPanel.tsx";
 import CustomerOrdersPanel from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
 import ProductsPanel from "@features/panels/products/products/ProductsPanel.tsx";
 import ProductCategoriesPanel from "@features/panels/products/product-categories/ProductCategoriesPanel.tsx";
+import ProductTypesPanel from "@features/panels/products/product-types/ProductTypesPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -36,6 +37,7 @@ export type TPanelKind =
     | 'customerOrders'
     | 'products'
     | 'productCategories'
+    | 'productTypes'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -58,5 +60,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     customerOrders: () => <CustomerOrdersPanel />,
     products: () => <ProductsPanel />,
     productCategories: () => <ProductCategoriesPanel />,
+    productTypes: () => <ProductTypesPanel />,
     "not-implemented": () => <>To implement</>,
 }

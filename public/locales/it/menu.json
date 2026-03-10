@@ -28,7 +28,8 @@
       "products": "Prodotti",
       "categories": "Categorie",
       "article-types": "Tipologie Articoli",
-      "productCategories": "ProductCategories"
+      "productCategories": "ProductCategories",
+      "productTypes": "ProductTypes"
     },
     "orders": {
       "self": "Ordini",
