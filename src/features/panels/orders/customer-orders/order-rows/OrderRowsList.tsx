@@ -49,6 +49,7 @@ const OrderRowsList = () => {
                 isLoading={isLoading}
                 selectedId={selectedOrderRowId}
                 onRowSelect={(id) => setUIState({selectedOrderRowId: id})}
+                onRowDoubleClick={() => openDialog(editRowDialogRef)}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar:
