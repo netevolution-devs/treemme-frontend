@@ -1,6 +1,8 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import ArticlesForm from "@features/panels/products/articles/ArticlesForm.tsx";
+import ArticlesList from "@features/panels/products/articles/ArticlesList.tsx";
 
 export interface IArticlesStoreState extends IPanelUIState {
     _placeholder?: string;
@@ -14,8 +16,8 @@ const ArticlesPanel = () => {
             kind={"articles"}
             initialState={{uiState: initialUiState}}
         >
-            <div>List placeholder for Articles</div>
-            <div>Form placeholder for Articles</div>
+            <ArticlesForm/>
+            <ArticlesList/>
         </GenericPanel>
     )
 }
