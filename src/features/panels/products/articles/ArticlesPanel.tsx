@@ -5,7 +5,7 @@ import ArticlesForm from "@features/panels/products/articles/ArticlesForm.tsx";
 import ArticlesList from "@features/panels/products/articles/ArticlesList.tsx";
 
 export interface IArticlesStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedArticledId?: number | null;
 }
 
 const ArticlesPanel = () => {
