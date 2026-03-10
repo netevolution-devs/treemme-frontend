@@ -38,6 +38,7 @@ const NationsForm = () => {
                 <TextFieldControlled<INationForm>
                     name="name"
                     label={t("nations.name")}
+                    required
                 />
             )}
         />
