@@ -80,6 +80,7 @@ const OriginsForm = () => {
                         <TextFieldControlled<IOriginForm>
                             name="code"
                             label={t("leathers.origin.code")}
+                            required
                         />
                         <NumberFieldControlled<IOriginForm>
                             name="trip_day"
@@ -99,6 +100,7 @@ const OriginsForm = () => {
                             label={t("nations.name")}
                             options={nations.map(n => ({ value: n.id, label: n.name }))}
                             minWidth={"49.6%"}
+                            required
                         />
                         <SelectFieldControlled<IOriginForm>
                             name="area_id"
@@ -107,6 +109,13 @@ const OriginsForm = () => {
                             minWidth={"50%"}
                         />
                     </Box>
+                    <SelectFieldControlled<IOriginForm>
+                        name="flay_id"
+                        label={t("leathers.origin.flay")}
+                        options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
+                        minWidth={"50%"}
+                        required
+                    />
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         <NumberFieldControlled<IOriginForm>
                             name="psp_yield_coefficient"
@@ -127,12 +136,6 @@ const OriginsForm = () => {
                             step={0.001}
                         />
                     </Box>
-                    <SelectFieldControlled<IOriginForm>
-                        name="flay_id"
-                        label={t("leathers.origin.flay")}
-                        options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
-                        minWidth={"50%"}
-                    />
                 </>
             )}
         />
