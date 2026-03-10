@@ -198,6 +198,7 @@ const LeathersForm = () => {
                                 label: `${x.nation.name} - ${x.area.name}`,
                                 value: x.id
                             }))}
+                            required
                         />
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
@@ -208,6 +209,7 @@ const LeathersForm = () => {
                                 label: x.name,
                                 value: x.id
                             }))}
+                            required
                         />
                         <SelectFieldControlled<ILeatherForm>
                             name={"type_id"}
@@ -216,6 +218,7 @@ const LeathersForm = () => {
                                 label: x.name,
                                 value: x.id
                             }))}
+                            required
                         />
                         <SelectFieldControlled<ILeatherForm>
                             name={"status_id"}
@@ -224,6 +227,7 @@ const LeathersForm = () => {
                                 label: x.name,
                                 value: x.id
                             }))}
+                            required
                         />
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
@@ -234,6 +238,7 @@ const LeathersForm = () => {
                                 label: x.name,
                                 value: x.id
                             }))}
+                            required
                         />
                         <SelectFieldControlled<ILeatherForm>
                             name={"thickness_id"}
@@ -242,6 +247,7 @@ const LeathersForm = () => {
                                 label: x.name,
                                 value: x.id
                             }))}
+                            required
                         />
                         <SelectFieldControlled<ILeatherForm>
                             name={"flay_id"}
@@ -250,6 +256,7 @@ const LeathersForm = () => {
                                 label: x.name,
                                 value: x.id
                             }))}
+                            required
                         />
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
