@@ -48,11 +48,13 @@ const ThicknessesForm = () => {
                     <TextFieldControlled<IThicknessForm>
                         name={"name"}
                         label={t("leathers.thickness.name")}
+                        required
                     />
                     <NumberFieldControlled<IThicknessForm>
                         name={"thickness_mm"}
                         label={t("leathers.thickness.mm")}
                         step={0.05}
+                        required
                     />
                 </>
             )}
