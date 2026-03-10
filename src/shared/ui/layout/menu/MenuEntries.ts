@@ -10,20 +10,20 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.contacts.self",
         subMenu: [
+            {i18nKey: "menu.contacts.contacts", component: "contacts" },
             {i18nKey: "menu.contacts.cap", component: "cap"},
             {i18nKey: "menu.contacts.nations", component: "nations" },
             {i18nKey: "menu.contacts.provinces", component: "province"},
-            {i18nKey: "menu.contacts.contacts", component: "contacts" },
             // {i18nKey: "menu.contacts.seaports", component: "seaports" }
         ]
     },
     {
         i18nKey: "menu.leathers.self",
         subMenu: [
+            {i18nKey: "menu.leathers.leathers", component: "leathers" },
             {i18nKey: "menu.leathers.weights", component: "weights" },
             {i18nKey: "menu.leathers.species", component: "species" },
             // {i18nKey: "menu.leathers.sizes", component: "sizes" },
-            {i18nKey: "menu.leathers.leathers", component: "leathers" },
             {i18nKey: "menu.leathers.thicknesses", component: "thicknesses" },
             {i18nKey: "menu.leathers.types", component: "types" },
             {i18nKey: "menu.leathers.flaying", component: "flaying" },
@@ -34,10 +34,10 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.products.self",
         subMenu: [
+            {i18nKey: "menu.products.products", component: "products" },
             {i18nKey: "menu.products.grades"},
             {i18nKey: "menu.products.articles"},
             {i18nKey: "menu.products.search"},
-            {i18nKey: "menu.products.products", component: "products" },
             {i18nKey: "menu.products.categories", component: "productCategories"},
             {i18nKey: "menu.products.article-types"},
         ]
