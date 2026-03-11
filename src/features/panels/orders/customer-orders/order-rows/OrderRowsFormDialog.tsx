@@ -21,13 +21,14 @@ type Props = unknown;
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
     'article' |
-    'measurement_unit'
+    'measurement_unit' |
+    'client_order'
 > & {
     id?: number;
     // product_id: number;
     article_id: number;
     measurement_unit_id: number;
-    client_order_id?: number;
+    client_order_id: number;
 };
 
 const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -82,6 +83,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     delivery_date_request: null,
                     delivery_date_confirmed: null,
                     article_id: 0,
+                    client_order_id: selectedCustomerOrderId ?? 0
                 }}
                 mapEntityToForm={(x) => ({
                     // product_id: x.product.id,
@@ -102,6 +104,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     delivery_date_request: x.delivery_date_request,
                     delivery_date_confirmed: x.delivery_date_confirmed,
                     article_id: x.article.id,
+                    client_order_id: selectedCustomerOrderId ?? 0
                 })}
                 create={(payload) => createRow({
                     ...payload,

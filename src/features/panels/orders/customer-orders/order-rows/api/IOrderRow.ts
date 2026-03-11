@@ -1,5 +1,6 @@
 import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
+import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
 
 export interface IOrderRow {
     id: number;
@@ -20,4 +21,5 @@ export interface IOrderRow {
     delivery_date_request: string | null;
     delivery_date_confirmed: string | null;
     article: IArticle;
+    client_order: ICustomerOrder;
 }
