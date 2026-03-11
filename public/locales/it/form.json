@@ -256,6 +256,7 @@
     "destination": "Destinazione",
     "rows": "Righe ordine",
     "row": {
+      "article": "Articolo",
       "product": "Prodotto",
       "measurement_unit": "Unità di misura",
       "quantity": "Quantità",

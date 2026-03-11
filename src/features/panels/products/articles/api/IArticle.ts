@@ -7,6 +7,7 @@ import type {IProduct} from "@features/panels/products/products/api/IProduct.ts"
 
 export interface IArticle {
     id: number;
+    name: string;
     code: string;
     client: IContact;
     article_type: IArticleType;

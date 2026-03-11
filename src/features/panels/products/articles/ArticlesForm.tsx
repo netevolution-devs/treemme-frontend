@@ -13,6 +13,7 @@ import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessA
 import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi.ts";
 import {useMemo} from "react";
 import {Box} from "@mui/material";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 
 export type IArticleForm = {
     code: string;
@@ -97,6 +98,11 @@ const ArticlesForm = () => {
                             name="code"
                             label={t("products.articles.code")}
                             required
+                        />
+                        <TextFieldValue
+                            label={t("products.articles.name")}
+                            value={article?.name}
+                            isFilled={!!selectedArticledId}
                         />
                         <FlagCheckBoxFieldControlled<IArticleForm>
                             name="full_grain"

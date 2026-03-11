@@ -11,19 +11,21 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
 import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import {productsApi} from "@features/panels/products/products/api/productsApi.ts";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
+import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
+import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
 
 type Props = unknown;
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
-    'product' |
+    'article' |
     'measurement_unit'
 > & {
     id?: number;
-    product_id: number;
+    // product_id: number;
+    article_id: number;
     measurement_unit_id: number;
     client_order_id?: number;
 };
@@ -39,6 +41,8 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {useGetDetail, usePost, usePut, useDelete} = orderRowApi;
     const {data: orderRow} = useGetDetail(selectedOrderRowId);
 
+    const {data: order} = customerOrderApi.useGetDetail(selectedCustomerOrderId);
+
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
         invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
     });
@@ -49,8 +53,8 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
         invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
     });
 
-    const {data: products} = productsApi.useGetList();
-    const {data: measurementUnits} = measurementUnitApi.useGetList();
+    const {data: articles = []} = articleApi.useGetList({queryParams: {client: order?.client.id as number}});
+    const {data: measurementUnits = []} = measurementUnitApi.useGetList();
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -60,7 +64,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 selectedId={selectedOrderRowId}
                 entity={orderRow}
                 emptyValues={{
-                    product_id: 0,
+                    // product_id: 0,
                     measurement_unit_id: 0,
                     processed: false,
                     cancelled: false,
@@ -77,9 +81,10 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     production_schedule: null,
                     delivery_date_request: null,
                     delivery_date_confirmed: null,
+                    article_id: 0,
                 }}
                 mapEntityToForm={(x) => ({
-                    product_id: x.product.id,
+                    // product_id: x.product.id,
                     measurement_unit_id: x.measurement_unit.id,
                     processed: x.processed,
                     cancelled: x.cancelled,
@@ -96,6 +101,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     production_schedule: x.production_schedule,
                     delivery_date_request: x.delivery_date_request,
                     delivery_date_confirmed: x.delivery_date_confirmed,
+                    article_id: x.article.id,
                 })}
                 create={(payload) => createRow({
                     ...payload,
@@ -116,9 +122,9 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     <Stack gap={2}>
                         <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                             <SelectFieldControlled<IOrderRowForm>
-                                name="product_id"
-                                label={t("orders.row.product")}
-                                options={products?.map(p => ({value: p.id, label: p.name})) || []}
+                                name="article_id"
+                                label={t("orders.row.article")}
+                                options={articles?.map(p => ({value: p.id, label: p.name})) || []}
                                 required
                             />
                             <FlagCheckBoxFieldControlled<IOrderRowForm>
