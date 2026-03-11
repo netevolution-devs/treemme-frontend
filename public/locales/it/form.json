@@ -214,6 +214,11 @@
         "stock_items": "Giacenza Pezzi",
         "selection": "Nome scelta"
       }
+    },
+    "machinery": {
+      "name": "Nome macchinario",
+      "prefix": "Prefisso",
+      "batch_type": "Tipo lotto"
     }
   },
   "movements": {

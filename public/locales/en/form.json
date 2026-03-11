@@ -49,5 +49,12 @@
       "title": "Update user",
       "description": "Update user information"
     }
+  },
+  "production": {
+    "machinery": {
+      "name": "Machinery name",
+      "prefix": "Prefix",
+      "batch_type": "Batch type"
+    }
   }
 }
