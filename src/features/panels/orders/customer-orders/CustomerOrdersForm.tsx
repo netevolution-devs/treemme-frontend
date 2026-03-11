@@ -100,6 +100,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.order_date")}
                     name={"order_date"}
+                    required
                 />
                 <Box sx={{display: 'flex', flexDirection: 'row', ml: 1.5}}>
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
@@ -127,6 +128,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_number")}
                     name={"client_order_number"}
+                    required
                 />
                 <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_date")}
@@ -311,7 +313,7 @@ const CustomerOrdersForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
-            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id}
+            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date && !!v.client_order_number}
             renderFields={() => (
                 <FormFields
                     clients={clients}
