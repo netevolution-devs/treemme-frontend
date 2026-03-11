@@ -14,8 +14,8 @@ import OrderRowsFormDialog from "@features/panels/orders/customer-orders/order-r
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
-import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dyeing/DyeFormDialog.tsx";
-import RefineFormDialog from "@features/panels/orders/customer-orders/order-rows/refinishing/RefineFormDialog.tsx";
+import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog.tsx";
+import RefinementFormDialog from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog.tsx";
 
 const OrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -45,7 +45,7 @@ const OrderRowsList = () => {
 
     const editRowDialogRef = useRef<IDialogActions | null>(null);
     const dyeDialogRef = useRef<IDialogActions | null>(null);
-    const refineDialogRef = useRef<IDialogActions | null>(null);
+    const refinementDialogRef = useRef<IDialogActions | null>(null);
 
     const handleOpenCreateRowDialog = () => {
         setUIState({selectedOrderRowId: null});
@@ -56,7 +56,7 @@ const OrderRowsList = () => {
         <>
             <OrderRowsFormDialog ref={editRowDialogRef}/>
             <DyeFormDialog ref={dyeDialogRef}/>
-            <RefineFormDialog ref={refineDialogRef}/>
+            <RefinementFormDialog ref={refinementDialogRef}/>
 
             <Typography variant={"h5"}>{t("orders.rows")}</Typography>
             <GenericList<IOrderRow>
@@ -68,14 +68,17 @@ const OrderRowsList = () => {
                 onRowDoubleClick={() => openDialog(editRowDialogRef)}
                 additionalOptions={{
                     enableRowActions: true,
-                    renderRowActionMenuItems: () => [
-                        <MenuItem key="dye" onClick={() => {openDialog(dyeDialogRef)}}>
+                    renderRowActionMenuItems: ({row}) => [
+                        <MenuItem key="dye" onClick={() => {
+                            openDialog(dyeDialogRef)
+                            setUIState({selectedOrderRowId: row.original.id})
+                        }}>
                             <ColorLensIcon color={"primary"} sx={{mr: 1}} />
                             {t("orders.row.dye")}
                         </MenuItem>,
-                        <MenuItem key="refinishing" onClick={() => {openDialog(refineDialogRef)}}>
+                        <MenuItem key="refinishing" onClick={() => {openDialog(refinementDialogRef)}}>
                             <SettingsInputHdmiIcon color={"success"} sx={{mr: 1}} />
-                            {t("orders.row.refinishing")}
+                            {t("orders.row.refinement")}
                         </MenuItem>
                     ],
                     enableTopToolbar: true,

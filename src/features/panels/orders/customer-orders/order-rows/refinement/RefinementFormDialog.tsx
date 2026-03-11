@@ -4,14 +4,14 @@ import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 
 type Props = unknown;
 
-const DyeFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+const RefinementFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     return (
         <BaseDialog ref={ref}>
             <div>
-                <h1>Dye Form</h1>
+                <h1>Refine Form</h1>
             </div>
         </BaseDialog>
     )
 });
 
-export default DyeFormDialog;
+export default RefinementFormDialog;
