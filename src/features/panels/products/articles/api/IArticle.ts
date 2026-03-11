@@ -1,5 +1,5 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IArticleType} from "@features/panels/products/articles/api/article-type/IArticleType.ts";
+import type {IArticleType} from "@features/panels/products/article-types/api/IArticleType.ts";
 import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
 import type {IArticlePrint} from "@features/panels/products/articles/api/article-print/IArticlePrint.ts";
 import type {IColorType} from "@features/panels/products/articles/api/color-type/IColorType.ts";

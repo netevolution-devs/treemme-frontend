@@ -8,7 +8,7 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {articleTypeApi} from "@features/panels/products/articles/api/article-type/articleTypeApi.ts";
+import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
 import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi.ts";
 import {useMemo} from "react";

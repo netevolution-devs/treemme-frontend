@@ -20,6 +20,7 @@ import ProductCategoriesPanel from "@features/panels/products/product-categories
 import ProductTypesPanel from "@features/panels/products/product-types/ProductTypesPanel.tsx";
 import ArticlesPanel from "@features/panels/products/articles/ArticlesPanel.tsx";
 import MachineryPanel from "@features/panels/production/machinery/MachineryPanel.tsx";
+import ArticleTypesPanel from "@features/panels/products/article-types/ArticleTypesPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -42,6 +43,7 @@ export type TPanelKind =
     | 'productTypes'
     | 'articles'
     | 'machinery'
+    | 'articleTypes'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -67,5 +69,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     productTypes: () => <ProductTypesPanel />,
     articles: () => <ArticlesPanel />,
     machinery: () => <MachineryPanel />,
+    articleTypes: () => <ArticleTypesPanel />,
     "not-implemented": () => <>To implement</>,
 }

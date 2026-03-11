@@ -318,7 +318,9 @@
       "article_variation": "Variazione",
       "thickness": "Spessore",
       "print": "Stampa",
-      "note": "Note articolo"
+      "note": "Note articolo",
+      "leather_type": "Pellame",
+      "article_class": "Classe"
     }
   }
 }
