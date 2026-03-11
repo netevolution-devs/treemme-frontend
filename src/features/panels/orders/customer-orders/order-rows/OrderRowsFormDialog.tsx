@@ -22,7 +22,8 @@ export type IOrderRowForm = Omit<IOrderRow,
     'id' |
     'article' |
     'measurement_unit' |
-    'client_order'
+    'client_order' |
+    'available_quantity'
 > & {
     id?: number;
     // product_id: number;
