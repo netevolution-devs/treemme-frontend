@@ -67,21 +67,21 @@ const GenericList = <TData extends BaseEntity>({
         ...additionalOptions,
         displayColumnDefOptions: ({
             'mrt-row-actions': {
-                size: 7,
-                minSize: 7,
-                maxSize: 7,
+                size: 12,
+                minSize: 12,
+                maxSize: 12,
                 muiTableHeadCellProps: {
                     sx: {
                         padding: 0,
-                        width: '7px',
-                        maxWidth: '7px',
+                        width: '12px',
+                        maxWidth: '12px',
                     },
                 },
                 muiTableBodyCellProps: {
                     sx: {
                         padding: 0,
-                        width: '7px',
-                        maxWidth: '7px',
+                        width: '12px',
+                        maxWidth: '12px',
                     },
                 },
             },

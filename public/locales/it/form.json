@@ -273,7 +273,9 @@
       "shipment_schedule": "Settimana spedizione",
       "production_schedule": "Settimana produzione",
       "processed": "Evasa",
-      "cancelled": "Annullata"
+      "cancelled": "Annullata",
+      "refinishing": "Rifinitura",
+      "dye": "Tinteggiatura"
     }
   },
   "products": {
