@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import {type ILeatherPayload, leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
+import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
 import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
 import {originApi} from "@features/panels/leathers/origins/api/originApi.ts";
@@ -113,8 +113,8 @@ const LeathersForm = () => {
                 container_piece: x.container_piece,
                 crust_revenue_expected: x.crust_revenue_expected,
             })}
-            create={(payload) => createLeather({...payload} as ILeatherPayload)}
-            update={(id, payload) => updateLeather({id, payload: payload as ILeatherPayload})}
+            create={(payload) => createLeather(payload)}
+            update={(id, payload) => updateLeather({id, payload})}
             remove={(id) => deleteLeather(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}

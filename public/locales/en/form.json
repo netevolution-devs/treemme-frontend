@@ -62,7 +62,12 @@
       "code": "Code",
       "client": "Client",
       "article_type": "Type",
-      "color": "Color"
+      "color": "Color",
+      "full_grain": "Full grain",
+      "article_variation": "Variation",
+      "thickness": "Thickness",
+      "print": "Print",
+      "note": "Article note"
     }
   }
 }

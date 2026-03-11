@@ -16,8 +16,8 @@ const ArticlesPanel = () => {
             kind={"articles"}
             initialState={{uiState: initialUiState}}
         >
-            <ArticlesForm/>
             <ArticleList/>
+            <ArticlesForm/>
         </GenericPanel>
     )
 }

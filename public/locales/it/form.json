@@ -313,7 +313,12 @@
       "code": "Codice",
       "client": "Cliente",
       "article_type": "Tipologia",
-      "color": "Colore"
+      "color": "Colore",
+      "full_grain": "Pieno fiore",
+      "article_variation": "Variazione",
+      "thickness": "Spessore",
+      "print": "Stampa",
+      "note": "Note articolo"
     }
   }
 }
