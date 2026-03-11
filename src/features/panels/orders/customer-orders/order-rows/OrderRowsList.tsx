@@ -26,8 +26,8 @@ const OrderRowsList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IOrderRow>[]>(() => [
         {
-            accessorKey: "product.name",
-            header: t("orders.row.product"),
+            accessorKey: "article.name",
+            header: t("orders.row.article"),
         },
         {
             accessorKey: "quantity",

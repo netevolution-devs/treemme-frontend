@@ -16,6 +16,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
     const {baseEndpoint, queryKey} = config;
 
     return {
+        queryKey,
         // GET LIST
         useGetList: (options?: ApiOptions) => {
             const {get} = useApi();

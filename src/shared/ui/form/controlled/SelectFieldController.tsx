@@ -8,6 +8,7 @@ interface SelectFieldProps<TFieldValues extends FieldValues> extends ControlledF
     options: { value: string | number; label: string }[];
     minWidth?: number | string;
     deactivated?: boolean;
+    onNoOptionsMatch?: (inputValue: string) => void;
 }
 
 const SelectFieldControlled = <TFieldValues extends FieldValues>({
@@ -19,6 +20,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                      TextFieldProps,
                                                                      minWidth = 150,
                                                                      deactivated = false,
+                                                                     onNoOptionsMatch,
                                                                  }: SelectFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const {
@@ -50,6 +52,17 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                             onChange(newValue ? newValue.value : 0);
                         }}
                         onBlur={onBlur}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && onNoOptionsMatch) {
+                                const target = e.target as HTMLInputElement;
+                                const inputValue = target.value;
+                                const match = options.find(opt => opt.label.toLowerCase() === inputValue.toLowerCase());
+                                if (!match && inputValue.trim()) {
+                                    onNoOptionsMatch(inputValue);
+                                    target.blur();
+                                }
+                            }
+                        }}
                         renderInput={(params) => {
                             const { InputLabelProps, InputProps, inputProps, ...restParams } = params;
 

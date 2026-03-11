@@ -11,9 +11,12 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts
 import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
 import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi.ts";
-import {useMemo} from "react";
+import {useMemo, useCallback, useEffect} from "react";
 import {Box} from "@mui/material";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useFormContext} from "react-hook-form";
+import {useQueryClient} from "@tanstack/react-query";
 
 export type IArticleForm = {
     code: string;
@@ -43,6 +46,27 @@ const ArticlesForm = () => {
     const {data: articleTypes = []} = articleTypeApi.useGetList();
     const {data: thicknesses = []} = thicknessApi.useGetList();
     const {data: prints = []} = articlePrintApi.useGetList();
+
+    const addPanel = useDockviewStore(state => state.addPanel);
+    const queryClient = useQueryClient();
+
+    const handleNoMatchArticleType = useCallback((inputValue: string) => {
+        addPanel({
+            id: `articleTypes-${crypto.randomUUID()}`,
+            component: 'articleTypes',
+            title: t("products.articles.article_type"),
+            floating: {
+                width: 600,
+                height: 800,
+            },
+            params: {
+                initialName: inputValue,
+                onSuccess: (id: number) => {
+                    queryClient.setQueryData(['LAST_CREATED_ARTICLE_TYPE'], id);
+                }
+            }
+        });
+    }, [addPanel, t, queryClient]);
 
     const clientOptions = useMemo(() =>
             contacts.filter(c => c.client).map(c => ({value: c.id, label: c.name})),
@@ -91,66 +115,114 @@ const ArticlesForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
             validateBeforeSave={(v) => !!v.code && v.client_id > 0 && v.article_type_id > 0}
-            renderFields={() => (
-                <>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <TextFieldControlled<IArticleForm>
-                            name="code"
-                            label={t("products.articles.code")}
-                            required
-                        />
-                        <TextFieldValue
-                            label={t("products.articles.name")}
-                            value={article?.name}
-                            isFilled={!!selectedArticledId}
-                        />
-                        <FlagCheckBoxFieldControlled<IArticleForm>
-                            name="full_grain"
-                            label={t("products.articles.full_grain")}
-                        />
-                    </Box>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<IArticleForm>
-                            name="client_id"
-                            label={t("products.articles.client")}
-                            options={clientOptions}
-                            required
-                        />
-                        <SelectFieldControlled<IArticleForm>
-                            name="article_type_id"
-                            label={t("products.articles.article_type")}
-                            options={articleTypeOptions}
-                            required
-                        />
-                    </Box>
-                    <TextFieldControlled<IArticleForm>
-                        name="article_variation"
-                        label={t("products.articles.article_variation")}
-                    />
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<IArticleForm>
-                            name="thickness_id"
-                            label={t("products.articles.thickness")}
-                            options={thicknessOptions}
-                        />
-                        <SelectFieldControlled<IArticleForm>
-                            name="print_id"
-                            label={t("products.articles.print")}
-                            options={printOptions}
-                        />
-                    </Box>
-                    <TextFieldControlled<IArticleForm>
-                        name="note"
-                        label={t("products.articles.note")}
-                        TextFieldProps={{
-                            multiline: true,
-                            rows: 4
-                        }}
-                    />
-                </>
-            )}
+            renderFields={() => <ArticlesFormFields 
+                article={article as IArticle}
+                selectedArticledId={selectedArticledId as number}
+                clientOptions={clientOptions}
+                articleTypeOptions={articleTypeOptions}
+                thicknessOptions={thicknessOptions}
+                printOptions={printOptions}
+                handleNoMatchArticleType={handleNoMatchArticleType}
+            />}
         />
     );
 };
+
+interface ArticlesFormFieldsProps {
+    article: IArticle;
+    selectedArticledId: number | null;
+    clientOptions: { value: number; label: string }[];
+    articleTypeOptions: { value: number; label: string }[];
+    thicknessOptions: { value: number; label: string }[];
+    printOptions: { value: number; label: string }[];
+    handleNoMatchArticleType: (inputValue: string) => void;
+}
+
+const ArticlesFormFields = ({
+    article,
+    selectedArticledId,
+    clientOptions,
+    articleTypeOptions,
+    thicknessOptions,
+    printOptions,
+    handleNoMatchArticleType
+}: ArticlesFormFieldsProps) => {
+    const {t} = useTranslation(["form"]);
+    const {setValue} = useFormContext<IArticleForm>();
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        // Listen for last created article type
+        const unsubscribe = queryClient.getQueryCache().subscribe(() => {
+            const lastId = queryClient.getQueryData<number>(['LAST_CREATED_ARTICLE_TYPE']);
+            if (lastId) {
+                setValue('article_type_id', lastId);
+                // Clear it so it doesn't trigger again
+                queryClient.setQueryData(['LAST_CREATED_ARTICLE_TYPE'], null);
+            }
+        });
+        return () => unsubscribe();
+    }, [queryClient, setValue]);
+
+    return (
+        <>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldControlled<IArticleForm>
+                    name="code"
+                    label={t("products.articles.code")}
+                    required
+                />
+                <TextFieldValue
+                    label={t("products.articles.name")}
+                    value={article?.name}
+                    isFilled={!!selectedArticledId}
+                />
+                <FlagCheckBoxFieldControlled<IArticleForm>
+                    name="full_grain"
+                    label={t("products.articles.full_grain")}
+                />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<IArticleForm>
+                    name="client_id"
+                    label={t("products.articles.client")}
+                    options={clientOptions}
+                    required
+                />
+                <SelectFieldControlled<IArticleForm>
+                    name="article_type_id"
+                    label={t("products.articles.article_type")}
+                    options={articleTypeOptions}
+                    required
+                    onNoOptionsMatch={handleNoMatchArticleType}
+                />
+            </Box>
+            <TextFieldControlled<IArticleForm>
+                name="article_variation"
+                label={t("products.articles.article_variation")}
+            />
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<IArticleForm>
+                    name="thickness_id"
+                    label={t("products.articles.thickness")}
+                    options={thicknessOptions}
+                />
+                <SelectFieldControlled<IArticleForm>
+                    name="print_id"
+                    label={t("products.articles.print")}
+                    options={printOptions}
+                />
+            </Box>
+            <TextFieldControlled<IArticleForm>
+                name="note"
+                label={t("products.articles.note")}
+                TextFieldProps={{
+                    multiline: true,
+                    rows: 4
+                }}
+            />
+        </>
+    );
+}
 
 export default ArticlesForm;

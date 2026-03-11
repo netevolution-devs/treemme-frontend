@@ -8,19 +8,29 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
 import {articleClassApi} from "@features/panels/products/articles/api/article-class/articleClassApi.ts";
-import {useMemo} from "react";
+import {useMemo, useEffect, useCallback} from "react";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 
 export type IArticleTypeForm = Omit<IArticleType, 'id' | 'article_class' | 'leather_type'> & {
     leather_type_id: number;
     article_class_id: number;
 }
 
-const ArticleTypesForm = () => {
+interface ArticleTypesFormProps {
+    initialName?: string;
+    onSuccess?: (id: number) => void;
+}
+
+const ArticleTypesForm = ({initialName, onSuccess}: ArticleTypesFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IArticleTypesStoreState>();
     const selectedArticleTypeId = useStore(state => state.uiState.selectedArticleTypeId);
     const setUIState = useStore(state => state.setUIState);
+    const {setFormState} = usePanelFormButtons<unknown, IArticleTypesStoreState>();
+
+    const api = useDockviewStore(state => state.api);
 
     const {useGetDetail, usePost, usePut, useDelete} = articleTypeApi;
     const {data: articleType} = useGetDetail(selectedArticleTypeId);
@@ -39,12 +49,29 @@ const ArticleTypesForm = () => {
         articleClasses.map(ac => ({value: ac.id, label: ac.name})),
     [articleClasses]);
 
+    useEffect(() => {
+        if (initialName && !selectedArticleTypeId) {
+            setFormState('new');
+        }
+    }, [initialName, selectedArticleTypeId, setFormState]);
+
+    const handleSuccess = useCallback((entity: IArticleType) => {
+        onSuccess?.(entity.id);
+        if (initialName) {
+            const panels = api?.panels;
+            if (panels) {
+                const currentPanel = Object.values(panels).find(p => p.params?.initialName === initialName);
+                currentPanel?.api.close();
+            }
+        }
+    }, [onSuccess, initialName, api]);
+
     return (
         <GenericForm<IArticleTypeForm, IArticleType, IArticleTypesStoreState>
             selectedId={selectedArticleTypeId}
             entity={articleType}
             emptyValues={{
-                name: '',
+                name: initialName ?? '',
                 leather_type_id: 0,
                 article_class_id: 0
             }}
@@ -59,6 +86,7 @@ const ArticleTypesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticleTypeId: null})}
+            onSuccess={handleSuccess}
             validateBeforeSave={(v) => !!v.name && v.leather_type_id > 0 && v.article_class_id > 0}
             renderFields={() => (
                 <>

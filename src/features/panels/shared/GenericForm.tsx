@@ -29,6 +29,8 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
 
     renderFields: () => React.ReactNode;
 
+    onSuccess?: (entity: TEntity) => void;
+
     // used if form data is inside a dialog
     dialogMode?: boolean;
     dialogRef?: ForwardedRef<IDialogActions>;
@@ -52,6 +54,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         onClearSelection,
         validateBeforeSave,
         renderFields,
+        onSuccess,
         dialogMode = false,
         dialogRef,
         extraButtons,
@@ -94,9 +97,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     const onConfirmDelete = async () => {
         if (selectedId) {
-            await remove?.(selectedId);
-            onClearSelection?.();
-            handleCloseDialog();
+            try {
+                await remove?.(selectedId);
+                onClearSelection?.();
+            } finally {
+                handleCloseDialog();
+                closeDialog(deleteRef);
+            }
         }
     };
 
@@ -130,14 +137,20 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             Object.entries(data).filter(([, value]) => value !== null && value !== undefined)
         ) as TForm;
 
-        if (selectedId && !bypassConfirm) {
-            await update?.(selectedId, cleanData);
-        } else {
-            await create?.(cleanData);
-            methods.reset(emptyValues);
-            setFormState('init');
+        try {
+            if (selectedId && !bypassConfirm) {
+                const res = await update?.(selectedId, cleanData);
+                if (res) onSuccess?.(res as TEntity);
+            } else {
+                const res = await create?.(cleanData);
+                if (res) onSuccess?.(res as TEntity);
+                methods.reset(emptyValues);
+                setFormState('init');
+            }
+        } finally {
+            handleCloseDialog();
+            closeDialog(saveRef);
         }
-        handleCloseDialog();
     };
 
     useEffect(() => {
