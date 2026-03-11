@@ -66,7 +66,7 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
                                 name="quantity"
                                 label={t("production.batch.quantity")}
                                 required
-                                max={orderRow?.quantity as number}
+                                max={orderRow?.available_quantity as number}
                             />
                             <DateFieldControlled<IDyeForm>
                                 name="scheduled_date"

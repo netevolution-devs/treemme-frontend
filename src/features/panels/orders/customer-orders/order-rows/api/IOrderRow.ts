@@ -22,4 +22,5 @@ export interface IOrderRow {
     delivery_date_confirmed: string | null;
     article: IArticle;
     client_order: ICustomerOrder;
+    available_quantity: number;
 }

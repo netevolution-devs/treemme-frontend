@@ -19,7 +19,7 @@ const usePostBatchDye = () => {
             return response.data.data;
         },
         onSuccess: () => {
-            void queryClient.invalidateQueries({ queryKey: ['BATCH', 'LIST'] });
+            void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'LIST'] });
         },
     });
 };
