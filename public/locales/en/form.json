@@ -56,5 +56,13 @@
       "prefix": "Prefix",
       "batch_type": "Batch type"
     }
+  },
+  "products": {
+    "articles": {
+      "code": "Code",
+      "client": "Client",
+      "article_type": "Type",
+      "color": "Color"
+    }
   }
 }

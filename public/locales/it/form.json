@@ -308,6 +308,12 @@
     "types": {
       "code": "Codice",
       "name": "Nome"
+    },
+    "articles": {
+      "code": "Codice",
+      "client": "Cliente",
+      "article_type": "Tipologia",
+      "color": "Colore"
     }
   }
 }
