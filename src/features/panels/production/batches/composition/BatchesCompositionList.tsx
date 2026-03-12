@@ -13,6 +13,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {
     IBatchCompositionResponse
 } from "@features/panels/production/batches/composition/api/IBatchComposition.ts";
+import {Typography} from "@mui/material";
 
 const BatchesCompositionList = () => {
     const {t} = useTranslation(["form"]);
@@ -45,6 +46,7 @@ const BatchesCompositionList = () => {
         <>
             <BatchCompositionFormDialog ref={compositionDialogRef} />
 
+            <Typography variant="h6">Composizione</Typography>
             <GenericList<IBatchCompositionResponse>
                 columns={columns}
                 data={compositions}

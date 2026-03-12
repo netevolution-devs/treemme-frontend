@@ -7,6 +7,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import dayjs from "dayjs";
+import {Typography} from "@mui/material";
 
 const BatchesProductionList = () => {
     const {t} = useTranslation(["form"]);
@@ -36,11 +37,14 @@ const BatchesProductionList = () => {
     ], [t])
 
     return (
-        <GenericList<IBatchProduction>
-            data={productionList}
-            isLoading={isLoading}
-            columns={columns}
-        />
+        <>
+            <Typography variant="h6">Produzione</Typography>
+            <GenericList<IBatchProduction>
+                data={productionList}
+                isLoading={isLoading}
+                columns={columns}
+            />
+        </>
     )
 }
 
