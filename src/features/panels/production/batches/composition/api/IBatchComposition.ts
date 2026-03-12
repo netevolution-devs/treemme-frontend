@@ -7,3 +7,10 @@ export interface IBatchComposition {
     father_batch_quantity: number | null;
     composition_note: string;
 }
+
+export interface IBatchCompositionResponse {
+    id: number;
+    father_batch_piece: number;
+    father_batch_quantity: number;
+    composition_note: string;
+}
