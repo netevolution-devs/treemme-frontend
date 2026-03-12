@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useMemo} from "react";
 import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
@@ -27,10 +27,13 @@ const getBatchIds = (batch: IBatch | undefined): string[] => {
 const TreeNode = ({ batch }: TreeNodeProps) => {
     const hasChildren = batch.son_batches && Array.isArray(batch.son_batches) && batch.son_batches.length > 0;
 
+    const random1 = useMemo(() => crypto.getRandomValues(new Uint32Array(1))[0], []);
+    const random2 = useMemo(() => crypto.getRandomValues(new Uint32Array(1))[0], []);
+
     if (!hasChildren) {
         return (
             <TreeItem
-                itemId={batch.batch_code}
+                itemId={batch.batch_code + random1}
                 label={batch.batch_code}
             />
         );
@@ -38,7 +41,7 @@ const TreeNode = ({ batch }: TreeNodeProps) => {
 
     return (
         <TreeItem
-            itemId={batch.batch_code}
+            itemId={batch.batch_code + random2}
             label={batch.batch_code}
         >
             {batch.son_batches.map((son) => {
