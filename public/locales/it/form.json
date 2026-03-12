@@ -214,7 +214,10 @@
         "pieces": "Pezzi",
         "stock_items": "Giacenza Pezzi",
         "selection": "Nome scelta"
-      }
+      },
+      "machine": "Macchinario",
+      "scheduled_date": "Data programmazione",
+      "production_note": "Note produzione"
     },
     "machinery": {
       "name": "Nome macchinario",

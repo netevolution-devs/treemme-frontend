@@ -5,6 +5,7 @@ import type {IUser} from "@features/user/model/UserInterfaces.ts";
 import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
 import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
+import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction.ts";
 
 export interface IFatherBatch {
     id: number;
@@ -41,4 +42,5 @@ export interface IBatch {
     batch_selections: IBatchSelection[];
     warehouse_movements: IWarehouseMovement[];
     batch_selections_count: number;
+    productions: IBatchProduction[] | null;
 }
