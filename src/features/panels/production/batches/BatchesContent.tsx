@@ -5,11 +5,24 @@ import BatchesProductionList from "@features/panels/production/batches/productio
 
 const BatchesContent = () => {
     return (
-        <Box sx={{display: 'flex', gap: 2}}>
-            <Box>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: {xs: 'column', xl: 'row'},
+            flexWrap: 'wrap',
+            alignItems: 'flex-start',
+            gap: 2,
+            width: '100%'
+        }}>
+            <Box sx={{flex: '1 1 450px', minWidth: 0}}>
                 <BatchesForm/>
             </Box>
-            <Box sx={{display: 'flex', flexDirection: "column", gap: 1, width: "60%"}}>
+            <Box sx={{
+                flex: '1 1 600px',
+                display: 'flex',
+                flexDirection: "column",
+                gap: 1,
+                minWidth: 0
+            }}>
                 <BatchesCompositionList/>
                 <BatchesProductionList/>
             </Box>
