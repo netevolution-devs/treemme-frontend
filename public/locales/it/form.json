@@ -215,6 +215,7 @@
         "stock_items": "Giacenza Pezzi",
         "selection": "Nome scelta"
       },
+      "father_batch": "Lotto padre",
       "machine": "Macchinario",
       "scheduled_date": "Data programmazione",
       "production_note": "Note produzione"

@@ -57,7 +57,7 @@ const BatchesCompositionList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => <ListToolbar
                         buttons={[
-                            <NewButton onClick={() => openDialog(compositionDialogRef)} />
+                            <NewButton onClick={() => openDialog(compositionDialogRef)} isEnable={!!selectedBatchId} />
                         ]}
                     />
                 }}

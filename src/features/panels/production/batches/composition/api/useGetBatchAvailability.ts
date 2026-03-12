@@ -2,16 +2,15 @@ import {useQuery} from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
 
-const useGetBatchAvailability = (tfBatchId: number) => {
+const useGetBatchAvailability = () => {
     const { get } = useApi();
     return useQuery({
-        queryKey: ['BATCH-AVAILABILITY', tfBatchId],
+        queryKey: ['BATCH-AVAILABILITY', 'LIST'],
         queryFn: async () => {
 
-            const response = await get<IBatch[]>(`/batch/availability`);
+            const response = await get<IBatch[]>(`/batch/available`);
             return response.data.data;
         },
-        enabled: !!tfBatchId,
         staleTime: 0,
         gcTime: 0
     });

@@ -1,13 +1,90 @@
-import {forwardRef} from "react";
+import {forwardRef, useMemo} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import {useTranslation} from "react-i18next";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
+import usePostBatchComposition from "@features/panels/production/batches/composition/api/usePostBatchComposition.ts";
+import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
+import GenericForm from "@features/panels/shared/GenericForm.tsx";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import {Box} from "@mui/material";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 
-type Props = unknown;
+export interface IBatchCompositionForm {
+    pieces: number;
+    quantity: number;
+    father_batch_id: number;
+    note?: string;
+}
 
-const BatchCompositionFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
+    const {t} = useTranslation(["form"]);
+
+    const {useStore} = usePanel<unknown, IBatchesStoreState>();
+    const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
+
+    const {data: batches = []} = useGetBatchAvailability();
+    const batchOptions = useMemo(() =>
+        batches
+            .map(b => ({
+                value: b.id,
+                label: `${b.batch_code} - ${b.leather?.name || b.article?.name || ''}`
+            })),
+    [batches, selectedBatchId]);
+
+    const {mutateAsync: createComposition, isPending} = usePostBatchComposition(selectedBatchId as number);
+
     return (
-        <BaseDialog ref={ref}>
-            <>works</>
+        <BaseDialog ref={ref} sx={{p: 2}}>
+            <GenericForm<IBatchCompositionForm, unknown, IBatchesStoreState>
+                selectedId={null}
+                dialogMode
+                dialogRef={ref}
+                bypassConfirm
+                emptyValues={{
+                    pieces: 0,
+                    quantity: 0,
+                    father_batch_id: 0,
+                }}
+                mapEntityToForm={() => ({
+                    pieces: 0,
+                    quantity: 0,
+                    father_batch_id: 0,
+                })}
+                create={(data) => {
+                    if (!selectedBatchId) return;
+                    return createComposition(data);
+                }}
+                isSaving={isPending}
+                validateBeforeSave={(v) => v.pieces > 0 && v.quantity > 0 && v.father_batch_id > 0}
+                renderFields={() => (
+                    <Box sx={{mb: 1}}>
+                        <SelectFieldControlled<IBatchCompositionForm>
+                            name="father_batch_id"
+                            label={t("production.batch.father_batch")}
+                            options={batchOptions}
+                            required
+                        />
+                        <NumberFieldControlled<IBatchCompositionForm>
+                            name="pieces"
+                            label={t("production.batch.pieces")}
+                            required
+                        />
+                        <NumberFieldControlled<IBatchCompositionForm>
+                            name="quantity"
+                            label={t("production.batch.quantity")}
+                            required
+                        />
+                        <TextFieldControlled<IBatchCompositionForm>
+                            name="note"
+                            label={t("production.batch.note")}
+                            TextFieldProps={{multiline: true, rows: 2}}
+                        />
+                    </Box>
+                )}
+            />
         </BaseDialog>
     );
 });
