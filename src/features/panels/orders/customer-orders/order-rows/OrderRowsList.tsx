@@ -76,7 +76,10 @@ const OrderRowsList = () => {
                             <ColorLensIcon color={"primary"} sx={{mr: 1}} />
                             {t("orders.row.dye")}
                         </MenuItem>,
-                        <MenuItem key="refinishing" onClick={() => {openDialog(refinementDialogRef)}}>
+                        <MenuItem key="refinishing" onClick={() => {
+                            openDialog(refinementDialogRef)
+                            setUIState({selectedOrderRowId: row.original.id})
+                        }}>
                             <SettingsInputHdmiIcon color={"success"} sx={{mr: 1}} />
                             {t("orders.row.refinement")}
                         </MenuItem>
