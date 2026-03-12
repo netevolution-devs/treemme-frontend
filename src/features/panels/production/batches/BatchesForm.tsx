@@ -39,6 +39,8 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_selections'
     | 'warehouse_movements'
     | 'batch_selections_count'
+    | 'productions'
+    | 'batch_compositions'
 > & {
     leather_id: number;
     batch_type_id: number;
