@@ -273,6 +273,7 @@
       "tolerance_quantity_percentage": "Tolleranza %",
       "delivery_date_request": "Data richiesta",
       "delivery_date_confirmed": "Data confermata",
+      "currency": "Valuta",
       "currency_price": "Prezzo valuta",
       "currency_exchange": "Cambio",
       "total_currency_price": "Totale valuta",

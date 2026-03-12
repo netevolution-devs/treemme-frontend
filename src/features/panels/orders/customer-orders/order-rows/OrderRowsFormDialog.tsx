@@ -6,7 +6,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef} from "react";
+import {forwardRef, useMemo} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
@@ -15,6 +15,7 @@ import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/m
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
 import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
 import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 
 type Props = unknown;
 
@@ -22,6 +23,7 @@ export type IOrderRowForm = Omit<IOrderRow,
     'id' |
     'article' |
     'measurement_unit' |
+    'currency' |
     'client_order' |
     'available_quantity'
 > & {
@@ -29,6 +31,7 @@ export type IOrderRowForm = Omit<IOrderRow,
     // product_id: number;
     article_id: number;
     measurement_unit_id: number;
+    currency_id: number | null;
     client_order_id: number;
 };
 
@@ -57,6 +60,11 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
 
     const {data: articles = []} = articleApi.useGetList({queryParams: {client: order?.client.id as number}});
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
+    const {data: currencies = []} = currencyApi.useGetList();
+
+    const currencyOptions = useMemo(() =>
+        currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
+    [currencies]);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -68,6 +76,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 emptyValues={{
                     // product_id: 0,
                     measurement_unit_id: 0,
+                    currency_id: null,
                     processed: false,
                     cancelled: false,
                     weight: null,
@@ -89,6 +98,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 mapEntityToForm={(x) => ({
                     // product_id: x.product.id,
                     measurement_unit_id: x.measurement_unit.id,
+                    currency_id: x.currency?.id ?? null,
                     processed: x.processed,
                     cancelled: x.cancelled,
                     weight: x.weight,
@@ -171,6 +181,11 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                         </Box>
 
                         <Box sx={{display: 'flex', gap: 1}}>
+                            <SelectFieldControlled<IOrderRowForm>
+                                name="currency_id"
+                                label={t("orders.row.currency")}
+                                options={currencyOptions}
+                            />
                             <NumberFieldControlled<IOrderRowForm>
                                 name="currency_price"
                                 label={t("orders.row.currency_price")}
