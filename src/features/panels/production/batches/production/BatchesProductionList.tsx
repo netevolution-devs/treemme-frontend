@@ -38,7 +38,7 @@ const BatchesProductionList = () => {
 
     return (
         <>
-            <Typography variant="h6">Produzione</Typography>
+            <Typography variant="h6">{t("production.title")}</Typography>
             <GenericList<IBatchProduction>
                 data={productionList}
                 isLoading={isLoading}

@@ -183,6 +183,7 @@
     }
   },
   "production": {
+    "title": "Produzione",
     "batch": {
       "article": "Articolo",
       "batch_code": "Lotto",
@@ -229,7 +230,8 @@
   "composition": {
     "father_batch_piece": "Pezzi padre lotto",
     "father_batch_quantity": "Quantità padre lotto",
-    "composition_note": "Note composizione"
+    "composition_note": "Note composizione",
+    "title": "Composizione"
   },
   "movements": {
     "date": "Data",

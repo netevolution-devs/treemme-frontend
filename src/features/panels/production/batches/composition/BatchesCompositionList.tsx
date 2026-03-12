@@ -46,7 +46,7 @@ const BatchesCompositionList = () => {
         <>
             <BatchCompositionFormDialog ref={compositionDialogRef} />
 
-            <Typography variant="h6">Composizione</Typography>
+            <Typography variant="h6">{t("composition.title")}</Typography>
             <GenericList<IBatchCompositionResponse>
                 columns={columns}
                 data={compositions}
