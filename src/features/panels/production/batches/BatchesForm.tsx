@@ -26,6 +26,7 @@ import dayjs from "dayjs";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
+    | 'article'
     | 'batch_type'
     | 'measurement_unit'
     | 'check_user'
@@ -94,7 +95,7 @@ const BatchesForm = () => {
                     pieces: 0,
                 }}
                 mapEntityToForm={(x) => ({
-                    leather_id: x.leather.id,
+                    leather_id: x.leather?.id as number,
                     batch_type_id: x.batch_type.id,
                     measurement_unit_id: x.measurement_unit.id,
                     completed: x.completed,
@@ -115,7 +116,7 @@ const BatchesForm = () => {
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedBatchId: null})}
-                validateBeforeSave={(v) => !!v.leather_id && !!v.batch_type_id && !!v.quantity && !!v.pieces && !!v.measurement_unit_id && !!v.batch_date}
+                validateBeforeSave={(v) => (!!v.leather_id || !!batchItem?.article) && !!v.batch_type_id && !!v.quantity && !!v.pieces && !!v.measurement_unit_id && !!v.batch_date}
                 extraButtons={[
                     <CustomButton
                         label={t("production.batch.rework")}
@@ -217,14 +218,25 @@ const BatchesForm = () => {
                             />
                         </Box>
 
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                            <SelectFieldControlled<IBatchesForm>
-                                name="leather_id"
-                                label={t("production.batch.leather")}
-                                options={leathers.map(x => ({label: x.name, value: x.id}))}
-                                deactivated={!!batchItem}
-                            />
-                        </Box>
+                        {(!batchItem || batchItem.leather) && (
+                            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                                <SelectFieldControlled<IBatchesForm>
+                                    name="leather_id"
+                                    label={t("production.batch.leather")}
+                                    options={leathers.map(x => ({label: x.name, value: x.id}))}
+                                    deactivated={!!batchItem}
+                                />
+                            </Box>
+                        )}
+                        {batchItem?.article && (
+                            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 0.8}}>
+                                <TextFieldValue
+                                    label={t("production.batch.article")}
+                                    value={batchItem.article.name}
+                                    isFilled={true}
+                                />
+                            </Box>
+                        )}
 
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                             {/*<FlagCheckBoxFieldControlled<IBatchesForm>*/}
