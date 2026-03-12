@@ -26,8 +26,8 @@ const BatchesList = () => {
         //     header: t("nations.name")
         // },
         {
-            accessorKey: "leather.name",
-            header: t("leathers.leather.name")
+            header: t("leathers.leather.name"),
+            Cell: ({row}) => row.original.leather?.name as string || row.original.article?.name as string
         },
         {
             accessorKey: "pieces",
@@ -36,6 +36,10 @@ const BatchesList = () => {
         {
             accessorKey: "quantity",
             header: t("production.batch.quantity")
+        },
+        {
+            accessorKey: "measurement_unit.prefix",
+            header: t("production.batch.measurement_unit")
         }
     ], [t]);
 

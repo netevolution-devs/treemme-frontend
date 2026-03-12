@@ -4,6 +4,7 @@ import type {IBatchType} from "@features/panels/production/batches/api/batch-typ
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
 import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
 import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
+import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
 
 export interface IFatherBatch {
     id: number;
@@ -15,7 +16,8 @@ export interface IFatherBatch {
 
 export interface IBatch {
     id: number;
-    leather: ILeather;
+    leather: ILeather | null;
+    article: IArticle | null;
     batch_type: IBatchType;
     measurement_unit: IMeasurementUnit;
     check_user: IUser;
