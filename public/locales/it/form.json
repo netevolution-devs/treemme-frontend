@@ -184,6 +184,7 @@
   },
   "production": {
     "batch": {
+      "article": "Articolo",
       "batch_code": "Lotto",
       "batch_date": "Data",
       "batch_type": "Tipo Lotto",
