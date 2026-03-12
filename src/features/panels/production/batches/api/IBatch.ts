@@ -42,5 +42,6 @@ export interface IBatch {
     batch_selections: IBatchSelection[];
     warehouse_movements: IWarehouseMovement[];
     batch_selections_count: number;
-    productions: IBatchProduction[] | null;
+    productions: IBatchProduction[];
+    batch_compositions: IFatherBatch[];
 }
