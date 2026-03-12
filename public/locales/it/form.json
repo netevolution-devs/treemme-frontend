@@ -225,6 +225,11 @@
       "batch_type": "Tipo lotto"
     }
   },
+  "composition": {
+    "father_batch_piece": "Pezzi padre lotto",
+    "father_batch_quantity": "Quantità padre lotto",
+    "composition_note": "Note composizione"
+  },
   "movements": {
     "date": "Data",
     "reason": "Motivo",
