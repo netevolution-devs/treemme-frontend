@@ -20,6 +20,7 @@ const useBatchRefinement = (clientOrderRowId: number) => {
         onSuccess: () => {
             void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'LIST'] });
             void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'DETAIL', clientOrderRowId] });
+            void queryClient.invalidateQueries({ queryKey: ['BATCH', 'LIST'] });
         },
     });
 };
