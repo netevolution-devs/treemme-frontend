@@ -185,6 +185,7 @@
   "production": {
     "title": "Produzione",
     "batch": {
+      "note": "Note composizione",
       "article": "Articolo",
       "batch_code": "Lotto",
       "batch_date": "Data",

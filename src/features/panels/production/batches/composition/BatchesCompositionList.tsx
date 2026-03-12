@@ -25,6 +25,8 @@ const BatchesCompositionList = () => {
     const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId);
     const compositions = batch?.batch_compositions ?? [];
 
+    const canComposition = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
+
     const columns = useMemo<MRT_ColumnDef<IBatchCompositionResponse>[]>(() => [
         {
             accessorKey: "father_batch_piece",
@@ -57,7 +59,7 @@ const BatchesCompositionList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => <ListToolbar
                         buttons={[
-                            <NewButton onClick={() => openDialog(compositionDialogRef)} isEnable={!!selectedBatchId} />
+                            <NewButton onClick={() => openDialog(compositionDialogRef)} isEnable={!!selectedBatchId && canComposition} />
                         ]}
                     />
                 }}
