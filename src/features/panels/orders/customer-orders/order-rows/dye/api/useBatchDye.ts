@@ -8,7 +8,7 @@ interface IDyePayload {
     client_order_row_id: number;
 }
 
-const usePostBatchDye = () => {
+const usePostBatchDye = (clientOrderRowId: number) => {
     const { postEncoded: post } = useApi();
     const queryClient = useQueryClient();
 
@@ -20,6 +20,7 @@ const usePostBatchDye = () => {
         },
         onSuccess: () => {
             void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'LIST'] });
+            void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'DETAIL', clientOrderRowId] });
         },
     });
 };

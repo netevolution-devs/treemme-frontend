@@ -18,12 +18,13 @@ export interface IRefinementForm {
 
 const RefinementFormDialog = forwardRef<IDialogActions>((_, ref) => {
     const {t} = useTranslation(["form"]);
+
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
 
-    const {mutateAsync: createBatchRefinement, isPending} = useBatchRefinement();
+    const {mutateAsync: createBatchRefinement, isPending} = useBatchRefinement(selectedOrderRowId as number);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>

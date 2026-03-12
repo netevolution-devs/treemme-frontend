@@ -21,12 +21,13 @@ export interface IDyeForm {
 
 const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
     const {t} = useTranslation(["form"]);
+
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
 
-    const {mutateAsync: createBatchDye, isPending} = usePostBatchDye();
+    const {mutateAsync: createBatchDye, isPending} = usePostBatchDye(selectedOrderRowId as number);
     const {data: machines = []} = machineApi.useGetList();
 
     const machineOptions = useMemo(() => 

@@ -7,7 +7,7 @@ interface IRefinementPayload {
     client_order_row_id: number;
 }
 
-const useBatchRefinement = () => {
+const useBatchRefinement = (clientOrderRowId: number) => {
     const { postEncoded: post } = useApi();
     const queryClient = useQueryClient();
 
@@ -19,6 +19,7 @@ const useBatchRefinement = () => {
         },
         onSuccess: () => {
             void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'LIST'] });
+            void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'DETAIL', clientOrderRowId] });
         },
     });
 };
