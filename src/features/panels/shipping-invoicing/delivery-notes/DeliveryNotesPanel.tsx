@@ -5,7 +5,7 @@ import DeliveryNotesList from "@features/panels/shipping-invoicing/delivery-note
 import DeliveryNotesForm from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesForm.tsx";
 
 export interface IDeliveryNotesStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedDeliveryNoteId?: number | null;
 }
 
 const DeliveryNotesPanel = () => {
