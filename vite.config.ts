@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 import {resolve} from 'path'
 import {fileURLToPath} from 'url'
 import {renameSync, existsSync} from 'fs'
@@ -30,7 +31,7 @@ function renameHtmlPlugin() {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), renameHtmlPlugin()],
+    plugins: [react(), basicSsl(), renameHtmlPlugin()],
     resolve: {
         alias: [
             {find: '@apps', replacement: resolve(root, 'src/apps')},
