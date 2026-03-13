@@ -9,6 +9,7 @@ import DeliveryNotesRowList
 
 export interface IDeliveryNotesStoreState extends IPanelUIState {
     selectedDeliveryNoteId?: number | null;
+    selectedDeliveryNoteRowId?: number | null;
 }
 
 const DeliveryNotesPanel = () => {

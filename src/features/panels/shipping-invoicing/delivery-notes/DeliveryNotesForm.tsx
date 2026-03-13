@@ -12,7 +12,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import {Box} from "@mui/material";
 import dayjs from "dayjs";
 
-export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason'> & {
+export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'ddt_rows'> & {
     subcontractor_id: number;
     reason_id: number;
 };
