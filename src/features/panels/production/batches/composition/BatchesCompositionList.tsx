@@ -29,6 +29,10 @@ const BatchesCompositionList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IBatchCompositionResponse>[]>(() => [
         {
+            accessorKey: "father_batch.batch_code",
+            header: t("composition.father_batch_code"),
+        },
+        {
             accessorKey: "father_batch_piece",
             header: t("composition.father_batch_piece"),
         },

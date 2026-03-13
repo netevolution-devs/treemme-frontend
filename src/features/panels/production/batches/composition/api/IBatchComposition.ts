@@ -13,4 +13,5 @@ export interface IBatchCompositionResponse {
     father_batch_piece: number;
     father_batch_quantity: number;
     composition_note: string;
+    father_batch: IBatch;
 }

@@ -233,7 +233,8 @@
     "father_batch_piece": "Pezzi padre lotto",
     "father_batch_quantity": "Quantità padre lotto",
     "composition_note": "Note composizione",
-    "title": "Composizione"
+    "title": "Composizione",
+    "father_batch_code": "Codice lotto padre"
   },
   "movements": {
     "date": "Data",
