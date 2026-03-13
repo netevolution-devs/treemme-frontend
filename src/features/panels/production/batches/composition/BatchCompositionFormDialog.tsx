@@ -47,11 +47,13 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                     pieces: 0,
                     quantity: 0,
                     father_batch_id: 0,
+                    note: ''
                 }}
                 mapEntityToForm={() => ({
                     pieces: 0,
                     quantity: 0,
                     father_batch_id: 0,
+                    note: ''
                 })}
                 create={(data) => {
                     if (!selectedBatchId) return;

@@ -21,7 +21,7 @@ const usePostBatchComposition = (batchId: number) => {
                 father_batch_quantity: payload.quantity,
                 batch_id: batchId,
                 father_batch_id: payload.father_batch_id,
-                composition_note: payload.note,
+                composition_note: payload.note ?? '',
             } as never);
             return response.data.data;
         },
