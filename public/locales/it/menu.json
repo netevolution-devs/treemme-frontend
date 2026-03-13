@@ -63,7 +63,8 @@
       "delivery-notes": "Documenti di Trasporto",
       "invoices": "Fatturazione",
       "search": "Ricerca Documenti",
-      "deliveryNotes": "DeliveryNotes"
+      "deliveryNotes": "DeliveryNotes",
+      "reasons": "Reasons"
     },
     "commercial": {
       "self": "Commerciale",

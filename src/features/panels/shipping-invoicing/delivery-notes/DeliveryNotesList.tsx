@@ -19,11 +19,11 @@ const DeliveryNotesList = () => {
     const columns = useMemo<MRT_ColumnDef<IDeliveryNote>[]>(() => [
         {
             accessorKey: "ddt_number",
-            header: t("delivery-note.ddtNumber"),
+            header: t("shipping.ddt_number"),
         },
         {
             accessorKey: "reason.name",
-            header: t("delivery-note.reason"),
+            header: t("shipping.reason"),
         }
     ], [t]);
 

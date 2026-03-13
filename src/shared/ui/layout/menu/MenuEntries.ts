@@ -10,32 +10,32 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.contacts.self",
         subMenu: [
-            {i18nKey: "menu.contacts.contacts", component: "contacts" },
+            {i18nKey: "menu.contacts.contacts", component: "contacts"},
             {i18nKey: "menu.contacts.cap", component: "cap"},
-            {i18nKey: "menu.contacts.nations", component: "nations" },
+            {i18nKey: "menu.contacts.nations", component: "nations"},
             {i18nKey: "menu.contacts.provinces", component: "province"},
-            {i18nKey: "menu.contacts.seaports", component: "seaports" }
+            {i18nKey: "menu.contacts.seaports", component: "seaports"}
         ]
     },
     {
         i18nKey: "menu.leathers.self",
         subMenu: [
-            {i18nKey: "menu.leathers.leathers", component: "leathers" },
-            {i18nKey: "menu.leathers.weights", component: "weights" },
-            {i18nKey: "menu.leathers.species", component: "species" },
+            {i18nKey: "menu.leathers.leathers", component: "leathers"},
+            {i18nKey: "menu.leathers.weights", component: "weights"},
+            {i18nKey: "menu.leathers.species", component: "species"},
             // {i18nKey: "menu.leathers.sizes", component: "sizes" },
-            {i18nKey: "menu.leathers.thicknesses", component: "thicknesses" },
-            {i18nKey: "menu.leathers.types", component: "types" },
-            {i18nKey: "menu.leathers.flaying", component: "flaying" },
-            {i18nKey: "menu.leathers.origins", component: "origins" },
-            {i18nKey: "menu.leathers.tanning-stages", component: "tanningStages" },
+            {i18nKey: "menu.leathers.thicknesses", component: "thicknesses"},
+            {i18nKey: "menu.leathers.types", component: "types"},
+            {i18nKey: "menu.leathers.flaying", component: "flaying"},
+            {i18nKey: "menu.leathers.origins", component: "origins"},
+            {i18nKey: "menu.leathers.tanning-stages", component: "tanningStages"},
         ]
     },
     {
         i18nKey: "menu.products.self",
         subMenu: [
-            {i18nKey: "menu.products.products", component: "products" },
-            {i18nKey: "menu.products.articles", component: "articles" },
+            {i18nKey: "menu.products.products", component: "products"},
+            {i18nKey: "menu.products.articles", component: "articles"},
             {i18nKey: "menu.products.grades"},
             {i18nKey: "menu.products.search"},
             {i18nKey: "menu.products.categories", component: "productCategories"},
@@ -46,7 +46,7 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.orders.self",
         subMenu: [
-            {i18nKey: "menu.orders.customer-orders", component: "customerOrders" },
+            {i18nKey: "menu.orders.customer-orders", component: "customerOrders"},
             {i18nKey: "menu.orders.supplier-orders"},
             {i18nKey: "menu.orders.search-customer-orders"},
             {i18nKey: "menu.orders.supplier-schedule"},
@@ -66,9 +66,9 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.production.self",
         subMenu: [
-            {i18nKey: "menu.production.batches", component: "batches" },
+            {i18nKey: "menu.production.batches", component: "batches"},
             {i18nKey: "menu.production.recipes"},
-            {i18nKey: "menu.production.machinery", component: "machinery" },
+            {i18nKey: "menu.production.machinery", component: "machinery"},
             {i18nKey: "menu.production.progress"},
             {i18nKey: "menu.production.processes"},
             {i18nKey: "menu.production.bom"},
@@ -80,7 +80,8 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.shipping-invoicing.self",
         subMenu: [
-            { i18nKey: "menu.shipping-invoicing.delivery-notes", component: "deliveryNotes" },
+            {i18nKey: "menu.shipping-invoicing.delivery-notes", component: "deliveryNotes"},
+            {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
             {i18nKey: "menu.shipping-invoicing.invoices"},
             {i18nKey: "menu.shipping-invoicing.search"},
         ]

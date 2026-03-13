@@ -1,7 +1,7 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import type {
     IDeliveryReason
-} from "@features/panels/shipping-invoicing/delivery-notes/api/delivery-reason/IDeliveryReason.ts";
+} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason.ts";
 
 export interface IDeliveryNote {
     id: number;

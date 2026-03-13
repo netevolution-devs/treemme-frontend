@@ -14,6 +14,7 @@ export interface IContact {
     client: boolean;
     supplier: boolean;
     agent: boolean;
+    subcontractor: boolean;
     tolerance_quantity: number | null;
     client_shipment_note: string | null;
     tolerance_start_days: number;

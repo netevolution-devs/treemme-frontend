@@ -65,6 +65,7 @@
     "select": "Tipologia",
     "client": "Cliente",
     "supplier": "Fornitore",
+    "subcontractor": "Terzista",
     "agent": "Agente",
     "agents": {
       "list": "Lista agenti",
@@ -338,6 +339,17 @@
       "note": "Note articolo",
       "leather_type": "Pellame",
       "article_class": "Classe"
+    }
+  },
+  "shipping": {
+    "ddt_number": "Numero DDT",
+    "ddt_date": "Data DDT",
+    "ddt_start_date": "Data inizio trasporto",
+    "subcontractor": "Terzista",
+    "reason": "Causale trasporto",
+    "reasons": {
+      "name": "Nome causale",
+      "warehouse_movement_reason": "Causale magazzino"
     }
   }
 }

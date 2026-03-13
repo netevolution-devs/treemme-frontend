@@ -61,6 +61,7 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
                 client: false,
                 supplier: false,
                 agent: false,
+                subcontractor: false,
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
@@ -70,6 +71,7 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
                 client: x.client,
                 supplier: x.supplier,
                 agent: x.agent,
+                subcontractor: x.subcontractor,
             })}
             create={(payload) => createContact(payload)}
             update={(id, payload) => updateContact({ id, payload })}
@@ -100,6 +102,11 @@ const {useStore} = usePanel<unknown, IContactsStoreState>();
                             <FlagCheckBoxFieldControlled<IContactForm>
                                 name="agent"
                                 label={t("contacts.agent")}
+                                width={100}
+                            />
+                            <FlagCheckBoxFieldControlled<IContactForm>
+                                name="subcontractor"
+                                label={t("contacts.subcontractor")}
                                 width={100}
                             />
                         </Box>
