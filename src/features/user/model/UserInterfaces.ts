@@ -3,15 +3,19 @@ import {
     type IAccessControl,
     type IApiAccessControl,
     AccessControlArrayAdapter,
-    type IRoles
+    type IUserRole
 } from "@features/user/model/RoleInterfaces.ts";
 
 export interface IUser {
     id: number;
     email: string;
-    roles: IRoles[];
+    roles: IUserRole[];
     userCode: string;
+    firstName: string;
+    lastName: string;
+    name: string;
     lastAccess: string | null;
+    createdAt?: Date | undefined;
     accessControl: IAccessControl[];
     otpEnabled?: boolean;
 }
@@ -19,8 +23,10 @@ export interface IUser {
 export interface IApiUser {
     id: number;
     email: string;
-    roles: IRoles[];
+    roles: IUserRole[];
     user_code: string;
+    first_name: string;
+    last_name: string;
     last_access: string | null;
     access_control: IApiAccessControl[];
     totp_enabled?: boolean;
@@ -32,6 +38,9 @@ export function UserAdapter(apiUser: IApiUser): IUser {
         email: apiUser.email,
         roles: apiUser.roles,
         userCode: apiUser.user_code,
+        firstName: apiUser.first_name,
+        lastName: apiUser.last_name,
+        name: `${apiUser.first_name} ${apiUser.last_name}`.trim(),
         lastAccess: apiUser.last_access,
         accessControl: AccessControlArrayAdapter(apiUser.access_control),
         otpEnabled: apiUser.totp_enabled ?? false,

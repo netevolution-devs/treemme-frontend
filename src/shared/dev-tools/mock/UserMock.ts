@@ -10,6 +10,8 @@ export const mockUser: IUser = {
   createdAt: new Date(),
   userCode: "DEV001",
   otpEnabled: true,
+  lastAccess: null,
+  accessControl: [],
   roles: [
     {
       associationId: 1,

@@ -35,6 +35,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
     "dev": "vite",
+    "dev:host": "vite --host",
     "build:production": "tsc -b --noEmit && vite build --mode production",
     "build:staging": "tsc -b --noEmit && vite build --mode staging",
     "build:local": "tsc -b --noEmit && vite build --mode development",
