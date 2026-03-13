@@ -26,12 +26,16 @@ const BatchesList = () => {
         //     header: t("nations.name")
         // },
         {
-            header: t("leathers.leather.name"),
+            header: t("orders.row.product"),
             Cell: ({row}) => row.original.leather?.name as string || row.original.article?.name as string
         },
         {
             accessorKey: "pieces",
             header: t("production.batch.pieces")
+        },
+        {
+            accessorKey: "stock_items",
+            header: t("production.batch.stock_items")
         },
         {
             accessorKey: "quantity",
