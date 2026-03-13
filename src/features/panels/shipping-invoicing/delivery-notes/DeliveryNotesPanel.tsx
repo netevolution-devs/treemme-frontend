@@ -3,6 +3,9 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import DeliveryNotesList from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesList.tsx";
 import DeliveryNotesForm from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesForm.tsx";
+import {Box} from "@mui/material";
+import DeliveryNotesRowList
+    from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowList.tsx";
 
 export interface IDeliveryNotesStoreState extends IPanelUIState {
     selectedDeliveryNoteId?: number | null;
@@ -17,7 +20,20 @@ const DeliveryNotesPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <DeliveryNotesList/>
-            <DeliveryNotesForm/>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                gap: 2,
+                alignItems: 'flex-start'
+            }}>
+                <Box sx={{flex: '1 1 600px', minWidth: 0}}>
+                    <DeliveryNotesForm/>
+                </Box>
+                <Box sx={{flex: '1 1 600px', minWidth: 0}}>
+                    <DeliveryNotesRowList/>
+                </Box>
+            </Box>
         </GenericPanel>
     )
 }
