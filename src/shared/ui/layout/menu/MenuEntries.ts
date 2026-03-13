@@ -80,9 +80,9 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.shipping-invoicing.self",
         subMenu: [
-            {i18nKey: "menu.shipping-invoicing.delivery-notes"},
+            { i18nKey: "menu.shipping-invoicing.delivery-notes", component: "deliveryNotes" },
             {i18nKey: "menu.shipping-invoicing.invoices"},
-            {i18nKey: "menu.shipping-invoicing.search"}
+            {i18nKey: "menu.shipping-invoicing.search"},
         ]
     },
     {

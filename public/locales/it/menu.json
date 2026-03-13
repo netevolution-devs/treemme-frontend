@@ -62,7 +62,8 @@
       "self": "DDT & Fatture",
       "delivery-notes": "Documenti di Trasporto",
       "invoices": "Fatturazione",
-      "search": "Ricerca Documenti"
+      "search": "Ricerca Documenti",
+      "deliveryNotes": "DeliveryNotes"
     },
     "commercial": {
       "self": "Commerciale",
