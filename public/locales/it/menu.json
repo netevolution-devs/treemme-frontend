@@ -64,7 +64,9 @@
       "invoices": "Fatturazione",
       "search": "Ricerca Documenti",
       "deliveryNotes": "DeliveryNotes",
-      "reasons": "Ragioni di trasporto"
+      "reasons": "Ragioni di trasporto",
+      "subcontractingNotReturned": "SubcontractingNotReturned",
+      "subcontracting-not-returned": "Lotti conto lavoro"
     },
     "commercial": {
       "self": "Commerciale",

@@ -8,10 +8,15 @@ import {Box, Stack} from "@mui/material";
 import {forwardRef, useEffect, useMemo} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
-import type {IDeliveryNoteRow} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
+import type {
+    IDeliveryNoteRow
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
 import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
-import {deliveryNoteRowApi, type IDeliveryNoteRowPayload} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/deliveryNoteRowApi.ts";
+import {
+    deliveryNoteRowApi,
+    type IDeliveryNoteRowPayload
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/deliveryNoteRowApi.ts";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
@@ -36,9 +41,9 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     ddt_id: number;
 };
 
-const CurrencyWatcher = ({ currencies }: { currencies: ICurrency[] }) => {
-    const { setValue } = useFormContext<IDeliveryNoteRowForm>();
-    const currencyId = useWatch<IDeliveryNoteRowForm>({ name: 'currency_id' });
+const CurrencyWatcher = ({currencies}: { currencies: ICurrency[] }) => {
+    const {setValue} = useFormContext<IDeliveryNoteRowForm>();
+    const currencyId = useWatch<IDeliveryNoteRowForm>({name: 'currency_id'});
 
     useEffect(() => {
         if (currencyId) {
@@ -78,8 +83,8 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
     const {data: selections = []} = selectionApi.useGetList();
 
     const currencyOptions = useMemo(() =>
-        currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
-    [currencies]);
+            currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
+        [currencies]);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -144,7 +149,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 renderFields={() => {
                     return (
                         <Stack gap={1}>
-                            <CurrencyWatcher currencies={currencies} />
+                            <CurrencyWatcher currencies={currencies}/>
                             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                                 <TextFieldControlled<IDeliveryNoteRowForm>
                                     name="order_note"

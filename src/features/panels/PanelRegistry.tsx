@@ -24,6 +24,7 @@ import ArticleTypesPanel from "@features/panels/products/article-types/ArticleTy
 import DeliveryNotesPanel from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
 import ReasonsPanel from "@features/panels/shipping-invoicing/reasons/ReasonsPanel.tsx";
 import SelectionPanel from "@features/panels/products/selection/SelectionPanel.tsx";
+import SubcontractingNotReturnedPanel from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -50,6 +51,7 @@ export type TPanelKind =
     | 'deliveryNotes'
     | 'reasons'
     | 'selection'
+    | 'subcontractingNotReturned'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -79,5 +81,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     deliveryNotes: () => <DeliveryNotesPanel />,
     reasons: () => <ReasonsPanel />,
     selection: () => <SelectionPanel />,
+    subcontractingNotReturned: () => <SubcontractingNotReturnedPanel />,
     "not-implemented": () => <>To implement</>,
 }

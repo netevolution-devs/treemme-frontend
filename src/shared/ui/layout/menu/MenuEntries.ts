@@ -85,6 +85,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
             // {i18nKey: "menu.shipping-invoicing.invoices"},
             // {i18nKey: "menu.shipping-invoicing.search"},
+            { i18nKey: "menu.shipping-invoicing.subcontracting-not-returned", component: "subcontractingNotReturned" },
         ]
     },
     {

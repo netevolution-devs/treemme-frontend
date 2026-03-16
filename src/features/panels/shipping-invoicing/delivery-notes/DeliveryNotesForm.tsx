@@ -26,7 +26,7 @@ const DeliveryNotesForm = () => {
 
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteApi;
     const {data: deliveryNote} = useGetDetail(selectedDeliveryNoteId);
-    const {mutateAsync: createDeliveryNote, isPending: isPosting} = usePost();
+    const {mutateAsync: createDeliveryNote, isPending: isPosting} = usePost({invalidateQueries: ['DDT-NOT-RETURNED', 'LIST']});
     const {mutateAsync: updateDeliveryNote, isPending: isPutting} = usePut();
     const {mutateAsync: deleteDeliveryNote, isPending: isDeleting} = useDelete();
 

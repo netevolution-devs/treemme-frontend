@@ -6,8 +6,14 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import useGetDDTNotReturned
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned.ts";
 
-const DeliveryNotesList = () => {
+interface DeliveryNoteListProps {
+    showNotReturned?: boolean;
+}
+
+const DeliveryNotesList = ({showNotReturned = false}: DeliveryNoteListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
@@ -15,6 +21,9 @@ const DeliveryNotesList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: deliveryNotes = [], isLoading} = deliveryNoteApi.useGetList();
+    const {data: deliveryNotesNotReturned = [], isLoading: isLoadingNotReturned} = useGetDDTNotReturned({enabled: showNotReturned});
+
+    const data = showNotReturned ? deliveryNotesNotReturned : deliveryNotes;
 
     const columns = useMemo<MRT_ColumnDef<IDeliveryNote>[]>(() => [
         {
@@ -29,8 +38,8 @@ const DeliveryNotesList = () => {
 
     return (
         <GenericList<IDeliveryNote>
-            data={deliveryNotes}
-            isLoading={isLoading}
+            data={data}
+            isLoading={isLoading || isLoadingNotReturned}
             columns={columns}
             selectedId={selectedDeliveryNoteId}
             onRowSelect={(id) => setUIState({selectedDeliveryNoteId: id})}
