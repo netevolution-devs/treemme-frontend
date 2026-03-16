@@ -37,7 +37,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.products.products", component: "products"},
             {i18nKey: "menu.products.articles", component: "articles"},
             {i18nKey: "menu.products.grades"},
-            {i18nKey: "menu.products.search"},
+            // {i18nKey: "menu.products.search"},
             {i18nKey: "menu.products.categories", component: "productCategories"},
             {i18nKey: "menu.products.products-types", component: "productTypes"},
             {i18nKey: "menu.products.article-types", component: "articleTypes"},
@@ -47,34 +47,35 @@ export const MenuEntries: IMenuEntry[] = [
         i18nKey: "menu.orders.self",
         subMenu: [
             {i18nKey: "menu.orders.customer-orders", component: "customerOrders"},
-            {i18nKey: "menu.orders.supplier-orders"},
-            {i18nKey: "menu.orders.search-customer-orders"},
-            {i18nKey: "menu.orders.supplier-schedule"},
-            {i18nKey: "menu.orders.search-supplier-orders"}
+            // {i18nKey: "menu.orders.supplier-orders"},
+            // {i18nKey: "menu.orders.search-customer-orders"},
+            // {i18nKey: "menu.orders.supplier-schedule"},
+            // {i18nKey: "menu.orders.search-supplier-orders"}
         ]
     },
     {
         i18nKey: "menu.warehouse.self",
         subMenu: [
-            {i18nKey: "menu.warehouse.movements"},
-            {i18nKey: "menu.warehouse.pallet-types"},
-            {i18nKey: "menu.warehouse.lots-batches"},
-            {i18nKey: "menu.warehouse.search-lots-batches"},
-            {i18nKey: "menu.warehouse.subcontracting-lots"}
+            {i18nKey: "to-implement"},
+            // {i18nKey: "menu.warehouse.movements"},
+            // {i18nKey: "menu.warehouse.pallet-types"},
+            // {i18nKey: "menu.warehouse.lots-batches"},
+            // {i18nKey: "menu.warehouse.search-lots-batches"},
+            // {i18nKey: "menu.warehouse.subcontracting-lots"}
         ]
     },
     {
         i18nKey: "menu.production.self",
         subMenu: [
             {i18nKey: "menu.production.batches", component: "batches"},
-            {i18nKey: "menu.production.recipes"},
+            // {i18nKey: "menu.production.recipes"},
             {i18nKey: "menu.production.machinery", component: "machinery"},
-            {i18nKey: "menu.production.progress"},
+            // {i18nKey: "menu.production.progress"},
             {i18nKey: "menu.production.processes"},
-            {i18nKey: "menu.production.bom"},
-            {i18nKey: "menu.production.batch-selection"},
-            {i18nKey: "menu.production.pirovano-monitor"},
-            {i18nKey: "menu.production.pirovano-recipes"}
+            // {i18nKey: "menu.production.bom"},
+            // {i18nKey: "menu.production.batch-selection"},
+            // {i18nKey: "menu.production.pirovano-monitor"},
+            // {i18nKey: "menu.production.pirovano-recipes"}
         ]
     },
     {
@@ -82,47 +83,50 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             {i18nKey: "menu.shipping-invoicing.delivery-notes", component: "deliveryNotes"},
             {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
-            {i18nKey: "menu.shipping-invoicing.invoices"},
-            {i18nKey: "menu.shipping-invoicing.search"},
+            // {i18nKey: "menu.shipping-invoicing.invoices"},
+            // {i18nKey: "menu.shipping-invoicing.search"},
         ]
     },
     {
         i18nKey: "menu.commercial.self",
         subMenu: [
-            {i18nKey: "menu.commercial.customers"},
-            {i18nKey: "menu.commercial.suppliers"},
-            {i18nKey: "menu.commercial.batch-data"},
-            {i18nKey: "menu.commercial.product-costs"},
-            {i18nKey: "menu.commercial.price-list"},
-            {i18nKey: "menu.commercial.work-reports"},
-            {i18nKey: "menu.commercial.currencies-exchange"}
+            {i18nKey: "to-implement"},
+            // {i18nKey: "menu.commercial.customers"},
+            // {i18nKey: "menu.commercial.suppliers"},
+            // {i18nKey: "menu.commercial.batch-data"},
+            // {i18nKey: "menu.commercial.product-costs"},
+            // {i18nKey: "menu.commercial.price-list"},
+            // {i18nKey: "menu.commercial.work-reports"},
+            // {i18nKey: "menu.commercial.currencies-exchange"}
         ]
     },
     {
         i18nKey: "menu.analysis.self",
         subMenu: [
-            {i18nKey: "menu.analysis.orders"},
-            {i18nKey: "menu.analysis.sales"},
-            {i18nKey: "menu.analysis.costs-revenues"},
-            {i18nKey: "menu.analysis.batches-lots"},
-            {i18nKey: "menu.analysis.subcontracting"},
-            {i18nKey: "menu.analysis.phone-traffic"},
-            {
-                i18nKey: "menu.analysis.iso-quality.self",
-                subMenu: [
-                    {i18nKey: "menu.analysis.iso-quality.order-fulfillment"},
-                ]
-            },
+            {i18nKey: "to-implement"},
+            // {i18nKey: "menu.analysis.orders"},
+            // {i18nKey: "menu.analysis.sales"},
+            // {i18nKey: "menu.analysis.costs-revenues"},
+            // {i18nKey: "menu.analysis.batches-lots"},
+            // {i18nKey: "menu.analysis.subcontracting"},
+            // {i18nKey: "menu.analysis.phone-traffic"},
+            // {
+            //     i18nKey: "menu.analysis.iso-quality.self",
+            //     subMenu: [
+            //         {i18nKey: "menu.analysis.iso-quality.order-fulfillment"},
+            //     ]
+            // },
         ]
     },
     {
         i18nKey: "menu.system.self",
         subMenu: [
-            {i18nKey: "menu.system.info"},
-            {i18nKey: "menu.system.tools"},
-            {i18nKey: "menu.system.console"},
-            {i18nKey: "menu.system.access-management"},
-            {i18nKey: "menu.system.logout"},
+            {i18nKey: "to-implement"},
+            // {i18nKey: "menu.system.info"},
+            // {i18nKey: "menu.system.tools"},
+            // {i18nKey: "menu.system.console"},
+            // {i18nKey: "menu.system.access-management"},
+            // {i18nKey: "menu.system.logout"},
         ]
     }
 ];
