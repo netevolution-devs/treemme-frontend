@@ -1,20 +1,22 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
-import DeliveryNotesList from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesList.tsx";
-import DeliveryNotesRowList
-    from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowList.tsx";
+import SubcontractingNotReturnedList
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedList.tsx";
+
+export interface ISubcontractingNotReturnedStoreState extends IPanelUIState {
+    selectedSubcontractingNotReturnedId?: number | null;
+}
 
 const SubcontractingNotReturnedPanel = () => {
-    const initialUiState: IDeliveryNotesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
+    const initialUiState: ISubcontractingNotReturnedStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, IDeliveryNotesStoreState>
+        <GenericPanel<unknown, ISubcontractingNotReturnedStoreState>
             kind={"subcontractingNotReturned"}
             initialState={{uiState: initialUiState}}
         >
-            <DeliveryNotesList showNotReturned/>
-            <DeliveryNotesRowList/>
+            <SubcontractingNotReturnedList/>
         </GenericPanel>
     )
 }
