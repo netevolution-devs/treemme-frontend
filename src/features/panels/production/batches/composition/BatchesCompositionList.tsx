@@ -15,14 +15,18 @@ import type {
 } from "@features/panels/production/batches/composition/api/IBatchComposition.ts";
 import {Typography} from "@mui/material";
 
-const BatchesCompositionList = () => {
+interface ICompositionDialogProps {
+    customBatchId?: number;
+}
+
+const BatchesCompositionList = ({customBatchId}: ICompositionDialogProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
-    const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
+    const selectedBatchId = useStore(state => state.uiState.selectedBatchId) || customBatchId;
     // const setUIState = useStore(state => state.setUIState);
 
-    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId);
+    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId as number);
     const compositions = batch?.batch_compositions ?? [];
 
     const canComposition = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";

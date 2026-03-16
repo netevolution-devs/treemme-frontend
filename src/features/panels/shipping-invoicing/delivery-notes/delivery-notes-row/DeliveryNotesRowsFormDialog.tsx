@@ -16,6 +16,7 @@ import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
 import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
+import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
 
 type Props = unknown;
 
@@ -236,6 +237,10 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                         </Stack>
                     );
                 }}
+            />
+
+            <BatchesCompositionList
+                customBatchId={deliveryNoteRow?.batch?.id as number}
             />
         </BaseDialog>
     );
