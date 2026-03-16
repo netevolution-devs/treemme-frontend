@@ -5,7 +5,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef, useMemo} from "react";
+import {forwardRef, useEffect, useMemo} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IDeliveryNoteRow} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
@@ -17,6 +17,8 @@ import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
 import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
+import {useFormContext, useWatch} from "react-hook-form";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
 
 type Props = unknown;
 
@@ -32,6 +34,22 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     currency_id: number | null;
     selection_id: number | null;
     ddt_id: number;
+};
+
+const CurrencyWatcher = ({ currencies }: { currencies: ICurrency[] }) => {
+    const { setValue } = useFormContext<IDeliveryNoteRowForm>();
+    const currencyId = useWatch<IDeliveryNoteRowForm>({ name: 'currency_id' });
+
+    useEffect(() => {
+        if (currencyId) {
+            const currency = currencies.find(c => c.id === currencyId);
+            if (currency) {
+                setValue('currency_change', currency.last_change?.change_value ?? 0);
+            }
+        }
+    }, [currencyId, currencies, setValue]);
+
+    return null;
 };
 
 const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -126,6 +144,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 renderFields={() => {
                     return (
                         <Stack gap={1}>
+                            <CurrencyWatcher currencies={currencies} />
                             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                                 <TextFieldControlled<IDeliveryNoteRowForm>
                                     name="order_note"
