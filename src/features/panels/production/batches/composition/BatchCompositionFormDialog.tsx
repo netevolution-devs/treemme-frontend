@@ -77,6 +77,7 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                             name="pieces"
                             label={t("production.batch.pieces")}
                             required
+                            precision={0}
                         />
                         {/*<NumberFieldControlled<IBatchCompositionForm>*/}
                         {/*    name="quantity"*/}
