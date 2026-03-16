@@ -17,9 +17,10 @@ import {Typography} from "@mui/material";
 
 interface ICompositionDialogProps {
     customBatchId?: number;
+    enableToolbar?: boolean;
 }
 
-const BatchesCompositionList = ({customBatchId}: ICompositionDialogProps) => {
+const BatchesCompositionList = ({customBatchId, enableToolbar = true}: ICompositionDialogProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
@@ -56,7 +57,7 @@ const BatchesCompositionList = ({customBatchId}: ICompositionDialogProps) => {
         <>
             <BatchCompositionFormDialog ref={compositionDialogRef} />
 
-            <Typography variant="h6">{t("composition.title")}</Typography>
+            <Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1}}>{t("composition.title")}</Typography>
             <GenericList<IBatchCompositionResponse>
                 columns={columns}
                 data={compositions}
@@ -64,7 +65,7 @@ const BatchesCompositionList = ({customBatchId}: ICompositionDialogProps) => {
                 minHeight={"200px"}
                 maxHeight={"200px"}
                 additionalOptions={{
-                    enableTopToolbar: true,
+                    enableTopToolbar: enableToolbar,
                     renderTopToolbar: () => <ListToolbar
                         buttons={[
                             <NewButton onClick={() => openDialog(compositionDialogRef)} isEnable={!!selectedBatchId && canComposition} />

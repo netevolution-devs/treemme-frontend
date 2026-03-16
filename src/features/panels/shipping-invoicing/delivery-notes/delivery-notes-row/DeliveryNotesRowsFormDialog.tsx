@@ -241,6 +241,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
 
             <BatchesCompositionList
                 customBatchId={deliveryNoteRow?.batch?.id as number}
+                enableToolbar={false}
             />
         </BaseDialog>
     );
