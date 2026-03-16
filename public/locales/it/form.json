@@ -355,6 +355,11 @@
     "reasons": {
       "name": "Nome causale",
       "warehouse_movement_reason": "Causale magazzino"
+    },
+    "ddt_rows": {
+      "half_piece": "Mezze",
+      "whole_piece": "Intere",
+      "row_note": "Note riga"
     }
   }
 }
