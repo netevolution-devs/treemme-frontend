@@ -22,7 +22,7 @@
     },
     "products": {
       "self": "Prodotti",
-      "grades": "Scelte",
+      "selection": "Scelte",
       "articles": "Articoli",
       "search": "Ricerca Prodotti",
       "products": "Prodotti",

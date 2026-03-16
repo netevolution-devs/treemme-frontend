@@ -36,7 +36,7 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             {i18nKey: "menu.products.products", component: "products"},
             {i18nKey: "menu.products.articles", component: "articles"},
-            {i18nKey: "menu.products.grades"},
+            {i18nKey: "menu.products.selection", component: "selection" },
             // {i18nKey: "menu.products.search"},
             {i18nKey: "menu.products.categories", component: "productCategories"},
             {i18nKey: "menu.products.products-types", component: "productTypes"},

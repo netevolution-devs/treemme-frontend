@@ -339,7 +339,11 @@
       "print": "Stampa",
       "note": "Note articolo",
       "leather_type": "Pellame",
-      "article_class": "Classe"
+      "article_class": "Classe",
+      "selection": {
+        "name": "Nome",
+        "value": "Valore"
+      }
     }
   },
   "shipping": {

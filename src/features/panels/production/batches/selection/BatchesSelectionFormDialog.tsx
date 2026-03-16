@@ -8,7 +8,7 @@ import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchSelectionApi} from "@features/panels/production/batches/selection/api/batchSelectionApi.ts";
-import {selectionApi} from "@features/panels/shared/api/selection/selectionApi.ts";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";

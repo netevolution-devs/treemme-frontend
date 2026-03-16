@@ -1,4 +1,4 @@
-import type {ISelection} from "@features/panels/shared/api/selection/ISelection.ts";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
 
 export interface IBatchSelection {
     id: number;
