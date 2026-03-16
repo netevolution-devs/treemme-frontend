@@ -14,7 +14,7 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 
 export interface IBatchCompositionForm {
     pieces: number;
-    quantity: number;
+    // quantity: number;
     father_batch_id: number;
     note?: string;
 }
@@ -45,13 +45,13 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 bypassConfirm
                 emptyValues={{
                     pieces: 0,
-                    quantity: 0,
+                    // quantity: 0,
                     father_batch_id: 0,
                     note: ''
                 }}
                 mapEntityToForm={() => ({
                     pieces: 0,
-                    quantity: 0,
+                    // quantity: 0,
                     father_batch_id: 0,
                     note: ''
                 })}
@@ -60,7 +60,11 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                     return createComposition(data);
                 }}
                 isSaving={isPending}
-                validateBeforeSave={(v) => v.pieces > 0 && v.quantity > 0 && v.father_batch_id > 0}
+                validateBeforeSave={(v) =>
+                    v.pieces > 0 &&
+                    // v.quantity > 0 &&
+                    v.father_batch_id > 0
+                }
                 renderFields={() => (
                     <Box sx={{mb: 1}}>
                         <SelectFieldControlled<IBatchCompositionForm>
@@ -74,11 +78,11 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                             label={t("production.batch.pieces")}
                             required
                         />
-                        <NumberFieldControlled<IBatchCompositionForm>
-                            name="quantity"
-                            label={t("production.batch.quantity")}
-                            required
-                        />
+                        {/*<NumberFieldControlled<IBatchCompositionForm>*/}
+                        {/*    name="quantity"*/}
+                        {/*    label={t("production.batch.quantity")}*/}
+                        {/*    required*/}
+                        {/*/>*/}
                         <TextFieldControlled<IBatchCompositionForm>
                             name="note"
                             label={t("production.batch.note")}

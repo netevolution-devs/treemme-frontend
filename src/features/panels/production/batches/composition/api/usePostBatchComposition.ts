@@ -3,7 +3,7 @@ import useApi from "@api/useApi.ts";
 
 interface ICompositionPayload {
     pieces: number;
-    quantity: number;
+    // quantity: number;
     note?: string;
 }
 
@@ -18,7 +18,7 @@ const usePostBatchComposition = (batchId: number) => {
 
             const response = await post<ICompositionPayload>(`/batch-composition`, {
                 father_batch_piece: payload.pieces,
-                father_batch_quantity: payload.quantity,
+                // father_batch_quantity: payload.quantity,
                 batch_id: batchId,
                 father_batch_id: payload.father_batch_id,
                 composition_note: payload.note ?? '',
