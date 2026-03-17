@@ -84,6 +84,7 @@
     "tolerance_start_days": "Giorni tolleranza inizio",
     "client_note": "Note cliente",
     "client_shipment_note": "Note spedizione cliente",
+    "agent_percentage": "Provvigione agente",
     "address": {
       "list": "Lista indirizzi",
       "name": "Nome",

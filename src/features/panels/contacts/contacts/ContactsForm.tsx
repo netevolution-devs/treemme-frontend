@@ -32,6 +32,7 @@ export type IContactForm = Omit<IContact, 'id'
     contact_type_id: number;
     tolerance_quantity: number | null;
     tolerance_start_days: number | null;
+    agent_percentage: number | null;
 };
 
 const ContactsForm = () => {
@@ -70,6 +71,7 @@ const ContactsForm = () => {
                 client_shipment_note: '',
                 tolerance_quantity: null,
                 tolerance_start_days: null,
+                agent_percentage: null
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
@@ -84,6 +86,7 @@ const ContactsForm = () => {
                 client_shipment_note: x.client_shipment_note ?? '',
                 tolerance_quantity: x.tolerance_quantity,
                 tolerance_start_days: x.tolerance_start_days,
+                agent_percentage: x.agent_percentage,
             })}
             create={(payload) => createContact(payload)}
             update={(id, payload) => updateContact({id, payload})}
@@ -110,6 +113,7 @@ interface ContactsFormFieldsProps {
 const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: ContactsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
     const isClient = useWatch({name: 'client'});
+    const isAgent = useWatch({name: 'agent'});
 
     return (
         <>
@@ -171,17 +175,17 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
 
             {isClient && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography variant="subtitle1" sx={{mb: 1}}>{t("contacts.client_data")}</Typography>
+                    <Typography color={!isFormDisabled ? "text.secondary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.client_data")}</Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <NumberFieldControlled<IContactForm>
                             name="tolerance_quantity"
                             label={t("contacts.tolerance_quantity")}
                             precision={3}
+                            startAdornment={"%"}
                         />
-                        <TextFieldControlled<IContactForm>
+                        <NumberFieldControlled<IContactForm>
                             name="tolerance_start_days"
                             label={t("contacts.tolerance_start_days")}
-                            TextFieldProps={{type: 'number'}}
                         />
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
@@ -194,6 +198,20 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
                             name="client_shipment_note"
                             label={t("contacts.client_shipment_note")}
                             TextFieldProps={{multiline: true, rows: 2}}
+                        />
+                    </Box>
+                </Box>
+            )}
+
+            {isAgent && (
+                <Box sx={{mt: 1, borderRadius: 1}}>
+                    <Typography color={!isFormDisabled ? "text.secondary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.agent")}</Typography>
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                        <NumberFieldControlled<IContactForm>
+                            name="agent_percentage"
+                            label={t("contacts.agent_percentage")}
+                            precision={2}
+                            startAdornment={"%"}
                         />
                     </Box>
                 </Box>
