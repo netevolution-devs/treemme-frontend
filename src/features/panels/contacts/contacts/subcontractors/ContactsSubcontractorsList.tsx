@@ -9,68 +9,67 @@ import type {MRT_ColumnDef} from "material-react-table";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import ContactsAgentFormDialog from "@features/panels/contacts/contacts/agents/ContactsAgentFormDialog.tsx";
+import ContactsSubcontractorFormDialog from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorFormDialog.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {MenuItem} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import DeleteIcon from '@mui/icons-material/Delete';
-import useRemoveAgentFromContact from "@features/panels/contacts/contacts/agents/api/useRemoveAgentFromContact.ts";
+import useRemoveSubcontractorFromContact from "@features/panels/contacts/contacts/subcontractors/api/useRemoveSubcontractorFromContact.ts";
+import DomainAddIcon from '@mui/icons-material/DomainAdd';
 
-const ContactsAgentsList = () => {
-    const {t} = useTranslation(["form"]);
+const ContactsSubcontractorsList = () => {
+    const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, IContactsStoreState>();
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
-    const selectedAgentId = useStore(state => state.uiState.selectedAgentId);
+    const selectedSubcontractorId = useStore(state => state.uiState.selectedSubcontractorId);
     const setUIState = useStore(state => state.setUIState);
 
     const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
-    const agents = contact?.contact_agents.map((x) => x.agent) || [];
+    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor) || [];
 
-    const {mutateAsync: deleteAgent} = useRemoveAgentFromContact(selectedContactId as number);
+    const {mutateAsync: deleteSubcontractor} = useRemoveSubcontractorFromContact(selectedContactId as number);
 
     const columns = useMemo<MRT_ColumnDef<IContact>[]>(() => [
         {
             accessorKey: "name",
-            header: t("contacts.name"),
+            header: t("shipping.subcontractor"),
             enableColumnFilter: false
         }
     ], [t]);
 
     const handleConfirmDelete = async () => {
-        console.log("Deleting agent");
-        await deleteAgent({agent_id: selectedAgentId as number});
+        await deleteSubcontractor({subcontractor_id: selectedSubcontractorId as number});
     }
 
-    const addAgentDialogRef = useRef<IDialogActions | null>(null);
+    const addSubcontractorDialogRef = useRef<IDialogActions | null>(null);
     const deleteConfirmDialogRef = useRef<IDialogActions | null>(null);
 
     return (
         <>
-            <ContactsAgentFormDialog ref={addAgentDialogRef}/>
+            <ContactsSubcontractorFormDialog ref={addSubcontractorDialogRef}/>
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
-                data={agents}
+                data={subcontractors}
                 isLoading={isLoading}
                 columns={columns}
-                selectedId={selectedAgentId}
-                onRowSelect={(id) => setUIState({selectedAgentId: id})}
+                selectedId={selectedSubcontractorId}
+                onRowSelect={(id) => setUIState({selectedSubcontractorId: id})}
                 minHeight={"150px"}
                 maxHeight={"200px"}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
-                    <ListToolbar
+                        <ListToolbar
                             buttons={[
                                 <CustomButton
                                     isEnable={!!selectedContactId}
-                                    label={t("contacts.agents.add")}
+                                    label={t("contacts.subcontractors.add")}
                                     color={"primary"}
-                                    icon={<PersonAddIcon/>}
+                                    icon={<DomainAddIcon/>}
                                     onClick={() => {
-                                        openDialog(addAgentDialogRef)
+                                        openDialog(addSubcontractorDialogRef)
                                     }}
                                 />
                             ]}
@@ -80,7 +79,7 @@ const ContactsAgentsList = () => {
                     renderRowActionMenuItems: ({row}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
-                            setUIState({selectedAgentId: row.original.id});
+                            setUIState({selectedSubcontractorId: row.original.id});
                         }}>
                             <DeleteIcon color={"error"}/>
                             {t("common:button.remove")}
@@ -92,4 +91,4 @@ const ContactsAgentsList = () => {
     )
 }
 
-export default ContactsAgentsList;
+export default ContactsSubcontractorsList;

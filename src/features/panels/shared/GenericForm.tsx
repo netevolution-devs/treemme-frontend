@@ -166,7 +166,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     }, [selectedId, entity]);
 
     return (
-        <Box>
+        <Box sx={{width: '100%'}}>
             <FormProvider {...methods}>
                 <Stack
                     component="form"

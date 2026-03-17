@@ -71,6 +71,10 @@
       "list": "Lista agenti",
       "add": "Aggiungi agente"
     },
+    "subcontractors": {
+      "list": "Lista fornitori",
+      "add": "Aggiungi fornitore"
+    },
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",

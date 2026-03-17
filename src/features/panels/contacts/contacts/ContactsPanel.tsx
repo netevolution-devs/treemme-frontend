@@ -7,13 +7,14 @@ import {Box, Stack, Typography} from "@mui/material";
 import ContactsAddressList from "@features/panels/contacts/contacts/address/ContactsAddressList.tsx";
 import {useTranslation} from "react-i18next";
 import ContactsDetailList from "@features/panels/contacts/contacts/detail/ContactsDetailList.tsx";
-import ContactsAgentsList from "@features/panels/contacts/contacts/agents/ContactsAgentsList.tsx";
+import ContactsContent from "@features/panels/contacts/contacts/ContactsContent.tsx";
 
 export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
     selectedAddressId?: number | null;
     selectedDetailId?: number | null;
     selectedAgentId?: number | null;
+    selectedSubcontractorId?: number | null;
 }
 
 export interface IContactsStoreFilter {
@@ -35,12 +36,9 @@ const ContactsPanel = () => {
         >
             <Stack gap={2}>
                 <ContactsList/>
-                <Box sx={{display: 'flex', gap: 2}}>
-                    <ContactsForm/>
-                    <Box sx={{width: '100%'}}>
-                        <Typography variant="h6">{t("contacts.agents.list")}</Typography>
-                        <ContactsAgentsList />
-                    </Box>
+                <Box sx={{display: 'flex', gap: 2, width: '100%'}}>
+                    <ContactsForm />
+                    <ContactsContent />
                 </Box>
                 <Box sx={{
                     display: 'flex',
