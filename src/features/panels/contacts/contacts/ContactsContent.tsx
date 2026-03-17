@@ -17,7 +17,7 @@ const ContactsContent = () => {
 
     return (
         <>
-            {selectedContactId && contact?.client && contact?.supplier && (
+            {(selectedContactId && (contact?.client || contact?.supplier)) && (
                 <Box sx={{display: 'flex', gap: 1, width: '100%'}}>
                     {contact?.client && (
                         <Box sx={{width: '100%'}}>
