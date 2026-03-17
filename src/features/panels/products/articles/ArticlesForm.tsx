@@ -52,7 +52,7 @@ const ArticlesForm = () => {
 
     const handleNoMatchArticleType = useCallback((inputValue: string) => {
         addPanel({
-            id: `articleTypes-${crypto.randomUUID()}`,
+            id: `articleTypes:${crypto.randomUUID()}`,
             component: 'articleTypes',
             title: t("products.articles.article_type"),
             floating: {
