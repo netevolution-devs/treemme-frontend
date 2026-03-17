@@ -359,7 +359,8 @@
     "ddt_rows": {
       "half_piece": "Mezze",
       "whole_piece": "Intere",
-      "row_note": "Note riga"
+      "row_note": "Note riga",
+      "return": "Rientra lotto"
     }
   }
 }

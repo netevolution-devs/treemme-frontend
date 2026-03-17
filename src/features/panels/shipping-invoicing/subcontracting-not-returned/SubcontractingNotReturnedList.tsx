@@ -13,6 +13,10 @@ import useGetDDTNotReturned
 import type {
     ISubcontractingNotReturnedStoreState
 } from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
+import {MenuItem} from "@mui/material";
+import usePostSubcontractingReturn
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/usePostSubcontractingReturn.ts";
+import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);
@@ -22,6 +26,7 @@ const SubcontractingNotReturnedList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: ddtRowsNotReturned = [], isLoading} = useGetDDTNotReturned();
+    const {mutateAsync: returnSubcontract} = usePostSubcontractingReturn();
 
     const columns = useMemo<MRT_ColumnDef<IDeliveryNoteRow>[]>(() => [
         {
@@ -52,6 +57,18 @@ const SubcontractingNotReturnedList = () => {
             selectedId={selectedSubcontractingNotReturnedId}
             onRowSelect={(id) => setUIState({selectedSubcontractingNotReturnedId: id as number})}
             onRowDoubleClick={() => openDialog(editRowDialogRef)}
+            additionalOptions={{
+                enableRowActions: true,
+                renderRowActionMenuItems: ({row}) => [
+                    <MenuItem key="dye" onClick={async () => {
+                        setUIState({selectedSubcontractingNotReturnedId: row.original.id})
+                        await returnSubcontract({ddtRowId: row.original.id});
+                    }}>
+                        <AssignmentReturnIcon color={"primary"} sx={{mr: 1}} />
+                        {t("shipping.ddt_rows.return")}
+                    </MenuItem>,
+                ],
+            }}
         />
     )
 };
