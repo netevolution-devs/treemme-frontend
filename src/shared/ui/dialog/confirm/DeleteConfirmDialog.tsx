@@ -60,7 +60,7 @@ const DeleteConfirmDialog = (
                         <Stack direction="row" spacing={1} alignItems="center">
                             <CircularProgress size={18} color="inherit" />
                             <Typography variant="button">
-                                {t("common:dialog.delete.pending")}...
+                                {t("common:dialog.delete.pending")}
                             </Typography>
                         </Stack>
                     ) : (

@@ -60,7 +60,7 @@ const SaveConfirmDialog = (
                         <Stack direction="row" spacing={1} alignItems="center">
                             <CircularProgress size={18} color="inherit" />
                             <Typography variant="button">
-                                {t("common:dialog.save.pending")}...
+                                {t("common:dialog.save.pending")}
                             </Typography>
                         </Stack>
                     ) : (

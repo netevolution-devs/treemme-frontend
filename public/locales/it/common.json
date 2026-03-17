@@ -141,12 +141,14 @@
     "delete": {
       "title": "Conferma eliminazione",
       "description": "Sei sicuro di voler eliminare questo elemento?",
-      "confirm-button": "Elimina"
+      "confirm-button": "Elimina",
+      "pending": "Eliminazione..."
     },
     "save": {
       "title": "Conferma salvataggio",
       "description": "Sei sicuro di voler salvare questo elemento?",
-      "confirm-button": "Salva"
+      "confirm-button": "Salva",
+      "pending": "Salvataggio..."
     }
   }
 }
