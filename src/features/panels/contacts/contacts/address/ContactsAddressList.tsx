@@ -77,7 +77,10 @@ const ContactsAddressList = () => {
                     renderTopToolbar:
                         <ListToolbar
                             buttons={[
-                                <NewButton onClick={() => handleOpenCreateDialog()}/>
+                                <NewButton
+                                    isEnable={!!selectedContactId}
+                                    onClick={() => handleOpenCreateDialog()}
+                                />
                             ]}
                         />
                 }}

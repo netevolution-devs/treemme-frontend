@@ -86,7 +86,8 @@
     "not-active": "Non attivo",
     "duplicate": "Duplica",
     "go-to-subcontractor": "Vai al terzista",
-    "execute": "Esegui"
+    "execute": "Esegui",
+    "remove": "Rimuovi"
   },
   "filter": {
     "status": "Stato",

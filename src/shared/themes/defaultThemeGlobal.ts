@@ -265,7 +265,7 @@ const baseTheme: ThemeOptions = {
 
 const lightTheme: Theme = createTheme({
     shape: {
-        borderRadius: 8,
+        borderRadius: 4,
     },
     typography: {
         fontFamily: `'Noto Sans', sans-serif`,
@@ -358,7 +358,7 @@ const lightTheme: Theme = createTheme({
 
 const darkTheme: Theme = createTheme({
     shape: {
-        borderRadius: 8,
+        borderRadius: 4,
     },
     typography: {
         fontFamily: 'Noto Sans, sans-serif',

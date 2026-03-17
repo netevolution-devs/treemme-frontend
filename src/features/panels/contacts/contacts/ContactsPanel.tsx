@@ -3,10 +3,11 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import ContactsList from "@features/panels/contacts/contacts/ContactsList.tsx";
 import ContactsForm from "@features/panels/contacts/contacts/ContactsForm.tsx";
-import ContactsAddressContent from "@features/panels/contacts/contacts/address/ContactsAddressContent.tsx";
-import ContactsDetailContent from "@features/panels/contacts/contacts/detail/ContactsDetailContent.tsx";
-import {Box, Stack} from "@mui/material";
-import ContactsAgentContent from "@features/panels/contacts/contacts/agents/ContactsAgentContent.tsx";
+import {Box, Stack, Typography} from "@mui/material";
+import ContactsAddressList from "@features/panels/contacts/contacts/address/ContactsAddressList.tsx";
+import {useTranslation} from "react-i18next";
+import ContactsDetailList from "@features/panels/contacts/contacts/detail/ContactsDetailList.tsx";
+import ContactsAgentsList from "@features/panels/contacts/contacts/agents/ContactsAgentsList.tsx";
 
 export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
@@ -21,6 +22,7 @@ export interface IContactsStoreFilter {
 }
 
 const ContactsPanel = () => {
+    const {t} = useTranslation(["form"]);
     const initialUiState: IContactsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -33,23 +35,28 @@ const ContactsPanel = () => {
         >
             <Stack gap={2}>
                 <ContactsList/>
-                <ContactsForm/>
+                <Box sx={{display: 'flex', gap: 2}}>
+                    <ContactsForm/>
+                    <Box sx={{width: '100%'}}>
+                        <Typography variant="h6">{t("contacts.agents.list")}</Typography>
+                        <ContactsAgentsList />
+                    </Box>
+                </Box>
                 <Box sx={{
                     display: 'flex',
-                    flexDirection: {xs: 'column', xl: 'row'},
+                    flexDirection: {xs: 'column', lg: 'row'},
                     flexWrap: 'wrap',
                     gap: 1,
                     width: '100%'
                 }}>
-                    <Box sx={{flex: '1 1 450px', minWidth: 0}}>
-                        <ContactsAddressContent/>
+                    <Box sx={{flex: '1 1 300px', minWidth: 0}}>
+                        <Typography variant="h6">{t("contacts.address.list")}</Typography>
+                        <ContactsAddressList />
                     </Box>
-                    <Box sx={{flex: '1 1 450px', minWidth: 0}}>
-                        <ContactsDetailContent/>
+                    <Box sx={{flex: '1 1 300px', minWidth: 0}}>
+                        <Typography variant="h6">{t("contacts.details.list")}</Typography>
+                        <ContactsDetailList />
                     </Box>
-                </Box>
-                <Box>
-                    <ContactsAgentContent/>
                 </Box>
             </Stack>
         </GenericPanel>

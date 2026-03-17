@@ -57,28 +57,33 @@ const ContactsAgentsList = () => {
                 columns={columns}
                 selectedId={selectedAgentId}
                 onRowSelect={(id) => setUIState({selectedAgentId: id})}
+                minHeight={"150px"}
+                maxHeight={"200px"}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                         <ListToolbar
                             buttons={[
                                 <CustomButton
+                                    isEnable={!!selectedContactId}
                                     label={t("contacts.agents.add")}
                                     color={"primary"}
                                     icon={<PersonAddIcon/>}
-                                    onClick={() => {openDialog(addAgentDialogRef)}}
+                                    onClick={() => {
+                                        openDialog(addAgentDialogRef)
+                                    }}
                                 />
                             ]}
                         />
                     ),
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({ row }) => [
+                    renderRowActionMenuItems: ({row}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
                             setUIState({selectedAgentId: row.original.id});
                         }}>
-                            <DeleteIcon color={"error"} />
-                            {t("common:button.delete")}
+                            <DeleteIcon color={"error"}/>
+                            {t("common:button.remove")}
                         </MenuItem>
                     ],
                 }}
