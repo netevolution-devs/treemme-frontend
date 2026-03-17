@@ -8,21 +8,17 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
 import {articleClassApi} from "@features/panels/products/articles/api/article-class/articleClassApi.ts";
-import {useMemo, useEffect, useCallback} from "react";
+import {useMemo} from "react";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export type IArticleTypeForm = Omit<IArticleType, 'id' | 'article_class' | 'leather_type'> & {
     leather_type_id: number;
     article_class_id: number;
 }
 
-interface ArticleTypesFormProps {
-    initialName?: string;
-    onSuccess?: (id: number) => void;
-}
-
-const ArticleTypesForm = ({initialName, onSuccess}: ArticleTypesFormProps) => {
+const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IArticleTypesStoreState>();
@@ -30,7 +26,12 @@ const ArticleTypesForm = ({initialName, onSuccess}: ArticleTypesFormProps) => {
     const setUIState = useStore(state => state.setUIState);
     const {setFormState} = usePanelFormButtons<unknown, IArticleTypesStoreState>();
 
-    const api = useDockviewStore(state => state.api);
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedArticleTypeId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = articleTypeApi;
     const {data: articleType} = useGetDetail(selectedArticleTypeId);
@@ -42,29 +43,12 @@ const ArticleTypesForm = ({initialName, onSuccess}: ArticleTypesFormProps) => {
     const {data: articleClasses = []} = articleClassApi.useGetList();
 
     const leatherTypeOptions = useMemo(() =>
-        leatherTypes.map(lt => ({value: lt.id, label: lt.name})),
-    [leatherTypes]);
+            leatherTypes.map(lt => ({value: lt.id, label: lt.name})),
+        [leatherTypes]);
 
     const articleClassOptions = useMemo(() =>
-        articleClasses.map(ac => ({value: ac.id, label: ac.name})),
-    [articleClasses]);
-
-    useEffect(() => {
-        if (initialName && !selectedArticleTypeId) {
-            setFormState('new');
-        }
-    }, [initialName, selectedArticleTypeId, setFormState]);
-
-    const handleSuccess = useCallback((entity: IArticleType) => {
-        onSuccess?.(entity.id);
-        if (initialName) {
-            const panels = api?.panels;
-            if (panels) {
-                const currentPanel = Object.values(panels).find(p => p.params?.initialName === initialName);
-                currentPanel?.api.close();
-            }
-        }
-    }, [onSuccess, initialName, api]);
+            articleClasses.map(ac => ({value: ac.id, label: ac.name})),
+        [articleClasses]);
 
     return (
         <GenericForm<IArticleTypeForm, IArticleType, IArticleTypesStoreState>
@@ -86,7 +70,7 @@ const ArticleTypesForm = ({initialName, onSuccess}: ArticleTypesFormProps) => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticleTypeId: null})}
-            onSuccess={handleSuccess}
+            onSuccess={handlePanelSuccess}
             validateBeforeSave={(v) => !!v.name && v.leather_type_id > 0 && v.article_class_id > 0}
             renderFields={() => (
                 <>

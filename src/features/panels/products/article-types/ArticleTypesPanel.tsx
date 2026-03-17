@@ -4,17 +4,13 @@ import type {IDockviewPanelProps} from "dockview";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import ArticleTypesList from "@features/panels/products/article-types/ArticleTypesList.tsx";
 import ArticleTypesForm from "@features/panels/products/article-types/ArticleTypesForm.tsx";
-
-export interface IArticleTypePanelProps {
-    onSuccess: () => void;
-    initialName: string;
-}
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IArticleTypesStoreState extends IPanelUIState {
     selectedArticleTypeId?: number | null;
 }
 
-const ArticleTypesPanel = (props: IDockviewPanelProps<IArticleTypePanelProps>) => {
+const ArticleTypesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IArticleTypesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -23,10 +19,7 @@ const ArticleTypesPanel = (props: IDockviewPanelProps<IArticleTypePanelProps>) =
             initialState={{uiState: initialUiState}}
         >
             <ArticleTypesList/>
-            <ArticleTypesForm 
-                initialName={props.params?.initialName}
-                onSuccess={props.params?.onSuccess}
-            />
+            <ArticleTypesForm {...props.params}/>
         </GenericPanel>
     )
 }

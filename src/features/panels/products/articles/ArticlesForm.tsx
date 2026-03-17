@@ -11,12 +11,11 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts
 import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
 import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi.ts";
-import {useMemo, useCallback, useEffect} from "react";
+import {useMemo} from "react";
 import {Box} from "@mui/material";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
-import {useFormContext} from "react-hook-form";
-import {useQueryClient} from "@tanstack/react-query";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type IArticleForm = {
     code: string;
@@ -30,8 +29,6 @@ export type IArticleForm = {
 }
 
 const ArticlesForm = () => {
-    const {t} = useTranslation(["form"]);
-
     const {useStore} = usePanel<unknown, IArticlesStoreState>();
     const selectedArticledId = useStore(state => state.uiState.selectedArticledId);
     const setUIState = useStore(state => state.setUIState);
@@ -46,27 +43,6 @@ const ArticlesForm = () => {
     const {data: articleTypes = []} = articleTypeApi.useGetList();
     const {data: thicknesses = []} = thicknessApi.useGetList();
     const {data: prints = []} = articlePrintApi.useGetList();
-
-    const addPanel = useDockviewStore(state => state.addPanel);
-    const queryClient = useQueryClient();
-
-    const handleNoMatchArticleType = useCallback((inputValue: string) => {
-        addPanel({
-            id: `articleTypes:${crypto.randomUUID()}`,
-            component: 'articleTypes',
-            title: t("products.articles.article_type"),
-            floating: {
-                width: 600,
-                height: 800,
-            },
-            params: {
-                initialName: inputValue,
-                onSuccess: (id: number) => {
-                    queryClient.setQueryData(['LAST_CREATED_ARTICLE_TYPE'], id);
-                }
-            }
-        });
-    }, [addPanel, t, queryClient]);
 
     const clientOptions = useMemo(() =>
             contacts.filter(c => c.client).map(c => ({value: c.id, label: c.name})),
@@ -122,7 +98,6 @@ const ArticlesForm = () => {
                 articleTypeOptions={articleTypeOptions}
                 thicknessOptions={thicknessOptions}
                 printOptions={printOptions}
-                handleNoMatchArticleType={handleNoMatchArticleType}
             />}
         />
     );
@@ -135,7 +110,6 @@ interface ArticlesFormFieldsProps {
     articleTypeOptions: { value: number; label: string }[];
     thicknessOptions: { value: number; label: string }[];
     printOptions: { value: number; label: string }[];
-    handleNoMatchArticleType: (inputValue: string) => void;
 }
 
 const ArticlesFormFields = ({
@@ -145,24 +119,14 @@ const ArticlesFormFields = ({
     articleTypeOptions,
     thicknessOptions,
     printOptions,
-    handleNoMatchArticleType
 }: ArticlesFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
-    const {setValue} = useFormContext<IArticleForm>();
-    const queryClient = useQueryClient();
 
-    useEffect(() => {
-        // Listen for last created article type
-        const unsubscribe = queryClient.getQueryCache().subscribe(() => {
-            const lastId = queryClient.getQueryData<number>(['LAST_CREATED_ARTICLE_TYPE']);
-            if (lastId) {
-                setValue('article_type_id', lastId);
-                // Clear it so it doesn't trigger again
-                queryClient.setQueryData(['LAST_CREATED_ARTICLE_TYPE'], null);
-            }
-        });
-        return () => unsubscribe();
-    }, [queryClient, setValue]);
+    const {add: addSelectPanel} = useCallablePanel();
+    useSubscribePanel<IArticleForm>({
+        formKey: 'article_type_id',
+        dependencyKey: 'articleTypes'
+    });
 
     return (
         <>
@@ -194,7 +158,13 @@ const ArticlesFormFields = ({
                     label={t("products.articles.article_type")}
                     options={articleTypeOptions}
                     required
-                    onNoOptionsMatch={handleNoMatchArticleType}
+                    onNoOptionsMatch={(input) => addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "articleTypes",
+                            i18nKey: "products.articles.article_type"
+                        }
+                    })}
                 />
             </Box>
             <TextFieldControlled<IArticleForm>
