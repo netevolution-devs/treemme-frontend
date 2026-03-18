@@ -5,7 +5,7 @@ import WorkingsList from "@features/panels/production/workings/WorkingsList.tsx"
 import WorkingsForm from "@features/panels/production/workings/WorkingsForm.tsx";
 
 export interface IWorkingsStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedWorkingId?: number | null;
 }
 
 const WorkingsPanel = () => {

@@ -237,6 +237,13 @@
       "name": "Nome macchinario",
       "prefix": "Prefisso",
       "batch_type": "Tipo lotto"
+    },
+    "working": {
+      "name": "Nome lavorazione",
+      "external": "Lavorazione esterna",
+      "color_recipe": "Ricetta colore",
+      "final_check": "Controllo finale",
+      "processing_recipe": "Ricetta lavorazione"
     }
   },
   "composition": {
