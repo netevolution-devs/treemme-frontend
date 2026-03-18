@@ -1,7 +1,7 @@
 import {processApi} from "@features/panels/production/processes/api/processApi.ts";
 import {useTranslation} from "react-i18next";
 import type {MRT_ColumnDef} from "material-react-table";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import type {IProcess} from "@features/panels/production/processes/api/IProcess.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import dayjs from "dayjs";
@@ -10,6 +10,8 @@ import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProcessesStoreState, IProcessStoreFilter} from "@features/panels/production/processes/ProcessesPanel.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import {Box} from "@mui/material";
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
 
 const ProcessesList = () => {
     const {t} = useTranslation(["form"]);
@@ -17,6 +19,12 @@ const ProcessesList = () => {
 
     const setFilters = useStore(state => state.setFilters);
     const filterScheduledDate = useStore(state => state.filters.filterScheduledDate);
+
+    const setTodayDate = () => setFilters({filterScheduledDate: dayjs(Date()).format("YYYY-MM-DD")});
+
+    useEffect(() => {
+        setTodayDate();
+    }, []);
 
     const queryParams = useMemo(() => cleanFilters(
             {
@@ -70,7 +78,15 @@ const ProcessesList = () => {
                                 label={t("processes.scheduled_date")}
                                 value={filterScheduledDate}
                                 onFilterChange={(val) => setFilters({filterScheduledDate: val as string})}
-                            />
+                            />,
+                            <Box sx={{height: "40px"}}>
+                                <CustomButton
+                                    label={t("processes.today")}
+                                    color={"primary"}
+                                    icon={""}
+                                    onClick={() => setTodayDate()}
+                                />
+                            </Box>
                         ]}
                     />
                 )

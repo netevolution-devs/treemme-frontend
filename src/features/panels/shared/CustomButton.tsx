@@ -10,19 +10,21 @@ interface CustomButtonProps {
     isSubmit?: boolean;
     isEnable?: boolean;
     icon: ReactNode;
+    variant?: "text" | "outlined" | "contained";
 }
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon}: CustomButtonProps) => {
+const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon, variant = "outlined"}: CustomButtonProps) => {
     const {t} = useTranslation(["common"]);
 
     return (
         <Button
-            variant="outlined"
+            variant={variant}
             onClick={onClick}
             color={color}
             size="small"
             startIcon={icon}
             sx={{
+                height: "100%",
                 minWidth: 100,
                 fontWeight: 'bold',
                 textTransform: 'none'

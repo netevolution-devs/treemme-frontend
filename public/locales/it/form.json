@@ -378,6 +378,7 @@
     "batch_code": "Codice lotto",
     "batch_pieces": "Pezzi lotto",
     "batch_quantity": "Quantità lotto",
-    "production_note": "Note di produzione"
+    "production_note": "Note di produzione",
+    "today": "Oggi"
   }
 }
