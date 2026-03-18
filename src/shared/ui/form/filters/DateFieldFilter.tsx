@@ -43,6 +43,7 @@ const DateFieldFilter = ({ value, onFilterChange, ...props }: DateFieldFilterPro
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="it">
             <DatePicker
+                sx={{mt: 0.3}}
                 {...props}
                 value={localValue}
                 onChange={(newValue) => setLocalValue(newValue)}
