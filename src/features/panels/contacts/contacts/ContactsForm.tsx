@@ -131,7 +131,7 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
         <>
             <Box>
                 <Typography
-                    color={!isFormDisabled ? "text.secondary" : "textDisabled"}>{t("contacts.select")}</Typography>
+                    color={!isFormDisabled ? "text.primary" : "textDisabled"}>{t("contacts.select")}</Typography>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, ml: 1}}>
                     <FlagCheckBoxFieldControlled<IContactForm>
                         name="client"
@@ -187,7 +187,7 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
 
             {isClient && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography color={!isFormDisabled ? "text.secondary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.client_data")}</Typography>
+                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.client_data")}</Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <NumberFieldControlled<IContactForm>
                             name="tolerance_quantity"
@@ -217,7 +217,7 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
 
             {isAgent && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography color={!isFormDisabled ? "text.secondary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.agent")}</Typography>
+                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.agent")}</Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <NumberFieldControlled<IContactForm>
                             name="agent_percentage"

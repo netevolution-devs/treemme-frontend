@@ -64,6 +64,8 @@ const LeathersForm = () => {
     const selectedLeatherId = useStore(state => state.uiState.selectedLeatherId);
     const setUIState = useStore(state => state.setUIState);
 
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+
     const {useGetDetail, usePost, usePut, useDelete} = leatherApi;
     const {data: leather} = useGetDetail(selectedLeatherId);
     const {mutateAsync: createLeather, isPending: isPosting} = usePost();
@@ -133,7 +135,9 @@ const LeathersForm = () => {
 
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
                         <Box>
-                            <Typography sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
+                            <Typography
+                                color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                                sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                                 <TextFieldValue
                                     label={t("leathers.leather.leather-min")}
@@ -153,7 +157,9 @@ const LeathersForm = () => {
                             </Box>
                         </Box>
                         <Box>
-                            <Typography sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
+                            <Typography
+                                color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                                sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                                 <TextFieldValue
                                     label={t("leathers.leather.leather-min")}

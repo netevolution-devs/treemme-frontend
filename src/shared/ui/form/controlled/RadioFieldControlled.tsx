@@ -44,7 +44,7 @@ const RadioFieldControlled = <TFieldValues extends FieldValues>({
                 return (
                     <FormControl error={!!error} component="fieldset" disabled={disabled} fullWidth>
                         {label && (
-                            <FormLabel component="legend" sx={{ fontSize: "0.85rem" }}>
+                            <FormLabel component="legend" sx={{ fontSize: "0.90rem", color: "text.primary" }}>
                                 {formattedLabel}
                             </FormLabel>
                         )}
