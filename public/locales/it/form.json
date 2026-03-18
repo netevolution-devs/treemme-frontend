@@ -346,6 +346,7 @@
       "name": "Nome"
     },
     "articles": {
+      "name": "Nome",
       "code": "Codice",
       "client": "Cliente",
       "article_type": "Tipologia",
