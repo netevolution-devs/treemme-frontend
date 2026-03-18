@@ -81,15 +81,15 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         }
     }, [dialogRef]);
 
-    const handleNew = () => {
+    const handleNew = React.useCallback(() => {
         if (dialogMode) return;
         setFormState('new');
-    };
+    }, [dialogMode, setFormState]);
 
-    const handleEdit = () => {
+    const handleEdit = React.useCallback(() => {
         if (dialogMode) return;
         setFormState('edit');
-    };
+    }, [dialogMode, setFormState]);
 
     const handleDelete = () => {
         openDialog(deleteRef);
@@ -140,12 +140,17 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         try {
             if (selectedId && !bypassConfirm) {
                 const res = await update?.(selectedId, cleanData);
-                if (res) onSuccess?.(res as TEntity);
+                if (res) {
+                    onSuccess?.(res as TEntity);
+                    setFormState('selected');
+                }
             } else {
                 const res = await create?.(cleanData);
-                if (res) onSuccess?.(res as TEntity);
-                methods.reset(emptyValues);
-                setFormState('init');
+                if (res) {
+                    onSuccess?.(res as TEntity);
+                    methods.reset(emptyValues);
+                    setFormState('init');
+                }
             }
         } finally {
             handleCloseDialog();
@@ -167,14 +172,27 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            const target = event.target as HTMLElement;
+            if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
+                return;
+            }
+
             if (event.key === "Escape") {
                 handleCancel();
+            }
+
+            if (event.key === "Enter" && isFormDisabled) {
+                handleNew();
+            }
+
+            if (event.key === "Enter" && isFormDisabled && !!selectedId) {
+                handleEdit();
             }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleCancel]);
+    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId]);
 
     return (
         <Box sx={{width: '100%'}}>
