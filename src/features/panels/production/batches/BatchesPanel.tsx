@@ -12,11 +12,15 @@ export interface IBatchesStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
 }
 
+export interface IBatchesStoreFilter {
+    filterBatchCode?: string;
+}
+
 const BatchesPanel = () => {
     const initialUiState: IBatchesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, IBatchesStoreState>
+        <GenericPanel<IBatchesStoreFilter, IBatchesStoreState>
             kind={"batches"}
             initialState={{uiState: initialUiState}}
         >
