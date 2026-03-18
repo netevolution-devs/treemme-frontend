@@ -379,6 +379,7 @@
     "batch_pieces": "Pezzi lotto",
     "batch_quantity": "Quantità lotto",
     "production_note": "Note di produzione",
-    "today": "Oggi"
+    "today": "Oggi",
+    "machine_name": "Macchinario"
   }
 }
