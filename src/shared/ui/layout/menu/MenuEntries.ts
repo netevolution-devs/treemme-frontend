@@ -72,6 +72,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.production.machinery", component: "machinery"},
             // {i18nKey: "menu.production.progress"},
             {i18nKey: "menu.production.processes", component: "processes" },
+            {i18nKey: "menu.production.workings", component: "workings" },
             // {i18nKey: "menu.production.bom"},
             // {i18nKey: "menu.production.batch-selection"},
             // {i18nKey: "menu.production.pirovano-monitor"},
