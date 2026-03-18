@@ -76,7 +76,7 @@ const CapFormFields = () => {
                         initialValue: input,
                         menu: {
                             component: "province",
-                            i18nKey: "menu.contacts.province"
+                            i18nKey: "menu.contacts.provinces"
                         }
                     })
                 }}
