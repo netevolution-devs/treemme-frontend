@@ -372,5 +372,12 @@
       "row_note": "Note riga",
       "return": "Rientra lotto"
     }
+  },
+  "processes": {
+    "scheduled_date": "Data programmazione",
+    "batch_code": "Codice lotto",
+    "batch_pieces": "Pezzi lotto",
+    "batch_quantity": "Quantità lotto",
+    "production_note": "Note di produzione"
   }
 }
