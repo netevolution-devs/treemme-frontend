@@ -7,6 +7,8 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type ICapForm = {
     cap: string;
@@ -15,8 +17,6 @@ export type ICapForm = {
 };
 
 const CapForm = () => {
-    const {t} = useTranslation(["form"]);
-
     const {useStore} = usePanel<unknown, ICapStoreState>();
     const selectedCapId = useStore(state => state.uiState.selectedCapId);
     const setUIState = useStore(state => state.setUIState);
@@ -26,9 +26,6 @@ const CapForm = () => {
     const {mutateAsync: createCap, isPending: isPosting} = usePost();
     const {mutateAsync: updateCap, isPending: isPutting} = usePut();
     const {mutateAsync: deleteCap, isPending: isDeleting} = useDelete();
-
-    const {useGetList: useGetProvinces} = provinceApi;
-    const {data: provinces} = useGetProvinces();
 
     return (
         <GenericForm<ICapForm, ICap, ICapStoreState>
@@ -48,30 +45,54 @@ const CapForm = () => {
             onClearSelection={() => setUIState({ selectedCapId: null })}
             validateBeforeSave={(v) => !!v.cap && !!v.name && !!v.province_id}
             renderFields={() => (
-                <>
-                    <SelectFieldControlled<ICapForm>
-                        name="province_id"
-                        label={t("province.name")}
-                        options={provinces?.map(p => ({
-                            value: p.id,
-                            label: `${p.acronym} - ${p.name}`
-                        })) || []}
-                        required
-                    />
-                    <TextFieldControlled<ICapForm>
-                        name="cap"
-                        label={t("cap.code")}
-                        required
-                    />
-                    <TextFieldControlled<ICapForm>
-                        name="name"
-                        label={t("cap.name")}
-                        required
-                    />
-                </>
+                <CapFormFields />
             )}
         />
     );
 };
+
+const CapFormFields = () => {
+    const {t} = useTranslation(["form"]);
+    const {data: provinces = []} = provinceApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+    useSubscribePanel<ICapForm>({
+        formKey: "province_id",
+        dependencyKey: "province"
+    })
+
+    return (
+        <>
+            <SelectFieldControlled<ICapForm>
+                name="province_id"
+                label={t("province.name")}
+                options={provinces?.map(p => ({
+                    value: p.id,
+                    label: `${p.acronym} - ${p.name}`
+                })) || []}
+                required
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "province",
+                            i18nKey: "menu.contacts.province"
+                        }
+                    })
+                }}
+            />
+            <TextFieldControlled<ICapForm>
+                name="cap"
+                label={t("cap.code")}
+                required
+            />
+            <TextFieldControlled<ICapForm>
+                name="name"
+                label={t("cap.name")}
+                required
+            />
+        </>
+    )
+}
 
 export default CapForm;
