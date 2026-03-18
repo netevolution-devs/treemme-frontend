@@ -50,7 +50,8 @@
   },
   "search": {
     "search-label": "Cerca...",
-    "no-results": "Nessun risultato trovato con la categoria e/o i filtri selezionati."
+    "no-results": "Nessun risultato trovato con la categoria e/o i filtri selezionati.",
+    "no-options": "Nessuna opzione"
   },
   "loading": {
     "authenticating": "Autenticazione...",

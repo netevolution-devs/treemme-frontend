@@ -46,6 +46,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         options={options}
                         disabled={disabled || deactivated}
                         value={selectedOption}
+                        noOptionsText={t("common:search.no-options")}
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
                         onChange={(_, newValue) => {
