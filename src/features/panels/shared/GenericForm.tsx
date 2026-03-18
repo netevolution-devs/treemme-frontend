@@ -206,7 +206,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                     }}
                     autoComplete="off"
                 >
-                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', gap: 1}}>
                         <FormButtons
                             onNew={handleNew}
                             onEdit={handleEdit}
@@ -219,11 +219,11 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             hideSave={disabledBasicButtons}
                             overrideButtonState={dialogMode}
                         />
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                            {extraButtons?.map((button) => (
-                                <>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap'}}>
+                            {extraButtons?.map((button, index) => (
+                                <React.Fragment key={index}>
                                     {button}
-                                </>
+                                </React.Fragment>
                             ))}
                         </Box>
                     </Box>
