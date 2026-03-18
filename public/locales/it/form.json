@@ -251,6 +251,7 @@
     "father_batch_quantity": "Quantità padre lotto",
     "composition_note": "Note composizione",
     "title": "Composizione",
+    "button": "Aggiungi",
     "father_batch_code": "Codice lotto padre"
   },
   "movements": {

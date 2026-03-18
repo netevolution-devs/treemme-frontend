@@ -4,7 +4,7 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import BatchCompositionFormDialog from "@features/panels/production/batches/composition/BatchCompositionFormDialog.tsx";
 import {useMemo, useRef} from "react";
@@ -14,6 +14,7 @@ import type {
     IBatchCompositionResponse
 } from "@features/panels/production/batches/composition/api/IBatchComposition.ts";
 import {Typography} from "@mui/material";
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 
 interface ICompositionDialogProps {
     customBatchId?: number;
@@ -25,7 +26,6 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
 
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId) || customBatchId;
-    // const setUIState = useStore(state => state.setUIState);
 
     const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId as number);
     const compositions = batch?.batch_compositions ?? [];
@@ -57,19 +57,25 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
         <>
             <BatchCompositionFormDialog ref={compositionDialogRef} />
 
-            <Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1}}>{t("composition.title")}</Typography>
             <GenericList<IBatchCompositionResponse>
                 columns={columns}
                 data={compositions}
                 isLoading={isLoading}
-                minHeight={"200px"}
-                maxHeight={"200px"}
                 additionalOptions={{
                     enableTopToolbar: enableToolbar,
                     renderTopToolbar: () => <ListToolbar
+                        label={<Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1}}>{t("composition.title")}</Typography>}
                         buttons={[
-                            <NewButton onClick={() => openDialog(compositionDialogRef)} isEnable={!!selectedBatchId && canComposition} />
+                            <CustomButton
+                                color={"primary"}
+                                icon={<AddToPhotosIcon/>}
+                                label={t("composition.button")}
+                                onClick={() => openDialog(compositionDialogRef)}
+                                isEnable={!!selectedBatchId && canComposition}
+                            />,
                         ]}
+                        sx={{mt: 0}}
+                        alignButtons={'flex-end'}
                     />
                 }}
             />
