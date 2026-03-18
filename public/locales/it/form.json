@@ -356,7 +356,7 @@
       "thickness": "Spessore",
       "print": "Stampa",
       "note": "Note articolo",
-      "leather_type": "Pellame",
+      "leather_type": "Tipo pellame",
       "article_class": "Classe",
       "selection": {
         "name": "Nome",
