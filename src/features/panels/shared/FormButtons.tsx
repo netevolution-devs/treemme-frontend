@@ -55,7 +55,6 @@ const FormButtons = ({
         <Box sx={{
             display: "flex",
             gap: 1,
-            backgroundColor: "background.paper",
             borderRadius: 1,
             top: 0,
             zIndex: 10,
