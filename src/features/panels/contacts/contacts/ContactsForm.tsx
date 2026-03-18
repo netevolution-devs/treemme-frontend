@@ -127,13 +127,13 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
                         width={100}
                     />
                     <FlagCheckBoxFieldControlled<IContactForm>
-                        name="supplier"
-                        label={t("contacts.supplier")}
+                        name="agent"
+                        label={t("contacts.agent")}
                         width={100}
                     />
                     <FlagCheckBoxFieldControlled<IContactForm>
-                        name="agent"
-                        label={t("contacts.agent")}
+                        name="supplier"
+                        label={t("contacts.supplier")}
                         width={100}
                     />
                     <FlagCheckBoxFieldControlled<IContactForm>
