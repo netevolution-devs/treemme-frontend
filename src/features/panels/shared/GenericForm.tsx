@@ -75,11 +75,11 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         defaultValues: emptyValues as DefaultValues<TForm>,
     });
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = React.useCallback(() => {
         if (dialogRef) {
             closeDialog(dialogRef)
         }
-    }
+    }, [dialogRef]);
 
     const handleNew = () => {
         if (dialogMode) return;
@@ -107,7 +107,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         }
     };
 
-    const handleCancel = () => {
+    const handleCancel = React.useCallback(() => {
         if (selectedId && !isFormDisabled && entity) {
             methods.reset(mapEntityToForm(entity));
             if (dialogMode) return;
@@ -119,7 +119,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             if (dialogMode) return;
             setFormState('cancel');
         }
-    };
+    }, [selectedId, isFormDisabled, entity, methods, mapEntityToForm, dialogMode, setFormState, onClearSelection, emptyValues, handleCloseDialog]);
 
     const onSubmit = (data: TForm) => {
         if (validateBeforeSave && !validateBeforeSave(data)) return;
@@ -164,6 +164,17 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             setFormState('cancel');
         }
     }, [selectedId, entity]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                handleCancel();
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [handleCancel]);
 
     return (
         <Box sx={{width: '100%'}}>
