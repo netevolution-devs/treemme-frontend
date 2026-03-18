@@ -38,6 +38,10 @@ const GenericList = <TData extends BaseEntity>({
                                                    minHeight = '300px',
                                                }: GenericListProps<TData>) => {
 
+    const calculateMin = parseInt(minHeight.split('px')[0]);
+    const filterHeight = additionalOptions?.enableTopToolbar ? 50 : 0;
+    const _minHeight = calculateMin + filterHeight;
+
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
         muiTableContainerProps: {
             sx: {maxHeight, minHeight},
@@ -95,7 +99,7 @@ const GenericList = <TData extends BaseEntity>({
     });
 
     return (
-        <Box sx={{width: '100%', overflowY: 'auto', minHeight}}>
+        <Box sx={{width: '100%', overflowY: 'scroll', minHeight: _minHeight}}>
             <MaterialReactTable table={table}/>
         </Box>
     );
