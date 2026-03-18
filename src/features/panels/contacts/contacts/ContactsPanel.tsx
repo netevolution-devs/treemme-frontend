@@ -8,6 +8,8 @@ import ContactsAddressList from "@features/panels/contacts/contacts/address/Cont
 import {useTranslation} from "react-i18next";
 import ContactsDetailList from "@features/panels/contacts/contacts/detail/ContactsDetailList.tsx";
 import ContactsContent from "@features/panels/contacts/contacts/ContactsContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
@@ -22,7 +24,11 @@ export interface IContactsStoreFilter {
     filterDetailName?: string;
 }
 
-const ContactsPanel = () => {
+export interface IContactsStoreParams {
+    supplier?: boolean;
+}
+
+const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsStoreParams>>) => {
     const {t} = useTranslation(["form"]);
     const initialUiState: IContactsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
@@ -37,7 +43,7 @@ const ContactsPanel = () => {
             <Stack gap={2}>
                 <ContactsList/>
                 <Box sx={{display: 'flex', gap: 2, width: '100%'}}>
-                    <ContactsForm />
+                    <ContactsForm {...props.params}/>
                     <ContactsContent />
                 </Box>
                 <Box sx={{

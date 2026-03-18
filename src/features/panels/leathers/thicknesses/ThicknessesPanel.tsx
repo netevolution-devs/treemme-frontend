@@ -5,12 +5,14 @@ import ThicknessesList from "@features/panels/leathers/thicknesses/ThicknessesLi
 import ThicknessesForm from "@features/panels/leathers/thicknesses/ThicknessesForm.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import ThicknessesContent from "@features/panels/leathers/thicknesses/ThicknessesContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IThicknessesStoreState extends IPanelUIState, ILeathersStoreState {
     selectedThicknessId?: number | null;
 }
 
-const ThicknessesPanel = () => {
+const ThicknessesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IThicknessesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -19,7 +21,7 @@ const ThicknessesPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <ThicknessesList/>
-            <ThicknessesForm/>
+            <ThicknessesForm {...props.params}/>
             <ThicknessesContent/>
         </GenericPanel>
     )

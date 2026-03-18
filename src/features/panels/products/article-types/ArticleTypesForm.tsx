@@ -24,8 +24,8 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {useStore} = usePanel<unknown, IArticleTypesStoreState>();
     const selectedArticleTypeId = useStore(state => state.uiState.selectedArticleTypeId);
     const setUIState = useStore(state => state.setUIState);
-    const {setFormState} = usePanelFormButtons<unknown, IArticleTypesStoreState>();
 
+    const {setFormState} = usePanelFormButtons();
     const {handlePanelSuccess} = usePanelFormLogic({
         initialName,
         selectedId: selectedArticleTypeId,

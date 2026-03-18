@@ -5,12 +5,14 @@ import TypesList from "@features/panels/leathers/types/TypesList.tsx";
 import TypesForm from "@features/panels/leathers/types/TypesForm.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import TypesContent from "@features/panels/leathers/types/TypesContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface ITypesStoreState extends IPanelUIState, ILeathersStoreState {
     selectedTypeId?: number | null;
 }
 
-const TypesPanel = () => {
+const TypesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: ITypesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -19,7 +21,7 @@ const TypesPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <TypesList/>
-            <TypesForm/>
+            <TypesForm {...props.params}/>
             <TypesContent/>
         </GenericPanel>
     )

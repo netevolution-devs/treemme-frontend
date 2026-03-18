@@ -61,19 +61,22 @@ export type TPanelKind =
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
 
 export const PANEL_REGISTRY: DockviewComponents = {
-    cap: () => <CapPanel/>,
-    province: () => <ProvincePanel/>,
-    nations: () => <NationsPanel/>,
-    contacts: () => <ContactsPanel/>,
-    seaports: () => <SeaportsPanel/>,
-    weights: () => <WeightsPanel/>,
-    species: () => <SpeciesPanel/>,
-    leathers: () => <LeathersPanel/>,
-    thicknesses: () => <ThicknessesPanel/>,
-    types: () => <TypesPanel/>,
-    flaying: () => <FlayingPanel/>,
-    origins: () => <OriginsPanel/>,
-    tanningStages: () => <TanningStagesPanel/>,
+    // contacts
+    contacts:   (props) => <ContactsPanel {...props}/>,
+    cap:        () => <CapPanel/>,
+    province:   () => <ProvincePanel/>,
+    nations:    () => <NationsPanel/>,
+    seaports:   () => <SeaportsPanel/>,
+    // leathers
+    leathers:       () => <LeathersPanel/>,
+    weights:        (props) => <WeightsPanel {...props}/>,
+    species:        (props) => <SpeciesPanel {...props}/>,
+    thicknesses:    (props) => <ThicknessesPanel {...props}/>,
+    types:          (props) => <TypesPanel {...props}/>,
+    flaying:        (props) => <FlayingPanel {...props}/>,
+    tanningStages:  (props) => <TanningStagesPanel {...props}/>,
+    origins:        (props) => <OriginsPanel {...props}/>,
+    // production
     batches: () => <BatchesPanel/>,
     customerOrders: () => <CustomerOrdersPanel/>,
     products: () => <ProductsPanel/>,

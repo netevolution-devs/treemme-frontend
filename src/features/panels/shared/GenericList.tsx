@@ -34,8 +34,8 @@ const GenericList = <TData extends BaseEntity>({
                                                    onRowDoubleClick,
                                                    additionalOptions,
                                                    overrideOptions: _overrideOptions,
-                                                   maxHeight = '400px',
-                                                   minHeight = '400px',
+                                                   maxHeight = '300px',
+                                                   minHeight = '300px',
                                                }: GenericListProps<TData>) => {
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {

@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
+import type {IContactsStoreParams, IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
@@ -15,6 +15,9 @@ import {useWatch} from "react-hook-form";
 import type {IContactType} from "@features/panels/contacts/contacts/api/contacts-type/IContactType.ts";
 import type {IContactTitle} from "@features/panels/contacts/contacts/api/contacts-title/IContactTitle.ts";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -35,10 +38,18 @@ export type IContactForm = Omit<IContact, 'id'
     agent_percentage: number | null;
 };
 
-const ContactsForm = () => {
+const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IContactsStoreParams>) => {
     const {useStore} = usePanel<unknown, IContactsStoreState>();
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedContactId,
+        onSuccess,
+        setFormState
+    });
 
     const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
 
@@ -56,15 +67,16 @@ const ContactsForm = () => {
 
     return (
         <GenericForm<IContactForm, IContact, IContactsStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedContactId}
             entity={contact}
             emptyValues={{
-                name: '',
+                name: initialName ?? '',
                 contact_note: '',
                 contact_title_id: 0,
                 contact_type_id: 0,
                 client: false,
-                supplier: false,
+                supplier: extra?.supplier ?? false,
                 agent: false,
                 subcontractor: false,
                 client_note: '',
