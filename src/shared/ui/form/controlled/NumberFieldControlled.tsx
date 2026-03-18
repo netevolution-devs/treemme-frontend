@@ -133,7 +133,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                             input: {
                                 startAdornment: startAdornment ? (
                                     <InputAdornment position="start">
-                                        <Typography color={!disabled ? 'textSecondary' : 'inherit'}>
+                                        <Typography color={!disabled ? 'textPrimary' : 'textDisabled'}>
                                             {startAdornment}
                                         </Typography>
                                     </InputAdornment>

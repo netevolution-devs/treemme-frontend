@@ -192,12 +192,13 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
                         <NumberFieldControlled<IContactForm>
                             name="tolerance_quantity"
                             label={t("contacts.tolerance_quantity")}
-                            precision={3}
+                            precision={2}
                             startAdornment={"%"}
                         />
                         <NumberFieldControlled<IContactForm>
                             name="tolerance_start_days"
                             label={t("contacts.tolerance_start_days")}
+                            precision={0}
                         />
                     </Box>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
