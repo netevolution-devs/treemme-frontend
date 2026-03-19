@@ -7,10 +7,10 @@ interface ListToolbarProps {
     buttons?: ReactNode[];
     filters?: ReactNode[];
     sx?: SxProps;
-    alignButtons?: 'flex-start' | 'flex-end';
+    alignButtons?: 'start' | 'flex-end';
 }
 
-const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'flex-start'}: ListToolbarProps) => {
+const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'start'}: ListToolbarProps) => {
     return (
         <Box sx={{display: 'flex', flexDirection: "row", gap: 0.5, minHeight: 32, mb: 1, mt: 0.5, alignItems: 'center', ...sx}}>
             {filters && filters.length > 0 && (
@@ -24,7 +24,7 @@ const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'flex-start'}:
                 </>
             )}
             {label && (
-                <Box sx={{width: '100%'}}>
+                <Box sx={{display: 'inline', textWrap: 'nowrap', mr: 1}}>
                     {label}
                 </Box>
             )}

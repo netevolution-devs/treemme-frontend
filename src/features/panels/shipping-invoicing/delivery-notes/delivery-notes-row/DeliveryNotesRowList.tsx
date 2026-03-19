@@ -55,7 +55,6 @@ const DeliveryNotesRowList = () => {
         <>
             <DeliveryNotesRowsFormDialog ref={editRowDialogRef}/>
 
-            <Typography variant={"h5"}>{t("orders.rows")}</Typography>
             <GenericList<IDeliveryNoteRow>
                 data={ddtRows}
                 columns={columns}
@@ -68,8 +67,13 @@ const DeliveryNotesRowList = () => {
                     renderTopToolbar:
                         <ListToolbar
                             buttons={[
-                                <NewButton onClick={() => handleOpenCreateRowDialog()}/>
+                                <NewButton
+                                    isEnable={!!selectedDeliveryNoteId}
+                                    onClick={() => handleOpenCreateRowDialog()}
+                                />
                             ]}
+                            label={<Typography variant={"h5"} >{t("shipping.ddt_rows.row")}</Typography>}
+                            sx={{mt: 0}}
                         />
                 }}
             />
