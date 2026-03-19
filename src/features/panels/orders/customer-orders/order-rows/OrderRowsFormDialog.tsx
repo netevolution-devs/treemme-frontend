@@ -274,9 +274,14 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                                 name="currency_exchange"
                                 label={t("orders.row.currency_exchange")}
                             />
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="currency_price"
+                            {/*<NumberFieldControlled<IOrderRowForm>*/}
+                            {/*    name="currency_price"*/}
+                            {/*    label={t("orders.row.currency_price")}*/}
+                            {/*/>*/}
+                            <TextFieldValue
                                 label={t("orders.row.currency_price")}
+                                value={orderRow?.currency_price ?? undefined}
+                                isFilled={!!orderRow}
                             />
                             <TextFieldValue
                                 label={t("orders.row.total_currency_price")}

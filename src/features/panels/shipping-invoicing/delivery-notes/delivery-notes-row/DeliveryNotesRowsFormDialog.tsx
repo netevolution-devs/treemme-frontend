@@ -168,10 +168,10 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                     required
                                     precision={0}
                                 />
-                                <NumberFieldControlled<IDeliveryNoteRowForm>
-                                    name="kg_weight"
-                                    label={t("orders.row.weight")}
-                                />
+                                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
+                                {/*    name="kg_weight"*/}
+                                {/*    label={t("orders.row.weight")}*/}
+                                {/*/>*/}
                             </Box>
 
                             <Box sx={{display: 'flex', gap: 1}}>
@@ -239,9 +239,14 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                     name="currency_change"
                                     label={t("orders.row.currency_exchange")}
                                 />
-                                <NumberFieldControlled<IDeliveryNoteRowForm>
-                                    name="currency_price"
+                                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
+                                {/*    name="currency_price"*/}
+                                {/*    label={t("orders.row.currency_price")}*/}
+                                {/*/>*/}
+                                <TextFieldValue
                                     label={t("orders.row.currency_price")}
+                                    value={deliveryNoteRow?.currency_price ?? undefined}
+                                    isFilled={!!deliveryNoteRow}
                                 />
                                 <TextFieldValue
                                     label={t("orders.row.total_currency_price")}
