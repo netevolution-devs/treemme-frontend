@@ -17,6 +17,7 @@ import EmailField from "../../../shared/ui/form/controlled/EmailField";
 import PasswordField from "../../../shared/ui/form/controlled/PasswordField";
 import usePostLogin from "../api/usePostLogin";
 import {useAuth} from "../model/AuthContext";
+import {useMenuStore} from "@ui/layout/default/layoutStore.ts";
 
 const backgroundSrc = "";
 
@@ -25,6 +26,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const theme = useTheme();
     const {mutateAsync: loginMutation, isPending: loginIsPending} = usePostLogin();
+    const {showMenu} = useMenuStore();
 
     const {setUserCode} = useAuth();
 
@@ -41,6 +43,8 @@ const LoginPage = () => {
             return;
         }
         navigate("/", {replace: true});
+
+        showMenu() //Make sure the menu is visible after login
     });
 
     return (
