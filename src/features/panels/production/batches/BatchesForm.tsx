@@ -164,11 +164,13 @@ const BatchesForm = () => {
                                 name="sampling"
                                 label={t("production.batch.sampling")}
                                 width={120}
+                                disabled
                             />
                             <FlagCheckBoxFieldControlled<IBatchesForm>
                                 name="completed"
                                 label={t("production.batch.completed")}
                                 width={120}
+                                disabled
                             />
                         </Box>
 
