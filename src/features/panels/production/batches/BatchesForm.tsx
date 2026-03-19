@@ -135,7 +135,7 @@ const BatchesForm = () => {
                         label={t("production.batch.split")}
                         color={"primary"}
                         icon={<CallSplitIcon/>}
-                        isEnable={!!selectedBatchId}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita" || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
                     />
                 ]}
