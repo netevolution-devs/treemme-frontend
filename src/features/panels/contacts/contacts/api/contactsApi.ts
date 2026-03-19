@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 
 interface IContactsPayload extends Omit<IContact, 'id'

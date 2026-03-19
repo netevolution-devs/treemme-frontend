@@ -16,6 +16,8 @@ import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/ap
 import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
 import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
+import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
 
 type Props = unknown;
 
@@ -76,7 +78,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 emptyValues={{
                     // product_id: 0,
                     measurement_unit_id: 0,
-                    currency_id: null,
+                    currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
                     processed: false,
                     cancelled: false,
                     weight: null,
@@ -134,6 +136,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 onClearSelection={() => setUIState({selectedOrderRowId: null})}
                 renderFields={() => (
                     <Stack gap={1}>
+                        <CurrencyWatcher currencies={currencies}/>
                         <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                             <SelectFieldControlled<IOrderRowForm>
                                 name="article_id"
@@ -182,6 +185,37 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                             />
                         </Box>
 
+                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+                        {/*    <SelectFieldControlled<IOrderRowForm>*/}
+                        {/*        name="currency_id"*/}
+                        {/*        label={t("orders.row.currency")}*/}
+                        {/*        options={currencyOptions}*/}
+                        {/*    />*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="currency_price"*/}
+                        {/*        label={t("orders.row.currency_price")}*/}
+                        {/*    />*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="currency_exchange"*/}
+                        {/*        label={t("orders.row.currency_exchange")}*/}
+                        {/*    />*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="total_currency_price"*/}
+                        {/*        label={t("orders.row.total_currency_price")}*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
+
+                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="price"*/}
+                        {/*        label={t("orders.row.price")}*/}
+                        {/*    />*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="total_price"*/}
+                        {/*        label={t("orders.row.total_price")}*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
+
                         <Box sx={{display: 'flex', gap: 1}}>
                             <SelectFieldControlled<IOrderRowForm>
                                 name="currency_id"
@@ -189,40 +223,42 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                                 options={currencyOptions}
                             />
                             <NumberFieldControlled<IOrderRowForm>
-                                name="currency_price"
-                                label={t("orders.row.currency_price")}
+                                name="price"
+                                label={t("orders.row.price")}
                             />
+                            <TextFieldValue
+                                label={t("orders.row.total_price")}
+                                value={orderRow?.total_price ?? undefined}
+                                isFilled={!!orderRow}
+                            />
+                        </Box>
+
+                        <Box sx={{display: 'flex', gap: 1}}>
                             <NumberFieldControlled<IOrderRowForm>
                                 name="currency_exchange"
                                 label={t("orders.row.currency_exchange")}
                             />
                             <NumberFieldControlled<IOrderRowForm>
-                                name="total_currency_price"
+                                name="currency_price"
+                                label={t("orders.row.currency_price")}
+                            />
+                            <TextFieldValue
                                 label={t("orders.row.total_currency_price")}
+                                value={orderRow?.total_currency_price ?? undefined}
+                                isFilled={!!orderRow}
                             />
                         </Box>
 
-                        <Box sx={{display: 'flex', gap: 1}}>
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="price"
-                                label={t("orders.row.price")}
-                            />
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="total_price"
-                                label={t("orders.row.total_price")}
-                            />
-                        </Box>
-
-                        <Box sx={{display: 'flex', gap: 1}}>
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="agent_percentage_row"
-                                label={t("orders.row.agent_percentage_row")}
-                            />
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="weight"
-                                label={t("orders.row.weight")}
-                            />
-                        </Box>
+                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="agent_percentage_row"*/}
+                        {/*        label={t("orders.row.agent_percentage_row")}*/}
+                        {/*    />*/}
+                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="weight"*/}
+                        {/*        label={t("orders.row.weight")}*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
 
                         {/*<Box sx={{display: 'flex', gap: 1}}>*/}
                         {/*     <NumberFieldControlled<IOrderRowForm>*/}

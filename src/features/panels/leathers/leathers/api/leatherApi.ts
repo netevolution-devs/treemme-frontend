@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
 
 export interface ILeatherPayload extends Omit<ILeather, 'id'

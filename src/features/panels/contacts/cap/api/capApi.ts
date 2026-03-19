@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
 
 interface ICapPayload extends Omit<ICap, 'id' | 'province'> {
