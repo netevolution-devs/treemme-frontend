@@ -7,7 +7,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import {detectLanguage} from "@helpers/languageDetection.ts";
 import type {ILanguageCode} from "@interfaces/ILanguageCode.ts";
 
-export const DEFAULT_LANGUAGE_CODE: ILanguageCode = "en";
+export const DEFAULT_LANGUAGE_CODE: ILanguageCode = "it";
 
 // Extend dayjs with the localizedFormat plugin globally
 dayjs.extend(localizedFormat);
