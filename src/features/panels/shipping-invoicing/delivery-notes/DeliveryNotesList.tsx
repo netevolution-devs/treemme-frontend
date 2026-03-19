@@ -27,7 +27,7 @@ const DeliveryNotesList = () => {
         {
             subcontractor_id: filterSubcontractorId,
         }
-    ) as Record<string, string | number>, [filterSubcontractorId]);
+    ), [filterSubcontractorId]);
 
     const {data: deliveryNotes = [], isLoading} = deliveryNoteApi.useGetList({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
