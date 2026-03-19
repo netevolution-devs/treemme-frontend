@@ -336,7 +336,6 @@ const LeatherSelects = () => {
                         label: x.name,
                         value: x.id
                     }))}
-                    required
                     onNoOptionsMatch={(input) => {
                         addSelectPanel({
                             initialValue: input,
