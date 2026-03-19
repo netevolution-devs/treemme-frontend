@@ -101,6 +101,11 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 agent_percentage: x.agent_percentage,
             })}
             create={(payload) => createContact(payload)}
+            onCreateSuccess={(id) => {
+                setUIState({selectedContactId: id});
+                setUIState({selectedAddressId: null});
+                setUIState({selectedDetailId: null});
+            }}
             update={(id, payload) => updateContact({id, payload})}
             remove={(id) => deleteContact(id)}
             isSaving={isPosting || isPutting}

@@ -314,6 +314,7 @@ const CustomerOrdersForm = () => {
                 agent_order_date: x.agent_order_date,
             } as ICustomerOrderForm)}
             create={(payload) => createOrder(payload as ICustomerOrderPayload)}
+            onCreateSuccess={(id) => setUIState({selectedCustomerOrderId: id})}
             update={(id, payload) => updateOrder({id, payload: payload as ICustomerOrderPayload})}
             remove={(id) => deleteOrder(id)}
             isSaving={isPosting || isPutting}

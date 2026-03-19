@@ -117,6 +117,7 @@ const BatchesForm = () => {
                     pieces: x.pieces,
                 })}
                 create={(payload) => createBatch(payload as IBatchesPayload)}
+                onCreateSuccess={(id) => {setUIState({selectedBatchId: id})}}
                 update={(id, payload) => updateBatch({id, payload: payload as IBatchesPayload})}
                 remove={(id) => deleteBatch(id)}
                 isSaving={isPosting || isPutting}
@@ -233,6 +234,7 @@ const BatchesForm = () => {
                                     label={t("production.batch.leather")}
                                     options={leathers.map(x => ({label: x.name, value: x.id}))}
                                     deactivated={!!batchItem}
+                                    required
                                 />
                             </Box>
                         )}

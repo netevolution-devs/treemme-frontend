@@ -52,6 +52,7 @@ const DeliveryNotesForm = () => {
                 ddt_start_date: x.ddt_start_date,
             })}
             create={(payload) => createDeliveryNote(payload as IDeliveryNotePayload)}
+            onCreateSuccess={(id) => {setUIState({selectedDeliveryNoteId: id})}}
             update={(id, payload) => updateDeliveryNote({id, payload: payload as IDeliveryNotePayload})}
             remove={(id) => deleteDeliveryNote(id)}
             isSaving={isPosting || isPutting}
