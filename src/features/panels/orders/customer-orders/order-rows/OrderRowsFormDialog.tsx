@@ -104,7 +104,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     currency_exchange: 1,
                     total_currency_price: null,
                     agent_percentage_row: null,
-                    tolerance_quantity_percentage: null,
+                    tolerance_quantity_percentage: 40,
                     shipment_schedule: null,
                     production_schedule: null,
                     delivery_date_request: null,
