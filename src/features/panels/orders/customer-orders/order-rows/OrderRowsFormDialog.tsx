@@ -6,7 +6,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef, useMemo} from "react";
+import {forwardRef, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
@@ -18,6 +18,13 @@ import {customerOrderApi} from "@features/panels/orders/customer-orders/api/cust
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
+import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog.tsx";
+import RefinementFormDialog
+    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog.tsx";
+import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
 
 type Props = unknown;
 
@@ -70,8 +77,14 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
         currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
     [currencies]);
 
+    const dyeDialogRef = useRef<IDialogActions | null>(null);
+    const refinementDialogRef = useRef<IDialogActions | null>(null);
+
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
+            <DyeFormDialog ref={dyeDialogRef}/>
+            <RefinementFormDialog ref={refinementDialogRef}/>
+
             <GenericForm<IOrderRowForm, IOrderRow>
                 dialogMode
                 dialogRef={ref}
@@ -141,6 +154,22 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedOrderRowId: null})}
                 validateBeforeSave={(v) => !!v.article_id && !!v.measurement_unit_id && !!v.quantity}
+                extraButtons={[
+                    <CustomButton
+                        label={t("orders.row.dye")}
+                        color={"primary"}
+                        icon={<ColorLensIcon/>}
+                        onClick={() => openDialog(dyeDialogRef)}
+                        isEnable={!!selectedOrderRowId}
+                    />,
+                    <CustomButton
+                        label={t("orders.row.refinement")}
+                        color={"success"}
+                        icon={<SettingsInputHdmiIcon/>}
+                        onClick={() => openDialog(refinementDialogRef)}
+                        isEnable={!!selectedOrderRowId}
+                    />,
+                ]}
                 renderFields={() => (
                     <Stack gap={1}>
                         <CurrencyWatcher currencies={currencies}/>
