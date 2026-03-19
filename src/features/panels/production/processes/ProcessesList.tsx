@@ -81,7 +81,7 @@ const ProcessesList = () => {
             onRowSelect={(id) => setUIState({selectedProcessId: id})}
             additionalOptions={{
                 enableRowActions: true,
-                renderRowActionMenuItems: ({row}) => [
+                renderRowActionMenuItems: ({row, closeMenu}) => [
                     <MenuItem key={"view_batch"} onClick={() => {
                         addPanel({
                             id: `batches:${crypto.randomUUID()}`,
@@ -93,7 +93,8 @@ const ProcessesList = () => {
                                     batch_code: row.original.batch.batch_code
                                 }
                             }
-                        })
+                        });
+                        closeMenu();
                     }}>
                         <VisibilityIcon color={"primary"} sx={{mr: 1}} />
                         {t("processes.view_batch")}
