@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import {type ILeatherPayload, leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
+import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
 import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
 import {originApi} from "@features/panels/leathers/origins/api/originApi.ts";
@@ -17,6 +17,8 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type ILeatherForm = Omit<ILeather, "id"
     | "contact"
@@ -62,21 +64,13 @@ const LeathersForm = () => {
     const selectedLeatherId = useStore(state => state.uiState.selectedLeatherId);
     const setUIState = useStore(state => state.setUIState);
 
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+
     const {useGetDetail, usePost, usePut, useDelete} = leatherApi;
     const {data: leather} = useGetDetail(selectedLeatherId);
     const {mutateAsync: createLeather, isPending: isPosting} = usePost();
     const {mutateAsync: updateLeather, isPending: isPutting} = usePut();
     const {mutateAsync: deleteLeather, isPending: isDeleting} = useDelete();
-
-    const {data: contacts = []} = contactsApi.useGetList();
-
-    const {data: origins = []} = originApi.useGetList();
-    const {data: species = []} = speciesApi.useGetList();
-    const {data: types = []} = leatherTypeApi.useGetList();
-    const {data: tanningStages = []} = tanningStageApi.useGetList();
-    const {data: weights = []} = weightApi.useGetList();
-    const {data: thicknesses = []} = thicknessApi.useGetList();
-    const {data: flays = []} = flayApi.useGetList();
 
     return (
         <GenericForm<ILeatherForm, ILeather, ILeathersStoreState>
@@ -113,12 +107,8 @@ const LeathersForm = () => {
                 container_piece: x.container_piece,
                 crust_revenue_expected: x.crust_revenue_expected,
             })}
-            // TODO: use correct code and name
-            create={(payload) => createLeather({...payload,
-                code: "test-code-" + Date.now(),
-                name: "test-name-" + Date.now(),
-            } as ILeatherPayload)}
-            update={(id, payload) => updateLeather({id, payload: payload as ILeatherPayload})}
+            create={(payload) => createLeather(payload)}
+            update={(id, payload) => updateLeather({id, payload})}
             remove={(id) => deleteLeather(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
@@ -145,7 +135,9 @@ const LeathersForm = () => {
 
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
                         <Box>
-                            <Typography sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
+                            <Typography
+                                color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                                sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                                 <TextFieldValue
                                     label={t("leathers.leather.leather-min")}
@@ -165,7 +157,9 @@ const LeathersForm = () => {
                             </Box>
                         </Box>
                         <Box>
-                            <Typography sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
+                            <Typography
+                                color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                                sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                                 <TextFieldValue
                                     label={t("leathers.leather.leather-min")}
@@ -185,77 +179,7 @@ const LeathersForm = () => {
                             </Box>
                         </Box>
                     </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"supplier_id"}
-                            label={t("leathers.leather.contact")}
-                            options={contacts.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"provenance_id"}
-                            label={t("leathers.leather.origin")}
-                            options={origins.map((x) => ({
-                                label: `${x.nation.name} - ${x.area.name}`,
-                                value: x.id
-                            }))}
-                        />
-                    </Box>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"species_id"}
-                            label={t("leathers.leather.species")}
-                            options={species.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"type_id"}
-                            label={t("leathers.leather.type")}
-                            options={types.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"status_id"}
-                            label={t("leathers.leather.status")}
-                            options={tanningStages.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                    </Box>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"weight_id"}
-                            label={t("leathers.leather.weight")}
-                            options={weights.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"thickness_id"}
-                            label={t("leathers.leather.thickness")}
-                            options={thicknesses.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                        <SelectFieldControlled<ILeatherForm>
-                            name={"flay_id"}
-                            label={t("leathers.leather.flay")}
-                            options={flays.map((x) => ({
-                                label: x.name,
-                                value: x.id
-                            }))}
-                        />
-                    </Box>
+                    <LeatherSelects/>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <NumberFieldControlled<ILeatherForm>
                             name={"sqft_leather_expected"}
@@ -276,6 +200,212 @@ const LeathersForm = () => {
                 </>
             )}
         />
+    )
+}
+
+const LeatherSelects = () => {
+    const {t} = useTranslation(["form"]);
+
+    const {data: suppliers = []} = contactsApi.useGetList({queryParams: {type: "supplier"}});
+    const {data: origins = []} = originApi.useGetList();
+
+    const {data: species = []} = speciesApi.useGetList();
+    const {data: types = []} = leatherTypeApi.useGetList();
+    const {data: tanningStages = []} = tanningStageApi.useGetList();
+    const {data: weights = []} = weightApi.useGetList();
+    const {data: thicknesses = []} = thicknessApi.useGetList();
+    const {data: flays = []} = flayApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<ILeatherForm>({
+        formKey: "supplier_id",
+        dependencyKey: "contacts"
+    })
+    useSubscribePanel<ILeatherForm>({
+        formKey: "provenance_id",
+        dependencyKey: "origins"
+    })
+    useSubscribePanel<ILeatherForm>({
+        formKey: "species_id",
+        dependencyKey: "species"
+    });
+    useSubscribePanel<ILeatherForm>({
+        formKey: "type_id",
+        dependencyKey: "types"
+    });
+    useSubscribePanel<ILeatherForm>({
+        formKey: "status_id",
+        dependencyKey: "tanningStages"
+    });
+    useSubscribePanel<ILeatherForm>({
+        formKey: "weight_id",
+        dependencyKey: "weights"
+    });
+    useSubscribePanel<ILeatherForm>({
+        formKey: "thickness_id",
+        dependencyKey: "thicknesses"
+    });
+    useSubscribePanel<ILeatherForm>({
+        formKey: "flay_id",
+        dependencyKey: "flaying"
+    });
+
+    return (
+        <>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<ILeatherForm>
+                    name={"supplier_id"}
+                    label={t("leathers.leather.contact")}
+                    options={suppliers.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                supplier: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
+                />
+                <SelectFieldControlled<ILeatherForm>
+                    name={"provenance_id"}
+                    label={t("leathers.leather.origin")}
+                    options={origins.map((x) => ({
+                        label: `${x.nation.name} - ${x.area.name}`,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "origins",
+                                i18nKey: "menu.leathers.origins"
+                            }
+                        })
+                    }}
+                />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<ILeatherForm>
+                    name={"species_id"}
+                    label={t("leathers.leather.species")}
+                    options={species.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "species",
+                                i18nKey: "menu.leathers.species"
+                            }
+                        })
+                    }}
+                />
+                <SelectFieldControlled<ILeatherForm>
+                    name={"type_id"}
+                    label={t("leathers.leather.type")}
+                    options={types.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "types",
+                                i18nKey: "menu.leathers.types"
+                            }
+                        })
+                    }}
+                />
+                <SelectFieldControlled<ILeatherForm>
+                    name={"status_id"}
+                    label={t("leathers.leather.status")}
+                    options={tanningStages.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "tanningStages",
+                                i18nKey: "menu.leathers.tanning-stages",
+                            }
+                        })
+                    }}
+                />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<ILeatherForm>
+                    name={"weight_id"}
+                    label={t("leathers.leather.weight")}
+                    options={weights.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "weights",
+                                i18nKey: "menu.leathers.weights"
+                            }
+                        })
+                    }}
+                />
+                <SelectFieldControlled<ILeatherForm>
+                    name={"thickness_id"}
+                    label={t("leathers.leather.thickness")}
+                    options={thicknesses.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "thicknesses",
+                                i18nKey: "menu.leathers.thicknesses",
+                            }
+                        })
+                    }}
+                />
+                <SelectFieldControlled<ILeatherForm>
+                    name={"flay_id"}
+                    label={t("leathers.leather.flay")}
+                    options={flays.map((x) => ({
+                        label: x.name,
+                        value: x.id
+                    }))}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "flaying",
+                                i18nKey: "menu.leathers.flaying",
+                            }
+                        })
+                    }}
+                />
+            </Box>
+        </>
     )
 }
 

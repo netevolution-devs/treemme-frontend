@@ -37,7 +37,21 @@ const ContactsList = () => {
             accessorKey: "name",
             header: t("contacts.name"),
             enableColumnFilter: false
-        }
+        },
+        {
+            header: t("contacts.select"),
+            Cell: ({ row }) => {
+                const roles = [];
+                const { original } = row;
+
+                if (original.client) roles.push(t("contacts.client"));
+                if (original.agent) roles.push(t("contacts.agent"));
+                if (original.supplier) roles.push(t("contacts.supplier"));
+                if (original.subcontractor) roles.push(t("contacts.subcontractor"));
+
+                return <>{roles.join(", ")}</>;
+            }
+        },
     ], [t]);
 
     return (

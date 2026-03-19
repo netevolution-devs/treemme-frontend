@@ -9,18 +9,29 @@ import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/I
 import {type ITanningStagePayload, tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi.ts";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {Box} from "@mui/material";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type ITanningStageForm = Omit<ITanningStage, 'id' | 'measurement_unit' | 'flower_yield_coefficient'> & {
     measurement_unit_id: number | null;
     flower_yield_coefficient: number | null;
 };
 
-const TanningStagesForm = () => {
+const TanningStagesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ITanningStagesStoreState>();
     const selectedTanningStageId = useStore(state => state.uiState.selectedTanningStageId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedTanningStageId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = tanningStageApi;
     const {data: tanningStage} = useGetDetail(selectedTanningStageId);
@@ -33,11 +44,12 @@ const TanningStagesForm = () => {
 
     return (
         <GenericForm<ITanningStageForm, ITanningStage, ITanningStagesStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedTanningStageId}
             entity={tanningStage}
             emptyValues={{
                 code: '',
-                name: '',
+                name: initialName ?? '',
                 flower_yield_coefficient: null,
                 measurement_unit_id: null,
             }}
@@ -60,10 +72,12 @@ const TanningStagesForm = () => {
                         <TextFieldControlled<ITanningStageForm>
                             name={"code"}
                             label={t("leathers.status.code")}
+                            required
                         />
                         <TextFieldControlled<ITanningStageForm>
                             name={"name"}
                             label={t("leathers.status.name")}
+                            required
                         />
                     </Box>
                     <SelectFieldControlled<ITanningStageForm>
@@ -73,6 +87,7 @@ const TanningStagesForm = () => {
                             label: `${x.prefix} - ${x.name}`,
                             value: x.id,
                         })) || []}
+                        required
                     />
                     <Box sx={{display: 'flex', gap: 1}}>
                         <NumberFieldControlled<ITanningStageForm>

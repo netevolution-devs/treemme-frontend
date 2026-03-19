@@ -29,8 +29,15 @@ const SaveConfirmDialog = (
         closeDialog(ref);
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" && !isPending) {
+            event.preventDefault();
+            handleConfirm();
+        }
+    };
+
     return (
-        <BaseDialog ref={ref} minWidth={400} minHeight={200}>
+        <BaseDialog ref={ref} minWidth={400} minHeight={200} onKeyDown={handleKeyDown}>
             <DialogTitle sx={{display: 'flex', alignItems: 'center', gap: 1}}>
                 <SaveIcon color="success" />
                 {title || t("common:dialog.save.title")}
@@ -60,7 +67,7 @@ const SaveConfirmDialog = (
                         <Stack direction="row" spacing={1} alignItems="center">
                             <CircularProgress size={18} color="inherit" />
                             <Typography variant="button">
-                                {t("common:dialog.save.pending")}...
+                                {t("common:dialog.save.pending")}
                             </Typography>
                         </Stack>
                     ) : (

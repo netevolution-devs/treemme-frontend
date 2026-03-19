@@ -7,16 +7,20 @@ import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
 interface SelectFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     options: { value: string | number; label: string }[];
     minWidth?: number | string;
+    deactivated?: boolean;
+    onNoOptionsMatch?: (inputValue: string) => void;
 }
 
 const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                      name,
                                                                      label,
                                                                      required = false,
-                                                                     showHelperRow = true,
+                                                                     showHelperRow = false,
                                                                      options = [],
                                                                      TextFieldProps,
-                                                                     minWidth = 150
+                                                                     minWidth = 150,
+                                                                     deactivated = false,
+                                                                     onNoOptionsMatch,
                                                                  }: SelectFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const {
@@ -40,14 +44,26 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                     <Autocomplete
                         sx={{ minWidth, width: "100%" }}
                         options={options}
-                        disabled={disabled}
+                        disabled={disabled || deactivated}
                         value={selectedOption}
+                        noOptionsText={t("common:search.no-options")}
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
                         onChange={(_, newValue) => {
                             onChange(newValue ? newValue.value : 0);
                         }}
                         onBlur={onBlur}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && onNoOptionsMatch) {
+                                const target = e.target as HTMLInputElement;
+                                const inputValue = target.value;
+                                const match = options.find(opt => opt.label.toLowerCase() === inputValue.toLowerCase());
+                                if (!match && inputValue.trim()) {
+                                    onNoOptionsMatch(inputValue);
+                                    target.blur();
+                                }
+                            }
+                        }}
                         renderInput={(params) => {
                             const { InputLabelProps, InputProps, inputProps, ...restParams } = params;
 
@@ -59,6 +75,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                     label={formattedLabel}
                                     size="small"
                                     fullWidth
+                                    sx={{mb: 1.2}}
                                     error={!!error}
                                     helperText={error?.message ?? (showHelperRow ? " " : "")}
                                     slotProps={{

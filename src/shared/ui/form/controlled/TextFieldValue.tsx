@@ -4,14 +4,24 @@ interface TextFieldValueProps {
     label: string;
     value: string | number | undefined;
     isFilled?: boolean;
+    precision?: number;
 }
 
-const TextFieldValue = ({label, value, isFilled}: TextFieldValueProps) => {
+const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps) => {
+    let displayValue: string | number = "";
+
+    if (isFilled && value !== undefined) {
+        if (typeof value === "number" && precision !== undefined) {
+            displayValue = value.toFixed(precision);
+        } else {
+            displayValue = value;
+        }
+    }
     return (
         <TextField
             label={label}
-            value={isFilled ? value : ""}
-            sx={{pb: 2}}
+            value={displayValue}
+            sx={{mb: 0.5}}
             slotProps={{
                 inputLabel: {
                     shrink: isFilled

@@ -1,0 +1,51 @@
+import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
+import {useTranslation} from "react-i18next";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
+import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
+import {useMemo} from "react";
+import type {MRT_ColumnDef} from "material-react-table";
+import dayjs from "dayjs";
+
+const WarehouseMovementsList = () => {
+    const {t} = useTranslation(["form"]);
+
+    const {useStore} = usePanel<unknown, IBatchesStoreState>();
+    const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
+
+    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId);
+    const movements = batch?.warehouse_movements || [];
+
+    const columns = useMemo<MRT_ColumnDef<IWarehouseMovement>[]>(() => [
+        {
+            accessorKey: "date",
+            header: t("movements.date"),
+            Cell: ({row}) => (
+                dayjs(row.original.date).format("DD/MM/YYYY")
+            )
+        },
+        {
+            accessorKey: "reason.name",
+            header: t("movements.reason")
+        },
+        {
+            accessorKey: "piece",
+            header: t("movements.piece")
+        },
+        {
+            accessorKey: "movement_note",
+            header: t("movements.movement_note")
+        }
+    ], [t]);
+
+    return (
+        <GenericList<IWarehouseMovement>
+            data={movements}
+            isLoading={isLoading}
+            columns={columns}
+        />
+    )
+}
+
+export default WarehouseMovementsList;

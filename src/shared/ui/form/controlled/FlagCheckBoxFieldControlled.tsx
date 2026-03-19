@@ -10,7 +10,7 @@ interface FlagCheckBoxFieldProps<TFieldValues extends FieldValues> extends Contr
 const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
                                                                            name,
                                                                            label,
-                                                                           showHelperRow = true,
+                                                                           showHelperRow = false,
                                                                            width,
                                                                        }: FlagCheckBoxFieldProps<TFieldValues>) => {
     const {
@@ -24,7 +24,7 @@ const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
             control={control}
             render={({ field: { onChange, value, onBlur }, fieldState: { error } }) => {
                 return (
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', mb: 0.4 }}>
                         <FormGroup>
                             <FormControlLabel
                                 control={

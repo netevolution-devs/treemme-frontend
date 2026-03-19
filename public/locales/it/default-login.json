@@ -1,11 +1,11 @@
 {
   "splash": {
     "title": "TRE EMME S.R.L.",
-    "subtitle": "Accedi alla piattaforma"
+    "subtitle": "Accedi al portale"
   },
   "form": {
-    "welcome": "Bentornato/a 👋",
-    "subtitle": "Usa le tue credenziali.",
+    "welcome": "Login",
+    "subtitle": "Usa le tue credenziali",
     "button": "Accedi",
     "forgotPassword": "Password dimenticata? <outLink>Clicca qui</outLink>"
   },

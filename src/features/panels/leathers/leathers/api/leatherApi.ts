@@ -2,8 +2,8 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
 
 export interface ILeatherPayload extends Omit<ILeather, 'id'
-    // | "code"
-    // | "name"
+    | "code"
+    | "name"
     | "contact"
     | "weight"
     | "thickness"
@@ -32,10 +32,10 @@ export interface ILeatherPayload extends Omit<ILeather, 'id'
     provenance_id: number;
     species_id: number;
     type_id: number;
-    sqft_leather_expected?: number;
-    kg_leather_expected?: number;
-    container_piece?: number;
-    crust_revenue_expected?: number;
+    sqft_leather_expected?: number | null;
+    kg_leather_expected?: number | null;
+    container_piece?: number | null;
+    crust_revenue_expected?: number | null;
 }
 
 export const leatherApi = createPanelApi<ILeather, ILeatherPayload>({

@@ -1,6 +1,11 @@
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
 import type {IProfile} from "@features/profile/model/IProfile.ts";
-import {type IApiUserRole, type IUserRole, UserRoleArrayAdapter} from "@features/user/model/RoleInterfaces.ts";
+import {
+    type IAccessControl,
+    type IApiUserRole,
+    type IUserRole,
+    UserRoleArrayAdapter
+} from "@features/user/model/RoleInterfaces.ts";
 
 export interface IUserProfile {
     id?: number;
@@ -15,6 +20,8 @@ export interface IUserProfile {
     address?: string | undefined;
     fiscalCode?: string | undefined;
     companyCode: string | undefined;
+    lastAccess?: string | null;
+    accessControl?: IAccessControl[];
 }
 
 export function mergeUserAndProfile(user: IUser, profile: IProfile): IUserProfile {
@@ -31,6 +38,8 @@ export function mergeUserAndProfile(user: IUser, profile: IProfile): IUserProfil
         address: profile?.address,
         fiscalCode: profile?.fiscalCode,
         companyCode: profile?.companyCode,
+        lastAccess: user.lastAccess,
+        accessControl: user.accessControl,
     };
 }
 
@@ -63,6 +72,8 @@ export function UserProfileAdapter(apiUserProfile: IApiUserProfile): IUserProfil
         address: apiUserProfile.address,
         fiscalCode: apiUserProfile.fiscal_code,
         companyCode: apiUserProfile.company?.company_code,
+        lastAccess: null,
+        accessControl: [],
     }
 }
 
@@ -81,6 +92,8 @@ export const toUserFromUserProfileAdapter = (data: IUserProfile): IUser => {
         firstName: data.firstName,
         lastName: data.lastName,
         name: data.name,
+        lastAccess: data.lastAccess ?? null,
+        accessControl: data.accessControl ?? [],
     }
 }
 

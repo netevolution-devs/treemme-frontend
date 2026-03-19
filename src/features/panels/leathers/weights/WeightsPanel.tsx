@@ -5,12 +5,14 @@ import WeightsList from "@features/panels/leathers/weights/WeightsList.tsx";
 import WeightsForm from "@features/panels/leathers/weights/WeightsForm.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import WeightsContent from "@features/panels/leathers/weights/WeightsContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IWeightsStoreState extends IPanelUIState, ILeathersStoreState {
     selectedWeightId?: number | null;
 }
 
-const WeightsPanel = () => {
+const WeightsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IWeightsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -19,7 +21,7 @@ const WeightsPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <WeightsList/>
-            <WeightsForm/>
+            <WeightsForm {...props.params}/>
             <WeightsContent/>
         </GenericPanel>
     )

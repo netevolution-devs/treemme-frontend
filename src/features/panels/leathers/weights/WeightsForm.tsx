@@ -7,6 +7,9 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box} from "@mui/material";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IWeightForm = Omit<IWeight, 'id' | 'kg_weight' | 'cost_stripped_crust_manual' | 'cost_stripped_crust_various' | 'kg_leather_expected' | 'sqft_leather_expected'> & {
     kg_weight?: number | null;
@@ -16,12 +19,20 @@ export type IWeightForm = Omit<IWeight, 'id' | 'kg_weight' | 'cost_stripped_crus
     sqft_leather_expected?: number | null;
 }
 
-const WeightsForm = () => {
+const WeightsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IWeightsStoreState>();
     const selectedWeightId = useStore((state) => state.uiState.selectedWeightId);
     const setUIState = useStore((state) => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedWeightId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = weightApi;
     const {data: weight} = useGetDetail(selectedWeightId);
@@ -31,10 +42,11 @@ const WeightsForm = () => {
 
     return (
         <GenericForm<IWeightForm, IWeight, IWeightsStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedWeightId}
             entity={weight}
             emptyValues={{
-                name: '',
+                name: initialName ?? '',
                 kg_weight: null,
                 cost_stripped_crust_manual: null,
                 cost_stripped_crust_various: null,
@@ -62,10 +74,12 @@ const WeightsForm = () => {
                         <TextFieldControlled<IWeightForm>
                             name={"name"}
                             label={t("leathers.weight.name")}
+                            required
                         />
                         <NumberFieldControlled<IWeightForm>
                             name={"kg_weight"}
                             label={t("leathers.weight.kg-weight")}
+                            required
                         />
                     </Box>
                     <Box sx={{display: 'flex', gap: 1}}>

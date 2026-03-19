@@ -1,0 +1,102 @@
+import {processApi} from "@features/panels/production/processes/api/processApi.ts";
+import {useTranslation} from "react-i18next";
+import type {MRT_ColumnDef} from "material-react-table";
+import {useEffect, useMemo} from "react";
+import type {IProcess} from "@features/panels/production/processes/api/IProcess.ts";
+import GenericList from "@features/panels/shared/GenericList.tsx";
+import dayjs from "dayjs";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import type {IProcessesStoreState, IProcessStoreFilter} from "@features/panels/production/processes/ProcessesPanel.tsx";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import {Box} from "@mui/material";
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
+
+const ProcessesList = () => {
+    const {t} = useTranslation(["form"]);
+    const {useStore} = usePanel<IProcessStoreFilter, IProcessesStoreState>();
+
+    const setFilters = useStore(state => state.setFilters);
+    const filterScheduledDate = useStore(state => state.filters.filterScheduledDate);
+
+    const setTodayDate = () => setFilters({filterScheduledDate: dayjs(Date()).format("YYYY-MM-DD")});
+
+    useEffect(() => {
+        setTodayDate();
+    }, []);
+
+    const queryParams = useMemo(() => cleanFilters(
+            {
+                scheduled_date: filterScheduledDate,
+            }
+        ),
+        [filterScheduledDate],
+    );
+
+    const {data: processes = [], isLoading} = processApi.useGetList({queryParams});
+
+    const columns = useMemo<MRT_ColumnDef<IProcess>[]>(() => [
+        {
+            accessorKey: "scheduled_date",
+            header: t("processes.scheduled_date"),
+            Cell: ({row}) => (
+                dayjs(row.original.scheduled_date).format("DD/MM/YYYY")
+            )
+        },
+        {
+            accessorKey: "batch.batch_code",
+            header: t("processes.batch_code")
+        },
+        {
+            accessorKey: "machine.name",
+            header: t("processes.machine_name")
+        },
+        {
+            accessorKey: "batch.pieces",
+            header: t("processes.batch_pieces")
+        },
+        {
+            accessorKey: "batch.quantity",
+            header: t("processes.batch_quantity")
+        },
+        {
+            accessorKey: "production_note",
+            header: t("processes.production_note")
+        }
+    ], [t]);
+
+    return (
+        <GenericList<IProcess>
+            data={processes}
+            isLoading={isLoading}
+            columns={columns}
+            minHeight={"700px"}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        filters={[
+                            <DateFieldFilter
+                                key={"f-date_filter"}
+                                label={t("processes.scheduled_date")}
+                                value={filterScheduledDate}
+                                onFilterChange={(val) => setFilters({filterScheduledDate: val as string})}
+                            />,
+                            <Box sx={{height: "40px"}}>
+                                <CustomButton
+                                    label={t("processes.today")}
+                                    color={"primary"}
+                                    icon={""}
+                                    onClick={() => setTodayDate()}
+                                />
+                            </Box>
+                        ]}
+                    />
+                )
+            }}
+        />
+    )
+}
+
+export default ProcessesList;

@@ -17,11 +17,12 @@ interface GenericListProps<TData extends BaseEntity> {
     isLoading: boolean;
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
-    onRowSelect: (id: TData["id"]) => void;
+    onRowSelect?: (id: TData["id"]) => void;
     onRowDoubleClick?: (id: TData["id"]) => void;
     additionalOptions?: Partial<MRT_TableOptions<TData>>;
     overrideOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
+    minHeight?: string;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -33,21 +34,26 @@ const GenericList = <TData extends BaseEntity>({
                                                    onRowDoubleClick,
                                                    additionalOptions,
                                                    overrideOptions: _overrideOptions,
-                                                   maxHeight = '400px',
+                                                   maxHeight = '300px',
+                                                   minHeight = '300px',
                                                }: GenericListProps<TData>) => {
+
+    const calculateMin = parseInt(minHeight.split('px')[0]);
+    const filterHeight = additionalOptions?.enableTopToolbar ? 50 : 0;
+    const _minHeight = calculateMin + filterHeight;
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
         muiTableContainerProps: {
-            sx: {maxHeight},
+            sx: {maxHeight, minHeight},
         },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
-                onRowSelect(row.original.id);
+                onRowSelect?.(row.original.id);
                 onRowDoubleClick?.(row.original.id);
             },
             onClick: (e: SyntheticEvent) => {
                 e.preventDefault();
-                onRowSelect(row.original.id);
+                onRowSelect?.(row.original.id);
             },
             selected: row.original.id === selectedId,
             sx: {cursor: 'pointer'}
@@ -63,6 +69,27 @@ const GenericList = <TData extends BaseEntity>({
         enableTopToolbar: false,
         ...defaultMrtOptions,
         ...additionalOptions,
+        displayColumnDefOptions: ({
+            'mrt-row-actions': {
+                size: 30,
+                minSize: 30,
+                maxSize: 30,
+                muiTableHeadCellProps: {
+                    sx: {
+                        padding: 0,
+                        width: '30px',
+                        maxWidth: '30px',
+                    },
+                },
+                muiTableBodyCellProps: {
+                    sx: {
+                        padding: 0,
+                        width: '30px',
+                        maxWidth: '30px',
+                    },
+                },
+            },
+        }),
         columns,
         data: data || [],
         state: {
@@ -72,7 +99,7 @@ const GenericList = <TData extends BaseEntity>({
     });
 
     return (
-        <Box sx={{width: '100%', overflowY: 'auto'}}>
+        <Box sx={{width: '100%', overflowY: 'scroll', minHeight: _minHeight}}>
             <MaterialReactTable table={table}/>
         </Box>
     );

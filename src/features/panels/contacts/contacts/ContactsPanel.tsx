@@ -3,14 +3,20 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import ContactsList from "@features/panels/contacts/contacts/ContactsList.tsx";
 import ContactsForm from "@features/panels/contacts/contacts/ContactsForm.tsx";
-import ContactsAddressContent from "@features/panels/contacts/contacts/address/ContactsAddressContent.tsx";
-import ContactsDetailContent from "@features/panels/contacts/contacts/detail/ContactsDetailContent.tsx";
-import {Box, Stack} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
+import ContactsAddressList from "@features/panels/contacts/contacts/address/ContactsAddressList.tsx";
+import {useTranslation} from "react-i18next";
+import ContactsDetailList from "@features/panels/contacts/contacts/detail/ContactsDetailList.tsx";
+import ContactsContent from "@features/panels/contacts/contacts/ContactsContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IContactsStoreState extends IPanelUIState {
     selectedContactId?: number | null;
     selectedAddressId?: number | null;
     selectedDetailId?: number | null;
+    selectedAgentId?: number | null;
+    selectedSubcontractorId?: number | null;
 }
 
 export interface IContactsStoreFilter {
@@ -18,7 +24,12 @@ export interface IContactsStoreFilter {
     filterDetailName?: string;
 }
 
-const ContactsPanel = () => {
+export interface IContactsStoreParams {
+    supplier?: boolean;
+}
+
+const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsStoreParams>>) => {
+    const {t} = useTranslation(["form"]);
     const initialUiState: IContactsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -30,11 +41,26 @@ const ContactsPanel = () => {
             }}
         >
             <Stack gap={2}>
-                <ContactsList />
-                <ContactsForm />
-                <Box sx={{display: 'flex', flexDirection: {xl: 'row', lg: 'column'}, gap: 0.7, width: '100%'}}>
-                    <ContactsAddressContent />
-                    <ContactsDetailContent />
+                <ContactsList/>
+                <Box sx={{display: 'flex', gap: 2, width: '100%'}}>
+                    <ContactsForm {...props.params}/>
+                    <ContactsContent />
+                </Box>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: {xs: 'column', lg: 'row'},
+                    flexWrap: 'wrap',
+                    gap: 1,
+                    width: '100%'
+                }}>
+                    <Box sx={{flex: '1 1 300px', minWidth: 0}}>
+                        <Typography variant="h6">{t("contacts.address.list")}</Typography>
+                        <ContactsAddressList />
+                    </Box>
+                    <Box sx={{flex: '1 1 300px', minWidth: 0}}>
+                        <Typography variant="h6">{t("contacts.details.list")}</Typography>
+                        <ContactsDetailList />
+                    </Box>
                 </Box>
             </Stack>
         </GenericPanel>

@@ -50,7 +50,6 @@
       "description": "Aggiorna le informazioni relative all'utente"
     }
   },
-
   "province": {
     "acronym": "Sigla",
     "name": "Provincia"
@@ -66,10 +65,26 @@
     "select": "Tipologia",
     "client": "Cliente",
     "supplier": "Fornitore",
+    "subcontractor": "Terzista",
+    "agent": "Agente",
+    "agents": {
+      "list": "Lista agenti",
+      "add": "Aggiungi agente"
+    },
+    "subcontractors": {
+      "list": "Lista terzista",
+      "add": "Aggiungi terzista"
+    },
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",
     "type": "Tipo contatto",
+    "client_data": "Dati cliente",
+    "tolerance_quantity": "Tolleranza quantità",
+    "tolerance_start_days": "Giorni tolleranza inizio",
+    "client_note": "Note cliente",
+    "client_shipment_note": "Note spedizione cliente",
+    "agent_percentage": "Provvigione agente",
     "address": {
       "list": "Lista indirizzi",
       "name": "Nome",
@@ -92,6 +107,13 @@
     "filters": {
       "name": "Nome contatto",
       "detail": "Recapito"
+    },
+    "seaports": {
+      "name": "Nome",
+      "ductible_day": "Gg. Franchigia",
+      "parking_day_cost": "Costo sosta gg.",
+      "container_deductible_day": "Gg. Franchigia Cnt.",
+      "container_parking_day_cost": "Costo sosta Cnt. gg."
     }
   },
   "leathers": {
@@ -170,5 +192,203 @@
         "gcz": "GCZ"
       }
     }
+  },
+  "production": {
+    "title": "Produzione",
+    "batch": {
+      "note": "Note composizione",
+      "article": "Articolo",
+      "batch_code": "Lotto",
+      "batch_date": "Data",
+      "batch_type": "Tipo Lotto",
+      "leather": "Pellame",
+      "measurement_unit": "Unità di misura",
+      "pieces": "Pezzi totali",
+      "quantity": "Quantità",
+      "sq_ft_average_expected": "Media PQ attesa",
+      "sq_ft_average_found": "Media PQ trovata",
+      "stock_items": "Giacenza pezzi",
+      "stock_quantity": "Giacenza quantità",
+      "completed": "Terminato",
+      "checked": "Controllato",
+      "sampling": "Campione",
+      "split_selected": "Spaccato",
+      "notes_section": "Note",
+      "batch_note": "Note lotto",
+      "selection_note": "Note scelta",
+      "check_section": "Controllo",
+      "check_date": "Data controllo",
+      "check_user": "Utente controllo",
+      "check_note": "Note controllo",
+      "rework": "Rinverdimento",
+      "split": "Spaccatura",
+      "selection": "Scelta",
+      "selections": {
+        "pieces": "Pezzi totali",
+        "stock_items": "Giacenza pezzi",
+        "selection": "Nome scelta"
+      },
+      "father_batch": "Lotto padre",
+      "machine": "Macchinario",
+      "scheduled_date": "Data programmazione",
+      "production_note": "Note produzione"
+    },
+    "machinery": {
+      "name": "Nome macchinario",
+      "prefix": "Prefisso",
+      "batch_type": "Tipo lotto"
+    },
+    "working": {
+      "name": "Nome lavorazione",
+      "external": "Lavorazione esterna",
+      "color_recipe": "Ricetta colore",
+      "final_check": "Controllo finale",
+      "processing_recipe": "Ricetta lavorazione"
+    }
+  },
+  "composition": {
+    "father_batch_piece": "Pezzi padre lotto",
+    "father_batch_quantity": "Quantità padre lotto",
+    "composition_note": "Note composizione",
+    "title": "Composizione",
+    "button": "Aggiungi",
+    "father_batch_code": "Codice lotto padre"
+  },
+  "movements": {
+    "date": "Data",
+    "reason": "Motivo",
+    "piece": "Pezzi",
+    "movement_note": "Note movimento"
+  },
+  "orders": {
+    "shipment-condition": "Resa",
+    "order_number": "Ordine",
+    "order_date": "Data",
+    "client": "Cliente",
+    "agent": "Agente",
+    "agent_order_number": "Codice ordine agente",
+    "agent_order_date": "Data ordine agente",
+    "client_order_number": "Codice Ordine cliente",
+    "client_order_date": "Data ordine cliente",
+    "percentage_agent": "Provv. %",
+    "percentage_tolerance_quantity": "Tolleranza quantità",
+    "order_note": "Note Ordine",
+    "order_note_iso": "Note ISO",
+    "order_note_production": "Note Produzione",
+    "order_note_administration": "Note Amministrazione",
+    "processed": "Evaso",
+    "cancelled": "Annullato",
+    "checked": "Controllato",
+    "printed": "Stampato",
+    "check_date": "Data controllo",
+    "check_user": "Utente controllo",
+    "print_date": "Data stampa",
+    "payment": "Pagamento",
+    "shipment": "Trasporto",
+    "yield": "Resa",
+    "destination": "Destinazione",
+    "rows": "Righe ordine",
+    "row": {
+      "article": "Articolo",
+      "product": "Prodotto",
+      "measurement_unit": "Unità di misura",
+      "quantity": "Quantità",
+      "tolerance_quantity_percentage": "Tolleranza %",
+      "delivery_date_request": "Data richiesta",
+      "delivery_date_confirmed": "Data confermata",
+      "currency": "Valuta",
+      "currency_price": "Prezzo valuta",
+      "currency_exchange": "Cambio",
+      "total_currency_price": "Totale valuta",
+      "price": "Prezzo",
+      "total_price": "Totale",
+      "agent_percentage_row": "Provv. riga %",
+      "weight": "Peso",
+      "shipment_schedule": "Settimana spedizione",
+      "production_schedule": "Settimana produzione",
+      "processed": "Evasa",
+      "cancelled": "Annullata",
+      "refinement": "Rifinitura",
+      "dye": "Tintura"
+    }
+  },
+  "products": {
+    "product_code": "Codice Articolo",
+    "name": "Nome",
+    "internal_name": "Nome Interno",
+    "external_name": "Nome Esterno",
+    "vendor_code": "Codice Fornitore",
+    "product_note": "Note",
+    "exclude_mrp": "Escludi MRP",
+    "alarm": "Allarme",
+    "stock_quantity": "Giacenza",
+    "weight": "Peso",
+    "thickness": "Spessore",
+    "use_coefficient": "Coefficiente Utilizzo",
+    "bill_of_material_quantity": "Quantità distinta",
+    "last_cost": "Ultimo Costo",
+    "last_price": "Ultimo Prezzo",
+    "product_type": "Tipo Prodotto",
+    "supplier": "Fornitore",
+    "measurement_unit": "Unità di Misura",
+    "color": "Colore",
+    "weight_measurement": "Unità Misura Peso",
+    "thickness_measurement": "Unità Misura Spessore",
+    "contact": "Contatto",
+    "generals": "Generalità",
+    "technical": "Dati tecnici",
+    "product_category": "Categoria",
+    "categories": {
+      "code": "Codice",
+      "name": "Nome"
+    },
+    "types": {
+      "code": "Codice",
+      "name": "Nome"
+    },
+    "articles": {
+      "name": "Nome",
+      "code": "Codice",
+      "client": "Cliente",
+      "article_type": "Tipologia",
+      "color": "Colore",
+      "full_grain": "Pieno fiore",
+      "article_variation": "Variazione",
+      "thickness": "Spessore",
+      "print": "Stampa",
+      "note": "Note articolo",
+      "leather_type": "Tipo pellame",
+      "article_class": "Classe",
+      "selection": {
+        "name": "Nome",
+        "value": "Valore"
+      }
+    }
+  },
+  "shipping": {
+    "ddt_number": "Numero DDT",
+    "ddt_date": "Data DDT",
+    "ddt_start_date": "Data inizio trasporto",
+    "subcontractor": "Terzista",
+    "reason": "Causale trasporto",
+    "reasons": {
+      "name": "Nome causale",
+      "warehouse_movement_reason": "Causale magazzino"
+    },
+    "ddt_rows": {
+      "half_piece": "Mezze",
+      "whole_piece": "Intere",
+      "row_note": "Note riga",
+      "return": "Rientra lotto"
+    }
+  },
+  "processes": {
+    "scheduled_date": "Data programmazione",
+    "batch_code": "Codice lotto",
+    "batch_pieces": "Pezzi lotto",
+    "batch_quantity": "Quantità lotto",
+    "production_note": "Note di produzione",
+    "today": "Oggi",
+    "machine_name": "Macchinario"
   }
 }

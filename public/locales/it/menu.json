@@ -5,7 +5,7 @@
       "cap": "CAP",
       "nations": "Nazioni",
       "provinces": "Province",
-      "contacts": "Gestione Contatti",
+      "contacts": "Contatti",
       "seaports": "Porti Marittimi"
     },
     "leathers": {
@@ -22,12 +22,13 @@
     },
     "products": {
       "self": "Prodotti",
-      "grades": "Scelte",
+      "selection": "Scelte",
       "articles": "Articoli",
       "search": "Ricerca Prodotti",
-      "registry": "Anagrafica Prodotti",
+      "products": "Prodotti",
       "categories": "Categorie",
-      "article-types": "Tipologie Articoli"
+      "article-types": "Tipologie Articoli",
+      "products-types": "Tipologie Prodotti"
     },
     "orders": {
       "self": "Ordini",
@@ -47,11 +48,12 @@
     },
     "production": {
       "self": "Produzione",
-      "lots": "Gestione Lotti",
+      "batches": "Lotti",
       "recipes": "Ricette",
       "machinery": "Macchinari",
       "progress": "Avanzamento Produzione",
-      "processes": "Lavorazioni",
+      "processes": "Produzione",
+      "workings": "Lavorazioni",
       "bom": "Distinta Base",
       "batch-selection": "Scelta Partite",
       "pirovano-monitor": "Monitor Pirovano",
@@ -61,7 +63,11 @@
       "self": "DDT & Fatture",
       "delivery-notes": "Documenti di Trasporto",
       "invoices": "Fatturazione",
-      "search": "Ricerca Documenti"
+      "search": "Ricerca Documenti",
+      "deliveryNotes": "DeliveryNotes",
+      "reasons": "Ragioni di trasporto",
+      "subcontractingNotReturned": "SubcontractingNotReturned",
+      "subcontracting-not-returned": "Lotti conto lavoro"
     },
     "commercial": {
       "self": "Commerciale",
@@ -94,5 +100,6 @@
       "access-management": "Gestione Accessi",
       "logout": "Fine Sessione"
     }
-  }
+  },
+  "to-implement": "Da Implementare"
 }

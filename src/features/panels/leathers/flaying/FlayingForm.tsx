@@ -5,15 +5,26 @@ import {flayApi} from "@features/panels/leathers/flaying/api/flayApi.ts";
 import type {IFlay} from "@features/panels/leathers/flaying/api/IFlay.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IFlayingForm = Omit<IFlay, 'id'>;
 
-const FlayingForm = () => {
+const FlayingForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IFlayingStoreState>();
     const selectedFlayId = useStore((state) => state.uiState.selectedFlayId);
     const setUIState = useStore((state) => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedFlayId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = flayApi;
     const {data: flayItem} = useGetDetail(selectedFlayId);
@@ -23,11 +34,12 @@ const FlayingForm = () => {
 
     return (
         <GenericForm<IFlayingForm, IFlay, IFlayingStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedFlayId}
             entity={flayItem}
             emptyValues={{
                 code: '',
-                name: ''
+                name: initialName ?? ''
             }}
             mapEntityToForm={(x) => ({
                 code: x.code,
@@ -45,10 +57,12 @@ const FlayingForm = () => {
                     <TextFieldControlled<IFlayingForm>
                         name={"code"}
                         label={t("leathers.flay.code")}
+                        required
                     />
                     <TextFieldControlled<IFlayingForm>
                         name={"name"}
                         label={t("leathers.flay.name")}
+                        required
                     />
                 </>
             )}

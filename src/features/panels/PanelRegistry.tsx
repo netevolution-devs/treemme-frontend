@@ -13,6 +13,20 @@ import TypesPanel from "@features/panels/leathers/types/TypesPanel.tsx";
 import FlayingPanel from "@features/panels/leathers/flaying/FlayingPanel.tsx";
 import OriginsPanel from "@features/panels/leathers/origins/OriginsPanel.tsx";
 import TanningStagesPanel from "@features/panels/leathers/tanning-stages/TanningStagesPanel.tsx";
+import BatchesPanel from "@features/panels/production/batches/BatchesPanel.tsx";
+import CustomerOrdersPanel from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
+import ProductsPanel from "@features/panels/products/products/ProductsPanel.tsx";
+import ProductCategoriesPanel from "@features/panels/products/product-categories/ProductCategoriesPanel.tsx";
+import ProductTypesPanel from "@features/panels/products/product-types/ProductTypesPanel.tsx";
+import ArticlesPanel from "@features/panels/products/articles/ArticlesPanel.tsx";
+import MachineryPanel from "@features/panels/production/machinery/MachineryPanel.tsx";
+import ArticleTypesPanel from "@features/panels/products/article-types/ArticleTypesPanel.tsx";
+import DeliveryNotesPanel from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
+import ReasonsPanel from "@features/panels/shipping-invoicing/reasons/ReasonsPanel.tsx";
+import SelectionPanel from "@features/panels/products/selection/SelectionPanel.tsx";
+import SubcontractingNotReturnedPanel from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
+import ProcessesPanel from "@features/panels/production/processes/ProcessesPanel.tsx";
+import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -28,23 +42,54 @@ export type TPanelKind =
     | 'flaying'
     | 'origins'
     | 'tanningStages'
+    | 'batches'
+    | 'customerOrders'
+    | 'products'
+    | 'productCategories'
+    | 'productTypes'
+    | 'articles'
+    | 'machinery'
+    | 'articleTypes'
+    | 'deliveryNotes'
+    | 'reasons'
+    | 'selection'
+    | 'subcontractingNotReturned'
+    | 'processes'
+    | 'workings'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
 
 export const PANEL_REGISTRY: DockviewComponents = {
-    cap: () => <CapPanel />,
-    province: () => <ProvincePanel />,
-    nations: () => <NationsPanel />,
-    contacts: () => <ContactsPanel />,
-    seaports: () => <SeaportsPanel />,
-    weights: () => <WeightsPanel />,
-    species: () => <SpeciesPanel />,
-    leathers: () => <LeathersPanel />,
-    thicknesses: () => <ThicknessesPanel />,
-    types: () => <TypesPanel />,
-    flaying: () => <FlayingPanel />,
-    origins: () => <OriginsPanel />,
-    tanningStages: () => <TanningStagesPanel />,
+    // contacts
+    contacts:   (props) => <ContactsPanel {...props}/>,
+    cap:        () => <CapPanel/>,
+    province:   (props) => <ProvincePanel {...props}/>,
+    nations:    () => <NationsPanel/>,
+    seaports:   () => <SeaportsPanel/>,
+    // leathers
+    leathers:       () => <LeathersPanel/>,
+    weights:        (props) => <WeightsPanel {...props}/>,
+    species:        (props) => <SpeciesPanel {...props}/>,
+    thicknesses:    (props) => <ThicknessesPanel {...props}/>,
+    types:          (props) => <TypesPanel {...props}/>,
+    flaying:        (props) => <FlayingPanel {...props}/>,
+    tanningStages:  (props) => <TanningStagesPanel {...props}/>,
+    origins:        (props) => <OriginsPanel {...props}/>,
+    // production
+    batches: () => <BatchesPanel/>,
+    customerOrders: () => <CustomerOrdersPanel/>,
+    products: () => <ProductsPanel/>,
+    productCategories: () => <ProductCategoriesPanel/>,
+    productTypes: () => <ProductTypesPanel/>,
+    articles: () => <ArticlesPanel/>,
+    machinery: () => <MachineryPanel/>,
+    articleTypes: (props) => <ArticleTypesPanel {...props}/>,
+    deliveryNotes: () => <DeliveryNotesPanel />,
+    reasons: () => <ReasonsPanel />,
+    selection: () => <SelectionPanel />,
+    subcontractingNotReturned: () => <SubcontractingNotReturnedPanel />,
+    processes: () => <ProcessesPanel />,
+    workings: () => <WorkingsPanel />,
     "not-implemented": () => <>To implement</>,
 }

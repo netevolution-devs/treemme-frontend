@@ -107,8 +107,12 @@ export function WorkAreaAdapter(apiWorkArea: IApiWorkArea): IWorkArea {
     }
 }
 
-export function UserRoleArrayAdapter(apiUserRoles: string[]): IUserRole[] {
-    return apiUserRoles
-        .map(UserRoleAdapter)
+export function UserRoleArrayAdapter(apiUserRoles: (string | IApiUserRole)[]): IUserRole[] {
+    return (apiUserRoles ?? [])
+        .map(role => typeof role === 'string' ? UserRoleAdapter(role) : {
+            associationId: role.id,
+            role: RoleAdapter(role.role),
+            workArea: WorkAreaAdapter(role.work_area)
+        })
         .sort((a, b) => a.role.id - b.role.id);
 }

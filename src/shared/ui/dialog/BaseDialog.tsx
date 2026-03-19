@@ -19,6 +19,7 @@ interface BaseDialogProps {
     onClose?: () => void;
     minHeight?: number | string;
     minWidth?: number;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 function BaseDialogWrapper({
@@ -29,6 +30,7 @@ function BaseDialogWrapper({
                                onClose,
                                minHeight,
                                minWidth = 800,
+                               onKeyDown,
                            }: BaseDialogProps,
                            ref: ForwardedRef<IDialogActions>
 ) {
@@ -56,6 +58,7 @@ function BaseDialogWrapper({
             fullScreen={isSmallScreen || fullscreen}
             open={open}
             onClose={() => handleClose()}
+            onKeyDown={onKeyDown}
             slotProps={{
                 paper: {
                     sx: {

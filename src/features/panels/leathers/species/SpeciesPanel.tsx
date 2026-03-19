@@ -5,12 +5,14 @@ import SpeciesList from "@features/panels/leathers/species/SpeciesList.tsx";
 import SpeciesForm from "@features/panels/leathers/species/SpeciesForm.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import SpeciesContent from "@features/panels/leathers/species/SpeciesContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface ISpeciesStoreState extends IPanelUIState, ILeathersStoreState {
     selectedSpeciesId?: number | null;
 }
 
-const SpeciesPanel = () => {
+const SpeciesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: ISpeciesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -19,7 +21,7 @@ const SpeciesPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <SpeciesList/>
-            <SpeciesForm/>
+            <SpeciesForm {...props.params}/>
             <SpeciesContent/>
         </GenericPanel>
     )

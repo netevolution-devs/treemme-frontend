@@ -48,7 +48,6 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
         {
             accessorKey: "code",
             header: t("leathers.leather.code"),
-            size: 0
         },
         {
             accessorKey: "name",

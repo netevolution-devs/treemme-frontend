@@ -12,6 +12,9 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import {Box} from "@mui/material";
 import {originAreaApi} from "@features/panels/leathers/origins/api/origin-area/originAreaApi.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IOriginForm = Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment"> & {
     nation_id: number;
@@ -24,12 +27,20 @@ export type IOriginForm = Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp
     sea_shipment?: boolean;
 };
 
-const OriginsForm = () => {
+const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IOriginsStoreState>();
     const selectedOriginId = useStore(state => state.uiState.selectedOriginId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedOriginId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = originApi;
     const {data: origin} = useGetDetail(selectedOriginId);
@@ -43,6 +54,7 @@ const OriginsForm = () => {
 
     return (
         <GenericForm<IOriginForm, IOrigin, IOriginsStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedOriginId}
             entity={origin}
             emptyValues={{
@@ -80,6 +92,7 @@ const OriginsForm = () => {
                         <TextFieldControlled<IOriginForm>
                             name="code"
                             label={t("leathers.origin.code")}
+                            required
                         />
                         <NumberFieldControlled<IOriginForm>
                             name="trip_day"
@@ -99,6 +112,7 @@ const OriginsForm = () => {
                             label={t("nations.name")}
                             options={nations.map(n => ({ value: n.id, label: n.name }))}
                             minWidth={"49.6%"}
+                            required
                         />
                         <SelectFieldControlled<IOriginForm>
                             name="area_id"
@@ -107,6 +121,13 @@ const OriginsForm = () => {
                             minWidth={"50%"}
                         />
                     </Box>
+                    <SelectFieldControlled<IOriginForm>
+                        name="flay_id"
+                        label={t("leathers.origin.flay")}
+                        options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
+                        minWidth={"50%"}
+                        required
+                    />
                     <Box sx={{ display: 'flex', gap: 1 }}>
                         <NumberFieldControlled<IOriginForm>
                             name="psp_yield_coefficient"
@@ -127,12 +148,6 @@ const OriginsForm = () => {
                             step={0.001}
                         />
                     </Box>
-                    <SelectFieldControlled<IOriginForm>
-                        name="flay_id"
-                        label={t("leathers.origin.flay")}
-                        options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
-                        minWidth={"50%"}
-                    />
                 </>
             )}
         />

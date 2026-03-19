@@ -170,10 +170,83 @@ const baseTheme: ThemeOptions = {
             }
         },
 
+        MuiInputBase: {
+            styleOverrides: {
+                input: {
+                    paddingTop: '4px !important',
+                    paddingBottom: '4px !important',
+                }
+            }
+        },
+
+        MuiOutlinedInput: {
+            styleOverrides: {
+                input: {
+                    paddingTop: '4px !important',
+                    paddingBottom: '4px !important',
+                },
+                root: {
+                    '& .MuiInputAdornment-root': {
+                        marginTop: '0 !important',
+                        marginBottom: '0 !important',
+                        '& .MuiIconButton-root': {
+                            padding: '2px', // Reduce padding for icons in inputs (e.g., date picker)
+                            '& .MuiSvgIcon-root': {
+                                fontSize: '1.2rem', // Reduce icon size from default 1.5rem
+                            }
+                        }
+                    },
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        '& legend': {
+                            fontSize: '0.7em',
+                        }
+                    }
+                }
+            }
+        },
+
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    transform: 'translate(14px, 5px) scale(1)',
+                    '&.MuiInputLabel-shrink': {
+                        transform: 'translate(14px, -9px) scale(0.75)',
+                    },
+                },
+                sizeSmall: {
+                    transform: 'translate(14px, 5px) scale(1)',
+                    '&.MuiInputLabel-shrink': {
+                        transform: 'translate(14px, -9px) scale(0.75)',
+                    },
+                }
+            }
+        },
+
+        MuiFormHelperText: {
+            styleOverrides: {
+                root: {
+                    marginTop: '0px',
+                    marginLeft: '4px',
+                    marginRight: '4px',
+                    lineHeight: '1',
+                    minHeight: '1em',
+                }
+            }
+        },
+
         MuiAutocomplete: {
             defaultProps: {
                 size: "small",
             },
+            styleOverrides: {
+                inputRoot: {
+                    paddingTop: '0px !important',
+                    paddingBottom: '0px !important',
+                    '& .MuiAutocomplete-input': {
+                        padding: '4px 4px !important',
+                    }
+                }
+            }
         },
 
         MuiListItem: {
@@ -192,7 +265,7 @@ const baseTheme: ThemeOptions = {
 
 const lightTheme: Theme = createTheme({
     shape: {
-        borderRadius: 8,
+        borderRadius: 4,
     },
     typography: {
         fontFamily: `'Noto Sans', sans-serif`,
@@ -285,7 +358,7 @@ const lightTheme: Theme = createTheme({
 
 const darkTheme: Theme = createTheme({
     shape: {
-        borderRadius: 8,
+        borderRadius: 4,
     },
     typography: {
         fontFamily: 'Noto Sans, sans-serif',

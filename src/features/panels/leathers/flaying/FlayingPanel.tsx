@@ -5,12 +5,14 @@ import FlayingList from "@features/panels/leathers/flaying/FlayingList.tsx";
 import FlayingForm from "@features/panels/leathers/flaying/FlayingForm.tsx";
 import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import FlayingContent from "@features/panels/leathers/flaying/FlayingContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IFlayingStoreState extends IPanelUIState, ILeathersStoreState {
     selectedFlayId?: number | null;
 }
 
-const FlayingPanel = () => {
+const FlayingPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IFlayingStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -19,7 +21,7 @@ const FlayingPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <FlayingList/>
-            <FlayingForm/>
+            <FlayingForm {...props.params}/>
             <FlayingContent/>
         </GenericPanel>
     )

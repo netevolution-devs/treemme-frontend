@@ -6,17 +6,28 @@ import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickn
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IThicknessForm = Omit<IThickness, "id" | "thickness_mm"> & {
     thickness_mm: number | null;
 };
 
-const ThicknessesForm = () => {
+const ThicknessesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IThicknessesStoreState>();
     const selectedThicknessId = useStore(state => state.uiState.selectedThicknessId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedThicknessId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = thicknessApi;
     const {data: thickness} = useGetDetail(selectedThicknessId);
@@ -26,10 +37,11 @@ const ThicknessesForm = () => {
 
     return (
         <GenericForm<IThicknessForm, IThickness, IThicknessesStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedThicknessId}
             entity={thickness}
             emptyValues={{
-                name: "",
+                name: initialName ?? '',
                 thickness_mm: null
             }}
             mapEntityToForm={(x) => ({
@@ -48,11 +60,13 @@ const ThicknessesForm = () => {
                     <TextFieldControlled<IThicknessForm>
                         name={"name"}
                         label={t("leathers.thickness.name")}
+                        required
                     />
                     <NumberFieldControlled<IThicknessForm>
                         name={"thickness_mm"}
                         label={t("leathers.thickness.mm")}
                         step={0.05}
+                        required
                     />
                 </>
             )}

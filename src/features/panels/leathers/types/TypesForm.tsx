@@ -8,17 +8,28 @@ import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessA
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {Box} from "@mui/material";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type ITypeForm = Omit<ILeatherType, "id" | "thickness"> & {
     thickness_id: number | null;
 };
 
-const TypesForm = () => {
+const TypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ITypesStoreState>();
     const selectedTypeId = useStore(state => state.uiState.selectedTypeId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedTypeId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = leatherTypeApi;
     const {data: type} = useGetDetail(selectedTypeId);
@@ -31,10 +42,11 @@ const TypesForm = () => {
 
     return (
         <GenericForm<ITypeForm, ILeatherType, ITypesStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedTypeId}
             entity={type}
             emptyValues={{
-                name: '',
+                name: initialName ?? '',
                 code: '',
                 thickness_id: null,
             }}
@@ -49,17 +61,19 @@ const TypesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedTypeId: null})}
-            validateBeforeSave={(v) => !!v.name && !!v.code}
+            validateBeforeSave={(v) => !!v.name && !!v.code && !!v.thickness_id}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', gap: 1}}>
                         <TextFieldControlled<ITypeForm>
                             name={"code"}
                             label={t("leathers.type.code")}
+                            required
                         />
                         <TextFieldControlled<ITypeForm>
                             name={"name"}
                             label={t("leathers.type.name")}
+                            required
                         />
                     </Box>
                     <SelectFieldControlled<ITypeForm>
@@ -69,6 +83,7 @@ const TypesForm = () => {
                             label: x.name,
                             value: x.id
                         })) || []}
+                        required
                     />
                 </>
             )}

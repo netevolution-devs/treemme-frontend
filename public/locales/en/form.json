@@ -49,5 +49,25 @@
       "title": "Update user",
       "description": "Update user information"
     }
+  },
+  "production": {
+    "machinery": {
+      "name": "Machinery name",
+      "prefix": "Prefix",
+      "batch_type": "Batch type"
+    }
+  },
+  "products": {
+    "articles": {
+      "code": "Code",
+      "client": "Client",
+      "article_type": "Type",
+      "color": "Color",
+      "full_grain": "Full grain",
+      "article_variation": "Variation",
+      "thickness": "Thickness",
+      "print": "Print",
+      "note": "Article note"
+    }
   }
 }
