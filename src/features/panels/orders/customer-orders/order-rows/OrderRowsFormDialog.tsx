@@ -172,7 +172,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 ]}
                 renderFields={() => (
                     <Stack gap={1}>
-                        <CurrencyWatcher currencies={currencies}/>
+                        <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_exchange"}/>
                         <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                             <SelectFieldControlled<IOrderRowForm>
                                 name="article_id"

@@ -6,19 +6,26 @@ interface ICurrencyWatcherProps {
     currencies: ICurrency[];
 }
 
-const CurrencyWatcher= ({currencies}: ICurrencyWatcherProps) => {
-    const {setValue} = useFormContext();
-    const currencyId = useWatch({name: 'currency_id'});
+interface ICurrencyWatcherProps {
+    currencies: ICurrency[];
+    exchangeFieldName: string;
+}
+
+const CurrencyWatcher = ({ currencies, exchangeFieldName }: ICurrencyWatcherProps) => {
+    const { setValue } = useFormContext();
+    const currencyId = useWatch({ name: 'currency_id' });
 
     useEffect(() => {
         if (currencyId) {
             const currency = currencies.find(c => c.id === currencyId);
-            if (currency) {
-                setValue('currency_change', currency.last_change?.change_value ?? 0);
-                setValue('currency_exchange', currency.last_change?.change_value ?? 0);
+
+            if (currency && currency.last_change) {
+                const newRate = currency.last_change.change_value ?? 0;
+
+                setValue(exchangeFieldName, newRate);
             }
         }
-    }, [currencyId, currencies, setValue]);
+    }, [currencyId, currencies, setValue, exchangeFieldName]);
 
     return null;
 };

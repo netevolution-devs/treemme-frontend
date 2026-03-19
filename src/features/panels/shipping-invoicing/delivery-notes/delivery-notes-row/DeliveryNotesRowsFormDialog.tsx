@@ -147,7 +147,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 renderFields={() => {
                     return (
                         <Stack gap={1}>
-                            <CurrencyWatcher currencies={currencies}/>
+                            <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_change"}/>
                             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                                 <TextFieldControlled<IDeliveryNoteRowForm>
                                     name="order_note"
