@@ -42,9 +42,9 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'productions'
     | 'batch_compositions'
 > & {
-    leather_id: number;
-    batch_type_id: number;
-    measurement_unit_id: number;
+    leather_id: number | null;
+    batch_type_id: number | null;
+    measurement_unit_id: number | null;
 };
 
 const BatchesForm = () => {
@@ -81,9 +81,9 @@ const BatchesForm = () => {
                 selectedId={selectedBatchId}
                 entity={batchItem}
                 emptyValues={{
-                    leather_id: 0,
-                    batch_type_id: 0,
-                    measurement_unit_id: 0,
+                    leather_id: null,
+                    batch_type_id: null,
+                    measurement_unit_id: null,
                     completed: false,
                     checked: false,
                     batch_date: dayjs(Date.now()).format('YYYY-MM-DD'),
@@ -97,9 +97,9 @@ const BatchesForm = () => {
                     pieces: 0,
                 }}
                 mapEntityToForm={(x) => ({
-                    leather_id: x.leather?.id as number,
-                    batch_type_id: x.batch_type.id,
-                    measurement_unit_id: x.measurement_unit.id,
+                    leather_id: x.leather?.id || null,
+                    batch_type_id: x.batch_type?.id || null,
+                    measurement_unit_id: x.measurement_unit?.id || null,
                     completed: x.completed,
                     checked: x.checked,
                     batch_date: x.batch_date,

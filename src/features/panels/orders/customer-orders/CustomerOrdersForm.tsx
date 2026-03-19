@@ -34,11 +34,11 @@ export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "shipment_condition"
     | "address"
 > & {
-    client_id: number;
-    payment_id?: number;
-    agent_id?: number;
-    shipment_condition_id?: number;
-    address_id?: number;
+    client_id: number | null;
+    payment_id?: number | null;
+    agent_id?: number | null;
+    shipment_condition_id?: number | null;
+    address_id?: number | null;
 };
 
 const FormFields = ({clients, payments, shipmentConditions, order, selectedCustomerOrderId}: {
@@ -264,10 +264,10 @@ const CustomerOrdersForm = () => {
             selectedId={selectedCustomerOrderId}
             entity={order}
             emptyValues={{
-                client_id: 0,
-                agent_id: 0,
-                address_id: 0,
-                shipment_condition_id: 0,
+                client_id: null,
+                agent_id: null,
+                address_id: null,
+                shipment_condition_id: null,
                 processed: false,
                 cancelled: false,
                 checked: false,
@@ -287,11 +287,11 @@ const CustomerOrdersForm = () => {
                 agent_order_date: "",
             } as ICustomerOrderForm}
             mapEntityToForm={(x) => ({
-                client_id: x.client?.id || 0,
-                agent_id: x.agent?.id,
-                address_id: x.address?.id,
-                shipment_condition_id: x.shipment_condition?.id,
-                payment_id: x.payment?.id,
+                client_id: x.client?.id || null,
+                agent_id: x.agent?.id || null,
+                address_id: x.address?.id || null,
+                shipment_condition_id: x.shipment_condition?.id || null,
+                payment_id: x.payment?.id || null,
                 processed: x.processed,
                 cancelled: x.cancelled,
                 checked: x.checked,

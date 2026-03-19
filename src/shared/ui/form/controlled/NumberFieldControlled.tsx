@@ -2,7 +2,8 @@ import { useTranslation } from "react-i18next";
 import { TextField, InputAdornment, Typography } from "@mui/material";
 import { Controller, type FieldValues, useFormContext, type Path, type PathValue, type RegisterOptions } from "react-hook-form";
 import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
-import type {ReactNode} from "react";
+import React, {type ReactNode} from "react";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
 
 interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     precision?: number;
@@ -100,7 +101,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                     onChange(toFixedString(num));
                                 }
                             } else if (displayValue === "-") {
-                                onChange("");
+                                onChange(null);
                             }
                             onBlur();
                         }}
@@ -111,7 +112,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                             if (val === "" || (min < 0 && val === "-") || regex.test(val)) {
                                 if (val !== "" && val !== "-" && max !== undefined && parseFloat(val) > max) return;
 
-                                onChange(val);
+                                onChange(val === "" ? null : val);
                             }
                         }}
                         placeholder={toFixedString(0)}
@@ -125,10 +126,8 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                             },
                             inputLabel: { shrink: (displayValue !== "" || !!startAdornment) || undefined },
                             formHelperText: {
-                                sx: {
-                                    textAlign: 'left',
-                                    fontFamily: 'monospace'
-                                }
+                                component: ({children}) =>
+                                    <ErrorFormHelperText isError={!!error} children={children}/>
                             },
                             input: {
                                 startAdornment: startAdornment ? (

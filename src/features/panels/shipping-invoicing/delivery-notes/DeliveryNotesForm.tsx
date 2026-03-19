@@ -13,8 +13,8 @@ import {Box} from "@mui/material";
 import dayjs from "dayjs";
 
 export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'ddt_rows'> & {
-    subcontractor_id: number;
-    reason_id: number;
+    subcontractor_id: number | null;
+    reason_id: number | null;
 };
 
 const DeliveryNotesForm = () => {
@@ -38,15 +38,15 @@ const DeliveryNotesForm = () => {
             selectedId={selectedDeliveryNoteId}
             entity={deliveryNote}
             emptyValues={{
-                subcontractor_id: 0,
-                reason_id: 0,
+                subcontractor_id: null,
+                reason_id: null,
                 ddt_number: "",
                 ddt_date: dayjs().format("YYYY-MM-DD"),
                 ddt_start_date: dayjs().format("YYYY-MM-DD"),
             }}
             mapEntityToForm={(x) => ({
-                subcontractor_id: x.subcontractor?.id || 0,
-                reason_id: x.reason?.id || 0,
+                subcontractor_id: x.subcontractor?.id || null,
+                reason_id: x.reason?.id || null,
                 ddt_number: x.ddt_number,
                 ddt_date: x.ddt_date,
                 ddt_start_date: x.ddt_start_date,

@@ -20,11 +20,11 @@ import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 export type IArticleForm = {
     code: string;
     full_grain: boolean;
-    client_id: number;
-    article_type_id: number;
+    client_id: number | null;
+    article_type_id: number | null;
     article_variation: string;
-    thickness_id: number;
-    print_id: number;
+    thickness_id: number | null;
+    print_id: number | null;
     note: string;
 }
 
@@ -67,21 +67,21 @@ const ArticlesForm = () => {
             emptyValues={{
                 code: '',
                 full_grain: false,
-                client_id: 0,
-                article_type_id: 0,
+                client_id: null,
+                article_type_id: null,
                 article_variation: '',
-                thickness_id: 0,
-                print_id: 0,
+                thickness_id: null,
+                print_id: null,
                 note: ''
             }}
             mapEntityToForm={(a) => ({
                 code: a.code,
                 full_grain: a.full_grain,
-                client_id: a.client?.id ?? 0,
-                article_type_id: a.article_type?.id ?? 0,
+                client_id: a.client?.id ?? null,
+                article_type_id: a.article_type?.id ?? null,
                 article_variation: a.article_variation ?? '',
-                thickness_id: a.thickness?.id ?? 0,
-                print_id: a.print?.id ?? 0,
+                thickness_id: a.thickness?.id ?? null,
+                print_id: a.print?.id ?? null,
                 note: a.note ?? ''
             })}
             create={(payload) => createArticle(payload)}
@@ -90,7 +90,7 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && v.client_id > 0 && v.article_type_id > 0}
+            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id}
             renderFields={() => <ArticlesFormFields 
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}

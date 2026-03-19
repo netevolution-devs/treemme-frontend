@@ -15,7 +15,7 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 export interface IBatchCompositionForm {
     pieces: number;
     // quantity: number;
-    father_batch_id: number;
+    father_batch_id: number | null;
     note?: string;
 }
 
@@ -46,13 +46,13 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 emptyValues={{
                     pieces: 0,
                     // quantity: 0,
-                    father_batch_id: 0,
+                    father_batch_id: null,
                     note: ''
                 }}
                 mapEntityToForm={() => ({
                     pieces: 0,
                     // quantity: 0,
-                    father_batch_id: 0,
+                    father_batch_id: null,
                     note: ''
                 })}
                 create={(data) => {
@@ -63,7 +63,7 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 validateBeforeSave={(v) =>
                     v.pieces > 0 &&
                     // v.quantity > 0 &&
-                    v.father_batch_id > 0
+                    !!v.father_batch_id
                 }
                 renderFields={() => (
                     <Box sx={{mb: 1}}>
