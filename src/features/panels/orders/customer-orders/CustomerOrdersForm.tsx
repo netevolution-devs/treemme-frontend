@@ -106,16 +106,19 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
                         name={"cancelled"}
                         label={t("orders.cancelled")}
+                        width={100}
                         disabled
                     />
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
                         name={"processed"}
                         label={t("orders.processed")}
+                        width={81}
                         disabled
                     />
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
                         name={"checked"}
                         label={t("orders.checked")}
+                        width={110}
                         disabled
                     />
                 </Box>
