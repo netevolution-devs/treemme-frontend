@@ -31,13 +31,17 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'batch' |
     'measurement_unit' |
     'currency' |
-    'selection'
+    'selection' |
+    'pieces' |
+    'quantity'
 > & {
-    batch_id: number;
-    measurement_unit_id: number;
+    batch_id: number | null;
+    measurement_unit_id: number | null;
     currency_id: number | null;
     selection_id: number | null;
     ddt_id: number;
+    pieces: number | null;
+    quantity: number | null;
 };
 
 
@@ -79,13 +83,13 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 selectedId={selectedDeliveryNoteRowId}
                 entity={deliveryNoteRow}
                 emptyValues={{
-                    batch_id: 0,
-                    measurement_unit_id: 0,
+                    batch_id: null,
+                    measurement_unit_id: null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
                     selection_id: null,
                     order_note: "",
-                    pieces: 0,
-                    quantity: 0,
+                    pieces: null,
+                    quantity: null,
                     price: null,
                     total_value: null,
                     currency_price: null,
@@ -98,8 +102,8 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     ddt_id: selectedDeliveryNoteId ?? 0
                 }}
                 mapEntityToForm={(x) => ({
-                    batch_id: x.batch.id,
-                    measurement_unit_id: x.measurement_unit.id,
+                    batch_id: x.batch?.id || null,
+                    measurement_unit_id: x.measurement_unit?.id || null,
                     currency_id: x.currency?.id ?? null,
                     selection_id: x.selection?.id ?? null,
                     order_note: x.order_note,
@@ -118,12 +122,20 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 })}
                 create={(payload) => createRow({
                     ...payload,
+                    batch_id: payload.batch_id as number,
+                    measurement_unit_id: payload.measurement_unit_id as number,
+                    pieces: payload.pieces as number,
+                    quantity: payload.quantity as number,
                     ddt_id: selectedDeliveryNoteId as number
                 } as IDeliveryNoteRowPayload)}
                 update={(id, payload) => updateRow({
                     id,
                     payload: {
                         ...payload,
+                        batch_id: payload.batch_id as number,
+                        measurement_unit_id: payload.measurement_unit_id as number,
+                        pieces: payload.pieces as number,
+                        quantity: payload.quantity as number,
                         ddt_id: selectedDeliveryNoteId as number
                     } as IDeliveryNoteRowPayload
                 })}
@@ -131,6 +143,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedDeliveryNoteRowId: null})}
+                validateBeforeSave={(v) => !!v.batch_id && !!v.measurement_unit_id && !!v.pieces && !!v.quantity}
                 renderFields={() => {
                     return (
                         <Stack gap={1}>

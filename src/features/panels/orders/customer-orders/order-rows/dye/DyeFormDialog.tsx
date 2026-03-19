@@ -42,7 +42,7 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 dialogRef={ref}
                 bypassConfirm
                 emptyValues={{
-                    quantity: 0,
+                    quantity: null as unknown as number,
                     scheduled_date: '',
                     machine_id: null
                 }}
@@ -60,7 +60,7 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
                     });
                 }}
                 isSaving={isPending}
-                validateBeforeSave={(v) => v.quantity > 0 && !!v.scheduled_date && !!v.machine_id}
+                validateBeforeSave={(v) => !!v.quantity && v.quantity > 0 && !!v.scheduled_date && !!v.machine_id}
                 renderFields={() => (
                     <>
                         <Box sx={{mb: 1}}>

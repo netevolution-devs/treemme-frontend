@@ -27,14 +27,16 @@ export type IOrderRowForm = Omit<IOrderRow,
     'measurement_unit' |
     'currency' |
     'client_order' |
-    'available_quantity'
+    'available_quantity' |
+    'quantity'
 > & {
     id?: number;
     // product_id: number;
-    article_id: number;
-    measurement_unit_id: number;
+    article_id: number | null;
+    measurement_unit_id: number | null;
     currency_id: number | null;
     client_order_id: number;
+    quantity: number | null;
 };
 
 const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -77,12 +79,12 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 entity={orderRow}
                 emptyValues={{
                     // product_id: 0,
-                    measurement_unit_id: 0,
+                    measurement_unit_id: null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
                     processed: false,
                     cancelled: false,
                     weight: null,
-                    quantity: 0,
+                    quantity: null,
                     price: null,
                     total_price: null,
                     currency_price: null,
@@ -94,7 +96,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     production_schedule: null,
                     delivery_date_request: null,
                     delivery_date_confirmed: null,
-                    article_id: 0,
+                    article_id: null,
                     client_order_id: selectedCustomerOrderId ?? 0
                 }}
                 mapEntityToForm={(x) => ({
@@ -121,12 +123,16 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 })}
                 create={(payload) => createRow({
                     ...payload,
+                    article_id: payload.article_id as number,
+                    measurement_unit_id: payload.measurement_unit_id as number,
                     client_order_id: selectedCustomerOrderId as number
                 })}
                 update={(id, payload) => updateRow({
                     id,
                     payload: {
                         ...payload,
+                        article_id: payload.article_id as number,
+                        measurement_unit_id: payload.measurement_unit_id as number,
                         client_order_id: selectedCustomerOrderId as number
                     }
                 })}
@@ -134,6 +140,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedOrderRowId: null})}
+                validateBeforeSave={(v) => !!v.article_id && !!v.measurement_unit_id && !!v.quantity}
                 renderFields={() => (
                     <Stack gap={1}>
                         <CurrencyWatcher currencies={currencies}/>

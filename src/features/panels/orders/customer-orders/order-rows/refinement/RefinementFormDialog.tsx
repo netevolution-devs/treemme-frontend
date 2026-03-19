@@ -34,7 +34,7 @@ const RefinementFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 dialogRef={ref}
                 bypassConfirm
                 emptyValues={{
-                    quantity: 0,
+                    quantity: null as unknown as number,
                     scheduled_date: '',
                 }}
                 mapEntityToForm={() => ({
@@ -49,7 +49,7 @@ const RefinementFormDialog = forwardRef<IDialogActions>((_, ref) => {
                     });
                 }}
                 isSaving={isPending}
-                validateBeforeSave={(v) => v.quantity > 0 && !!v.scheduled_date}
+                validateBeforeSave={(v) => !!v.quantity && v.quantity > 0 && !!v.scheduled_date}
                 renderFields={() => (
                     <Box sx={{mb: 1}}>
                         <NumberFieldControlled<IRefinementForm>
