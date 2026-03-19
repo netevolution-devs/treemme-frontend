@@ -5,6 +5,7 @@ import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
 
 interface FlagCheckBoxFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     width?: number;
+    disabled?: boolean;
 }
 
 const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
@@ -12,7 +13,8 @@ const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
                                                                            label,
                                                                            showHelperRow = false,
                                                                            width,
-                                                                       }: FlagCheckBoxFieldProps<TFieldValues>) => {
+                                                                           disabled: customDisabled = false,
+                                                                        }: FlagCheckBoxFieldProps<TFieldValues>) => {
     const {
         control,
         formState: { disabled }
@@ -32,7 +34,7 @@ const FlagCheckBoxFieldControlled = <TFieldValues extends FieldValues>({
                                         checked={!!value}
                                         onChange={(e) => onChange(e.target.checked)}
                                         onBlur={onBlur}
-                                        disabled={disabled}
+                                        disabled={disabled || customDisabled}
                                         size="small"
                                     />
                                 }

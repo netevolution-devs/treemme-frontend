@@ -133,7 +133,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedOrderRowId: null})}
                 renderFields={() => (
-                    <Stack gap={2}>
+                    <Stack gap={1}>
                         <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                             <SelectFieldControlled<IOrderRowForm>
                                 name="article_id"
@@ -144,10 +144,12 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                             <FlagCheckBoxFieldControlled<IOrderRowForm>
                                 name="processed"
                                 label={t("orders.row.processed")}
+                                disabled
                             />
                             <FlagCheckBoxFieldControlled<IOrderRowForm>
                                 name="cancelled"
                                 label={t("orders.row.cancelled")}
+                                disabled
                             />
                         </Box>
 
@@ -169,7 +171,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                             />
                         </Box>
 
-                        <Box sx={{display: 'flex', gap: 1}}>
+                        <Box sx={{display: 'flex', gap: 1, mb: 1.5}}>
                             <DateFieldControlled<IOrderRowForm>
                                 name="delivery_date_request"
                                 label={t("orders.row.delivery_date_request")}
@@ -222,16 +224,16 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                             />
                         </Box>
 
-                        <Box sx={{display: 'flex', gap: 1}}>
-                             <NumberFieldControlled<IOrderRowForm>
-                                name="shipment_schedule"
-                                label={t("orders.row.shipment_schedule")}
-                            />
-                             <NumberFieldControlled<IOrderRowForm>
-                                name="production_schedule"
-                                label={t("orders.row.production_schedule")}
-                            />
-                        </Box>
+                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+                        {/*     <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="shipment_schedule"*/}
+                        {/*        label={t("orders.row.shipment_schedule")}*/}
+                        {/*    />*/}
+                        {/*     <NumberFieldControlled<IOrderRowForm>*/}
+                        {/*        name="production_schedule"*/}
+                        {/*        label={t("orders.row.production_schedule")}*/}
+                        {/*    />*/}
+                        {/*</Box>*/}
                     </Stack>
                 )}
             />
