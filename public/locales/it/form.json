@@ -376,7 +376,7 @@
       "warehouse_movement_reason": "Causale magazzino"
     },
     "ddt_rows": {
-      "row": "Righe ddt",
+      "row": "Righe DDT",
       "half_piece": "Mezze",
       "whole_piece": "Intere",
       "row_note": "Note riga",
