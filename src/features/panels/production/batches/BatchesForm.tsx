@@ -1,6 +1,10 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
+import type {
+    IBatchesStoreFilter,
+    IBatchesStoreParams,
+    IBatchesStoreState
+} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchApi, type IBatchesPayload} from "@features/panels/production/batches/api/batchApi.ts";
 import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
@@ -18,11 +22,12 @@ import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog.tsx";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog.tsx";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -51,12 +56,13 @@ export type IBatchesForm = Omit<IBatch, 'id'
     pieces: number | null;
 };
 
-const BatchesForm = () => {
+const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IBatchesStoreState>();
+    const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
+    const setFilters = useStore((state) => state.setFilters);
 
     const {useGetDetail, usePost, usePut, useDelete} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
@@ -75,6 +81,13 @@ const BatchesForm = () => {
 
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
+
+    useEffect(() => {
+        if (extra) {
+            setUIState({selectedBatchId: extra.id});
+            setFilters({filterBatchCode: extra.batch_code});
+        }
+    }, [extra, setUIState, setFilters]);
 
     return (
         <>

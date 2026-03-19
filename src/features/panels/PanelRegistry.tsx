@@ -77,7 +77,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     tanningStages:  (props) => <TanningStagesPanel {...props}/>,
     origins:        (props) => <OriginsPanel {...props}/>,
     // production
-    batches: () => <BatchesPanel/>,
+    batches: (props) => <BatchesPanel {...props}/>,
     customerOrders: () => <CustomerOrdersPanel/>,
     products: () => <ProductsPanel/>,
     productCategories: () => <ProductCategoriesPanel/>,
