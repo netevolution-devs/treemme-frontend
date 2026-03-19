@@ -1,22 +1,8 @@
 import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
+import type {IContactForm} from "@features/panels/contacts/contacts/ContactsForm.tsx";
 
-interface IContactsPayload extends Omit<IContact, 'id'
-    | 'contact_title'
-    | 'contact_type'
-    | 'contact_addresses'
-    | 'contact_details'
-    | 'contact_agents'
-    | 'contact_subcontractors'
-    | 'tolerance_quantity'
-    | 'client_shipment_note'
-    | 'tolerance_start_days'
-    | 'specific_order_reference'
-    | 'agent_percentage'
-> {
-    contact_type_id: number,
-    contact_title_id: number,
-}
+type IContactsPayload = IContactForm;
 
 export const contactsApi = createPanelApi<IContact, IContactsPayload>({
     baseEndpoint: "/contact",
