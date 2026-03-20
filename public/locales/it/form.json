@@ -369,6 +369,8 @@
     "ddt_number": "Numero DDT",
     "ddt_date": "Data DDT",
     "ddt_start_date": "Data inizio trasporto",
+    "date_start": "Data inizio",
+    "date_end": "Data fine",
     "subcontractor": "Terzista",
     "reason": "Causale trasporto",
     "reasons": {

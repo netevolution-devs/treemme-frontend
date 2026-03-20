@@ -27,7 +27,7 @@ const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder 
 
     return (
         <Autocomplete<SelectFieldOption, false, true, false>
-            sx={{ minWidth: 200, width: "100%", mt: 0.3 }}
+            sx={{ minWidth: 200, width: "100%" }}
             options={options}
             value={selectedOption as SelectFieldOption}
             noOptionsText={t("common:search.no-options")}

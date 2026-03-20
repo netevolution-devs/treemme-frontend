@@ -14,6 +14,8 @@ export interface IDeliveryNotesStoreState extends IPanelUIState {
 
 export interface IDeliveryNotesStoreFilter {
     filterSubcontractorId?: number | null;
+    filterStartDate?: string;
+    filterEndDate?: string;
 }
 
 const DeliveryNotesPanel = () => {

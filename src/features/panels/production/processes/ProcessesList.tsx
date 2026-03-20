@@ -10,7 +10,7 @@ import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProcessesStoreState, IProcessStoreFilter} from "@features/panels/production/processes/ProcessesPanel.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import {Box, MenuItem} from "@mui/material";
+import {MenuItem} from "@mui/material";
 import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
@@ -110,14 +110,12 @@ const ProcessesList = () => {
                                 value={filterScheduledDate}
                                 onFilterChange={(val) => setFilters({filterScheduledDate: val as string})}
                             />,
-                            <Box sx={{height: "40px"}}>
-                                <CustomButton
-                                    label={t("processes.today")}
-                                    color={"primary"}
-                                    icon={""}
-                                    onClick={() => setTodayDate()}
-                                />
-                            </Box>
+                            <CustomButton
+                                label={t("processes.today")}
+                                color={"primary"}
+                                icon={""}
+                                onClick={() => setTodayDate()}
+                            />
                         ]}
                     />
                 )

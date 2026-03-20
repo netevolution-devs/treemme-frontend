@@ -13,6 +13,7 @@ import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter.tsx";
 
 const DeliveryNotesList = () => {
     const {t} = useTranslation(["form"]);
@@ -20,14 +21,19 @@ const DeliveryNotesList = () => {
     const {useStore} = usePanel<IDeliveryNotesStoreFilter, IDeliveryNotesStoreState>();
     const selectedDeliveryNoteId = useStore((state) => state.uiState.selectedDeliveryNoteId);
     const setUIState = useStore((state) => state.setUIState);
-    const setFilters = useStore((state) => state.setFilters);
+
     const filterSubcontractorId = useStore((state) => state.filters.filterSubcontractorId);
+    const filterStartDate = useStore((state) => state.filters.filterStartDate);
+    const filterEndDate = useStore((state) => state.filters.filterEndDate);
+    const setFilters = useStore((state) => state.setFilters);
 
     const queryParams = useMemo(() => cleanFilters(
         {
-            subcontractor_id: filterSubcontractorId,
+            subcontractor_id: filterSubcontractorId as number,
+            start_date: filterStartDate,
+            end_date: filterEndDate,
         }
-    ), [filterSubcontractorId]);
+    ), [filterSubcontractorId, filterStartDate, filterEndDate]);
 
     const {data: deliveryNotes = [], isLoading} = deliveryNoteApi.useGetList({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
@@ -61,6 +67,15 @@ const DeliveryNotesList = () => {
                                 value={filterSubcontractorId}
                                 options={subcontractors.map(s => ({value: s.id, label: s.name}))}
                                 onFilterChange={(value) => setFilters({filterSubcontractorId: value as number})}
+                            />,
+                            <DateFieldRangeFilter
+                                key={"f-date-range"}
+                                startValue={filterStartDate}
+                                endValue={filterEndDate}
+                                onStartFilterChange={(value) => setFilters({filterStartDate: value as string})}
+                                onEndFilterChange={(value) => setFilters({filterEndDate: value as string})}
+                                startLabel={t("shipping.date_start")}
+                                endLabel={t("shipping.date_end")}
                             />
                         ]}
                     />
