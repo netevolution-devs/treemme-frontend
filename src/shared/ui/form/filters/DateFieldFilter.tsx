@@ -4,6 +4,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import "dayjs/locale/it";
 import dayjs, {type Dayjs} from "dayjs";
+import {IconButton, InputAdornment} from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface DateFieldFilterProps extends Omit<DatePickerProps<boolean>, 'onChange' | 'value'> {
     value: string | undefined;
@@ -32,6 +34,12 @@ const DateFieldFilter = ({ value, onFilterChange, ...props }: DateFieldFilterPro
         return () => clearTimeout(handler);
     }, [localValue, onFilterChange, value]);
 
+    const handleClear = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setLocalValue(null);
+        onFilterChange(undefined);
+    };
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="it">
             <DatePicker
@@ -44,6 +52,28 @@ const DateFieldFilter = ({ value, onFilterChange, ...props }: DateFieldFilterPro
                         size: "small",
                         fullWidth: true,
                         ...props.slotProps?.textField,
+                        InputProps: {
+                            endAdornment: (
+                                <>
+                                    <InputAdornment
+                                        position="end"
+                                        sx={{
+                                            visibility: localValue ? "visible" : "hidden",
+                                            pointerEvents: localValue ? "auto" : "none",
+                                        }}
+                                    >
+                                        <IconButton
+                                            aria-label="clear filter"
+                                            onClick={handleClear}
+                                            edge="end"
+                                            size="small"
+                                        >
+                                            <ClearIcon fontSize="small" />
+                                        </IconButton>
+                                    </InputAdornment>
+                                </>
+                            ),
+                        },
                         sx: {
                             "& .MuiPickersInputBase-root": {
                                 paddingTop: "0 !important",
