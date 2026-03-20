@@ -14,6 +14,7 @@ import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter.tsx";
+import dayjs from "dayjs";
 
 const DeliveryNotesList = () => {
     const {t} = useTranslation(["form"]);
@@ -46,6 +47,11 @@ const DeliveryNotesList = () => {
         {
             accessorKey: "reason.name",
             header: t("shipping.reason"),
+        },
+        {
+            accessorKey: "ddt_date",
+            header: t("shipping.ddt_date"),
+            Cell: ({row}) => dayjs(row.original.ddt_date).format("DD/MM/YYYY"),
         }
     ], [t]);
 
