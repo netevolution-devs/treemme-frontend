@@ -15,7 +15,6 @@ import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {
     deliveryNoteRowApi,
-    type IDeliveryNoteRowPayload
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/deliveryNoteRowApi.ts";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
@@ -23,6 +22,7 @@ import {selectionApi} from "@features/panels/products/selection/api/selectionApi
 import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
+import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
 
 type Props = unknown;
 
@@ -33,7 +33,8 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'currency' |
     'selection' |
     'pieces' |
-    'quantity'
+    'quantity' |
+    'processing'
 > & {
     batch_id: number | null;
     measurement_unit_id: number | null;
@@ -42,9 +43,8 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     ddt_id: number;
     pieces: number | null;
     quantity: number | null;
+    processing_id: number | null;
 };
-
-
 
 const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {t} = useTranslation(["form"]);
@@ -70,6 +70,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: currencies = []} = currencyApi.useGetList();
     const {data: selections = []} = selectionApi.useGetList();
+    const {data: workings = []} = workingApi.useGetList();
 
     const currencyOptions = useMemo(() =>
             currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
@@ -99,7 +100,8 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     row_note: "",
                     whole_piece: null,
                     half_piece: 0,
-                    ddt_id: selectedDeliveryNoteId ?? 0
+                    ddt_id: selectedDeliveryNoteId ?? 0,
+                    processing_id: null,
                 }}
                 mapEntityToForm={(x) => ({
                     batch_id: x.batch?.id || null,
@@ -118,27 +120,11 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     row_note: x.row_note || "",
                     whole_piece: x.whole_piece,
                     half_piece: x.half_piece || 0,
-                    ddt_id: selectedDeliveryNoteId ?? 0
+                    ddt_id: selectedDeliveryNoteId ?? 0,
+                    processing_id: x.processing?.id ?? 0
                 })}
-                create={(payload) => createRow({
-                    ...payload,
-                    batch_id: payload.batch_id as number,
-                    measurement_unit_id: payload.measurement_unit_id as number,
-                    pieces: payload.pieces as number,
-                    quantity: payload.quantity as number,
-                    ddt_id: selectedDeliveryNoteId as number
-                } as IDeliveryNoteRowPayload)}
-                update={(id, payload) => updateRow({
-                    id,
-                    payload: {
-                        ...payload,
-                        batch_id: payload.batch_id as number,
-                        measurement_unit_id: payload.measurement_unit_id as number,
-                        pieces: payload.pieces as number,
-                        quantity: payload.quantity as number,
-                        ddt_id: selectedDeliveryNoteId as number
-                    } as IDeliveryNoteRowPayload
-                })}
+                create={(payload) => createRow(payload)}
+                update={(id, payload) => updateRow({id, payload})}
                 remove={(id) => deleteRow(id)}
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
@@ -179,6 +165,11 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                     name="selection_id"
                                     label={t("production.batch.selection")}
                                     options={selections.map(s => ({value: s.id, label: s.name}))}
+                                />
+                                <SelectFieldControlled<IDeliveryNoteRowForm>
+                                    name="processing_id"
+                                    label={t("production.batch.workings")}
+                                    options={workings.map(s => ({value: s.id, label: s.name}))}
                                 />
                             </Box>
 
