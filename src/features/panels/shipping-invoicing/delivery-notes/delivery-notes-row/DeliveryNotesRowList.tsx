@@ -6,16 +6,19 @@ import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IDeliveryNoteRow} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
-import {Typography} from "@mui/material";
+import {MenuItem, Typography} from "@mui/material";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import DeliveryNotesRowsFormDialog
     from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsFormDialog.tsx";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 
 const DeliveryNotesRowList = () => {
     const {t} = useTranslation(["form"]);
+    const addPanel = useDockviewStore(state => state.addPanel);
 
     const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
     const selectedDeliveryNoteId = useStore((state) => state.uiState.selectedDeliveryNoteId);
@@ -63,6 +66,26 @@ const DeliveryNotesRowList = () => {
                 onRowSelect={(id) => setUIState({selectedDeliveryNoteRowId: id as number})}
                 onRowDoubleClick={() => openDialog(editRowDialogRef)}
                 additionalOptions={{
+                    enableRowActions: true,
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
+                        <MenuItem key={"view_batch"} onClick={() => {
+                            addPanel({
+                                id: `batches:${crypto.randomUUID()}`,
+                                title: t("menu:menu.production.batches"),
+                                component: 'batches',
+                                params: {
+                                    extra: {
+                                        id: row.original.batch.id,
+                                        batch_code: row.original.batch.batch_code
+                                    }
+                                }
+                            });
+                            closeMenu();
+                        }}>
+                            <VisibilityIcon color={"primary"} sx={{mr: 1}} />
+                            {t("processes.view_batch")}
+                        </MenuItem>
+                    ],
                     enableTopToolbar: true,
                     renderTopToolbar:
                         <ListToolbar
