@@ -90,7 +90,7 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id}
+            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation}
             renderFields={() => <ArticlesFormFields 
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}
@@ -170,12 +170,14 @@ const ArticlesFormFields = ({
             <TextFieldControlled<IArticleForm>
                 name="article_variation"
                 label={t("products.articles.article_variation")}
+                required
             />
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <SelectFieldControlled<IArticleForm>
                     name="thickness_id"
                     label={t("products.articles.thickness")}
                     options={thicknessOptions}
+                    required
                 />
                 <SelectFieldControlled<IArticleForm>
                     name="print_id"

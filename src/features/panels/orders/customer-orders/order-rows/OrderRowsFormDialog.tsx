@@ -183,7 +183,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                             <SelectFieldControlled<IOrderRowForm>
                                 name="article_id"
                                 label={t("orders.row.article")}
-                                options={articles?.map(p => ({value: p.id, label: p.name})) || []}
+                                options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
                                 required
                             />
                             <FlagCheckBoxFieldControlled<IOrderRowForm>
