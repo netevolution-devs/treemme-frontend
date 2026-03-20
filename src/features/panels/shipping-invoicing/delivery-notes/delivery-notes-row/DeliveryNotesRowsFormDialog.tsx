@@ -72,6 +72,11 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
     const {data: selections = []} = selectionApi.useGetList();
     const {data: workings = []} = workingApi.useGetList();
 
+    const batchesList = [
+        deliveryNoteRow?.batch,
+        ...batches
+    ].filter((x) => x !== undefined);
+
     const currencyOptions = useMemo(() =>
             currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
         [currencies]);
@@ -145,7 +150,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                 <SelectFieldControlled<IDeliveryNoteRowForm>
                                     name="batch_id"
                                     label={t("production.batch.batch_code")}
-                                    options={batches.map(b => ({value: b.id, label: b.batch_code}))}
+                                    options={batchesList.map(b => ({value: b.id, label: b.batch_code}))}
                                     required
                                 />
                                 <NumberFieldControlled<IDeliveryNoteRowForm>
