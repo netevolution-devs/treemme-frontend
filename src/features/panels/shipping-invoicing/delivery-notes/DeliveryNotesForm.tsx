@@ -26,7 +26,10 @@ const Fields = ({subcontractors, clients, reasons}: {subcontractors: IContact[],
     const {t} = useTranslation(["form"]);
     const reasonId = useWatch<IDeliveryNoteForm>({name: 'reason_id'});
     const selectedReason = reasons.find(r => r.id === reasonId);
-    const isSale = selectedReason?.name.toLowerCase() === 'Vendita';
+    const isSale = selectedReason?.name.toLowerCase() === 'vendita';
+
+    const contactLabel = isSale ? t("orders.client") : t("shipping.subcontractor");
+    const combinedLabel = `${t("shipping.subcontractor")} / ${t("orders.client")}`;
 
     return (
         <>
@@ -54,20 +57,25 @@ const Fields = ({subcontractors, clients, reasons}: {subcontractors: IContact[],
                     options={reasons.map(r => ({value: r.id, label: r.name}))}
                     required
                 />
-                {isSale ? (
+                {!reasonId ? (
+                    <SelectFieldControlled<IDeliveryNoteForm>
+                        name="subcontractor_id"
+                        label={combinedLabel}
+                        options={[]}
+                        deactivated
+                    />
+                ) : isSale ? (
                     <SelectFieldControlled<IDeliveryNoteForm>
                         name="client_id"
-                        label={t("orders.client")}
+                        label={contactLabel}
                         options={clients.map(c => ({value: c.id, label: c.name}))}
-                        deactivated={!reasonId}
                         required
                     />
                 ) : (
                     <SelectFieldControlled<IDeliveryNoteForm>
                         name="subcontractor_id"
-                        label={t("shipping.subcontractor")}
+                        label={contactLabel}
                         options={subcontractors.map(s => ({value: s.id, label: s.name}))}
-                        deactivated={!reasonId}
                         required
                     />
                 )}
