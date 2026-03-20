@@ -44,6 +44,7 @@ const DateFieldRangeFilter = ({
                 label={endLabel}
                 value={endValue}
                 onFilterChange={handleEndChange}
+                minDate={startValue ? dayjs(startValue) : dayjs().subtract(30, 'year')}
             />
         </>
     );
