@@ -367,6 +367,7 @@
     }
   },
   "shipping": {
+    "subcontractor_clients": "Terzista/Cliente",
     "ddt_number": "Numero DDT",
     "ddt_date": "Data DDT",
     "ddt_start_date": "Data inizio trasporto",

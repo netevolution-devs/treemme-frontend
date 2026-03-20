@@ -38,6 +38,14 @@ const DeliveryNotesList = () => {
 
     const {data: deliveryNotes = [], isLoading} = deliveryNoteApi.useGetList({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
+    const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
+
+    const contacts = [
+            ...subcontractors,
+            ...clients
+        ].filter(
+        (contact, index, self) => self.findIndex(c => c.id === contact.id) === index
+    );
 
     const columns = useMemo<MRT_ColumnDef<IDeliveryNote>[]>(() => [
         {
@@ -73,9 +81,9 @@ const DeliveryNotesList = () => {
                         filters={[
                             <SelectFieldFilter
                                 key={"f-subcontractor"}
-                                label={t("shipping.subcontractor")}
+                                label={t("shipping.subcontractor_clients")}
                                 value={filterSubcontractorId}
-                                options={subcontractors.map(s => ({value: s.id, label: s.name}))}
+                                options={contacts.map(s => ({value: s.id, label: s.name}))}
                                 onFilterChange={(value) => setFilters({filterSubcontractorId: value as number})}
                             />,
                             <DateFieldRangeFilter
