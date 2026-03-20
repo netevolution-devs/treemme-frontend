@@ -25,6 +25,7 @@ import RefinementFormDialog
     from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
 
 type Props = unknown;
 
@@ -35,7 +36,8 @@ export type IOrderRowForm = Omit<IOrderRow,
     'currency' |
     'client_order' |
     'available_quantity' |
-    'quantity'
+    'quantity' |
+    'selection'
 > & {
     id?: number;
     // product_id: number;
@@ -44,6 +46,7 @@ export type IOrderRowForm = Omit<IOrderRow,
     currency_id: number | null;
     client_order_id: number;
     quantity: number | null;
+    selection_id: number | null;
 };
 
 const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -72,6 +75,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {data: articles = []} = articleApi.useGetList({queryParams: {client: order?.client.id as number}});
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: currencies = []} = currencyApi.useGetList();
+    const {data: selections = []} = selectionApi.useGetList();
 
     const currencyOptions = useMemo(() =>
         currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
@@ -110,7 +114,8 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     delivery_date_request: null,
                     delivery_date_confirmed: null,
                     article_id: null,
-                    client_order_id: selectedCustomerOrderId ?? 0
+                    client_order_id: selectedCustomerOrderId ?? 0,
+                    selection_id: null,
                 }}
                 mapEntityToForm={(x) => ({
                     // product_id: x.product.id,
@@ -132,7 +137,8 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     delivery_date_request: x.delivery_date_request,
                     delivery_date_confirmed: x.delivery_date_confirmed,
                     article_id: x.article.id,
-                    client_order_id: selectedCustomerOrderId ?? 0
+                    client_order_id: selectedCustomerOrderId ?? 0,
+                    selection_id: x.selection.id ?? null,
                 })}
                 create={(payload) => createRow({
                     ...payload,
@@ -191,6 +197,12 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                                 disabled
                             />
                         </Box>
+
+                        <SelectFieldControlled<IOrderRowForm>
+                            name={"selection_id"}
+                            label={t("orders.row.selection")}
+                            options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+                        />
 
                         <Box sx={{display: 'flex', gap: 1}}>
                             <SelectFieldControlled<IOrderRowForm>

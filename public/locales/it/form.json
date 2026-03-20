@@ -289,6 +289,7 @@
     "destination": "Destinazione",
     "rows": "Righe ordine",
     "row": {
+      "selection": "Scelta",
       "article": "Articolo",
       "product": "Prodotto",
       "measurement_unit": "Unità di misura",
