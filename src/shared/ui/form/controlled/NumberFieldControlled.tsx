@@ -124,7 +124,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                 max: max,
                                 inputMode: "decimal"
                             },
-                            inputLabel: { shrink: (displayValue !== "" || !!startAdornment) || undefined },
+                            inputLabel: { shrink: (displayValue !== "" || !!startAdornment) },
                             formHelperText: {
                                 component: ({children}) =>
                                     <ErrorFormHelperText isError={!!error} children={children}/>
