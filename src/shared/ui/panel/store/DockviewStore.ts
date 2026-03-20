@@ -27,6 +27,9 @@ export const useDockviewStore = create<DockviewState>((set, get) => ({
             const existingPanel = panels.find(p => p.id.startsWith(`${config.component}:`));
 
             if (existingPanel) {
+                if (config.params) {
+                    existingPanel.api.updateParameters(config.params);
+                }
                 existingPanel.focus();
             } else {
                 api.addPanel(config);
