@@ -138,6 +138,17 @@ const baseTheme: ThemeOptions = {
             },
         },
 
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    boxShadow: 'none',
+                    '&:hover': {
+                        boxShadow: 'none',
+                    },
+                }
+            }
+        },
+
         MuiIconButton: {
             styleOverrides: {
                 root: {
