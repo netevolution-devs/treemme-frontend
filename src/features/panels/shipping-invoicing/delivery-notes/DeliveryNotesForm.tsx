@@ -11,15 +11,72 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import {Box} from "@mui/material";
 import dayjs from "dayjs";
+import {useWatch} from "react-hook-form";
 
-export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'ddt_rows'> & {
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
+import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason.ts";
+
+export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'ddt_rows' | 'client'> & {
     subcontractor_id: number | null;
+    client_id: number | null;
     reason_id: number | null;
 };
 
-const DeliveryNotesForm = () => {
+const Fields = ({subcontractors, clients, reasons}: {subcontractors: IContact[], clients: IContact[], reasons: IDeliveryReason[]}) => {
     const {t} = useTranslation(["form"]);
+    const reasonId = useWatch<IDeliveryNoteForm>({name: 'reason_id'});
+    const selectedReason = reasons.find(r => r.id === reasonId);
+    const isSale = selectedReason?.name.toLowerCase() === 'Vendita';
 
+    return (
+        <>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldControlled<IDeliveryNoteForm>
+                    name="ddt_number"
+                    label={t("shipping.ddt_number")}
+                    required
+                />
+                <DateFieldControlled<IDeliveryNoteForm>
+                    name="ddt_date"
+                    label={t("shipping.ddt_date")}
+                    required
+                />
+                <DateFieldControlled<IDeliveryNoteForm>
+                    name="ddt_start_date"
+                    label={t("shipping.ddt_start_date")}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <SelectFieldControlled<IDeliveryNoteForm>
+                    name="reason_id"
+                    label={t("shipping.reason")}
+                    options={reasons.map(r => ({value: r.id, label: r.name}))}
+                    required
+                />
+                {isSale ? (
+                    <SelectFieldControlled<IDeliveryNoteForm>
+                        name="client_id"
+                        label={t("orders.client")}
+                        options={clients.map(c => ({value: c.id, label: c.name}))}
+                        deactivated={!reasonId}
+                        required
+                    />
+                ) : (
+                    <SelectFieldControlled<IDeliveryNoteForm>
+                        name="subcontractor_id"
+                        label={t("shipping.subcontractor")}
+                        options={subcontractors.map(s => ({value: s.id, label: s.name}))}
+                        deactivated={!reasonId}
+                        required
+                    />
+                )}
+            </Box>
+        </>
+    );
+};
+
+const DeliveryNotesForm = () => {
     const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
     const selectedDeliveryNoteId = useStore(state => state.uiState.selectedDeliveryNoteId);
     const setUIState = useStore(state => state.setUIState);
@@ -31,6 +88,7 @@ const DeliveryNotesForm = () => {
     const {mutateAsync: deleteDeliveryNote, isPending: isDeleting} = useDelete();
 
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: 'subcontractor'}});
+    const {data: clients = []} = contactsApi.useGetList({queryParams: {type: 'client'}});
     const {data: reasons = []} = deliveryReasonApi.useGetList();
 
     return (
@@ -39,6 +97,7 @@ const DeliveryNotesForm = () => {
             entity={deliveryNote}
             emptyValues={{
                 subcontractor_id: null,
+                client_id: null,
                 reason_id: null,
                 ddt_number: "",
                 ddt_date: dayjs().format("YYYY-MM-DD"),
@@ -46,6 +105,7 @@ const DeliveryNotesForm = () => {
             }}
             mapEntityToForm={(x) => ({
                 subcontractor_id: x.subcontractor?.id || null,
+                client_id: x.client?.id || null,
                 reason_id: x.reason?.id || null,
                 ddt_number: x.ddt_number,
                 ddt_date: x.ddt_date,
@@ -58,42 +118,8 @@ const DeliveryNotesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedDeliveryNoteId: null})}
-            validateBeforeSave={(v) => !!v.subcontractor_id && !!v.reason_id && !!v.ddt_number && !!v.ddt_date}
-            renderFields={() => (
-                <>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <TextFieldControlled<IDeliveryNoteForm>
-                            name="ddt_number"
-                            label={t("shipping.ddt_number")}
-                            required
-                        />
-                        <DateFieldControlled<IDeliveryNoteForm>
-                            name="ddt_date"
-                            label={t("shipping.ddt_date")}
-                            required
-                        />
-                        <DateFieldControlled<IDeliveryNoteForm>
-                            name="ddt_start_date"
-                            label={t("shipping.ddt_start_date")}
-                        />
-                    </Box>
-
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<IDeliveryNoteForm>
-                            name="subcontractor_id"
-                            label={t("shipping.subcontractor")}
-                            options={subcontractors.map(s => ({value: s.id, label: s.name}))}
-                            required
-                        />
-                        <SelectFieldControlled<IDeliveryNoteForm>
-                            name="reason_id"
-                            label={t("shipping.reason")}
-                            options={reasons.map(r => ({value: r.id, label: r.name}))}
-                            required
-                        />
-                    </Box>
-                </>
-            )}
+            validateBeforeSave={(v) => (!!v.subcontractor_id || !!v.client_id) && !!v.reason_id && !!v.ddt_number && !!v.ddt_date}
+            renderFields={() => <Fields subcontractors={subcontractors} clients={clients} reasons={reasons} />}
         />
     )
 };
