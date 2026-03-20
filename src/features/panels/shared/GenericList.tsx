@@ -88,6 +88,7 @@ const GenericList = <TData extends BaseEntity>({
                         padding: 0,
                         width: '50px',
                         maxWidth: '50px',
+                        borderBottom: 'none',
                     },
                 },
             },
