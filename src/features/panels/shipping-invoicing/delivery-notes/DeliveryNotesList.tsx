@@ -49,6 +49,10 @@ const DeliveryNotesList = () => {
             header: t("shipping.reason"),
         },
         {
+            accessorKey: "subcontractor.name",
+            header: t("shipping.subcontractor"),
+        },
+        {
             accessorKey: "ddt_date",
             header: t("shipping.ddt_date"),
             Cell: ({row}) => dayjs(row.original.ddt_date).format("DD/MM/YYYY"),
