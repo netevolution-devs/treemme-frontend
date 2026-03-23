@@ -1,5 +1,6 @@
 import {SvgIcon, type SvgIconProps} from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
 /**
  * Custom SVG Icons for Leather ERP/Software.
@@ -9,9 +10,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 
 /** 1. CONTACTS: Stylized person/address book icon */
 export const TMContactsIcon = (props: SvgIconProps) => (
-    <SvgIcon {...props}>
-        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-    </SvgIcon>
+    <PeopleAltIcon {...props}/>
 );
 
 /** 2. LEATHER (PELLAMI): Custom hide/skin shape specific to the industry */
