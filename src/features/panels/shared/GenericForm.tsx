@@ -167,12 +167,12 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             methods.reset(mapEntityToForm(entity));
             if (dialogMode) return;
             setFormState('selected');
-        } else if (selectedId === null) {
+        } else if (selectedId === null || selectedId === undefined) {
             methods.reset(emptyValues);
             if (dialogMode) return;
             setFormState('cancel');
         }
-    }, [selectedId, entity]);
+    }, [selectedId, entity, emptyValues]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
