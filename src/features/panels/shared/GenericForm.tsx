@@ -152,10 +152,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 if (res) {
                     onSuccess?.(res as TEntity);
                     onCreateSuccess?.(res.id);
-                    if (!onClearSelection) {
-                        methods.reset(emptyValues);
-                        setFormState('init');
-                    }
+                    methods.reset(emptyValues);
+                    setFormState('init');
                 }
             }
         } finally {
