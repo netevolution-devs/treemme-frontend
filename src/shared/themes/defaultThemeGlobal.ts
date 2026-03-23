@@ -3,9 +3,9 @@ import {createTheme, type Theme, type ThemeOptions} from '@mui/material/styles';
 
 const getPrimaryColors = () => {
     return {
-        main: '#3c8fd3',
+        main: '#2b98ea',
         dark: '#41689b',
-        light: '#a8dbea',
+        light: '#5590c3',
     };
 };
 
@@ -43,13 +43,7 @@ const baseTheme: ThemeOptions = {
             }),
         },
 
-        // Global handling for long text in Typography
         MuiTypography: {
-            defaultProps: {
-                variantMapping: {
-                    // You can also customize variant mappings here if needed
-                },
-            },
             styleOverrides: {
                 root: {
                     // Prefer breaking long words anywhere to avoid layout overflow
@@ -144,6 +138,17 @@ const baseTheme: ThemeOptions = {
             },
         },
 
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    boxShadow: 'none',
+                    '&:hover': {
+                        boxShadow: 'none',
+                    },
+                }
+            }
+        },
+
         MuiIconButton: {
             styleOverrides: {
                 root: {
@@ -159,10 +164,10 @@ const baseTheme: ThemeOptions = {
         },
 
         MuiTextField: {
-            // defaultProps: {
-            //     variant: "outlined",
-            //     size: "small",
-            // },
+            defaultProps: {
+                variant: "outlined",
+                size: "small",
+            },
             styleOverrides: {
                 root: (props) => ({
                     width: "100%",
@@ -176,17 +181,84 @@ const baseTheme: ThemeOptions = {
             }
         },
 
-        // MuiAutocomplete: {
-        //     defaultProps: {
-        //         size: "small",
-        //     },
-        // },
+        MuiInputBase: {
+            styleOverrides: {
+                input: {
+                    paddingTop: '4px !important',
+                    paddingBottom: '4px !important',
+                }
+            }
+        },
 
-        // MuiDateField: {
-        //     defaultProps: {
-        //         size: "small",
-        //     },
-        // },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                input: {
+                    paddingTop: '4px !important',
+                    paddingBottom: '4px !important',
+                },
+                root: {
+                    '& .MuiInputAdornment-root': {
+                        marginTop: '0 !important',
+                        marginBottom: '0 !important',
+                        '& .MuiIconButton-root': {
+                            padding: '2px', // Reduce padding for icons in inputs (e.g., date picker)
+                            '& .MuiSvgIcon-root': {
+                                fontSize: '1.2rem', // Reduce icon size from default 1.5rem
+                            }
+                        }
+                    },
+                    '& .MuiOutlinedInput-notchedOutline': {
+                        '& legend': {
+                            fontSize: '0.7em',
+                        }
+                    }
+                }
+            }
+        },
+
+        MuiInputLabel: {
+            styleOverrides: {
+                root: {
+                    transform: 'translate(14px, 5px) scale(1)',
+                    '&.MuiInputLabel-shrink': {
+                        transform: 'translate(14px, -9px) scale(0.75)',
+                    },
+                },
+                sizeSmall: {
+                    transform: 'translate(14px, 5px) scale(1)',
+                    '&.MuiInputLabel-shrink': {
+                        transform: 'translate(14px, -9px) scale(0.75)',
+                    },
+                }
+            }
+        },
+
+        MuiFormHelperText: {
+            styleOverrides: {
+                root: {
+                    marginTop: '0px',
+                    marginLeft: '4px',
+                    marginRight: '4px',
+                    lineHeight: '1',
+                    minHeight: '1em',
+                }
+            }
+        },
+
+        MuiAutocomplete: {
+            defaultProps: {
+                size: "small",
+            },
+            styleOverrides: {
+                inputRoot: {
+                    paddingTop: '0px !important',
+                    paddingBottom: '0px !important',
+                    '& .MuiAutocomplete-input': {
+                        padding: '4px 4px !important',
+                    }
+                }
+            }
+        },
 
         MuiListItem: {
             defaultProps: {
@@ -204,7 +276,7 @@ const baseTheme: ThemeOptions = {
 
 const lightTheme: Theme = createTheme({
     shape: {
-        borderRadius: 8,
+        borderRadius: 4,
     },
     typography: {
         fontFamily: `'Noto Sans', sans-serif`,
@@ -212,6 +284,30 @@ const lightTheme: Theme = createTheme({
     palette: {
         mode: 'light',
         primary: getPrimaryColors(),
+        success: {
+            main: '#2e7d32',
+            light: '#4caf50',
+            dark: '#1b5e20',
+            contrastText: '#ffffff',
+        },
+        error: {
+            main: '#d32f2f',
+            light: '#ef5350',
+            dark: '#c62828',
+            contrastText: '#ffffff',
+        },
+        warning: {
+            main: '#ed6c02',
+            light: '#ff9800',
+            dark: '#e65100',
+            contrastText: '#ffffff',
+        },
+        info: {
+            main: '#0288d1',
+            light: '#03a9f4',
+            dark: '#01579b',
+            contrastText: '#ffffff',
+        },
         background: {
             default: '#f7f8fa',
             paper: '#ffffff',
@@ -228,7 +324,7 @@ const lightTheme: Theme = createTheme({
         },
         tableColors: {
             tableRow1: '#f7f8fa',
-            tableRow2: '#ffffff',
+            tableRow2: '#ededed',
             border: '#e2e8f0',
             hover: 'rgba(2,6,23,0.04)',
         },
@@ -263,7 +359,6 @@ const lightTheme: Theme = createTheme({
                 {
                     props: {variant: "outlined"},
                     style: {
-                        color: "inherit",
                         borderColor: "inherit",
                     }
                 }
@@ -274,7 +369,7 @@ const lightTheme: Theme = createTheme({
 
 const darkTheme: Theme = createTheme({
     shape: {
-        borderRadius: 8,
+        borderRadius: 4,
     },
     typography: {
         fontFamily: 'Noto Sans, sans-serif',

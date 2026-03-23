@@ -6,11 +6,11 @@ import ProfilePage from "@features/profile/ui/default/ProfilePage.tsx";
 export const defaultProtectedRoutes: IRouteConfig[] = [
     {
         path: "/",
-        element: <Navigate to="/dashboard" replace/>
+        element: <Navigate to="/app" replace/>
     },
     {
-        path: "/dashboard",
-        element: <> </>
+        path: "/app",
+        element: null
     },
     {
         path: "/settings",

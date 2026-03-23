@@ -25,55 +25,51 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
     const {i18n} = useTranslation()
 
     return {
+        enableRowVirtualization: overrideProps?.enableRowVirtualization ?? false, // If true, issues displaying rows when opening before-closed dockview panels
+        autoResetPageIndex: false,
         enableColumnActions: false,
-        enableFilters: true,
         enableFullScreenToggle: false,
         enableDensityToggle: false,
         enableHiding: false,
-        enableRowActions: true,
+        enablePagination: overrideProps?.enablePagination ?? false,
         enableToolbarInternalActions: false,
         enableFilterMatchHighlighting: false,
-        columnFilterDisplayMode: 'popover',
+        enableStickyHeader: true,
 
         positionGlobalFilter: "none",
         globalFilterFn: 'contains',
 
         localization: tableLocale[i18n.language],
         enableEditing: false,
-        createDisplayMode: "modal",
-        editDisplayMode: "modal",
 
         positionPagination: "bottom",
         initialState: {
-            density: 'comfortable',
+            density: 'compact',
             pagination: {
                 pageSize: 10,
                 pageIndex: 0,
             },
-        },
-
-        displayColumnDefOptions: {
-            "mrt-row-actions": {
-                size: 0,
-            },
+            ...overrideProps?.initialState
         },
 
         muiTableContainerProps: (props) => {
-            const overrideContainerProps = typeof overrideProps?.muiTableContainerProps === 'function'
+            const overrideContainerProps = overrideProps?.muiTableContainerProps instanceof Function
                 ? overrideProps.muiTableContainerProps(props)
                 : overrideProps?.muiTableContainerProps;
 
             return getMrtContainerProps(theme, overrideContainerProps);
         },
 
-        defaultColumn: {
-            muiTableHeadCellProps: () => getMrtTableHeadCellProps(theme),
-            muiTableBodyCellProps: (props) => getMrtTableBodyCellProps<TData>(props.column, theme),
-        },
+        muiTablePaperProps: () => getMrtTablePaperProps(),
+
         muiBottomToolbarProps: () => getMrtBottomToolbarProps(),
         muiTopToolbarProps: () => getMrtTopToolbarProps(),
 
-        muiTablePaperProps: () => getMrtTablePaperProps(),
+        defaultColumn: {
+            muiTableHeadCellProps: () => getMrtTableHeadCellProps(),
+            muiTableBodyCellProps: (props) => getMrtTableBodyCellProps<TData>(props.column, theme),
+        },
+
         muiTableBodyRowProps: ({table, row, staticRowIndex, isDetailPanel}) =>
             getMrtTableBodyRowProps(
                 table,
@@ -83,7 +79,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
                 isDetailPanel,
                 {
                     ...overrideProps?.muiTableBodyRowProps,
-                    ...(typeof overrideProps?.muiTableBodyRowProps === 'function'
+                    ...(overrideProps?.muiTableBodyRowProps instanceof Function
                         ? overrideProps.muiTableBodyRowProps({
                             table,
                             row,

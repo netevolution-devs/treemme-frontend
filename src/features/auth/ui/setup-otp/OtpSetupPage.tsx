@@ -1,34 +1,36 @@
-import {Box} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 import {useState} from "react";
 import {useNavigate} from "react-router";
 import BasePage from "@shared/ui/layout/BasePage";
-import ChangePassword from "./ChangePassword";
 import SetupOtp from "./SetupOtp";
 import VerifyDevice from "./VerifyDevice";
+import ButtonBackToApp from "@ui/ButtonGoBack.tsx";
+import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
 
-type TSteps = "changePassword" | "setupOtp" | "verifyDevice";
+type TSteps = "setupOtp" | "verifyDevice";
 
 const OtpSetupPage = () => {
     const navigate = useNavigate();
+    const {setShowTopBar} = useLayout()
 
-    const [step, setStep] = useState<TSteps>("changePassword");
+    const [step, setStep] = useState<TSteps>("setupOtp");
+
+    const handleOnVerifySuccess = () => {
+        navigate("/", {replace: true})
+        setShowTopBar(true)
+    }
 
     return (
         <BasePage>
-            <Box
+            <Stack
                 sx={{
-                    py: 8,
-                    display: 'flex',
-                    justifyContent: 'center',
+                    p: 8,
                     alignItems: 'center',
-                    minHeight: '99vh',
                 }}
             >
-                {step === "changePassword" && (
-                    <ChangePassword
-                        onChangeSuccess={() => setStep("setupOtp")}
-                    />
-                )}
+                <Box sx={{alignSelf: 'flex-start', mx: 12}}>
+                    <ButtonBackToApp/>
+                </Box>
                 {step === "setupOtp" && (
                     <SetupOtp
                         onSetupSuccess={() => setStep("verifyDevice")}
@@ -36,10 +38,10 @@ const OtpSetupPage = () => {
                 )}
                 {step === "verifyDevice" && (
                     <VerifyDevice
-                        onVerifySuccess={() => navigate("/", {replace: true})}
+                        onVerifySuccess={handleOnVerifySuccess}
                     />
                 )}
-            </Box>
+            </Stack>
         </BasePage>
     )
 }

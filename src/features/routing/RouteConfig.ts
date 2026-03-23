@@ -1,11 +1,11 @@
 import type {ReactNode} from "react";
-import type {IPermissionGuardProps} from "@features/routing/useHasPermission.ts";
+import type {IPermissionCheck} from "@features/authz/permission.utils.ts";
 
 export interface IRouteConfig {
     path?: string;
     index?: boolean;
     element?: ReactNode;
     children?: IRouteConfig[];
-    permissionGuardProps?: IPermissionGuardProps;
+    permissionCheck?: IPermissionCheck;
     fallbackElement?: ReactNode;
 }

@@ -9,7 +9,7 @@ interface Props {
 const ErrorFormHelperText = ({isError, children}: Props) => {
     return (
         <Fade in={isError}>
-            <FormHelperText sx={{mt: 0, fontSize: "0.7rem"}}>
+            <FormHelperText sx={{fontSize: "0.7rem", mt: 0.3}}>
                 {children}
             </FormHelperText>
         </Fade>

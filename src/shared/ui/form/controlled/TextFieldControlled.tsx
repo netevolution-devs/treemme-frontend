@@ -10,7 +10,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                                                    label,
                                                                    required = false,
                                                                    TextFieldProps,
-                                                                   showHelperRow = true,
+                                                                   showHelperRow = false,
                                                                    maxLength = 255,
                                                                }: ControlledFieldProps<TFieldValues>) => {
     const {t} = useTranslation(["common"])
@@ -30,18 +30,23 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                 maxLength: {value: maxLength, message: t("common:form.error.too-long")},
             }}
             render={({field, fieldState: {error}}) => {
-                const {onBlur, ...restField} = field;
+                const {onBlur, value, ...restField} = field;
                 const composedOnBlur = (e: React.FocusEvent) => {
                     TextFieldProps?.onBlur?.(e as never);
                     onBlur();
                 };
+
+                const isShrink = !!value || value === 0;
+
                 return (
                     <TextField
                         {...TextFieldProps}
                         {...restField}
+                        value={value ?? ""}
                         onBlur={composedOnBlur}
                         label={formattedLabel}
                         fullWidth
+                        size={"small"}
                         error={!!error}
                         helperText={error?.message ?? (showHelperRow ? " " : "")}
                         slotProps={{
@@ -49,8 +54,14 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                 component: ({children}) =>
                                     <ErrorFormHelperText isError={!!error} children={children}/>
                             },
-                            htmlInput: {maxLength: maxLength}
+                            htmlInput: {maxLength: maxLength},
+                            inputLabel: {
+                                shrink: isShrink,
+                                ...TextFieldProps?.slotProps?.inputLabel
+                            },
+                            ...TextFieldProps?.slotProps
                         }}
+                        sx={{mb: 1.2}}
                         disabled={disabled}
                     />
                 )

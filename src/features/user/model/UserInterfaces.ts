@@ -1,42 +1,54 @@
 import type {IApiProfile} from "@features/profile/model/IProfile.ts";
-import {type IApiUserRole, type IUserRole, UserRoleArrayAdapter} from "@features/user/model/RoleInterfaces.ts";
+import {
+    type IAccessControl,
+    type IApiAccessControl,
+    AccessControlArrayAdapter,
+    type IUserRole
+} from "@features/user/model/RoleInterfaces.ts";
 
 export interface IUser {
     id: number;
-    name: string;
     email: string;
     roles: IUserRole[];
+    userCode: string;
     firstName: string;
     lastName: string;
-    createdAt: Date;
-    userCode: string;
+    name: string;
+    lastAccess: string | null;
+    createdAt?: Date | undefined;
+    accessControl: IAccessControl[];
     otpEnabled?: boolean;
 }
 
 export interface IApiUser {
     id: number;
     email: string;
-    user_roles: IApiUserRole[];
+    roles: IUserRole[];
+    user_code: string;
     first_name: string;
     last_name: string;
-    created_at: Date;
-    user_code: string;
-    totp_enabled: boolean;
+    last_access: string | null;
+    access_control: IApiAccessControl[];
+    totp_enabled?: boolean;
 }
 
 export function UserAdapter(apiUser: IApiUser): IUser {
-
-    return {
+    const user: IUser = {
         id: apiUser.id,
-        name: `${apiUser.first_name} ${apiUser.last_name}`.trim(),
         email: apiUser.email,
-        roles: UserRoleArrayAdapter(apiUser.user_roles),
+        roles: apiUser.roles,
+        userCode: apiUser.user_code,
         firstName: apiUser.first_name,
         lastName: apiUser.last_name,
-        createdAt: apiUser.created_at,
-        userCode: apiUser.user_code,
-        otpEnabled: apiUser.totp_enabled,
-    };
+        name: `${apiUser.first_name} ${apiUser.last_name}`.trim(),
+        lastAccess: apiUser.last_access,
+        accessControl: AccessControlArrayAdapter(apiUser.access_control),
+        otpEnabled: apiUser.totp_enabled ?? false,
+    }
+
+    if (typeof apiUser.totp_enabled === "undefined") delete user.otpEnabled;
+
+    return user;
 }
 
 export function UserArrayAdapter(apiUsers: IApiUser[]): IUser[] {
@@ -45,20 +57,20 @@ export function UserArrayAdapter(apiUsers: IApiUser[]): IUser[] {
 
 
 export type IApiUserPayload = Required<
-  Omit<IApiProfile, "user_code" | "company"> & {
+    Omit<IApiProfile, "user_code" | "company"> & {
     password: string
-  }
-  >
+}
+>
 
 export interface IApiUserPayloadUpdate {
-  code: string;
-  payload: Partial<Omit<IApiProfile, "user_code">>
+    code: string;
+    payload: Partial<Omit<IApiProfile, "user_code">>
 }
 
 export interface IApiUserRolePayload {
-  user_code: string;
-  role_id: number;
-  work_area_id: number
+    user_code: string;
+    role_id: number;
+    work_area_id: number
 }
 
 export interface IApiUserAssignCompanyPayload {

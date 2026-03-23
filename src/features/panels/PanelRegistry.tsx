@@ -1,0 +1,95 @@
+import type {FunctionComponent} from "react";
+import type {IDockviewPanelProps} from "dockview";
+import CapPanel from "@features/panels/contacts/cap/CapPanel.tsx";
+import ProvincePanel from "@features/panels/contacts/province/ProvincePanel.tsx";
+import NationsPanel from "@features/panels/contacts/nations/NationsPanel.tsx";
+import ContactsPanel from "@features/panels/contacts/contacts/ContactsPanel.tsx";
+import SeaportsPanel from "@features/panels/contacts/seaports/SeaportsPanel.tsx";
+import WeightsPanel from "@features/panels/leathers/weights/WeightsPanel.tsx";
+import SpeciesPanel from "@features/panels/leathers/species/SpeciesPanel.tsx";
+import LeathersPanel from "@features/panels/leathers/leathers/LeathersPanel.tsx";
+import ThicknessesPanel from "@features/panels/leathers/thicknesses/ThicknessesPanel.tsx";
+import TypesPanel from "@features/panels/leathers/types/TypesPanel.tsx";
+import FlayingPanel from "@features/panels/leathers/flaying/FlayingPanel.tsx";
+import OriginsPanel from "@features/panels/leathers/origins/OriginsPanel.tsx";
+import TanningStagesPanel from "@features/panels/leathers/tanning-stages/TanningStagesPanel.tsx";
+import BatchesPanel from "@features/panels/production/batches/BatchesPanel.tsx";
+import CustomerOrdersPanel from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
+import ProductsPanel from "@features/panels/products/products/ProductsPanel.tsx";
+import ProductCategoriesPanel from "@features/panels/products/product-categories/ProductCategoriesPanel.tsx";
+import ProductTypesPanel from "@features/panels/products/product-types/ProductTypesPanel.tsx";
+import ArticlesPanel from "@features/panels/products/articles/ArticlesPanel.tsx";
+import MachineryPanel from "@features/panels/production/machinery/MachineryPanel.tsx";
+import ArticleTypesPanel from "@features/panels/products/article-types/ArticleTypesPanel.tsx";
+import DeliveryNotesPanel from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
+import ReasonsPanel from "@features/panels/shipping-invoicing/reasons/ReasonsPanel.tsx";
+import SelectionPanel from "@features/panels/products/selection/SelectionPanel.tsx";
+import SubcontractingNotReturnedPanel from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
+import ProcessesPanel from "@features/panels/production/processes/ProcessesPanel.tsx";
+import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.tsx";
+
+export type TPanelKind =
+    | 'cap'
+    | 'province'
+    | 'nations'
+    | 'contacts'
+    | 'seaports'
+    | 'weights'
+    | 'species'
+    | 'leathers'
+    | 'thicknesses'
+    | 'types'
+    | 'flaying'
+    | 'origins'
+    | 'tanningStages'
+    | 'batches'
+    | 'customerOrders'
+    | 'products'
+    | 'productCategories'
+    | 'productTypes'
+    | 'articles'
+    | 'machinery'
+    | 'articleTypes'
+    | 'deliveryNotes'
+    | 'reasons'
+    | 'selection'
+    | 'subcontractingNotReturned'
+    | 'processes'
+    | 'workings'
+    | 'not-implemented';
+
+export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
+
+export const PANEL_REGISTRY: DockviewComponents = {
+    // contacts
+    contacts:   (props) => <ContactsPanel {...props}/>,
+    cap:        () => <CapPanel/>,
+    province:   (props) => <ProvincePanel {...props}/>,
+    nations:    () => <NationsPanel/>,
+    seaports:   () => <SeaportsPanel/>,
+    // leathers
+    leathers:       () => <LeathersPanel/>,
+    weights:        (props) => <WeightsPanel {...props}/>,
+    species:        (props) => <SpeciesPanel {...props}/>,
+    thicknesses:    (props) => <ThicknessesPanel {...props}/>,
+    types:          (props) => <TypesPanel {...props}/>,
+    flaying:        (props) => <FlayingPanel {...props}/>,
+    tanningStages:  (props) => <TanningStagesPanel {...props}/>,
+    origins:        (props) => <OriginsPanel {...props}/>,
+    // production
+    batches: (props) => <BatchesPanel {...props}/>,
+    customerOrders: () => <CustomerOrdersPanel/>,
+    products: () => <ProductsPanel/>,
+    productCategories: () => <ProductCategoriesPanel/>,
+    productTypes: () => <ProductTypesPanel/>,
+    articles: () => <ArticlesPanel/>,
+    machinery: () => <MachineryPanel/>,
+    articleTypes: (props) => <ArticleTypesPanel {...props}/>,
+    deliveryNotes: () => <DeliveryNotesPanel />,
+    reasons: () => <ReasonsPanel />,
+    selection: () => <SelectionPanel />,
+    subcontractingNotReturned: () => <SubcontractingNotReturnedPanel />,
+    processes: () => <ProcessesPanel />,
+    workings: () => <WorkingsPanel />,
+    "not-implemented": () => <>To implement</>,
+}

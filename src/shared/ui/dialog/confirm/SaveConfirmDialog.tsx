@@ -1,0 +1,82 @@
+import {forwardRef, type ForwardedRef} from "react";
+import {Button, CircularProgress, DialogActions, DialogContent, DialogTitle, Stack, Typography} from "@mui/material";
+import {useTranslation} from "react-i18next";
+import BaseDialog from "@shared/ui/dialog/BaseDialog";
+import {closeDialog} from "@shared/ui/dialog/dialogHelper";
+import type {IDialogActions} from "@shared/ui/dialog/IDialogActions";
+import SaveIcon from '@mui/icons-material/Save';
+
+interface SaveConfirmDialogProps {
+    onConfirm: () => Promise<void> | void;
+    title?: string;
+    description?: string;
+    isPending?: boolean;
+}
+
+const SaveConfirmDialog = (
+    {
+        onConfirm,
+        title,
+        description,
+        isPending = false
+    }: SaveConfirmDialogProps,
+    ref: ForwardedRef<IDialogActions>
+) => {
+    const {t} = useTranslation(["common"]);
+
+    const handleConfirm = async () => {
+        await onConfirm();
+        closeDialog(ref);
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter" && !isPending) {
+            event.preventDefault();
+            handleConfirm();
+        }
+    };
+
+    return (
+        <BaseDialog ref={ref} minWidth={400} minHeight={200} onKeyDown={handleKeyDown}>
+            <DialogTitle sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+                <SaveIcon color="success" />
+                {title || t("common:dialog.save.title")}
+            </DialogTitle>
+            <DialogContent>
+                <Typography>
+                    {description || t("common:dialog.save.description")}
+                </Typography>
+            </DialogContent>
+            <DialogActions sx={{px: 3, pb: 2}}>
+                <Button 
+                    onClick={() => closeDialog(ref)} 
+                    disabled={isPending}
+                    variant="outlined"
+                    color="inherit"
+                >
+                    {t("common:button.cancel")}
+                </Button>
+                <Button
+                    onClick={handleConfirm}
+                    variant="contained"
+                    color="success"
+                    disabled={isPending}
+                    sx={{minWidth: 120}}
+                >
+                    {isPending ? (
+                        <Stack direction="row" spacing={1} alignItems="center">
+                            <CircularProgress size={18} color="inherit" />
+                            <Typography variant="button">
+                                {t("common:dialog.save.pending")}
+                            </Typography>
+                        </Stack>
+                    ) : (
+                        t("common:button.save")
+                    )}
+                </Button>
+            </DialogActions>
+        </BaseDialog>
+    );
+};
+
+export default forwardRef(SaveConfirmDialog);

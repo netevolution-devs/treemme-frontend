@@ -19,6 +19,7 @@ interface BaseDialogProps {
     onClose?: () => void;
     minHeight?: number | string;
     minWidth?: number;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 function BaseDialogWrapper({
@@ -28,7 +29,8 @@ function BaseDialogWrapper({
                                fullscreen = false,
                                onClose,
                                minHeight,
-                               minWidth = 600,
+                               minWidth = 800,
+                               onKeyDown,
                            }: BaseDialogProps,
                            ref: ForwardedRef<IDialogActions>
 ) {
@@ -56,6 +58,7 @@ function BaseDialogWrapper({
             fullScreen={isSmallScreen || fullscreen}
             open={open}
             onClose={() => handleClose()}
+            onKeyDown={onKeyDown}
             slotProps={{
                 paper: {
                     sx: {
@@ -65,10 +68,11 @@ function BaseDialogWrapper({
                         maxHeight: '90vh',
                         display: 'flex',
                         flexDirection: 'column',
+                        ...sx
                     },
                 },
             }}
-            sx={{...sx, m: 2}}
+            sx={{m: 2}}
         >
             {children}
         </Dialog>

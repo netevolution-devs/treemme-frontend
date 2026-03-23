@@ -23,7 +23,7 @@ export const ThemeSwitch = ({size = 'medium', showText = true}: Props) => {
             size={size}
             aria-label={ariaLabel}
             sx={{
-                color: theme.palette.text.primary,
+                color: theme.palette.action.active,
                 '&:hover': {
                     backgroundColor: 'transparent',
                     transform: 'scale(1.12)',

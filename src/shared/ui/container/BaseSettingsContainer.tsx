@@ -1,5 +1,6 @@
-import {Box, type SxProps} from "@mui/material";
+import {Box, Stack, type SxProps} from "@mui/material";
 import type {ReactNode} from "react";
+import ButtonGoToApp from "@ui/ButtonGoToApp.tsx";
 
 interface Props {
     children: ReactNode;
@@ -7,11 +8,17 @@ interface Props {
 }
 
 const BaseSettingsContainer = ({children}: Props) => {
+
     return (
-        <Box sx={{display: 'flex', justifyContent: 'center'}}>
-            <Box sx={{px: 3, pt: 2, minWidth: "70%", maxWidth: 1200}}>
-                {children}
-            </Box>
+        <Box sx={{display: "flex", justifyContent: 'center'}}>
+            <Stack sx={{minWidth: "70%", maxWidth: 1200}} spacing={2}>
+                <Box>
+                    <ButtonGoToApp/>
+                </Box>
+                <Box>
+                    {children}
+                </Box>
+            </Stack>
         </Box>
     )
 }

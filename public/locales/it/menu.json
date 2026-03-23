@@ -1,0 +1,105 @@
+{
+  "menu": {
+    "contacts": {
+      "self": "Contatti",
+      "cap": "CAP",
+      "nations": "Nazioni",
+      "provinces": "Province",
+      "contacts": "Contatti",
+      "seaports": "Porti Marittimi"
+    },
+    "leathers": {
+      "self": "Pellami",
+      "weights": "Pesi",
+      "species": "Specie",
+      "sizes": "Taglie",
+      "leathers": "Pellami",
+      "thicknesses": "Spessori",
+      "types": "Tipologie",
+      "flaying": "Scuoiature",
+      "origins": "Provenienze",
+      "tanning-stages": "Stati di Lavorazione"
+    },
+    "products": {
+      "self": "Prodotti",
+      "selection": "Scelte",
+      "articles": "Articoli",
+      "search": "Ricerca Prodotti",
+      "products": "Prodotti",
+      "categories": "Categorie",
+      "article-types": "Tipologie Articoli",
+      "products-types": "Tipologie Prodotti"
+    },
+    "orders": {
+      "self": "Ordini",
+      "customer-orders": "Ordini Clienti",
+      "supplier-orders": "Ordini Fornitori",
+      "search-customer-orders": "Ricerca Ordini Clienti",
+      "supplier-schedule": "Scadenziario Fornitori",
+      "search-supplier-orders": "Ricerca Ordini Fornitori"
+    },
+    "warehouse": {
+      "self": "Magazzino",
+      "movements": "Movimenti di Magazzino",
+      "pallet-types": "Tipologie Pallets",
+      "lots-batches": "Lotti e Partite",
+      "search-lots-batches": "Ricerca Lotti/Partite",
+      "subcontracting-lots": "Lotti in Conto Lavorazione"
+    },
+    "production": {
+      "self": "Produzione",
+      "batches": "Lotti",
+      "recipes": "Ricette",
+      "machinery": "Macchinari",
+      "progress": "Avanzamento Produzione",
+      "processes": "Produzione",
+      "workings": "Lavorazioni",
+      "bom": "Distinta Base",
+      "batch-selection": "Scelta Partite",
+      "pirovano-monitor": "Monitor Pirovano",
+      "pirovano-recipes": "Ricettario Pirovano"
+    },
+    "shipping-invoicing": {
+      "self": "DDT & Fatture",
+      "delivery-notes": "Documenti di Trasporto",
+      "invoices": "Fatturazione",
+      "search": "Ricerca Documenti",
+      "deliveryNotes": "DeliveryNotes",
+      "reasons": "Ragioni di trasporto",
+      "subcontractingNotReturned": "SubcontractingNotReturned",
+      "subcontracting-not-returned": "Lotti conto lavoro"
+    },
+    "commercial": {
+      "self": "Commerciale",
+      "customers": "Anagrafica Clienti",
+      "suppliers": "Anagrafica Fornitori",
+      "batch-data": "Dati Partite",
+      "product-costs": "Costo Prodotti",
+      "price-list": "Listino Prodotti",
+      "work-reports": "Rapportini di Lavoro",
+      "currencies-exchange": "Valute e Cambi"
+    },
+    "analysis": {
+      "self": "Analisi",
+      "orders": "Analisi Ordini",
+      "sales": "Analisi Vendite",
+      "costs-revenues": "Costi e Ricavi",
+      "batches-lots": "Analisi Partite/Lotti",
+      "subcontracting": "Analisi Conto Lavorazione",
+      "phone-traffic": "Traffico Telefonico",
+      "iso-quality": {
+        "self": "Controllo Qualità ISO",
+        "order-fulfillment": "Evasione Ordini"
+      }
+    },
+    "system": {
+      "self": "Sistema",
+      "info": "Informazioni di Sistema",
+      "tools": "Strumenti",
+      "console": "Console di Comando",
+      "access-management": "Gestione Accessi",
+      "logout": "Fine Sessione"
+    }
+  },
+  "to-implement": "Da Implementare"
+}

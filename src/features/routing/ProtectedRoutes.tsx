@@ -1,20 +1,20 @@
 import {type ReactNode, useMemo} from "react";
 import {Route, Outlet} from "react-router";
 import {useAuth} from "@features/auth/model/AuthContext.tsx";
-import {checkPermission} from "@helpers/permissionDetection.ts";
-import type {IUserRole} from "@features/user/model/RoleInterfaces.ts";
 import type {IRouteConfig} from "@features/routing/RouteConfig.ts";
 import LogoutAndRedirect from "@features/routing/LogoutAndRedirect.tsx";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
+import {hasPermission} from "@features/authz/permission.utils.ts";
 
 function renderRoutes(
     routes: IRouteConfig[],
-    userRoles: IUserRole[],
+    accessControlList: IAccessControl[],
     defaultFallback: ReactNode
 ): ReactNode[] {
     return routes
         .filter(route => {
-            if (!route.permissionGuardProps) return true;
-            return checkPermission(userRoles, route.permissionGuardProps);
+            if (!route.permissionCheck) return true;
+            return hasPermission(accessControlList, route.permissionCheck);
         })
         .map((route, index) => {
             const hasChildren = route.children && route.children.length > 0;
@@ -23,7 +23,7 @@ function renderRoutes(
                 : route.element;
 
             const filteredChildren = hasChildren
-                ? renderRoutes(route.children!, userRoles, defaultFallback)
+                ? renderRoutes(route.children!, accessControlList, defaultFallback)
                 : undefined;
 
             if (route.index) {
@@ -43,9 +43,9 @@ export function useFilteredRoutes(
     defaultFallback: ReactNode = <LogoutAndRedirect to="/login"/>
 ): ReactNode[] {
     const {user} = useAuth();
-    const userRoles = user?.roles ?? [];
+    const userAccessControl = user?.accessControl ?? [];
 
     return useMemo(() => {
-        return renderRoutes(routes, userRoles, defaultFallback);
-    }, [routes, userRoles, defaultFallback]);
+        return renderRoutes(routes, userAccessControl, defaultFallback);
+    }, [routes, userAccessControl, defaultFallback]);
 }

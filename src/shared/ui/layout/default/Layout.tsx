@@ -1,21 +1,22 @@
-import {Outlet} from "react-router";
-import TopBar from "./TopBar.tsx";
+import {Outlet, useLocation} from "react-router";
 import {Box, Stack} from "@mui/material";
-import NavBar from "./navbar/NavBar.tsx";
-import {useLayout} from "./LayoutContext.tsx";
+import MenuToolbar from "@ui/layout/menu/MenuToolbar.tsx";
+import PanelContainerPage from "@features/panels/PanelContainerPage.tsx";
 
 const Layout = () => {
-    const {showNavBar, showTopBar, topBarComponent} = useLayout();
+    const location = useLocation();
+    const isAppRoute = location.pathname === "/app";
+
     return (
         <Box sx={{display: "flex", width: "100%"}}>
-            {showNavBar && <NavBar/>}
             <Stack sx={{flexGrow: 1}}>
-                {showTopBar && (
-                    <>
-                        {topBarComponent ? topBarComponent : <TopBar/>}
-                    </>
-                )}
-                <Outlet/>
+                <MenuToolbar />
+                <Box sx={{ display: isAppRoute ? 'block' : 'none' }}>
+                    <PanelContainerPage />
+                </Box>
+                <Box sx={{ display: !isAppRoute ? 'block' : 'none' }}>
+                    <Outlet/>
+                </Box>
             </Stack>
         </Box>
     );

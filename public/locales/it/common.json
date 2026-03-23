@@ -14,20 +14,6 @@
     "staff": "Staff",
     "user": "User"
   },
-  "menu": {
-    "group": {
-      "_default": "Menu principale",
-      "overview": "Panoramica",
-      "registry": "Anagrafica",
-      "preferences": "Preferenze",
-      "backoffice": "Backoffice",
-      "companies": "Aziende"
-    },
-    "dashboard": "Dashboard",
-    "users": "Utenti",
-    "subcontractors": "Terzisti",
-    "settings": "Impostazioni"
-  },
   "form": {
     "field": {
       "email": "Email",
@@ -59,12 +45,15 @@
       "at-least-one-select-required": "Selezionare almeno uno",
       "only-numbers": "Solo numeri consentiti",
       "unsaved_changes": "Ci sono modifiche non salvate",
-      "pending_save": "Salvataggio in corso..."
+      "pending_save": "Salvataggio in corso...",
+      "min": "Inserire un valore maggiore o uguale a ",
+      "max": "Inserire un valore minore o uguale a "
     }
   },
   "search": {
     "search-label": "Cerca...",
-    "no-results": "Nessun risultato trovato con la categoria e/o i filtri selezionati."
+    "no-results": "Nessun risultato trovato con la categoria e/o i filtri selezionati.",
+    "no-options": "Nessuna opzione"
   },
   "loading": {
     "authenticating": "Autenticazione...",
@@ -78,6 +67,7 @@
     }
   },
   "button": {
+    "new": "Nuovo",
     "next": "Avanti",
     "back": "Indietro",
     "close": "Chiudi",
@@ -98,7 +88,9 @@
     "active": "Attivo",
     "not-active": "Non attivo",
     "duplicate": "Duplica",
-    "go-to-subcontractor": "Vai al terzista"
+    "go-to-subcontractor": "Vai al terzista",
+    "execute": "Esegui",
+    "remove": "Rimuovi"
   },
   "filter": {
     "status": "Stato",
@@ -148,5 +140,19 @@
     "calendar-plan": "Calendario plan",
     "list-plan": "Elenco plan"
   },
-  "software-version": "Versione software: {{version}}"
+  "software-version": "Versione software: {{version}}",
+  "dialog": {
+    "delete": {
+      "title": "Conferma eliminazione",
+      "description": "Sei sicuro di voler eliminare questo elemento?",
+      "confirm-button": "Elimina",
+      "pending": "Eliminazione..."
+    },
+    "save": {
+      "title": "Conferma salvataggio",
+      "description": "Sei sicuro di voler salvare questo elemento?",
+      "confirm-button": "Salva",
+      "pending": "Salvataggio..."
+    }
+  }
 }

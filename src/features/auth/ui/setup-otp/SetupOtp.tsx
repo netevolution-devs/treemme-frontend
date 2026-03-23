@@ -39,7 +39,7 @@ const SetupOtp = ({onSetupSuccess}: SetupOtpProps) => {
     const {userCode} = useAuth();
     const [otpData, setOtpData] = useState<ISetupOtpResponse | null>(null);
 
-    const {mutate: setupOtp, isPending} = usePostSetupOTP();
+    const {mutate: setupOtp, isPending, isError} = usePostSetupOTP();
 
     useEffect(() => {
         if (userCode) {
@@ -81,6 +81,12 @@ const SetupOtp = ({onSetupSuccess}: SetupOtpProps) => {
             <Typography variant="h5" fontWeight="bold">
                 {t("otp.setup.title")}
             </Typography>
+
+            {isError && (
+                <Typography variant="body1" gutterBottom>
+                    {t("otp.setup.already-configured")}
+                </Typography>
+            )}
 
             {otpData && (
                 <>
