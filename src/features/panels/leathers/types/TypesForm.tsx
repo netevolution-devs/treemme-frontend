@@ -90,7 +90,7 @@ const TypesFormFields = () => {
                     required
                 />
             </Box>
-            <SelectFieldControlled<ILeatherForm>
+            <SelectFieldControlled<ITypeForm>
                 name={"thickness_id"}
                 label={t("leathers.leather.thickness")}
                 options={thicknesses.map((x) => ({
