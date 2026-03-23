@@ -13,9 +13,9 @@ import {Box} from "@mui/material";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 
 export interface IBatchCompositionForm {
-    pieces: number;
+    pieces: number | null;
     // quantity: number;
-    father_batch_id: number;
+    father_batch_id: number | null;
     note?: string;
 }
 
@@ -44,26 +44,30 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 dialogRef={ref}
                 bypassConfirm
                 emptyValues={{
-                    pieces: 0,
+                    pieces: null,
                     // quantity: 0,
-                    father_batch_id: 0,
+                    father_batch_id: null,
                     note: ''
                 }}
                 mapEntityToForm={() => ({
                     pieces: 0,
                     // quantity: 0,
-                    father_batch_id: 0,
+                    father_batch_id: null,
                     note: ''
                 })}
                 create={(data) => {
-                    if (!selectedBatchId) return;
-                    return createComposition(data);
+                    if (!selectedBatchId && !data.pieces) return;
+                    return createComposition({
+                        ...data,
+                        father_batch_id: data.father_batch_id as number,
+                        pieces: data.pieces as number
+                    });
                 }}
                 isSaving={isPending}
                 validateBeforeSave={(v) =>
-                    v.pieces > 0 &&
+                    !!v.pieces &&
                     // v.quantity > 0 &&
-                    v.father_batch_id > 0
+                    !!v.father_batch_id
                 }
                 renderFields={() => (
                     <Box sx={{mb: 1}}>

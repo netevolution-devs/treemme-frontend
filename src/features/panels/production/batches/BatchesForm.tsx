@@ -1,6 +1,10 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
+import type {
+    IBatchesStoreFilter,
+    IBatchesStoreParams,
+    IBatchesStoreState
+} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchApi, type IBatchesPayload} from "@features/panels/production/batches/api/batchApi.ts";
 import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
@@ -18,11 +22,12 @@ import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog.tsx";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog.tsx";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -41,18 +46,23 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_selections_count'
     | 'productions'
     | 'batch_compositions'
+    | 'quantity'
+    | 'pieces'
 > & {
-    leather_id: number;
-    batch_type_id: number;
-    measurement_unit_id: number;
+    leather_id: number | null;
+    batch_type_id: number | null;
+    measurement_unit_id: number | null;
+    quantity: number | null
+    pieces: number | null;
 };
 
-const BatchesForm = () => {
+const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IBatchesStoreState>();
+    const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
+    const setFilters = useStore((state) => state.setFilters);
 
     const {useGetDetail, usePost, usePut, useDelete} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
@@ -72,6 +82,13 @@ const BatchesForm = () => {
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
 
+    useEffect(() => {
+        if (extra) {
+            setUIState({selectedBatchId: extra.id});
+            setFilters({filterBatchCode: extra.batch_code});
+        }
+    }, [extra, setUIState, setFilters]);
+
     return (
         <>
             <BatchesReworkFormDialog ref={reworkDialogRef}/>
@@ -81,25 +98,25 @@ const BatchesForm = () => {
                 selectedId={selectedBatchId}
                 entity={batchItem}
                 emptyValues={{
-                    leather_id: 0,
-                    batch_type_id: 0,
-                    measurement_unit_id: 0,
+                    leather_id: null,
+                    batch_type_id: batchTypes.find(x => x.name === "Partita")?.id || null,
+                    measurement_unit_id: measurementUnits.find(x => x.name === "Piedi quadrati")?.id || null,
                     completed: false,
                     checked: false,
                     batch_date: dayjs(Date.now()).format('YYYY-MM-DD'),
-                    quantity: 0,
+                    quantity: null,
                     selection_note: '',
                     batch_note: '',
                     sampling: false,
                     split_selected: false,
                     check_date: '',
                     check_note: '',
-                    pieces: 0,
+                    pieces: null,
                 }}
                 mapEntityToForm={(x) => ({
-                    leather_id: x.leather?.id as number,
-                    batch_type_id: x.batch_type.id,
-                    measurement_unit_id: x.measurement_unit.id,
+                    leather_id: x.leather?.id || null,
+                    batch_type_id: x.batch_type?.id || null,
+                    measurement_unit_id: x.measurement_unit?.id || null,
                     completed: x.completed,
                     checked: x.checked,
                     batch_date: x.batch_date,
@@ -113,6 +130,7 @@ const BatchesForm = () => {
                     pieces: x.pieces,
                 })}
                 create={(payload) => createBatch(payload as IBatchesPayload)}
+                onCreateSuccess={(id) => {setUIState({selectedBatchId: id})}}
                 update={(id, payload) => updateBatch({id, payload: payload as IBatchesPayload})}
                 remove={(id) => deleteBatch(id)}
                 isSaving={isPosting || isPutting}
@@ -131,7 +149,7 @@ const BatchesForm = () => {
                         label={t("production.batch.split")}
                         color={"primary"}
                         icon={<CallSplitIcon/>}
-                        isEnable={!!selectedBatchId}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita" || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
                     />
                 ]}
@@ -164,11 +182,13 @@ const BatchesForm = () => {
                                 name="sampling"
                                 label={t("production.batch.sampling")}
                                 width={120}
+                                disabled
                             />
                             <FlagCheckBoxFieldControlled<IBatchesForm>
                                 name="completed"
                                 label={t("production.batch.completed")}
                                 width={120}
+                                disabled
                             />
                         </Box>
 
@@ -227,6 +247,7 @@ const BatchesForm = () => {
                                     label={t("production.batch.leather")}
                                     options={leathers.map(x => ({label: x.name, value: x.id}))}
                                     deactivated={!!batchItem}
+                                    required
                                 />
                             </Box>
                         )}

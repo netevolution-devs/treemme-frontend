@@ -12,7 +12,7 @@ import {useMemo} from "react";
 export interface IMachineryForm {
     name: string;
     prefix: string | null;
-    batch_type_id: number;
+    batch_type_id: number | null;
 }
 
 const MachineryForm = () => {
@@ -38,11 +38,11 @@ const MachineryForm = () => {
         <GenericForm<IMachineryForm, IMachine, IMachineryStoreState>
             selectedId={selectedMachineryId}
             entity={machinery}
-            emptyValues={{ name: '', prefix: '', batch_type_id: 0 }}
+            emptyValues={{ name: '', prefix: '', batch_type_id: null }}
             mapEntityToForm={(m) => ({ 
                 name: m.name, 
                 prefix: m.prefix ?? '', 
-                batch_type_id: m.batch_type?.id ?? 0 
+                batch_type_id: m.batch_type?.id ?? null
             })}
             create={(payload) => createMachinery(payload)}
             update={(id, payload) => updateMachinery({ id, payload })}
@@ -50,12 +50,13 @@ const MachineryForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({ selectedMachineryId: null })}
-            validateBeforeSave={(v) => !!v.name && v.batch_type_id > 0}
+            validateBeforeSave={(v) => !!v.name && !!v.batch_type_id}
             renderFields={() => (
                 <>
                     <TextFieldControlled<IMachineryForm>
                         name="prefix"
                         label={t("production.machinery.prefix")}
+                        required
                     />
                     <TextFieldControlled<IMachineryForm>
                         name="name"
@@ -66,7 +67,6 @@ const MachineryForm = () => {
                         name="batch_type_id"
                         label={t("production.machinery.batch_type")}
                         options={batchTypeOptions}
-                        required
                     />
                 </>
             )}

@@ -38,6 +38,8 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     extraButtons?: ReactNode[];
     disabledBasicButtons?: boolean;
     bypassConfirm?: boolean;
+
+    onCreateSuccess?: (id: number) => void;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -59,7 +61,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         dialogRef,
         extraButtons,
         disabledBasicButtons = false,
-        bypassConfirm = false
+        bypassConfirm = false,
+        onCreateSuccess
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const {useStore} = usePanel<unknown, TUI>();
@@ -145,11 +148,14 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                     setFormState('selected');
                 }
             } else {
-                const res = await create?.(cleanData);
+                const res = await create?.(cleanData) as {id: number};
                 if (res) {
                     onSuccess?.(res as TEntity);
-                    methods.reset(emptyValues);
-                    setFormState('init');
+                    onCreateSuccess?.(res.id);
+                    if (!onClearSelection) {
+                        methods.reset(emptyValues);
+                        setFormState('init');
+                    }
                 }
             }
         } finally {

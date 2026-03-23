@@ -10,13 +10,18 @@ import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IProcessesStoreState, IProcessStoreFilter} from "@features/panels/production/processes/ProcessesPanel.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import {Box} from "@mui/material";
+import {MenuItem} from "@mui/material";
 import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 
 const ProcessesList = () => {
-    const {t} = useTranslation(["form"]);
+    const {t} = useTranslation(["form", "menu"]);
     const {useStore} = usePanel<IProcessStoreFilter, IProcessesStoreState>();
+    const addPanel = useDockviewStore(state => state.addPanel);
 
+    const selectedProcessId = useStore(state => state.uiState.selectedProcessId);
+    const setUIState = useStore(state => state.setUIState);
     const setFilters = useStore(state => state.setFilters);
     const filterScheduledDate = useStore(state => state.filters.filterScheduledDate);
 
@@ -72,7 +77,29 @@ const ProcessesList = () => {
             isLoading={isLoading}
             columns={columns}
             minHeight={"700px"}
+            selectedId={selectedProcessId}
+            onRowSelect={(id) => setUIState({selectedProcessId: id})}
             additionalOptions={{
+                enableRowActions: true,
+                renderRowActionMenuItems: ({row, closeMenu}) => [
+                    <MenuItem key={"view_batch"} onClick={() => {
+                        addPanel({
+                            id: `batches:${crypto.randomUUID()}`,
+                            title: t("menu:menu.production.batches"),
+                            component: 'batches',
+                            params: {
+                                extra: {
+                                    id: row.original.batch.id,
+                                    batch_code: row.original.batch.batch_code
+                                }
+                            }
+                        });
+                        closeMenu();
+                    }}>
+                        <VisibilityIcon color={"primary"} sx={{mr: 1}} />
+                        {t("processes.view_batch")}
+                    </MenuItem>
+                ],
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
@@ -83,14 +110,12 @@ const ProcessesList = () => {
                                 value={filterScheduledDate}
                                 onFilterChange={(val) => setFilters({filterScheduledDate: val as string})}
                             />,
-                            <Box sx={{height: "40px"}}>
-                                <CustomButton
-                                    label={t("processes.today")}
-                                    color={"primary"}
-                                    icon={""}
-                                    onClick={() => setTodayDate()}
-                                />
-                            </Box>
+                            <CustomButton
+                                label={t("processes.today")}
+                                color={"primary"}
+                                icon={""}
+                                onClick={() => setTodayDate()}
+                            />
                         ]}
                     />
                 )

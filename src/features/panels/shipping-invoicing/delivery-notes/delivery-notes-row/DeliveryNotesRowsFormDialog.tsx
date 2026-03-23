@@ -5,7 +5,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef, useEffect, useMemo} from "react";
+import {forwardRef, useMemo} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {
@@ -15,15 +15,14 @@ import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {
     deliveryNoteRowApi,
-    type IDeliveryNoteRowPayload
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/deliveryNoteRowApi.ts";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
 import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
-import {useFormContext, useWatch} from "react-hook-form";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
+import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
+import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
 
 type Props = unknown;
 
@@ -32,29 +31,19 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'batch' |
     'measurement_unit' |
     'currency' |
-    'selection'
+    'selection' |
+    'pieces' |
+    'quantity' |
+    'processing'
 > & {
-    batch_id: number;
-    measurement_unit_id: number;
+    batch_id: number | null;
+    measurement_unit_id: number | null;
     currency_id: number | null;
     selection_id: number | null;
     ddt_id: number;
-};
-
-const CurrencyWatcher = ({currencies}: { currencies: ICurrency[] }) => {
-    const {setValue} = useFormContext<IDeliveryNoteRowForm>();
-    const currencyId = useWatch<IDeliveryNoteRowForm>({name: 'currency_id'});
-
-    useEffect(() => {
-        if (currencyId) {
-            const currency = currencies.find(c => c.id === currencyId);
-            if (currency) {
-                setValue('currency_change', currency.last_change?.change_value ?? 0);
-            }
-        }
-    }, [currencyId, currencies, setValue]);
-
-    return null;
+    pieces: number | null;
+    quantity: number | null;
+    processing_id: number | null;
 };
 
 const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -81,6 +70,12 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: currencies = []} = currencyApi.useGetList();
     const {data: selections = []} = selectionApi.useGetList();
+    const {data: workings = []} = workingApi.useGetList();
+
+    const batchesList = [
+        deliveryNoteRow?.batch,
+        ...batches
+    ].filter((x) => x !== undefined);
 
     const currencyOptions = useMemo(() =>
             currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
@@ -94,13 +89,13 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 selectedId={selectedDeliveryNoteRowId}
                 entity={deliveryNoteRow}
                 emptyValues={{
-                    batch_id: 0,
-                    measurement_unit_id: 0,
+                    batch_id: null,
+                    measurement_unit_id: null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
                     selection_id: null,
                     order_note: "",
-                    pieces: 0,
-                    quantity: 0,
+                    pieces: null,
+                    quantity: null,
                     price: null,
                     total_value: null,
                     currency_price: null,
@@ -110,11 +105,12 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     row_note: "",
                     whole_piece: null,
                     half_piece: 0,
-                    ddt_id: selectedDeliveryNoteId ?? 0
+                    ddt_id: selectedDeliveryNoteId ?? 0,
+                    processing_id: null,
                 }}
                 mapEntityToForm={(x) => ({
-                    batch_id: x.batch.id,
-                    measurement_unit_id: x.measurement_unit.id,
+                    batch_id: x.batch?.id || null,
+                    measurement_unit_id: x.measurement_unit?.id || null,
                     currency_id: x.currency?.id ?? null,
                     selection_id: x.selection?.id ?? null,
                     order_note: x.order_note,
@@ -129,27 +125,20 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     row_note: x.row_note || "",
                     whole_piece: x.whole_piece,
                     half_piece: x.half_piece || 0,
-                    ddt_id: selectedDeliveryNoteId ?? 0
+                    ddt_id: selectedDeliveryNoteId ?? 0,
+                    processing_id: x.processing?.id ?? 0
                 })}
-                create={(payload) => createRow({
-                    ...payload,
-                    ddt_id: selectedDeliveryNoteId as number
-                } as IDeliveryNoteRowPayload)}
-                update={(id, payload) => updateRow({
-                    id,
-                    payload: {
-                        ...payload,
-                        ddt_id: selectedDeliveryNoteId as number
-                    } as IDeliveryNoteRowPayload
-                })}
+                create={(payload) => createRow(payload)}
+                update={(id, payload) => updateRow({id, payload})}
                 remove={(id) => deleteRow(id)}
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedDeliveryNoteRowId: null})}
+                validateBeforeSave={(v) => !!v.batch_id && !!v.measurement_unit_id && !!v.pieces && !!v.quantity}
                 renderFields={() => {
                     return (
                         <Stack gap={1}>
-                            <CurrencyWatcher currencies={currencies}/>
+                            <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_change"}/>
                             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                                 <TextFieldControlled<IDeliveryNoteRowForm>
                                     name="order_note"
@@ -161,7 +150,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                 <SelectFieldControlled<IDeliveryNoteRowForm>
                                     name="batch_id"
                                     label={t("production.batch.batch_code")}
-                                    options={batches.map(b => ({value: b.id, label: b.batch_code}))}
+                                    options={batchesList.map(b => ({value: b.id, label: b.batch_code}))}
                                     required
                                 />
                                 <NumberFieldControlled<IDeliveryNoteRowForm>
@@ -170,10 +159,10 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                     required
                                     precision={0}
                                 />
-                                <NumberFieldControlled<IDeliveryNoteRowForm>
-                                    name="kg_weight"
-                                    label={t("orders.row.weight")}
-                                />
+                                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
+                                {/*    name="kg_weight"*/}
+                                {/*    label={t("orders.row.weight")}*/}
+                                {/*/>*/}
                             </Box>
 
                             <Box sx={{display: 'flex', gap: 1}}>
@@ -181,6 +170,11 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                     name="selection_id"
                                     label={t("production.batch.selection")}
                                     options={selections.map(s => ({value: s.id, label: s.name}))}
+                                />
+                                <SelectFieldControlled<IDeliveryNoteRowForm>
+                                    name="processing_id"
+                                    label={t("production.batch.workings")}
+                                    options={workings.map(s => ({value: s.id, label: s.name}))}
                                 />
                             </Box>
 
@@ -241,9 +235,14 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                                     name="currency_change"
                                     label={t("orders.row.currency_exchange")}
                                 />
-                                <NumberFieldControlled<IDeliveryNoteRowForm>
-                                    name="currency_price"
+                                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
+                                {/*    name="currency_price"*/}
+                                {/*    label={t("orders.row.currency_price")}*/}
+                                {/*/>*/}
+                                <TextFieldValue
                                     label={t("orders.row.currency_price")}
+                                    value={deliveryNoteRow?.currency_price ?? undefined}
+                                    isFilled={!!deliveryNoteRow}
                                 />
                                 <TextFieldValue
                                     label={t("orders.row.total_currency_price")}

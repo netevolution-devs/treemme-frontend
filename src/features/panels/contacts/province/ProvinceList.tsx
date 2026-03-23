@@ -9,11 +9,13 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const ProvinceList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: provinces = [], isLoading} = provinceApi.useGetList();
 
     const {useStore} = usePanel<unknown, IProvinceStoreState>();
     const selectedProvinceId = useStore(state => state.uiState.selectedProvinceId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {data: provinces = [], isLoading} = provinceApi.useGetList();
+    const sortedProvinces = useMemo(() => provinces.sort((a, b) => a.acronym.localeCompare(b.acronym)), [provinces]);
 
     const columns = useMemo<MRT_ColumnDef<IProvince>[]>(() => [
         {
@@ -28,7 +30,7 @@ const ProvinceList = () => {
 
     return (
         <GenericList<IProvince>
-            data={provinces}
+            data={sortedProvinces}
             isLoading={isLoading}
             columns={columns}
             selectedId={selectedProvinceId}

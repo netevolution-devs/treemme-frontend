@@ -16,7 +16,7 @@ import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/ap
 export interface IDyeForm {
     quantity: number;
     scheduled_date: string;
-    machine_id: number;
+    machine_id?: number | null;
 }
 
 const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
@@ -42,24 +42,25 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 dialogRef={ref}
                 bypassConfirm
                 emptyValues={{
-                    quantity: 0,
+                    quantity: null as unknown as number,
                     scheduled_date: '',
-                    machine_id: 0
+                    machine_id: null
                 }}
                 mapEntityToForm={() => ({
                     quantity: 0,
                     scheduled_date: '',
-                    machine_id: 0
+                    machine_id: null
                 })}
                 create={(data) => {
-                    if (!selectedOrderRowId) return;
+                    if (!selectedOrderRowId && !data.machine_id) return;
                     return createBatchDye({
                         ...data,
-                        client_order_row_id: selectedOrderRowId
+                        machine_id: data.machine_id as number,
+                        client_order_row_id: selectedOrderRowId as number
                     });
                 }}
                 isSaving={isPending}
-                validateBeforeSave={(v) => v.quantity > 0 && !!v.scheduled_date && v.machine_id > 0}
+                validateBeforeSave={(v) => !!v.quantity && v.quantity > 0 && !!v.scheduled_date && !!v.machine_id}
                 renderFields={() => (
                     <>
                         <Box sx={{mb: 1}}>

@@ -29,10 +29,10 @@ const ArticleList = () => {
                 accessorKey: "article_type.name",
                 header: t("products.articles.article_type"),
             },
-            {
-                accessorKey: "color",
-                header: t("products.articles.color"),
-            }
+            // {
+            //     accessorKey: "color",
+            //     header: t("products.articles.color"),
+            // }
         ],
         [t]
     );

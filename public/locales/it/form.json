@@ -196,6 +196,7 @@
   "production": {
     "title": "Produzione",
     "batch": {
+      "workings": "Lavorazione",
       "note": "Note composizione",
       "article": "Articolo",
       "batch_code": "Lotto",
@@ -289,6 +290,7 @@
     "destination": "Destinazione",
     "rows": "Righe ordine",
     "row": {
+      "selection": "Scelta",
       "article": "Articolo",
       "product": "Prodotto",
       "measurement_unit": "Unità di misura",
@@ -366,9 +368,12 @@
     }
   },
   "shipping": {
+    "subcontractor_clients": "Terzista/Cliente",
     "ddt_number": "Numero DDT",
     "ddt_date": "Data DDT",
     "ddt_start_date": "Data inizio trasporto",
+    "date_start": "Data inizio",
+    "date_end": "Data fine",
     "subcontractor": "Terzista",
     "reason": "Causale trasporto",
     "reasons": {
@@ -376,6 +381,7 @@
       "warehouse_movement_reason": "Causale magazzino"
     },
     "ddt_rows": {
+      "row": "Righe DDT",
       "half_piece": "Mezze",
       "whole_piece": "Intere",
       "row_note": "Note riga",
@@ -389,6 +395,7 @@
     "batch_quantity": "Quantità lotto",
     "production_note": "Note di produzione",
     "today": "Oggi",
-    "machine_name": "Macchinario"
+    "machine_name": "Macchinario",
+    "view_batch": "Vedi lotto"
   }
 }

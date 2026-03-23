@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin.ts";
 
 export interface IOriginPayload extends Omit<IOrigin, 'id' | 'area' | 'nation' | 'flay' | 'sea_shipment'> {

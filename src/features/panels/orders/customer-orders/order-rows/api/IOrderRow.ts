@@ -2,6 +2,7 @@ import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-uni
 import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
 import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
 
 export interface IOrderRow {
     id: number;
@@ -25,4 +26,5 @@ export interface IOrderRow {
     article: IArticle;
     client_order: ICustomerOrder;
     available_quantity: number;
+    selection: ISelection;
 }

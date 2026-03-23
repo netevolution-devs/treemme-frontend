@@ -32,22 +32,54 @@ const DateFieldFilter = ({ value, onFilterChange, ...props }: DateFieldFilterPro
         return () => clearTimeout(handler);
     }, [localValue, onFilterChange, value]);
 
+    const handleClear = () => {
+        setLocalValue(null);
+        onFilterChange(undefined);
+    };
+
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="it">
             <DatePicker
-                sx={{mt: 0.3}}
                 {...props}
                 value={localValue}
                 onChange={(newValue) => setLocalValue(newValue)}
                 slotProps={{
                     ...props.slotProps,
+                    field: {
+                        clearable: true,
+                        onClear: () => handleClear(),
+                    },
                     textField: {
                         size: "small",
+                        fullWidth: true,
                         ...props.slotProps?.textField,
+                        sx: {
+                            "& .MuiPickersInputBase-root": {
+                                paddingTop: "0 !important",
+                                paddingBottom: "0 !important",
+                                minHeight: "unset",
+                            },
+                            "& .MuiPickersSectionList-root": {
+                                paddingTop: "4px !important",
+                                paddingBottom: "4px !important",
+                            },
+                            "& .MuiInputAdornment-root": {
+                                height: "auto",
+                                maxHeight: "none",
+                            },
+                            ...props.slotProps?.textField,
+                        },
                     },
                     openPickerButton: {
                         size: "small",
                         ...props.slotProps?.openPickerButton,
+                        sx: {
+                            padding: "0px",
+                            "& .MuiSvgIcon-root": {
+                                fontSize: "1.2rem",
+                            },
+                            ...props.slotProps?.openPickerButton,
+                        },
                     },
                 }}
             />

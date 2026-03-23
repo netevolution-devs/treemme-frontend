@@ -64,7 +64,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
                 additionalOptions={{
                     enableTopToolbar: enableToolbar,
                     renderTopToolbar: () => <ListToolbar
-                        label={<Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1}}>{t("composition.title")}</Typography>}
+                        label={<Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1, textWrap: 'nowrap'}}>{t("composition.title")}</Typography>}
                         buttons={[
                             <CustomButton
                                 color={"primary"}

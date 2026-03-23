@@ -17,9 +17,9 @@ import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormBut
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IOriginForm = Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment"> & {
-    nation_id: number;
-    flay_id: number;
-    area_id: number;
+    nation_id?: number | null;
+    flay_id?: number | null;
+    area_id?: number | null;
     crust_yield_coefficient?: number | null;
     grain_yield_coefficient?: number | null;
     psp_yield_coefficient?: number | null;
@@ -59,9 +59,9 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
             entity={origin}
             emptyValues={{
                 code: "",
-                area_id: 0,
-                nation_id: 0,
-                flay_id: 0,
+                area_id: null,
+                nation_id: null,
+                flay_id: null,
                 crust_yield_coefficient: null,
                 grain_yield_coefficient: null,
                 psp_yield_coefficient: null,

@@ -50,7 +50,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
                         onChange={(_, newValue) => {
-                            onChange(newValue ? newValue.value : 0);
+                            onChange(newValue ? newValue.value : null);
                         }}
                         onBlur={onBlur}
                         onKeyDown={(e) => {

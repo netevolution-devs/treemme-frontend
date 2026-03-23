@@ -7,6 +7,8 @@ import BatchesChronology from "@features/panels/production/batches/chronology/Ba
 import WarehouseMovementsList from "@features/panels/production/batches/movements/WarehouseMovementsList.tsx";
 import BatchesSelection from "@features/panels/production/batches/selection/BatchesSelection.tsx";
 import BatchesContent from "@features/panels/production/batches/BatchesContent.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IBatchesStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
@@ -16,7 +18,12 @@ export interface IBatchesStoreFilter {
     filterBatchCode?: string;
 }
 
-const BatchesPanel = () => {
+export interface IBatchesStoreParams {
+    id: number;
+    batch_code: string;
+}
+
+const BatchesPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchesStoreParams>>) => {
     const initialUiState: IBatchesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -27,7 +34,7 @@ const BatchesPanel = () => {
             <BatchesList/>
             <GenericTabContent
                 tabs={[
-                    {label: "Lotto", component: <BatchesContent/>},
+                    {label: "Lotto", component: <BatchesContent {...props.params}/>},
                     {label: "Cronologia", component: <BatchesChronology/>},
                     {label: "Scelte", component: <BatchesSelection/>},
                     {label: "Movimenti", component: <WarehouseMovementsList/>},

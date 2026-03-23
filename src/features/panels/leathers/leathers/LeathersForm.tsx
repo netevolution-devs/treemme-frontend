@@ -43,14 +43,14 @@ export type ILeatherForm = Omit<ILeather, "id"
     | "container_piece"
     | "crust_revenue_expected"
 > & {
-    supplier_id: number;
-    weight_id: number;
-    thickness_id: number;
-    flay_id: number;
-    status_id: number;
-    provenance_id: number;
-    species_id: number;
-    type_id: number;
+    supplier_id: number | null;
+    weight_id: number | null;
+    thickness_id: number | null;
+    flay_id: number | null;
+    status_id: number | null;
+    provenance_id: number | null;
+    species_id: number | null;
+    type_id: number | null;
     sqft_leather_expected?: number | null;
     kg_leather_expected?: number | null;
     container_piece?: number | null;
@@ -77,15 +77,14 @@ const LeathersForm = () => {
             selectedId={selectedLeatherId}
             entity={leather}
             emptyValues={{
-                supplier_id: 0,
-                weight_id: 0,
-                species_id: 0,
-                // supplier_id: 0,
-                thickness_id: 0,
-                flay_id: 0,
-                type_id: 0,
-                provenance_id: 0,
-                status_id: 0,
+                supplier_id: null,
+                weight_id: null,
+                species_id: null,
+                thickness_id: null,
+                flay_id: null,
+                type_id: null,
+                provenance_id: null,
+                status_id: null,
                 sqft_leather_expected: null,
                 kg_leather_expected: null,
                 statistic_update: true,
@@ -93,14 +92,14 @@ const LeathersForm = () => {
                 crust_revenue_expected: null,
             }}
             mapEntityToForm={(x) => ({
-                supplier_id: x.supplier.id,
-                weight_id: x.weight.id,
-                species_id: x.species.id,
-                thickness_id: x.thickness.id,
-                flay_id: x.flay.id,
-                type_id: x.type.id,
-                provenance_id: x.provenance.id,
-                status_id: x.status.id,
+                supplier_id: x.supplier?.id || null,
+                weight_id: x.weight?.id || null,
+                species_id: x.species?.id || null,
+                thickness_id: x.thickness?.id || null,
+                flay_id: x.flay?.id || null,
+                type_id: x.type?.id || null,
+                provenance_id: x.provenance?.id || null,
+                status_id: x.status?.id || null,
                 sqft_leather_expected: x.sqft_leather_expected,
                 kg_leather_expected: x.kg_leather_expected,
                 statistic_update: x.statistic_update,
@@ -337,7 +336,6 @@ const LeatherSelects = () => {
                         label: x.name,
                         value: x.id
                     }))}
-                    required
                     onNoOptionsMatch={(input) => {
                         addSelectPanel({
                             initialValue: input,

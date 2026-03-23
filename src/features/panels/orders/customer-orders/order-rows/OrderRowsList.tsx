@@ -58,7 +58,6 @@ const OrderRowsList = () => {
             <DyeFormDialog ref={dyeDialogRef}/>
             <RefinementFormDialog ref={refinementDialogRef}/>
 
-            <Typography variant={"h5"}>{t("orders.rows")}</Typography>
             <GenericList<IOrderRow>
                 data={orderRows}
                 columns={columns}
@@ -88,8 +87,13 @@ const OrderRowsList = () => {
                     renderTopToolbar:
                         <ListToolbar
                             buttons={[
-                                <NewButton onClick={() => handleOpenCreateRowDialog()}/>
+                                <NewButton
+                                    isEnable={!!selectedCustomerOrderId}
+                                    onClick={() => handleOpenCreateRowDialog()}
+                                />
                             ]}
+                            label={<Typography variant={"h5"}>{t("orders.rows")}</Typography>}
+                            sx={{mt: 0}}
                         />
                 }}
             />

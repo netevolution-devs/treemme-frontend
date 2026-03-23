@@ -18,6 +18,10 @@ const MachineryList = () => {
     const columns = useMemo<MRT_ColumnDef<IMachine>[]>(
         () => [
             {
+                accessorKey: "prefix",
+                header: t("production.machinery.prefix"),
+            },
+            {
                 accessorKey: "name",
                 header: t("production.machinery.name"),
             }

@@ -31,8 +31,8 @@ export type IContactForm = Omit<IContact, 'id'
     | 'tolerance_quantity'
     | 'tolerance_start_days'
 > & {
-    contact_title_id: number;
-    contact_type_id: number;
+    contact_title_id: number | null;
+    contact_type_id: number | null;
     tolerance_quantity: number | null;
     tolerance_start_days: number | null;
     agent_percentage: number | null;
@@ -73,8 +73,8 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
             emptyValues={{
                 name: initialName ?? '',
                 contact_note: '',
-                contact_title_id: 0,
-                contact_type_id: 0,
+                contact_title_id: null,
+                contact_type_id: null,
                 client: false,
                 supplier: extra?.supplier ?? false,
                 agent: false,
@@ -88,8 +88,8 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
             mapEntityToForm={(x) => ({
                 name: x.name,
                 contact_note: x.contact_note,
-                contact_title_id: x.contact_title.id,
-                contact_type_id: x.contact_type.id,
+                contact_title_id: x.contact_title?.id || null,
+                contact_type_id: x.contact_type?.id || null,
                 client: x.client,
                 supplier: x.supplier,
                 agent: x.agent,
@@ -101,6 +101,11 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 agent_percentage: x.agent_percentage,
             })}
             create={(payload) => createContact(payload)}
+            onCreateSuccess={(id) => {
+                setUIState({selectedContactId: id});
+                setUIState({selectedAddressId: null});
+                setUIState({selectedDetailId: null});
+            }}
             update={(id, payload) => updateContact({id, payload})}
             remove={(id) => deleteContact(id)}
             isSaving={isPosting || isPutting}
@@ -129,9 +134,11 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
 
     return (
         <>
+            {/* Contact typology selection */}
             <Box>
-                <Typography
-                    color={!isFormDisabled ? "text.primary" : "textDisabled"}>{t("contacts.select")}</Typography>
+                <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"}>
+                    {t("contacts.select")}
+                </Typography>
                 <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, ml: 1}}>
                     <FlagCheckBoxFieldControlled<IContactForm>
                         name="client"
@@ -155,6 +162,8 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
                     />
                 </Box>
             </Box>
+
+            {/* Contact type selection */}
             <RadioFieldControlled<IContactForm>
                 name="contact_type_id"
                 label={t("contacts.type")}
@@ -164,6 +173,8 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
                 })) || []}
                 required
             />
+
+            {/* Basic information */}
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <SelectFieldControlled<IContactForm>
                     name="contact_title_id"
