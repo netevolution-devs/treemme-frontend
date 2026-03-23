@@ -96,7 +96,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 entity={orderRow}
                 emptyValues={{
                     // product_id: 0,
-                    measurement_unit_id: null,
+                    measurement_unit_id: measurementUnits.find(x => x.name === "Metri quadrati")?.id || null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
                     processed: false,
                     cancelled: false,

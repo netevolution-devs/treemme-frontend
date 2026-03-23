@@ -99,8 +99,8 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                 entity={batchItem}
                 emptyValues={{
                     leather_id: null,
-                    batch_type_id: null,
-                    measurement_unit_id: null,
+                    batch_type_id: batchTypes.find(x => x.name === "Partita")?.id || null,
+                    measurement_unit_id: measurementUnits.find(x => x.name === "Piedi quadrati")?.id || null,
                     completed: false,
                     checked: false,
                     batch_date: dayjs(Date.now()).format('YYYY-MM-DD'),
