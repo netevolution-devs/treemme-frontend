@@ -16,7 +16,9 @@ import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts"
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
-export type IOriginForm = Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment"> & {
+export type IOriginForm =
+    Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment">
+    & {
     nation_id?: number | null;
     flay_id?: number | null;
     area_id?: number | null;
@@ -62,9 +64,9 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 area_id: null,
                 nation_id: null,
                 flay_id: null,
-                crust_yield_coefficient: null,
-                grain_yield_coefficient: null,
-                psp_yield_coefficient: null,
+                crust_yield_coefficient: 1,
+                grain_yield_coefficient: 1,
+                psp_yield_coefficient: 1,
                 sea_shipment: false,
                 trip_day: null,
             }}
@@ -80,15 +82,15 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 trip_day: x.trip_day,
             })}
             create={(payload) => createOrigin(payload as IOriginPayload)}
-            update={(id, payload) => updateOrigin({ id, payload: payload as IOriginPayload })}
+            update={(id, payload) => updateOrigin({id, payload: payload as IOriginPayload})}
             remove={(id) => deleteOrigin(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
-            onClearSelection={() => setUIState({ selectedOriginId: null })}
-            validateBeforeSave={(v) => !!v.code && !!v.nation_id && !!v.flay_id}
+            onClearSelection={() => setUIState({selectedOriginId: null})}
+            validateBeforeSave={(v) => !!v.code && !!v.nation_id && !!v.flay_id && !!v.psp_yield_coefficient && !!v.crust_yield_coefficient && !!v.grain_yield_coefficient}
             renderFields={() => (
                 <>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{display: 'flex', gap: 1}}>
                         <TextFieldControlled<IOriginForm>
                             name="code"
                             label={t("leathers.origin.code")}
@@ -106,46 +108,49 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                             label={t("leathers.origin.sea-shipment")}
                         />
                     </Box>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{display: 'flex', gap: 1}}>
                         <SelectFieldControlled<IOriginForm>
                             name="nation_id"
                             label={t("nations.name")}
-                            options={nations.map(n => ({ value: n.id, label: n.name }))}
+                            options={nations.map(n => ({value: n.id, label: n.name}))}
                             minWidth={"49.6%"}
                             required
                         />
                         <SelectFieldControlled<IOriginForm>
                             name="area_id"
                             label={t("leathers.origin.area")}
-                            options={areas.map(n => ({ value: n.id, label: n.name }))}
+                            options={areas.map(n => ({value: n.id, label: n.name}))}
                             minWidth={"50%"}
                         />
                     </Box>
                     <SelectFieldControlled<IOriginForm>
                         name="flay_id"
                         label={t("leathers.origin.flay")}
-                        options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
+                        options={flays.map(f => ({value: f.id, label: `${f.code} - ${f.name}`}))}
                         minWidth={"50%"}
                         required
                     />
-                    <Box sx={{ display: 'flex', gap: 1 }}>
+                    <Box sx={{display: 'flex', gap: 1}}>
                         <NumberFieldControlled<IOriginForm>
                             name="psp_yield_coefficient"
                             label={t("leathers.origin.psp-yield-coefficient")}
                             precision={3}
-                            step={0.001}
+                            step={1}
+                            required
                         />
                         <NumberFieldControlled<IOriginForm>
                             name="grain_yield_coefficient"
                             label={t("leathers.origin.grain-yield-coefficient")}
                             precision={3}
-                            step={0.001}
+                            step={1}
+                            required
                         />
                         <NumberFieldControlled<IOriginForm>
                             name="crust_yield_coefficient"
                             label={t("leathers.origin.crust-yield-coefficient")}
                             precision={3}
-                            step={0.001}
+                            step={1}
+                            required
                         />
                     </Box>
                 </>
