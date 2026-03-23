@@ -11,14 +11,15 @@ import {Box} from "@mui/material";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm.tsx";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 
 export type ITypeForm = Omit<ILeatherType, "id" | "thickness"> & {
     thickness_id: number | null;
 };
 
 const TypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
-    const {t} = useTranslation(["form"]);
-
     const {useStore} = usePanel<unknown, ITypesStoreState>();
     const selectedTypeId = useStore(state => state.uiState.selectedTypeId);
     const setUIState = useStore(state => state.setUIState);
@@ -36,9 +37,6 @@ const TypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {mutateAsync: createType, isPending: isPosting} = usePost();
     const {mutateAsync: updateType, isPending: isPutting} = usePut();
     const {mutateAsync: deleteType, isPending: isDeleting} = useDelete();
-
-    const {useGetList: useGetThicknesses} = thicknessApi;
-    const {data: thicknesses} = useGetThicknesses();
 
     return (
         <GenericForm<ITypeForm, ILeatherType, ITypesStoreState>
@@ -62,32 +60,55 @@ const TypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedTypeId: null})}
             validateBeforeSave={(v) => !!v.name && !!v.code && !!v.thickness_id}
-            renderFields={() => (
-                <>
-                    <Box sx={{display: 'flex', gap: 1}}>
-                        <TextFieldControlled<ITypeForm>
-                            name={"code"}
-                            label={t("leathers.type.code")}
-                            required
-                        />
-                        <TextFieldControlled<ITypeForm>
-                            name={"name"}
-                            label={t("leathers.type.name")}
-                            required
-                        />
-                    </Box>
-                    <SelectFieldControlled<ITypeForm>
-                        name={"thickness_id"}
-                        label={t("leathers.type.thickness")}
-                        options={thicknesses?.map(x => ({
-                            label: x.name,
-                            value: x.id
-                        })) || []}
-                        required
-                    />
-                </>
-            )}
+            renderFields={() => <TypesFormFields/>}
         />
+    )
+}
+
+const TypesFormFields = () => {
+    const {t} = useTranslation(["form"]);
+
+    const {data: thicknesses = []} = thicknessApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+    useSubscribePanel<ILeatherForm>({
+        formKey: "thickness_id",
+        dependencyKey: "thicknesses"
+    });
+
+    return (
+        <>
+            <Box sx={{display: 'flex', gap: 1}}>
+                <TextFieldControlled<ITypeForm>
+                    name={"code"}
+                    label={t("leathers.type.code")}
+                    required
+                />
+                <TextFieldControlled<ITypeForm>
+                    name={"name"}
+                    label={t("leathers.type.name")}
+                    required
+                />
+            </Box>
+            <SelectFieldControlled<ILeatherForm>
+                name={"thickness_id"}
+                label={t("leathers.leather.thickness")}
+                options={thicknesses.map((x) => ({
+                    label: x.name,
+                    value: x.id
+                }))}
+                required
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "thicknesses",
+                            i18nKey: "menu.leathers.thicknesses",
+                        }
+                    })
+                }}
+            />
+        </>
     )
 }
 
