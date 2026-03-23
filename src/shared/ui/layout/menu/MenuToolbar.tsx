@@ -48,7 +48,8 @@ const MenuToolbar = () => {
                         flexDirection: 'row',
                         justifyContent: 'flex-end',
                         gap: 2,
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        mr: 1
                     }}>
                         <ThemeSwitch showText={false} size={"small"}/>
                         <Avatar

@@ -1,14 +1,17 @@
 import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
+import type {MenuIconKey} from "@ui/layout/menu/MenuIcons.tsx";
 
 export interface IMenuEntry {
     i18nKey: string;
     subMenu?: IMenuEntry[];
     component?: TPanelKind;
+    icon?: MenuIconKey;
 }
 
 export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.contacts.self",
+        icon: "CONTACTS",
         subMenu: [
             {i18nKey: "menu.contacts.contacts", component: "contacts"},
             {i18nKey: "menu.contacts.cap", component: "cap"},
@@ -19,6 +22,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.leathers.self",
+        icon: "LEATHERS",
         subMenu: [
             {i18nKey: "menu.leathers.leathers", component: "leathers"},
             {i18nKey: "menu.leathers.weights", component: "weights"},
@@ -33,6 +37,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.products.self",
+        icon: "PRODUCTS",
         subMenu: [
             {i18nKey: "menu.products.products", component: "products"},
             {i18nKey: "menu.products.articles", component: "articles"},
@@ -45,6 +50,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.orders.self",
+        icon: "ORDERS",
         subMenu: [
             {i18nKey: "menu.orders.customer-orders", component: "customerOrders"},
             // {i18nKey: "menu.orders.supplier-orders"},
@@ -55,6 +61,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.warehouse.self",
+        icon: "WAREHOUSE",
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.warehouse.movements"},
@@ -66,6 +73,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.production.self",
+        icon: "PRODUCTION",
         subMenu: [
             {i18nKey: "menu.production.batches", component: "batches"},
             // {i18nKey: "menu.production.recipes"},
@@ -81,6 +89,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.shipping-invoicing.self",
+        icon: "SHIPPING-INVOICING",
         subMenu: [
             {i18nKey: "menu.shipping-invoicing.delivery-notes", component: "deliveryNotes"},
             {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
@@ -91,6 +100,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.commercial.self",
+        icon: "COMMERCIAL",
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.commercial.customers"},
@@ -104,6 +114,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.analysis.self",
+        icon: "ANALYSIS",
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.analysis.orders"},
@@ -122,6 +133,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.system.self",
+        icon: "SYSTEM",
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.system.info"},
