@@ -11,9 +11,10 @@ interface CustomButtonProps {
     isEnable?: boolean;
     icon: ReactNode;
     variant?: "text" | "outlined" | "contained";
+    minWidth?: number;
 }
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon, variant = "outlined"}: CustomButtonProps) => {
+const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon, variant = "outlined", minWidth = 100}: CustomButtonProps) => {
     const {t} = useTranslation(["common"]);
 
     return (
@@ -25,7 +26,7 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             startIcon={icon}
             sx={{
                 height: "100%",
-                minWidth: 100,
+                minWidth: minWidth,
                 fontWeight: 'bold',
                 textTransform: 'none'
             }}

@@ -277,7 +277,7 @@ const LeatherSelects = () => {
                     name={"provenance_id"}
                     label={t("leathers.leather.origin")}
                     options={origins.map((x) => ({
-                        label: `${x.nation.name} - ${x.area.name}`,
+                        label: `${x.nation.name} - ${x.area?.name ?? ''}`,
                         value: x.id
                     }))}
                     required

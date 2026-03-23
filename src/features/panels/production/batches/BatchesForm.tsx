@@ -28,6 +28,7 @@ import BatchesSplitFormDialog from "@features/panels/production/batches/split/Ba
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons.tsx";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -60,6 +61,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
+    const isFormDisabled = useStore((state) => state.uiState.isFormDisabled);
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
     const setFilters = useStore((state) => state.setFilters);
@@ -249,6 +251,18 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                                     deactivated={!!batchItem}
                                     required
                                 />
+                                <Box sx={{mb: 1}}>
+                                    <CustomButton
+                                        isEnable={!isFormDisabled}
+                                        minWidth={30}
+                                        label={(t("production.batch.leather"))}
+                                        color={"primary"}
+                                        icon={<TMLeatherIcon/>}
+                                        onClick={() => {
+
+                                        }}
+                                    />
+                                </Box>
                             </Box>
                         )}
                         {batchItem?.article && (
