@@ -46,7 +46,7 @@ const UserProfileCard = (
     // const updateUserDialogRef = useRef<IDialogActions>(null);
 
     return (
-        <Card elevation={2}>
+        <Card variant={"outlined"}>
             {/*<UpdateUserDialog ref={updateUserDialogRef} userCode={user?.userCode as string} isProfile/>*/}
 
             <CardContent>
