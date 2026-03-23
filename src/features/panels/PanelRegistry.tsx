@@ -76,20 +76,23 @@ export const PANEL_REGISTRY: DockviewComponents = {
     flaying:        (props) => <FlayingPanel {...props}/>,
     tanningStages:  (props) => <TanningStagesPanel {...props}/>,
     origins:        (props) => <OriginsPanel {...props}/>,
-    // production
-    batches: (props) => <BatchesPanel {...props}/>,
+    // products
+    products:           () => <ProductsPanel/>,
+    articles:           () => <ArticlesPanel/>,
+    selection:          () => <SelectionPanel />,
+    productCategories:  () => <ProductCategoriesPanel/>,
+    productTypes:       () => <ProductTypesPanel/>,
+    articleTypes:       (props) => <ArticleTypesPanel {...props}/>,
+    // orders
     customerOrders: () => <CustomerOrdersPanel/>,
-    products: () => <ProductsPanel/>,
-    productCategories: () => <ProductCategoriesPanel/>,
-    productTypes: () => <ProductTypesPanel/>,
-    articles: () => <ArticlesPanel/>,
-    machinery: () => <MachineryPanel/>,
-    articleTypes: (props) => <ArticleTypesPanel {...props}/>,
-    deliveryNotes: () => <DeliveryNotesPanel />,
-    reasons: () => <ReasonsPanel />,
-    selection: () => <SelectionPanel />,
-    subcontractingNotReturned: () => <SubcontractingNotReturnedPanel />,
-    processes: () => <ProcessesPanel />,
-    workings: () => <WorkingsPanel />,
+    // production
+    batches:    (props) => <BatchesPanel {...props}/>,
+    machinery:  () => <MachineryPanel/>,
+    processes:  () => <ProcessesPanel />,
+    workings:   () => <WorkingsPanel />,
+    // ddt
+    deliveryNotes:              () => <DeliveryNotesPanel />,
+    reasons:                    () => <ReasonsPanel />,
+    subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     "not-implemented": () => <>To implement</>,
 }
