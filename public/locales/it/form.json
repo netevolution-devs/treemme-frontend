@@ -156,7 +156,7 @@
       "psp-yield-coefficient": "Coefficiente resa PSP",
       "sea-shipment": "Spedizione mare",
       "trip-day": "Giorni viaggio",
-      "flay": "Scortico predefinito"
+      "flay": "Scuoiatura predefinita"
     },
     "leather": {
       "code": "Codice",
@@ -168,7 +168,7 @@
       "status": "Stato lavorazione",
       "thickness": "Spessore",
       "weight": "Peso",
-      "flay": "Scortico",
+      "flay": "Scuoiatura",
       "container-piece": "Nr x Cnt",
       "crust-revenue-expected": "Ricavi crosta",
       "sqft-leather-expected": "RPQ",
