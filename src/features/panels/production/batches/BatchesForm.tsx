@@ -29,6 +29,7 @@ import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons.tsx";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -61,7 +62,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
-    const isFormDisabled = useStore((state) => state.uiState.isFormDisabled);
+    const isEditMode = useStore((state) => state.uiState.buttonsState.edit);
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
     const setFilters = useStore((state) => state.setFilters);
@@ -74,9 +75,6 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
 
     const {useGetList: useGetBatchTypes} = batchTypeApi;
     const {data: batchTypes = []} = useGetBatchTypes();
-
-    const {useGetList: useGetLeathers} = leatherApi;
-    const {data: leathers = []} = useGetLeathers();
 
     const {useGetList: useGetMeasurementUnits} = measurementUnitApi;
     const {data: measurementUnits = []} = useGetMeasurementUnits();
@@ -244,25 +242,10 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
 
                         {(!batchItem || batchItem.leather) && (
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                                <SelectFieldControlled<IBatchesForm>
-                                    name="leather_id"
-                                    label={t("production.batch.leather")}
-                                    options={leathers.map(x => ({label: x.name, value: x.id}))}
-                                    deactivated={!!batchItem}
-                                    required
+                                <BatchesSelectLeather
+                                    isEdit={isEditMode}
+                                    batchItem={batchItem}
                                 />
-                                <Box sx={{mb: 1}}>
-                                    <CustomButton
-                                        isEnable={!isFormDisabled}
-                                        minWidth={30}
-                                        label={(t("production.batch.leather"))}
-                                        color={"primary"}
-                                        icon={<TMLeatherIcon/>}
-                                        onClick={() => {
-
-                                        }}
-                                    />
-                                </Box>
                             </Box>
                         )}
                         {batchItem?.article && (
@@ -319,6 +302,52 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                     </>
                 )}
             />
+        </>
+    )
+}
+
+interface IBatchSelectLeatherProps {
+    isEdit?: boolean;
+    batchItem: IBatch | undefined;
+}
+
+const BatchesSelectLeather = ({batchItem, isEdit = false}: IBatchSelectLeatherProps) => {
+    const {t} = useTranslation(["form"]);
+
+    const {data: leathers = []} = leatherApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    return (
+        <>
+            <SelectFieldControlled<IBatchesForm>
+                name="leather_id"
+                label={t("production.batch.leather")}
+                options={leathers.map(x => ({label: x.name, value: x.id}))}
+                deactivated={!!batchItem}
+                required
+            />
+            <Box sx={{mb: 1}}>
+                <CustomButton
+                    isEnable={isEdit}
+                    minWidth={30}
+                    label={(t("production.batch.leather"))}
+                    color={"primary"}
+                    icon={<TMLeatherIcon/>}
+                    onClick={() => {
+                        addSelectPanel({
+                            initialValue: "",
+                            menu: {
+                                component: "leathers",
+                                i18nKey: "menu.leathers.leathers"
+                            },
+                            extra: {
+                                leatherId: batchItem?.leather?.id || null,
+                            }
+                        })
+                    }}
+                />
+            </Box>
         </>
     )
 }

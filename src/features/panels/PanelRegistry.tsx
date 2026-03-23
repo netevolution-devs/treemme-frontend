@@ -68,7 +68,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     nations:    (props) => <NationsPanel {...props}/>,
     seaports:   () => <SeaportsPanel/>,
     // leathers
-    leathers:       () => <LeathersPanel/>,
+    leathers:       (props) => <LeathersPanel {...props}/>,
     weights:        (props) => <WeightsPanel {...props}/>,
     species:        (props) => <SpeciesPanel {...props}/>,
     thicknesses:    (props) => <ThicknessesPanel {...props}/>,

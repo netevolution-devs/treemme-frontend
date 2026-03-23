@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
+import type {ILeathersStoreState, ILeatherStoreParams} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
 import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
 import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
@@ -19,6 +19,8 @@ import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
 import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {useEffect} from "react";
 
 export type ILeatherForm = Omit<ILeather, "id"
     | "contact"
@@ -57,20 +59,25 @@ export type ILeatherForm = Omit<ILeather, "id"
     crust_revenue_expected?: number | null;
 };
 
-const LeathersForm = () => {
+const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ILeathersStoreState>();
     const selectedLeatherId = useStore(state => state.uiState.selectedLeatherId);
-    const setUIState = useStore(state => state.setUIState);
-
     const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+    const setUIState = useStore(state => state.setUIState);
 
     const {useGetDetail, usePost, usePut, useDelete} = leatherApi;
     const {data: leather} = useGetDetail(selectedLeatherId);
     const {mutateAsync: createLeather, isPending: isPosting} = usePost();
     const {mutateAsync: updateLeather, isPending: isPutting} = usePut();
     const {mutateAsync: deleteLeather, isPending: isDeleting} = useDelete();
+
+    useEffect(() => {
+        if (extra?.leatherId) {
+            setUIState({selectedLeatherId: extra.leatherId});
+        }
+    }, [extra]);
 
     return (
         <GenericForm<ILeatherForm, ILeather, ILeathersStoreState>

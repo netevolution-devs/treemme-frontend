@@ -3,6 +3,8 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import LeathersList from "@features/panels/leathers/leathers/LeathersList.tsx";
 import LeathersForm from "@features/panels/leathers/leathers/LeathersForm.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface ILeathersStoreState extends IPanelUIState {
     selectedLeatherId?: number | null;
@@ -12,7 +14,11 @@ export interface ILeatherStoreFilter {
     filterProvenance?: string;
 }
 
-const LeathersPanel = () => {
+export interface ILeatherStoreParams {
+    leatherId?: number;
+}
+
+const LeathersPanel = (props: IDockviewPanelProps<ICustomPanelProps<ILeatherStoreParams>>) => {
     const initialUiState: ILeathersStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -21,7 +27,7 @@ const LeathersPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <LeathersList enableFilters={false}/>
-            <LeathersForm />
+            <LeathersForm {...props.params}/>
         </GenericPanel>
     )
 }
