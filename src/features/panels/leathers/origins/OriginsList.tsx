@@ -20,11 +20,14 @@ const OriginsList = () => {
         {
             accessorKey: "code",
             header: t("leathers.origin.code"),
-            size: 0
         },
         {
             accessorKey: "nation.name",
             header: t("nations.name"),
+        },
+        {
+            accessorKey: "area.name",
+            header: t("leathers.origin.area"),
         },
     ], [t]);
 
