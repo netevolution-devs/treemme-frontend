@@ -405,6 +405,7 @@
     "sign": "Simbolo",
     "abbreviation": "Sigla",
     "last_rate": "Ultimo cambio",
-    "change_value": "Cambio"
+    "change_value": "Cambio",
+    "date": "Data cambio"
   }
 }
