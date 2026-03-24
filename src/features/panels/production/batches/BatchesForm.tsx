@@ -63,6 +63,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
     const isEditMode = useStore((state) => state.uiState.buttonsState.edit);
+    const isSaveMode = useStore((state) => state.uiState.buttonsState.save);
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
     const setFilters = useStore((state) => state.setFilters);
@@ -243,7 +244,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                         {(!batchItem || batchItem.leather) && (
                             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                                 <BatchesSelectLeather
-                                    isEdit={isEditMode}
+                                    isEdit={isEditMode || isSaveMode}
                                     batchItem={batchItem}
                                 />
                             </Box>
