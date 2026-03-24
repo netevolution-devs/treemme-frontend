@@ -382,6 +382,12 @@
       "return": "Rientra lotto"
     }
   },
+  "user_management": {
+    "user_code": "Codice Utente",
+    "email": "Email",
+    "last_access": "Ultimo Accesso",
+    "password": "Password"
+  },
   "processes": {
     "scheduled_date": "Data programmazione",
     "batch_code": "Codice lotto",
