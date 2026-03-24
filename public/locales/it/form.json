@@ -404,6 +404,7 @@
     "name": "Nome",
     "sign": "Simbolo",
     "abbreviation": "Sigla",
-    "last_rate": "Ultimo cambio"
+    "last_rate": "Ultimo cambio",
+    "change_value": "Cambio"
   }
 }

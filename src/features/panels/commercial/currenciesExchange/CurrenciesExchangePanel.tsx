@@ -7,6 +7,7 @@ import CurrenciesExchangeList from "@features/panels/commercial/currenciesExchan
 
 export interface ICurrenciesExchangeStoreState extends IPanelUIState {
     selectedCurrencyId?: number | null;
+    selectedCurrencyExchangeId?: number | null;
 }
 
 const CurrenciesExchangePanel = () => {
