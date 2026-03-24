@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 
-type Props = unknown;
+type Props = { currencyId: number };
 
 export type ICurrenciesExchangeForm = {
     date: string;
@@ -21,13 +21,13 @@ export type ICurrenciesExchangeForm = {
     currency_id: number | null;
 }
 
-const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId}, ref) => {
     const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, ICurrenciesExchangeStoreState>();
     const selectedCurrencyId = useStore((state) => state.uiState.selectedCurrencyId);
 
-    const {mutateAsync: createExchange, isPending} = currencyChangeApi.usePost();
+    const {mutateAsync: createExchange, isPending} = currencyChangeApi.usePost({invalidateQueries: ['CURRENCY', 'LIST']});
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -42,22 +42,22 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>((_props, 
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
                     change_value: null,
-                    currency_id: null,
+                    currency_id: currencyId ?? null,
                 }}
                 emptyValues={{
                     date: dayjs().format("YYYY-MM-DD"),
-                    currency_id: null,
                     change_value: null,
+                    currency_id: currencyId ?? null,
                 }}
                 mapEntityToForm={(x) => ({
                     date: x.date,
-                    change_value: x.change_value,
-                    currency_id: null,
+                    change_value: null,
+                    currency_id: currencyId ?? null,
                 })}
                 create={(payload) => createExchange({
                     date: payload.date,
                     change_value: payload.change_value,
-                    currency_id: selectedCurrencyId as number
+                    currency_id: selectedCurrencyId as number || currencyId
                 })}
                 validateBeforeSave={(v) => !!v.date && !!v.change_value}
                 extraButtons={[

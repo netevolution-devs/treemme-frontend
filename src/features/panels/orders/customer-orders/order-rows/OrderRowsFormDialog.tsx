@@ -6,7 +6,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef, useMemo, useRef} from "react";
+import {forwardRef, useEffect, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
@@ -28,6 +28,7 @@ import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
 import CurrenciesExchangeFormDialog
     from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
+import {useWatch} from "react-hook-form";
 
 type Props = unknown;
 
@@ -62,8 +63,6 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {useGetDetail, usePost, usePut, useDelete} = orderRowApi;
     const {data: orderRow} = useGetDetail(selectedOrderRowId);
 
-    const {data: order} = customerOrderApi.useGetDetail(selectedCustomerOrderId);
-
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
         invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
     });
@@ -74,19 +73,11 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
         invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
     });
 
-    const {data: articles = []} = articleApi.useGetList({queryParams: {client: order?.client.id as number}});
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: currencies = []} = currencyApi.useGetList();
-    const {data: selections = []} = selectionApi.useGetList();
-
-    const currencyOptions = useMemo(() =>
-        currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
-    [currencies]);
 
     const dyeDialogRef = useRef<IDialogActions | null>(null);
     const refinementDialogRef = useRef<IDialogActions | null>(null);
-
-    const addExchangeDialogRef = useRef<IDialogActions | null>(null);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -181,166 +172,197 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     />,
                 ]}
                 renderFields={() => (
-                    <Stack gap={1}>
-                        <CurrenciesExchangeFormDialog ref={addExchangeDialogRef}/>
-
-                        <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_exchange"}/>
-                        <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
-                            <SelectFieldControlled<IOrderRowForm>
-                                name="article_id"
-                                label={t("orders.row.article")}
-                                options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
-                                required
-                            />
-                            <FlagCheckBoxFieldControlled<IOrderRowForm>
-                                name="processed"
-                                label={t("orders.row.processed")}
-                                disabled
-                            />
-                            <FlagCheckBoxFieldControlled<IOrderRowForm>
-                                name="cancelled"
-                                label={t("orders.row.cancelled")}
-                                disabled
-                            />
-                        </Box>
-
-                        <SelectFieldControlled<IOrderRowForm>
-                            name={"selection_id"}
-                            label={t("orders.row.selection")}
-                            options={selections?.map(s => ({value: s.id, label: s.name})) || []}
-                        />
-
-                        <Box sx={{display: 'flex', gap: 1}}>
-                            <SelectFieldControlled<IOrderRowForm>
-                                name="measurement_unit_id"
-                                label={t("orders.row.measurement_unit")}
-                                options={measurementUnits?.map(mu => ({value: mu.id, label: mu.name})) || []}
-                                required
-                            />
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="quantity"
-                                label={t("orders.row.quantity")}
-                                required
-                            />
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="tolerance_quantity_percentage"
-                                label={t("orders.row.tolerance_quantity_percentage")}
-                            />
-                        </Box>
-
-                        <Box sx={{display: 'flex', gap: 1, mb: 1.5}}>
-                            <DateFieldControlled<IOrderRowForm>
-                                name="delivery_date_request"
-                                label={t("orders.row.delivery_date_request")}
-                            />
-                            <DateFieldControlled<IOrderRowForm>
-                                name="delivery_date_confirmed"
-                                label={t("orders.row.delivery_date_confirmed")}
-                            />
-                        </Box>
-
-                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-                        {/*    <SelectFieldControlled<IOrderRowForm>*/}
-                        {/*        name="currency_id"*/}
-                        {/*        label={t("orders.row.currency")}*/}
-                        {/*        options={currencyOptions}*/}
-                        {/*    />*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="currency_price"*/}
-                        {/*        label={t("orders.row.currency_price")}*/}
-                        {/*    />*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="currency_exchange"*/}
-                        {/*        label={t("orders.row.currency_exchange")}*/}
-                        {/*    />*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="total_currency_price"*/}
-                        {/*        label={t("orders.row.total_currency_price")}*/}
-                        {/*    />*/}
-                        {/*</Box>*/}
-
-                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="price"*/}
-                        {/*        label={t("orders.row.price")}*/}
-                        {/*    />*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="total_price"*/}
-                        {/*        label={t("orders.row.total_price")}*/}
-                        {/*    />*/}
-                        {/*</Box>*/}
-
-                        <Box sx={{display: 'flex', gap: 1}}>
-                            <SelectFieldControlled<IOrderRowForm>
-                                name="currency_id"
-                                label={t("orders.row.currency")}
-                                options={currencyOptions}
-                            />
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="price"
-                                label={t("orders.row.price")}
-                            />
-                            <TextFieldValue
-                                label={t("orders.row.total_price")}
-                                value={orderRow?.total_price ?? undefined}
-                                isFilled={!!orderRow}
-                            />
-                        </Box>
-
-                        <Box sx={{display: 'flex', gap: 1}}>
-                            <NumberFieldControlled<IOrderRowForm>
-                                name="currency_exchange"
-                                label={t("orders.row.currency_exchange")}
-                            />
-                            <Box sx={{mb: 1}}>
-                                <NewButton
-                                    sx={{pr: 0}}
-                                    onClick={() => openDialog(addExchangeDialogRef)}
-                                    disableLabel
-                                />
-                            </Box>
-                            {/*<NumberFieldControlled<IOrderRowForm>*/}
-                            {/*    name="currency_price"*/}
-                            {/*    label={t("orders.row.currency_price")}*/}
-                            {/*/>*/}
-                            <TextFieldValue
-                                label={t("orders.row.currency_price")}
-                                value={orderRow?.currency_price ?? undefined}
-                                isFilled={!!orderRow}
-                            />
-                            <TextFieldValue
-                                label={t("orders.row.total_currency_price")}
-                                value={orderRow?.total_currency_price ?? undefined}
-                                isFilled={!!orderRow}
-                            />
-                        </Box>
-
-                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="agent_percentage_row"*/}
-                        {/*        label={t("orders.row.agent_percentage_row")}*/}
-                        {/*    />*/}
-                        {/*    <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="weight"*/}
-                        {/*        label={t("orders.row.weight")}*/}
-                        {/*    />*/}
-                        {/*</Box>*/}
-
-                        {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-                        {/*     <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="shipment_schedule"*/}
-                        {/*        label={t("orders.row.shipment_schedule")}*/}
-                        {/*    />*/}
-                        {/*     <NumberFieldControlled<IOrderRowForm>*/}
-                        {/*        name="production_schedule"*/}
-                        {/*        label={t("orders.row.production_schedule")}*/}
-                        {/*    />*/}
-                        {/*</Box>*/}
-                    </Stack>
+                    <OrderRowFormFields/>
                 )}
             />
         </BaseDialog>
     );
 });
+
+const OrderRowFormFields = () => {
+    const {t} = useTranslation(["form"]);
+
+    const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
+    const selectedCustomerOrderId = useStore(state => state.uiState.selectedCustomerOrderId);
+    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
+
+    const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
+    const {data: measurementUnits = []} = measurementUnitApi.useGetList();
+    const {data: currencies = []} = currencyApi.useGetList();
+    const {data: order} = customerOrderApi.useGetDetail(selectedCustomerOrderId);
+    const {data: articles = []} = articleApi.useGetList({queryParams: {client: order?.client.id as number}});
+    const {data: selections = []} = selectionApi.useGetList();
+
+    const currencyOptions = useMemo(() =>
+            currencies.map(c => ({value: c.id, label: `${c.abbreviation} - ${c.name}`})),
+        [currencies]);
+
+    const addExchangeDialogRef = useRef<IDialogActions | null>(null);
+
+    const watchedCurrencyId = useWatch<IOrderRowForm>({name: "currency_id"});
+
+    useEffect(() => {
+        console.log("watchedCurrencyId", watchedCurrencyId);
+    }, [watchedCurrencyId]);
+
+    return (
+        <Stack gap={1}>
+            <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_exchange"}/>
+            <CurrenciesExchangeFormDialog ref={addExchangeDialogRef} currencyId={watchedCurrencyId as number}/>
+
+            <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
+                <SelectFieldControlled<IOrderRowForm>
+                    name="article_id"
+                    label={t("orders.row.article")}
+                    options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
+                    required
+                />
+                <FlagCheckBoxFieldControlled<IOrderRowForm>
+                    name="processed"
+                    label={t("orders.row.processed")}
+                    disabled
+                />
+                <FlagCheckBoxFieldControlled<IOrderRowForm>
+                    name="cancelled"
+                    label={t("orders.row.cancelled")}
+                    disabled
+                />
+            </Box>
+
+            <SelectFieldControlled<IOrderRowForm>
+                name={"selection_id"}
+                label={t("orders.row.selection")}
+                options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+            />
+
+            <Box sx={{display: 'flex', gap: 1}}>
+                <SelectFieldControlled<IOrderRowForm>
+                    name="measurement_unit_id"
+                    label={t("orders.row.measurement_unit")}
+                    options={measurementUnits?.map(mu => ({value: mu.id, label: mu.name})) || []}
+                    required
+                />
+                <NumberFieldControlled<IOrderRowForm>
+                    name="quantity"
+                    label={t("orders.row.quantity")}
+                    required
+                />
+                <NumberFieldControlled<IOrderRowForm>
+                    name="tolerance_quantity_percentage"
+                    label={t("orders.row.tolerance_quantity_percentage")}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', gap: 1, mb: 1.5}}>
+                <DateFieldControlled<IOrderRowForm>
+                    name="delivery_date_request"
+                    label={t("orders.row.delivery_date_request")}
+                />
+                <DateFieldControlled<IOrderRowForm>
+                    name="delivery_date_confirmed"
+                    label={t("orders.row.delivery_date_confirmed")}
+                />
+            </Box>
+
+            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+            {/*    <SelectFieldControlled<IOrderRowForm>*/}
+            {/*        name="currency_id"*/}
+            {/*        label={t("orders.row.currency")}*/}
+            {/*        options={currencyOptions}*/}
+            {/*    />*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="currency_price"*/}
+            {/*        label={t("orders.row.currency_price")}*/}
+            {/*    />*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="currency_exchange"*/}
+            {/*        label={t("orders.row.currency_exchange")}*/}
+            {/*    />*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="total_currency_price"*/}
+            {/*        label={t("orders.row.total_currency_price")}*/}
+            {/*    />*/}
+            {/*</Box>*/}
+
+            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="price"*/}
+            {/*        label={t("orders.row.price")}*/}
+            {/*    />*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="total_price"*/}
+            {/*        label={t("orders.row.total_price")}*/}
+            {/*    />*/}
+            {/*</Box>*/}
+
+            <Box sx={{display: 'flex', gap: 1}}>
+                <SelectFieldControlled<IOrderRowForm>
+                    name="currency_id"
+                    label={t("orders.row.currency")}
+                    options={currencyOptions}
+                />
+                <NumberFieldControlled<IOrderRowForm>
+                    name="price"
+                    label={t("orders.row.price")}
+                />
+                <TextFieldValue
+                    label={t("orders.row.total_price")}
+                    value={orderRow?.total_price ?? undefined}
+                    isFilled={!!orderRow}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', gap: 1}}>
+                <NumberFieldControlled<IOrderRowForm>
+                    name="currency_exchange"
+                    label={t("orders.row.currency_exchange")}
+                />
+                <Box sx={{mb: 1}}>
+                    <NewButton
+                        sx={{pr: 0}}
+                        onClick={() => openDialog(addExchangeDialogRef)}
+                        disableLabel
+                    />
+                </Box>
+                {/*<NumberFieldControlled<IOrderRowForm>*/}
+                {/*    name="currency_price"*/}
+                {/*    label={t("orders.row.currency_price")}*/}
+                {/*/>*/}
+                <TextFieldValue
+                    label={t("orders.row.currency_price")}
+                    value={orderRow?.currency_price ?? undefined}
+                    isFilled={!!orderRow}
+                />
+                <TextFieldValue
+                    label={t("orders.row.total_currency_price")}
+                    value={orderRow?.total_currency_price ?? undefined}
+                    isFilled={!!orderRow}
+                />
+            </Box>
+
+            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="agent_percentage_row"*/}
+            {/*        label={t("orders.row.agent_percentage_row")}*/}
+            {/*    />*/}
+            {/*    <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="weight"*/}
+            {/*        label={t("orders.row.weight")}*/}
+            {/*    />*/}
+            {/*</Box>*/}
+
+            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
+            {/*     <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="shipment_schedule"*/}
+            {/*        label={t("orders.row.shipment_schedule")}*/}
+            {/*    />*/}
+            {/*     <NumberFieldControlled<IOrderRowForm>*/}
+            {/*        name="production_schedule"*/}
+            {/*        label={t("orders.row.production_schedule")}*/}
+            {/*    />*/}
+            {/*</Box>*/}
+        </Stack>
+    )
+}
 
 export default OrderRowsFormDialog;
