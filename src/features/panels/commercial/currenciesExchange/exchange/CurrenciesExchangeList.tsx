@@ -4,13 +4,16 @@ import type {
 } from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import {currencyChangeApi} from "@features/panels/commercial/currenciesExchange/api/currencyChangeApi.ts";
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ICurrencyChange} from "@features/panels/commercial/currenciesExchange/api/ICurrencyChange.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
 import dayjs from "dayjs";
+import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import CurrenciesExchangeFormDialog from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
 
 const CurrenciesExchangeList = () => {
     const {t} = useTranslation(["form"]);
@@ -33,27 +36,34 @@ const CurrenciesExchangeList = () => {
         }
     ], [t])
 
+    const addExchangeDialogRef = useRef<IDialogActions | null>(null);
+
     return (
-        <GenericList<ICurrencyChange>
-            data={selectedCurrencyId ? currenciesExchange : []}
-            isLoading={isLoading}
-            columns={columns}
-            selectedId={selectedCurrencyId}
-            onRowSelect={(id) => setUIState({selectedCurrencyId: id})}
-            additionalOptions={{
-                enableTopToolbar: true,
-                renderTopToolbar: () => (
-                    <ListToolbar
-                        buttons={[
-                            <NewButton
-                                isEnable={!!selectedCurrencyId}
-                                onClick={() => {}}
-                            />
-                        ]}
-                    />
-                )
-            }}
-        />
+        <>
+            <CurrenciesExchangeFormDialog ref={addExchangeDialogRef}/>
+            <GenericList<ICurrencyChange>
+                data={selectedCurrencyId ? currenciesExchange : []}
+                isLoading={isLoading}
+                columns={columns}
+                selectedId={selectedCurrencyId}
+                onRowSelect={(id) => setUIState({selectedCurrencyId: id})}
+                additionalOptions={{
+                    enableTopToolbar: true,
+                    renderTopToolbar: () => (
+                        <ListToolbar
+                            buttons={[
+                                <NewButton
+                                    isEnable={!!selectedCurrencyId}
+                                    onClick={() => {
+                                        openDialog(addExchangeDialogRef)
+                                    }}
+                                />
+                            ]}
+                        />
+                    )
+                }}
+            />
+        </>
     )
 }
 
