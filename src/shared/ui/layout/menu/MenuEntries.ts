@@ -123,11 +123,10 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.system.self",
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.system.info"},
             // {i18nKey: "menu.system.tools"},
             // {i18nKey: "menu.system.console"},
-            // {i18nKey: "menu.system.access-management"},
+            {i18nKey: "menu.system.access-management", component: "user-management"},
             // {i18nKey: "menu.system.logout"},
         ]
     }
