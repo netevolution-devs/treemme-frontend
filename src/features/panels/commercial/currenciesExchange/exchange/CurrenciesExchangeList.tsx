@@ -20,6 +20,7 @@ const CurrenciesExchangeList = () => {
 
     const {useStore} = usePanel<unknown, ICurrenciesExchangeStoreState>();
     const selectedCurrencyId = useStore((state) => state.uiState.selectedCurrencyId);
+    const selectedCurrencyExchangeId = useStore((state) => state.uiState.selectedCurrencyExchangeId);
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: currenciesExchange = [], isLoading} = currencyChangeApi.useGetList({queryParams: {currency: selectedCurrencyId as number}});
@@ -45,8 +46,8 @@ const CurrenciesExchangeList = () => {
                 data={selectedCurrencyId ? currenciesExchange : []}
                 isLoading={isLoading}
                 columns={columns}
-                selectedId={selectedCurrencyId}
-                onRowSelect={(id) => setUIState({selectedCurrencyId: id})}
+                selectedId={selectedCurrencyExchangeId}
+                onRowSelect={(id) => setUIState({selectedCurrencyExchangeId: id as number})}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar: () => (

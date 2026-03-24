@@ -30,11 +30,7 @@ const CurrenciesList = () => {
         {
             accessorKey: "name",
             header: t("currencies.name"),
-        },
-        {
-            accessorKey: "last_change",
-            header: t("currencies.last_rate"),
-        },
+        }
     ], [t])
 
     return (
