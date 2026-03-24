@@ -18,10 +18,10 @@ import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessA
 type Props = unknown;
 
 export type IBatchSelectionForm = {
-    batch_id: number;
-    selection_id: number;
-    thickness_id: number;
-    pieces: number;
+    batch_id: number | null;
+    selection_id: number | null;
+    thickness_id: number | null;
+    pieces: number | null;
 }
 
 const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -48,15 +48,15 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                 selectedId={selectedBatchId}
                 entity={{
                     batch_id: batch?.id as number,
-                    selection_id: 0,
-                    thickness_id: 0,
-                    pieces: 0
+                    selection_id: null,
+                    thickness_id: null,
+                    pieces: null
                 }}
                 emptyValues={{
                     batch_id: batch?.id as number,
-                    selection_id: 0,
-                    thickness_id: 0,
-                    pieces: 0
+                    selection_id: null,
+                    thickness_id: null,
+                    pieces: null
                 }}
                 mapEntityToForm={(x) => ({
                     batch_id: x.batch_id,
@@ -74,18 +74,20 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                         isSubmit
                     />
                 ]}
-                validateBeforeSave={(v) => v.selection_id > 0 && v.thickness_id > 0 && !!v.pieces}
+                validateBeforeSave={(v) => !!v.selection_id && !!v.thickness_id && !!v.pieces}
                 renderFields={() => (
                     <>
                         <SelectFieldControlled<IBatchSelectionForm>
                             name={"selection_id"}
                             label={t("production.batch.selection")}
                             options={selections.map((x) => ({label: x.name, value: x.id}))}
+                            required
                         />
                         <SelectFieldControlled<IBatchSelectionForm>
                             name={"thickness_id"}
                             label={t("leathers.type.thickness")}
                             options={thicknesses.map((x) => ({label: x.name, value: x.id}))}
+                            required
                         />
                         <NumberFieldControlled<IBatchSelectionForm>
                             name={"pieces"}
@@ -93,6 +95,7 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                             min={0}
                             max={batch?.batch_selections_count as number}
                             precision={0}
+                            required
                         />
                     </>
                 )}

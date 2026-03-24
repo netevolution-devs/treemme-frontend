@@ -23,12 +23,20 @@ const BatchesSelectionList = () => {
             header: t("production.batch.selections.pieces")
         },
         {
+            accessorKey: "stock_pieces",
+            header: t("production.batch.selections.stock_items")
+        },
+        {
             accessorKey: "selection.name",
             header: t("production.batch.selections.selection")
         },
         {
-            accessorKey: "stock_pieces",
-            header: t("production.batch.selections.stock_items")
+            accessorKey: "thickness.name",
+            header: t("production.batch.selections.thickness")
+        },
+        {
+            accessorKey: "note",
+            header: t("production.batch.selections.note")
         }
     ], [t]);
 

@@ -227,7 +227,9 @@
       "selections": {
         "pieces": "Pezzi totali",
         "stock_items": "Giacenza pezzi",
-        "selection": "Nome scelta"
+        "selection": "Tipo scelta",
+        "note": "Note scelta",
+        "thickness": "Spessore"
       },
       "father_batch": "Lotto padre",
       "machine": "Macchinario",
