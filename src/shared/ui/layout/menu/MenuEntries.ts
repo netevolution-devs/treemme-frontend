@@ -102,14 +102,13 @@ export const MenuEntries: IMenuEntry[] = [
         i18nKey: "menu.commercial.self",
         icon: "COMMERCIAL",
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.commercial.customers"},
             // {i18nKey: "menu.commercial.suppliers"},
             // {i18nKey: "menu.commercial.batch-data"},
             // {i18nKey: "menu.commercial.product-costs"},
             // {i18nKey: "menu.commercial.price-list"},
             // {i18nKey: "menu.commercial.work-reports"},
-            // {i18nKey: "menu.commercial.currencies-exchange"}
+            {i18nKey: "menu.commercial.currencies-exchange", component: "currenciesExchange" }
         ]
     },
     {
