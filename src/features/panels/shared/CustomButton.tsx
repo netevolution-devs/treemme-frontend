@@ -1,4 +1,4 @@
-import {Button, CircularProgress} from "@mui/material";
+import {Button, CircularProgress, type SxProps} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import type {ReactNode} from "react";
 import AddIcon from "@mui/icons-material/Add";
@@ -13,9 +13,10 @@ interface CustomButtonProps {
     icon: ReactNode;
     variant?: "text" | "outlined" | "contained";
     minWidth?: number;
+    sx?: SxProps;
 }
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, isLoading = false, icon, variant = "outlined", minWidth = 100}: CustomButtonProps) => {
+const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, isLoading = false, icon, variant = "outlined", minWidth = 100, sx}: CustomButtonProps) => {
     const {t} = useTranslation(["common"]);
 
     return (
@@ -29,7 +30,8 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
                 height: "100%",
                 minWidth: minWidth,
                 fontWeight: 'bold',
-                textTransform: 'none'
+                textTransform: 'none',
+                ...sx
             }}
             type={isSubmit ? "submit" : "button"}
             disabled={!isEnable || isLoading}
@@ -42,16 +44,20 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
 interface CustomButtonPropsEvent {
     onClick: () => void;
     isEnable?: boolean;
+    disableLabel?: boolean;
+    sx?: SxProps;
 }
 
-export const NewButton = ({onClick, isEnable = true}: CustomButtonPropsEvent) => {
+export const NewButton = ({onClick, isEnable = true, disableLabel = false, sx}: CustomButtonPropsEvent) => {
     return (
         <CustomButton
             onClick={onClick}
-            label={"button.new"}
+            label={!disableLabel ? "button.new" : ""}
             color={"primary"}
+            minWidth={disableLabel ? 0 : 100}
             icon={<AddIcon/>}
             isEnable={isEnable}
+            sx={sx as SxProps}
         />
     )
 }

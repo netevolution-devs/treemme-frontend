@@ -18,7 +18,7 @@ import {customerOrderApi} from "@features/panels/orders/customer-orders/api/cust
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import CustomButton, {NewButton} from "@features/panels/shared/CustomButton.tsx";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
 import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog.tsx";
 import RefinementFormDialog
@@ -26,6 +26,8 @@ import RefinementFormDialog
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
+import CurrenciesExchangeFormDialog
+    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
 
 type Props = unknown;
 
@@ -83,6 +85,8 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
 
     const dyeDialogRef = useRef<IDialogActions | null>(null);
     const refinementDialogRef = useRef<IDialogActions | null>(null);
+
+    const addExchangeDialogRef = useRef<IDialogActions | null>(null);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -178,6 +182,8 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 ]}
                 renderFields={() => (
                     <Stack gap={1}>
+                        <CurrenciesExchangeFormDialog ref={addExchangeDialogRef}/>
+
                         <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_exchange"}/>
                         <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                             <SelectFieldControlled<IOrderRowForm>
@@ -286,6 +292,13 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                                 name="currency_exchange"
                                 label={t("orders.row.currency_exchange")}
                             />
+                            <Box sx={{mb: 1}}>
+                                <NewButton
+                                    sx={{pr: 0}}
+                                    onClick={() => openDialog(addExchangeDialogRef)}
+                                    disableLabel
+                                />
+                            </Box>
                             {/*<NumberFieldControlled<IOrderRowForm>*/}
                             {/*    name="currency_price"*/}
                             {/*    label={t("orders.row.currency_price")}*/}
