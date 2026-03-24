@@ -15,8 +15,13 @@ import {originAreaApi} from "@features/panels/leathers/origins/api/origin-area/o
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm.tsx";
 
-export type IOriginForm = Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment"> & {
+export type IOriginForm =
+    Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment">
+    & {
     nation_id?: number | null;
     flay_id?: number | null;
     area_id?: number | null;
@@ -28,8 +33,6 @@ export type IOriginForm = Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp
 };
 
 const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
-    const {t} = useTranslation(["form"]);
-
     const {useStore} = usePanel<unknown, IOriginsStoreState>();
     const selectedOriginId = useStore(state => state.uiState.selectedOriginId);
     const setUIState = useStore(state => state.setUIState);
@@ -48,10 +51,6 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {mutateAsync: updateOrigin, isPending: isPutting} = usePut();
     const {mutateAsync: deleteOrigin, isPending: isDeleting} = useDelete();
 
-    const {data: nations = []} = nationsApi.useGetList();
-    const {data: areas = []} = originAreaApi.useGetList();
-    const {data: flays = []} = flayApi.useGetList();
-
     return (
         <GenericForm<IOriginForm, IOrigin, IOriginsStoreState>
             onSuccess={handlePanelSuccess}
@@ -62,9 +61,9 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 area_id: null,
                 nation_id: null,
                 flay_id: null,
-                crust_yield_coefficient: null,
-                grain_yield_coefficient: null,
-                psp_yield_coefficient: null,
+                crust_yield_coefficient: 1,
+                grain_yield_coefficient: 1,
+                psp_yield_coefficient: 1,
                 sea_shipment: false,
                 trip_day: null,
             }}
@@ -80,77 +79,130 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 trip_day: x.trip_day,
             })}
             create={(payload) => createOrigin(payload as IOriginPayload)}
-            update={(id, payload) => updateOrigin({ id, payload: payload as IOriginPayload })}
+            update={(id, payload) => updateOrigin({id, payload: payload as IOriginPayload})}
             remove={(id) => deleteOrigin(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
-            onClearSelection={() => setUIState({ selectedOriginId: null })}
-            validateBeforeSave={(v) => !!v.code && !!v.nation_id && !!v.flay_id}
-            renderFields={() => (
-                <>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <TextFieldControlled<IOriginForm>
-                            name="code"
-                            label={t("leathers.origin.code")}
-                            required
-                        />
-                        <NumberFieldControlled<IOriginForm>
-                            name="trip_day"
-                            label={t("leathers.origin.trip-day")}
-                            step={1}
-                            precision={0}
-                            maxWidth="200px"
-                        />
-                        <FlagCheckBoxFieldControlled<IOriginForm>
-                            name="sea_shipment"
-                            label={t("leathers.origin.sea-shipment")}
-                        />
-                    </Box>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <SelectFieldControlled<IOriginForm>
-                            name="nation_id"
-                            label={t("nations.name")}
-                            options={nations.map(n => ({ value: n.id, label: n.name }))}
-                            minWidth={"49.6%"}
-                            required
-                        />
-                        <SelectFieldControlled<IOriginForm>
-                            name="area_id"
-                            label={t("leathers.origin.area")}
-                            options={areas.map(n => ({ value: n.id, label: n.name }))}
-                            minWidth={"50%"}
-                        />
-                    </Box>
-                    <SelectFieldControlled<IOriginForm>
-                        name="flay_id"
-                        label={t("leathers.origin.flay")}
-                        options={flays.map(f => ({ value: f.id, label: `${f.code} - ${f.name}` }))}
-                        minWidth={"50%"}
-                        required
-                    />
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <NumberFieldControlled<IOriginForm>
-                            name="psp_yield_coefficient"
-                            label={t("leathers.origin.psp-yield-coefficient")}
-                            precision={3}
-                            step={0.001}
-                        />
-                        <NumberFieldControlled<IOriginForm>
-                            name="grain_yield_coefficient"
-                            label={t("leathers.origin.grain-yield-coefficient")}
-                            precision={3}
-                            step={0.001}
-                        />
-                        <NumberFieldControlled<IOriginForm>
-                            name="crust_yield_coefficient"
-                            label={t("leathers.origin.crust-yield-coefficient")}
-                            precision={3}
-                            step={0.001}
-                        />
-                    </Box>
-                </>
-            )}
+            onClearSelection={() => setUIState({selectedOriginId: null})}
+            validateBeforeSave={(v) =>
+                !!v.code &&
+                !!v.area_id &&
+                !!v.nation_id &&
+                !!v.flay_id &&
+                !!v.psp_yield_coefficient &&
+                !!v.crust_yield_coefficient &&
+                !!v.grain_yield_coefficient
+            }
+            renderFields={() => <OriginsFormFields/>}
         />
+    )
+}
+
+const OriginsFormFields = () => {
+    const {t} = useTranslation(["form"]);
+
+    const {data: nations = []} = nationsApi.useGetList();
+    const {data: areas = []} = originAreaApi.useGetList();
+    const {data: flays = []} = flayApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IOriginForm>({
+        formKey: "nation_id",
+        dependencyKey: "nations"
+    });
+    useSubscribePanel<IOriginForm>({
+        formKey: "flay_id",
+        dependencyKey: "flaying"
+    });
+
+    return (
+        <>
+            <Box sx={{display: 'flex', gap: 1}}>
+                <TextFieldControlled<IOriginForm>
+                    name="code"
+                    label={t("leathers.origin.code")}
+                    required
+                />
+                <NumberFieldControlled<IOriginForm>
+                    name="trip_day"
+                    label={t("leathers.origin.trip-day")}
+                    step={1}
+                    precision={0}
+                    maxWidth="200px"
+                />
+                <FlagCheckBoxFieldControlled<IOriginForm>
+                    name="sea_shipment"
+                    label={t("leathers.origin.sea-shipment")}
+                />
+            </Box>
+            <Box sx={{display: 'flex', gap: 1}}>
+                <SelectFieldControlled<IOriginForm>
+                    name="nation_id"
+                    label={t("nations.name")}
+                    options={nations.map(n => ({value: n.id, label: n.name}))}
+                    minWidth={"49.6%"}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "nations",
+                                i18nKey: "menu.contacts.nations",
+                            }
+                        })
+                    }}
+                />
+                <SelectFieldControlled<IOriginForm>
+                    name="area_id"
+                    label={t("leathers.origin.area")}
+                    options={areas.map(n => ({value: n.id, label: n.name}))}
+                    minWidth={"50%"}
+                    required
+                />
+            </Box>
+            <SelectFieldControlled<ILeatherForm>
+                name={"flay_id"}
+                label={t("leathers.leather.flay")}
+                options={flays.map((x) => ({
+                    label: x.name,
+                    value: x.id
+                }))}
+                required
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "flaying",
+                            i18nKey: "menu.leathers.flaying",
+                        }
+                    })
+                }}
+            />
+            <Box sx={{display: 'flex', gap: 1}}>
+                <NumberFieldControlled<IOriginForm>
+                    name="psp_yield_coefficient"
+                    label={t("leathers.origin.psp-yield-coefficient")}
+                    precision={3}
+                    step={1}
+                    required
+                />
+                <NumberFieldControlled<IOriginForm>
+                    name="grain_yield_coefficient"
+                    label={t("leathers.origin.grain-yield-coefficient")}
+                    precision={3}
+                    step={1}
+                    required
+                />
+                <NumberFieldControlled<IOriginForm>
+                    name="crust_yield_coefficient"
+                    label={t("leathers.origin.crust-yield-coefficient")}
+                    precision={3}
+                    step={1}
+                    required
+                />
+            </Box>
+        </>
     )
 }
 

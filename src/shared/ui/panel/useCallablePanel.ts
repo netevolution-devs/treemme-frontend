@@ -46,7 +46,7 @@ const useCallablePanel = () => {
                 },
                 extra
             }
-        });
+        }, {overrideLogic: true});
     }, [addPanel, t, queryClient]);
 
     return {add};
