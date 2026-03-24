@@ -77,7 +77,8 @@
       "product-costs": "Costo Prodotti",
       "price-list": "Listino Prodotti",
       "work-reports": "Rapportini di Lavoro",
-      "currencies-exchange": "Valute e Cambi"
+      "currencies-exchange": "Valute e Cambi",
+      "currenciesExchange": "CurrenciesExchange"
     },
     "analysis": {
       "self": "Analisi",

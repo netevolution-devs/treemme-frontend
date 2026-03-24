@@ -1,4 +1,4 @@
-import {Button} from "@mui/material";
+import {Button, CircularProgress} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import type {ReactNode} from "react";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,12 +9,13 @@ interface CustomButtonProps {
     color: "primary" | "success" | "error" | "warning" | "inherit";
     isSubmit?: boolean;
     isEnable?: boolean;
+    isLoading?: boolean;
     icon: ReactNode;
     variant?: "text" | "outlined" | "contained";
     minWidth?: number;
 }
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon, variant = "outlined", minWidth = 100}: CustomButtonProps) => {
+const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, isLoading = false, icon, variant = "outlined", minWidth = 100}: CustomButtonProps) => {
     const {t} = useTranslation(["common"]);
 
     return (
@@ -23,7 +24,7 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             onClick={onClick}
             color={color}
             size="small"
-            startIcon={icon}
+            startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : icon}
             sx={{
                 height: "100%",
                 minWidth: minWidth,
@@ -31,7 +32,7 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
                 textTransform: 'none'
             }}
             type={isSubmit ? "submit" : "button"}
-            disabled={!isEnable}
+            disabled={!isEnable || isLoading}
         >
             {t(label)}
         </Button>

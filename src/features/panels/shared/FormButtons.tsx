@@ -34,7 +34,8 @@ interface FormButtonsProps {
     hideDelete?: boolean;
     hideCancel?: boolean;
     hideSave?: boolean;
-    overrideButtonState?: boolean
+    overrideButtonState?: boolean;
+    isLoading?: boolean;
 }
 
 const FormButtons = ({
@@ -49,7 +50,8 @@ const FormButtons = ({
                          hideDelete = false,
                          hideCancel = false,
                          hideSave = false,
-                         overrideButtonState = false
+                         overrideButtonState = false,
+                         isLoading = false,
                      }: FormButtonsProps) => {
     return (
         <Box sx={{
@@ -103,6 +105,7 @@ const FormButtons = ({
                     icon={<SaveIcon/>}
                     isSubmit
                     isEnable={buttonState.save || overrideButtonState}
+                    isLoading={isLoading}
                 />
             )}
         </Box>

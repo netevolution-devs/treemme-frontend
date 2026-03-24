@@ -73,7 +73,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     const saveRef = useRef<IDialogActions>(null);
 
     const methods = useForm<TForm>({
-        disabled: !dialogMode && isFormDisabled,
+        disabled: (!dialogMode && isFormDisabled) || isSaving,
         mode: "onSubmit",
         defaultValues: emptyValues as DefaultValues<TForm>,
     });
@@ -152,7 +152,9 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 if (res) {
                     onSuccess?.(res as TEntity);
                     onCreateSuccess?.(res.id);
-                    methods.reset(emptyValues);
+                    if (!dialogMode) {
+                        methods.reset(emptyValues);
+                    }
                     setFormState('init');
                 }
             }
@@ -222,13 +224,22 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             hideDelete={!selectedId && dialogMode || disabledBasicButtons}
                             hideSave={disabledBasicButtons}
                             overrideButtonState={dialogMode}
+                            isLoading={isSaving}
                         />
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap'}}>
-                            {extraButtons?.map((button, index) => (
-                                <React.Fragment key={index}>
-                                    {button}
-                                </React.Fragment>
-                            ))}
+                            {extraButtons?.map((button, index) => {
+                                if (React.isValidElement(button) && (button.props as {isSubmit?: boolean}).isSubmit) {
+                                    return React.cloneElement(button as React.ReactElement<{isLoading?: boolean}>, {
+                                        key: index,
+                                        isLoading: isSaving
+                                    });
+                                }
+                                return (
+                                    <React.Fragment key={index}>
+                                        {button}
+                                    </React.Fragment>
+                                );
+                            })}
                         </Box>
                     </Box>
                     <Stack sx={{mt: 3}}>

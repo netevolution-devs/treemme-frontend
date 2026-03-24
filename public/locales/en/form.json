@@ -69,5 +69,13 @@
       "print": "Print",
       "note": "Article note"
     }
+  },
+  "currencies": {
+    "name": "Name",
+    "sign": "Sign",
+    "abbreviation": "Abbreviation",
+    "last_rate": "Last rate",
+    "change_value": "Change",
+    "date": "Date"
   }
 }
