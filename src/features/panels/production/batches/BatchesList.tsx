@@ -9,6 +9,8 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
+import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
 
 const BatchesList = () => {
     const {t} = useTranslation(["form"]);
@@ -16,6 +18,7 @@ const BatchesList = () => {
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
     const setUIState = useStore(state => state.setUIState);
+    const filterBatchTypeId = useStore(state => state.filters.filterBatchTypeId);
     const setFilters = useStore(state => state.setFilters);
 
     const filterBatchCode = useStore(state => state.filters.filterBatchCode);
@@ -23,10 +26,12 @@ const BatchesList = () => {
     const queryParams = useMemo(() => cleanFilters(
         {
             code: filterBatchCode,
+            type: filterBatchTypeId as number,
         }
-    ), [filterBatchCode]);
+    ), [filterBatchCode, filterBatchTypeId]);
 
     const {data: batches = [], isLoading} = batchApi.useGetList({queryParams});
+    const {data: batchTypes = []} = batchTypeApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IBatch>[]>(() => [
         {
@@ -76,7 +81,14 @@ const BatchesList = () => {
                                 label={t("production.batch.batch_code")}
                                 value={filterBatchCode}
                                 onFilterChange={(val) => setFilters({filterBatchCode: val as string})}
-                            />
+                            />,
+                            <SelectFieldFilter
+                                key={"f-batch_type"}
+                                label={t("production.batch.batch_type")}
+                                value={filterBatchTypeId}
+                                options={batchTypes.map(s => ({value: s.id, label: s.name}))}
+                                onFilterChange={(value) => setFilters({filterBatchTypeId: value as number})}
+                            />,
                         ]}
                     />
                 )
