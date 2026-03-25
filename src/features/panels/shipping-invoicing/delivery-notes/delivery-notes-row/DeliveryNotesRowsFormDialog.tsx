@@ -61,7 +61,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
     const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
 
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
-        invalidateQueries: ['DELIVERY-NOTE', String(selectedDeliveryNoteId)]
+        invalidateQueries: ['DELIVERY-NOTE', String(selectedDeliveryNoteId), "DDT-ROW-NOT-RETURNED", "LIST"]
     });
     const {mutateAsync: updateRow, isPending: isPutting} = usePut({
         invalidateQueries: ['DELIVERY-NOTE', String(selectedDeliveryNoteId)]
