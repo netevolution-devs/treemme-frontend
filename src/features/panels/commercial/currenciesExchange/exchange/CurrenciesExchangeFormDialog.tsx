@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 
-type Props = { currencyId: number };
+type Props = { currencyId: number, currencyValue?: number | null };
 
 export type ICurrenciesExchangeForm = {
     date: string;
@@ -21,7 +21,7 @@ export type ICurrenciesExchangeForm = {
     currency_id: number | null;
 }
 
-const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId}, ref) => {
+const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId, currencyValue = null}, ref) => {
     const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, ICurrenciesExchangeStoreState>();
@@ -41,17 +41,17 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                 selectedId={selectedCurrencyId}
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
-                    change_value: null,
+                    change_value: currencyValue,
                     currency_id: currencyId ?? null,
                 }}
                 emptyValues={{
                     date: dayjs().format("YYYY-MM-DD"),
-                    change_value: null,
+                    change_value: currencyValue,
                     currency_id: currencyId ?? null,
                 }}
                 mapEntityToForm={(x) => ({
                     date: x.date,
-                    change_value: null,
+                    change_value: x.change_value,
                     currency_id: currencyId ?? null,
                 })}
                 create={(payload) => createExchange({
@@ -80,7 +80,7 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                             name={"change_value"}
                             label={t("currencies.change_value")}
                             required
-                            precision={2}
+                            precision={3}
                         />
                     </Stack>
                 )}

@@ -6,7 +6,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef, useEffect, useMemo, useRef} from "react";
+import {forwardRef, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
@@ -199,16 +199,24 @@ const OrderRowFormFields = () => {
 
     const addExchangeDialogRef = useRef<IDialogActions | null>(null);
 
-    const watchedCurrencyId = useWatch<IOrderRowForm>({name: "currency_id"});
+    const isEuro = (currencyId: number | null) => (
+        currencyId === currencies.find(c => c.abbreviation === 'EUR')?.id
+    )
 
-    useEffect(() => {
-        console.log("watchedCurrencyId", watchedCurrencyId);
-    }, [watchedCurrencyId]);
+    const watchedCurrencyId = useWatch<IOrderRowForm>({name: "currency_id"});
+    const watchedCurrencyValue = useWatch<IOrderRowForm>({name: "currency_exchange"});
 
     return (
         <Stack gap={1}>
             <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_exchange"}/>
-            <CurrenciesExchangeFormDialog ref={addExchangeDialogRef} currencyId={watchedCurrencyId as number}/>
+            <CurrenciesExchangeFormDialog
+                ref={addExchangeDialogRef}
+                currencyId={watchedCurrencyId as number}
+                currencyValue={watchedCurrencyValue as number > 0
+                    ? watchedCurrencyValue as number
+                    : null
+                }
+            />
 
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
                 <SelectFieldControlled<IOrderRowForm>
@@ -316,11 +324,14 @@ const OrderRowFormFields = () => {
                 <NumberFieldControlled<IOrderRowForm>
                     name="currency_exchange"
                     label={t("orders.row.currency_exchange")}
+                    precision={3}
+                    deactivated={isEuro(watchedCurrencyId as number)}
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
                         sx={{pr: 0}}
                         onClick={() => openDialog(addExchangeDialogRef)}
+                        isEnable={!isEuro(watchedCurrencyId as number)}
                         disableLabel
                     />
                 </Box>

@@ -12,6 +12,7 @@ interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledF
     min?: number;
     max?: number;
     startAdornment?: ReactNode;
+    deactivated?: boolean;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -25,6 +26,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      min = 0,
                                                                      max,
                                                                      startAdornment,
+                                                                     deactivated = false,
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -89,7 +91,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                         label={formattedLabel}
                         size="small"
                         fullWidth
-                        disabled={disabled}
+                        disabled={disabled || deactivated}
                         error={!!error}
                         onKeyDown={handleKeyDown}
                         onBlur={() => {
