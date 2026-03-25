@@ -50,6 +50,10 @@ const BatchesList = () => {
             header: t("production.batch.quantity")
         },
         {
+            accessorKey: "stock_quantity",
+            header: t("production.batch.stock_quantity")
+        },
+        {
             accessorKey: "measurement_unit.prefix",
             header: t("production.batch.measurement_unit")
         }
