@@ -14,7 +14,7 @@ const ReasonsList = () => {
     const selectedDeliveryReasonId = useStore(state => state.uiState.selectedDeliveryReasonId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: deliveryReasons = [], isLoading} = deliveryReasonApi.useGetList();
+    const {data: deliveryReasons = [], isLoading, isFetching} = deliveryReasonApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IDeliveryReason>[]>(() => [
         {
@@ -32,6 +32,7 @@ const ReasonsList = () => {
         <GenericList<IDeliveryReason>
             data={deliveryReasons}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedDeliveryReasonId}
             onRowSelect={(id) => setUIState({selectedDeliveryReasonId: id as number})}

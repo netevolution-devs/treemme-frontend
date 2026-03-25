@@ -25,7 +25,7 @@ const DeliveryNotesRowList = () => {
     const selectedDeliveryNoteRowId = useStore((state) => state.uiState.selectedDeliveryNoteRowId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: deliveryNote, isLoading} = deliveryNoteApi.useGetDetail(selectedDeliveryNoteId);
+    const {data: deliveryNote, isLoading, isFetching} = deliveryNoteApi.useGetDetail(selectedDeliveryNoteId);
     const ddtRows = deliveryNote?.ddt_rows || [];
 
     const columns = useMemo<MRT_ColumnDef<IDeliveryNoteRow>[]>(() => [
@@ -62,6 +62,7 @@ const DeliveryNotesRowList = () => {
                 data={ddtRows}
                 columns={columns}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 selectedId={selectedDeliveryNoteRowId}
                 onRowSelect={(id) => setUIState({selectedDeliveryNoteRowId: id as number})}
                 onRowDoubleClick={() => openDialog(editRowDialogRef)}
