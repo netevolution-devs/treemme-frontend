@@ -24,13 +24,8 @@ export type IContactForm = Omit<IContact, 'id'
     | 'contact_subcontractors'
     | 'specific_order_reference'
     | 'agent_percentage'
-    | 'tolerance_quantity'
-    | 'tolerance_start_days'
 > & {
-    // contact_title_id: number | null;
     contact_type_id: number | null;
-    tolerance_quantity: number | null;
-    tolerance_start_days: number | null;
     agent_percentage: number | null;
 };
 
@@ -71,14 +66,11 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 subcontractor: false,
                 client_note: '',
                 client_shipment_note: '',
-                tolerance_quantity: null,
-                tolerance_start_days: null,
                 agent_percentage: null
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
                 contact_note: x.contact_note,
-                // contact_title_id: x.contact_title?.id || null,
                 contact_type_id: x.contact_type?.id || null,
                 client: x.client,
                 supplier: x.supplier,
@@ -86,8 +78,6 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 subcontractor: x.subcontractor,
                 client_note: x.client_note ?? '',
                 client_shipment_note: x.client_shipment_note ?? '',
-                tolerance_quantity: x.tolerance_quantity,
-                tolerance_start_days: x.tolerance_start_days,
                 agent_percentage: x.agent_percentage,
             })}
             create={(payload) => createContact(payload)}
@@ -191,19 +181,19 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
             {isClient && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
                     <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.client_data")}</Typography>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <NumberFieldControlled<IContactForm>
-                            name="tolerance_quantity"
-                            label={t("contacts.tolerance_quantity")}
-                            precision={2}
-                            startAdornment={"%"}
-                        />
-                        <NumberFieldControlled<IContactForm>
-                            name="tolerance_start_days"
-                            label={t("contacts.tolerance_start_days")}
-                            precision={0}
-                        />
-                    </Box>
+                    {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+                    {/*    <NumberFieldControlled<IContactForm>*/}
+                    {/*        name="tolerance_quantity"*/}
+                    {/*        label={t("contacts.tolerance_quantity")}*/}
+                    {/*        precision={2}*/}
+                    {/*        startAdornment={"%"}*/}
+                    {/*    />*/}
+                    {/*    <NumberFieldControlled<IContactForm>*/}
+                    {/*        name="tolerance_start_days"*/}
+                    {/*        label={t("contacts.tolerance_start_days")}*/}
+                    {/*        precision={0}*/}
+                    {/*    />*/}
+                    {/*</Box>*/}
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <TextFieldControlled<IContactForm>
                             name="client_note"

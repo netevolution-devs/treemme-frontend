@@ -79,7 +79,7 @@
     "title": "Titolo",
     "notes": "Note",
     "type": "Tipo contatto",
-    "client_data": "Dati cliente",
+    "client_data": "Note",
     "tolerance_quantity": "Tolleranza quantità",
     "tolerance_start_days": "Giorni tolleranza inizio",
     "client_note": "Note cliente",
