@@ -87,7 +87,7 @@
     "agent_percentage": "Provvigione agente",
     "address": {
       "list": "Lista indirizzi",
-      "name": "Nome",
+      "name": "Tipologia indirizzo",
       "address": "Indirizzo",
       "cap": "Cap e provincia",
       "address-1": "Riga 1",
