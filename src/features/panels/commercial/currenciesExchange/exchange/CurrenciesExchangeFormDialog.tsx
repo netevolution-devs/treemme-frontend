@@ -13,7 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 
-type Props = { currencyId: number, currencyValue?: number | null };
+type Props = { currencyId?: number, currencyValue?: number | null };
 
 export type ICurrenciesExchangeForm = {
     date: string;
@@ -41,7 +41,7 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                 selectedId={selectedCurrencyId}
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
-                    change_value: currencyValue,
+                    change_value: currencyValue ?? null,
                     currency_id: currencyId ?? null,
                 }}
                 emptyValues={{
@@ -57,7 +57,7 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                 create={(payload) => createExchange({
                     date: payload.date,
                     change_value: payload.change_value,
-                    currency_id: selectedCurrencyId as number || currencyId
+                    currency_id: selectedCurrencyId as number ?? currencyId
                 })}
                 validateBeforeSave={(v) => !!v.date && !!v.change_value}
                 extraButtons={[
