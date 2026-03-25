@@ -208,7 +208,10 @@ const OrderRowFormFields = () => {
 
     return (
         <Stack gap={1}>
-            <CurrencyWatcher currencies={currencies} exchangeFieldName={"currency_exchange"}/>
+            <CurrencyWatcher
+                currencies={currencies}
+                exchangeFieldName={"currency_exchange"}
+            />
             <CurrenciesExchangeFormDialog
                 ref={addExchangeDialogRef}
                 currencyId={watchedCurrencyId as number}
@@ -375,5 +378,6 @@ const OrderRowFormFields = () => {
         </Stack>
     )
 }
+
 
 export default OrderRowsFormDialog;
