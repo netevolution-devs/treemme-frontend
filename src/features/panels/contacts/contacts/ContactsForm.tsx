@@ -5,15 +5,11 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {contactsTitleApi} from "@features/panels/contacts/contacts/api/contacts-title/contactsTitleApi.ts";
 import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
 import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-type/contactsTypeApi.ts";
 import {Box, Typography} from "@mui/material";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import {useWatch} from "react-hook-form";
-import type {IContactType} from "@features/panels/contacts/contacts/api/contacts-type/IContactType.ts";
-import type {IContactTitle} from "@features/panels/contacts/contacts/api/contacts-title/IContactTitle.ts";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
@@ -31,7 +27,7 @@ export type IContactForm = Omit<IContact, 'id'
     | 'tolerance_quantity'
     | 'tolerance_start_days'
 > & {
-    contact_title_id: number | null;
+    // contact_title_id: number | null;
     contact_type_id: number | null;
     tolerance_quantity: number | null;
     tolerance_start_days: number | null;
@@ -59,12 +55,6 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
     const {mutateAsync: updateContact, isPending: isPutting} = usePut();
     const {mutateAsync: deleteContact, isPending: isDeleting} = useDelete();
 
-    const {useGetList: useGetContactTitles} = contactsTitleApi;
-    const {data: contactTitles} = useGetContactTitles();
-
-    const {useGetList: useGetContactTypes} = contactsTypeApi;
-    const {data: contactTypes} = useGetContactTypes();
-
     return (
         <GenericForm<IContactForm, IContact, IContactsStoreState>
             onSuccess={handlePanelSuccess}
@@ -73,7 +63,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
             emptyValues={{
                 name: initialName ?? '',
                 contact_note: '',
-                contact_title_id: null,
+                // contact_title_id: null,
                 contact_type_id: null,
                 client: false,
                 supplier: extra?.supplier ?? false,
@@ -88,7 +78,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
             mapEntityToForm={(x) => ({
                 name: x.name,
                 contact_note: x.contact_note,
-                contact_title_id: x.contact_title?.id || null,
+                // contact_title_id: x.contact_title?.id || null,
                 contact_type_id: x.contact_type?.id || null,
                 client: x.client,
                 supplier: x.supplier,
@@ -115,22 +105,23 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 selectedAddressId: null,
                 selectedDetailId: null
             })}
-            validateBeforeSave={(v) => !!v.name && !!v.contact_title_id && !!v.contact_type_id}
-            renderFields={() => <ContactsFormFields isFormDisabled={isFormDisabled} contactTypes={contactTypes} contactTitles={contactTitles}/>}
+            validateBeforeSave={(v) => !!v.name && !!v.contact_type_id}
+            renderFields={() => <ContactsFormFields isFormDisabled={isFormDisabled}/>}
         />
     );
 };
 
 interface ContactsFormFieldsProps {
     isFormDisabled: boolean;
-    contactTypes: IContactType[] | undefined;
-    contactTitles: IContactTitle[] | undefined;
 }
 
-const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: ContactsFormFieldsProps) => {
+const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
     const isClient = useWatch({name: 'client'});
     const isAgent = useWatch({name: 'agent'});
+
+    // const {data: contactTitles} = contactsTitleApi.useGetList();
+    const {data: contactTypes} = contactsTypeApi.useGetList();
 
     return (
         <>
@@ -176,15 +167,15 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
 
             {/* Basic information */}
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <SelectFieldControlled<IContactForm>
-                    name="contact_title_id"
-                    label={t("contacts.title")}
-                    options={contactTitles?.map((x) => ({
-                        value: x.id,
-                        label: x.name
-                    })) || []}
-                    required
-                />
+                {/*<SelectFieldControlled<IContactForm>*/}
+                {/*    name="contact_title_id"*/}
+                {/*    label={t("contacts.title")}*/}
+                {/*    options={contactTitles?.map((x) => ({*/}
+                {/*        value: x.id,*/}
+                {/*        label: x.name*/}
+                {/*    })) || []}*/}
+                {/*    required*/}
+                {/*/>*/}
                 <TextFieldControlled<IContactForm>
                     name="name"
                     label={t("contacts.name")}
@@ -194,6 +185,7 @@ const ContactsFormFields = ({isFormDisabled, contactTypes, contactTitles}: Conta
             <TextFieldControlled<IContactForm>
                 name="contact_note"
                 label={t("contacts.notes")}
+                TextFieldProps={{multiline: true, rows: 2}}
             />
 
             {isClient && (
