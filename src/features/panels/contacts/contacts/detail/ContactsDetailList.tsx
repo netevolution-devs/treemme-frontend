@@ -20,7 +20,7 @@ const ContactsDetailList = () => {
     const selectedDetailId = useStore(state => state.uiState.selectedDetailId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
 
     const columns = useMemo<MRT_ColumnDef<IContactDetail>[]>(() => [
         {
@@ -55,6 +55,7 @@ const ContactsDetailList = () => {
             <GenericList<IContactDetail>
                 data={contact?.contact_details || []}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedDetailId}
                 onRowSelect={(id) => setUIState({selectedDetailId: id})}

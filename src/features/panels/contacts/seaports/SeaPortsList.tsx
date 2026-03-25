@@ -14,7 +14,7 @@ const SeaPortsList = () => {
     const selectedSeaPortId = useStore(state => state.uiState.selectedSeaPortId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: seaPorts = [], isLoading} = seaPortApi.useGetList();
+    const {data: seaPorts = [], isLoading, isFetching} = seaPortApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<ISeaPort>[]>(() => [
         {
@@ -27,6 +27,7 @@ const SeaPortsList = () => {
         <GenericList<ISeaPort>
             data={seaPorts}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedSeaPortId}
             onRowSelect={(id) => setUIState({selectedSeaPortId: id})}

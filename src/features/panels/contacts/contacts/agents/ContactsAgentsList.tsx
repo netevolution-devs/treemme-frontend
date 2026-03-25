@@ -25,7 +25,7 @@ const ContactsAgentsList = () => {
     const selectedAgentId = useStore(state => state.uiState.selectedAgentId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
     const agents = contact?.contact_agents.map((x) => x.agent) || [];
 
     const {mutateAsync: deleteAgent} = useRemoveAgentFromContact(selectedContactId as number);
@@ -54,6 +54,7 @@ const ContactsAgentsList = () => {
             <GenericList<IContact>
                 data={agents}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedAgentId}
                 onRowSelect={(id) => setUIState({selectedAgentId: id})}

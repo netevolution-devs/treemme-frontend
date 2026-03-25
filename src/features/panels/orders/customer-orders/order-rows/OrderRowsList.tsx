@@ -25,7 +25,7 @@ const OrderRowsList = () => {
     const selectedOrderRowId = useStore((state) => state.uiState.selectedOrderRowId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: customerOrder, isLoading} = customerOrderApi.useGetDetail(selectedCustomerOrderId);
+    const {data: customerOrder, isLoading, isFetching} = customerOrderApi.useGetDetail(selectedCustomerOrderId);
     const orderRows = customerOrder?.client_order_rows || [];
 
     const columns = useMemo<MRT_ColumnDef<IOrderRow>[]>(() => [
@@ -62,6 +62,7 @@ const OrderRowsList = () => {
                 data={orderRows}
                 columns={columns}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 selectedId={selectedOrderRowId}
                 onRowSelect={(id) => setUIState({selectedOrderRowId: id})}
                 onRowDoubleClick={() => openDialog(editRowDialogRef)}

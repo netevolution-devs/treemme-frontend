@@ -14,7 +14,7 @@ const WarehouseMovementsList = () => {
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
 
-    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId);
+    const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId);
     const movements = batch?.warehouse_movements || [];
 
     const columns = useMemo<MRT_ColumnDef<IWarehouseMovement>[]>(() => [
@@ -43,6 +43,7 @@ const WarehouseMovementsList = () => {
         <GenericList<IWarehouseMovement>
             data={movements}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
         />
     )

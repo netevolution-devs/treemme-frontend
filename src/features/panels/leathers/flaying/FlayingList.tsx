@@ -14,7 +14,7 @@ const FlayingList = () => {
     const selectedFlayId = useStore(state => state.uiState.selectedFlayId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: flays = [], isLoading} = flayApi.useGetList();
+    const {data: flays = [], isLoading, isFetching} = flayApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IFlay>[]>(() => [
         {
@@ -32,6 +32,7 @@ const FlayingList = () => {
         <GenericList<IFlay>
             data={flays}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedFlayId}
             onRowSelect={(id) => setUIState({selectedFlayId: id})}

@@ -14,7 +14,7 @@ const BatchesSelectionList = () => {
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
     // const setUIState = useStore(state => state.setUIState);
 
-    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId);
+    const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId);
     const selections = batch?.batch_selections || [];
 
     const columns = useMemo<MRT_ColumnDef<IBatchSelection>[]>(() => [
@@ -44,6 +44,7 @@ const BatchesSelectionList = () => {
         <GenericList<IBatchSelection>
             data={selections}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
         />
     )

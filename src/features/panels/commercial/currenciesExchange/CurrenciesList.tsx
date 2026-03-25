@@ -16,7 +16,7 @@ const CurrenciesList = () => {
     const selectedCurrencyId = useStore((state) => state.uiState.selectedCurrencyId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: currencies = [], isLoading} = currencyApi.useGetList();
+    const {data: currencies = [], isLoading, isFetching} = currencyApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<ICurrency>[]>(() => [
         {
@@ -37,6 +37,7 @@ const CurrenciesList = () => {
         <GenericList<ICurrency>
             data={currencies}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedCurrencyId}
             onRowSelect={(id) => setUIState({selectedCurrencyId: id})}

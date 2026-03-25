@@ -42,7 +42,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
         [panelFilter, selectedQueryId]
     ) as Record<string, string | number>
 
-    const {data: leathers = [], isLoading} = leatherApi.useGetList({queryParams});
+    const {data: leathers = [], isLoading, isFetching} = leatherApi.useGetList({queryParams});
 
     const columns = useMemo<MRT_ColumnDef<ILeather>[]>(() => [
         {
@@ -138,6 +138,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
         <GenericList<ILeather>
             data={leathers}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={panelFilter ? specificColumns : columns}
             selectedId={selectedLeatherId}
             onRowSelect={(id) => setUIState({selectedLeatherId: id})}

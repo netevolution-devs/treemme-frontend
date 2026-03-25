@@ -23,7 +23,7 @@ const CurrenciesExchangeList = () => {
     const selectedCurrencyExchangeId = useStore((state) => state.uiState.selectedCurrencyExchangeId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: currenciesExchange = [], isLoading} = currencyChangeApi.useGetList({queryParams: {currency: selectedCurrencyId as number}});
+    const {data: currenciesExchange = [], isLoading, isFetching} = currencyChangeApi.useGetList({queryParams: {currency: selectedCurrencyId as number}});
 
     const columns = useMemo<MRT_ColumnDef<ICurrencyChange>[]>(() => [
         {
@@ -45,6 +45,7 @@ const CurrenciesExchangeList = () => {
             <GenericList<ICurrencyChange>
                 data={selectedCurrencyId ? currenciesExchange : []}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedCurrencyExchangeId}
                 onRowSelect={(id) => setUIState({selectedCurrencyExchangeId: id as number})}

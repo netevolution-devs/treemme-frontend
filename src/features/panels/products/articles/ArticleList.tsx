@@ -9,7 +9,7 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const ArticleList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: articles = [], isLoading} = articleApi.useGetList();
+    const {data: articles = [], isLoading, isFetching} = articleApi.useGetList();
 
     const {useStore} = usePanel<unknown, IArticlesStoreState>();
     const {selectedArticledId} = useStore(state => state.uiState);
@@ -41,6 +41,7 @@ const ArticleList = () => {
         <GenericList<IArticle>
             data={articles}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedArticledId}
             onRowSelect={(id) => setUIState({selectedArticledId: id})}

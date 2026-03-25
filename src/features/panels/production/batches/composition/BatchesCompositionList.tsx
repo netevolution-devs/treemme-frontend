@@ -27,7 +27,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId) || customBatchId;
 
-    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId as number);
+    const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId as number);
     const compositions = batch?.batch_compositions ?? [];
 
     const canComposition = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
@@ -61,6 +61,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
                 columns={columns}
                 data={compositions}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 additionalOptions={{
                     enableTopToolbar: enableToolbar,
                     renderTopToolbar: () => <ListToolbar

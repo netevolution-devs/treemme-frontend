@@ -25,7 +25,7 @@ const ContactsSubcontractorsList = () => {
     const selectedSubcontractorId = useStore(state => state.uiState.selectedSubcontractorId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
     const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor) || [];
 
     const {mutateAsync: deleteSubcontractor} = useRemoveSubcontractorFromContact(selectedContactId as number);
@@ -53,6 +53,7 @@ const ContactsSubcontractorsList = () => {
             <GenericList<IContact>
                 data={subcontractors}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedSubcontractorId}
                 onRowSelect={(id) => setUIState({selectedSubcontractorId: id})}

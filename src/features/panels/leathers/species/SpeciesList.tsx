@@ -14,7 +14,7 @@ const SpeciesList = () => {
     const selectedSpeciesId = useStore((state) => state.uiState.selectedSpeciesId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: species = [], isLoading} = speciesApi.useGetList();
+    const {data: species = [], isLoading, isFetching} = speciesApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<ISpecies>[]>(() => [
         {
@@ -32,6 +32,7 @@ const SpeciesList = () => {
         <GenericList<ISpecies>
             data={species}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedSpeciesId}
             onRowSelect={(id) => setUIState({selectedSpeciesId: id})}

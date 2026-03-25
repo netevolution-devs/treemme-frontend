@@ -30,7 +30,7 @@ const BatchesList = () => {
         }
     ), [filterBatchCode, filterBatchTypeId]);
 
-    const {data: batches = [], isLoading} = batchApi.useGetList({queryParams});
+    const {data: batches = [], isLoading, isFetching} = batchApi.useGetList({queryParams});
     const {data: batchTypes = []} = batchTypeApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IBatch>[]>(() => [
@@ -68,6 +68,7 @@ const BatchesList = () => {
         <GenericList<IBatch>
             data={batches}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedBatchId}
             onRowSelect={(id) => setUIState({selectedBatchId: id})}

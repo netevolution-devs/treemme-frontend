@@ -4,7 +4,7 @@ import {
     type MRT_TableOptions,
     useMaterialReactTable
 } from "material-react-table";
-import {Box} from "@mui/material";
+import {Box, CircularProgress} from "@mui/material";
 import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.ts";
 import type {SyntheticEvent} from "react";
 
@@ -15,6 +15,7 @@ export interface BaseEntity {
 interface GenericListProps<TData extends BaseEntity> {
     data: TData[];
     isLoading: boolean;
+    isFetching?: boolean;
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
     onRowSelect?: (id: TData["id"]) => void;
@@ -27,7 +28,8 @@ interface GenericListProps<TData extends BaseEntity> {
 
 const GenericList = <TData extends BaseEntity>({
                                                    data = [],
-                                                   isLoading,
+                                                   isLoading = false,
+                                                   isFetching = false,
                                                    columns,
                                                    selectedId,
                                                    onRowSelect,
@@ -102,8 +104,21 @@ const GenericList = <TData extends BaseEntity>({
     });
 
     return (
-        <Box sx={{width: '100%', overflowY: 'scroll', minHeight: _minHeight}}>
-            <MaterialReactTable table={table}/>
+        <Box sx={{ width: '100%', position: 'relative', minHeight: _minHeight }}>
+            {(isFetching && !isLoading) && (
+                <Box sx={{
+                    position: 'absolute',
+                    right: 10,
+                    top: additionalOptions?.enableTopToolbar ? 50 : 5,
+                    zIndex: 1000
+                }}>
+                    <CircularProgress size={20} thickness={5} />
+                </Box>
+            )}
+
+            <Box sx={{ overflowY: 'auto' }}>
+                <MaterialReactTable table={table} />
+            </Box>
         </Box>
     );
 };
