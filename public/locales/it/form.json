@@ -64,6 +64,9 @@
   "contacts": {
     "select": "Tipologia",
     "client": "Cliente",
+    "clients": {
+      "list": "Lista clienti"
+    },
     "supplier": "Fornitore",
     "subcontractor": "Terzista",
     "agent": "Agente",

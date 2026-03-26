@@ -18,5 +18,6 @@ export interface IContact {
     specific_order_reference: string | null;
     contact_agents: { agent: IContact }[];
     contact_subcontractors: { subcontractor: IContact }[];
-    agent_percentage: number | null;
+    agent_clients: { contact: IContact }[];
+    agent_suppliers: { supplier: IContact }[];
 }
