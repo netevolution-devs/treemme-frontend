@@ -7,6 +7,7 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList.tsx";
+import ContactsSupplier from "@features/panels/contacts/contacts/subcontractors/ContactsSupplier.tsx";
 
 const ContactsContent = () => {
     const {t} = useTranslation(["form", "shipping"]);
@@ -18,7 +19,7 @@ const ContactsContent = () => {
 
     return (
         <>
-            {(selectedContactId && (contact?.client || contact?.supplier || contact?.agent)) && (
+            {(selectedContactId && (contact?.client || contact?.supplier || contact?.agent || contact?.subcontractor)) && (
                 <Stack sx={{width: '100%'}}>
                     <Box sx={{display: 'flex', gap: 1, width: '100%'}}>
                         {contact?.client && (
@@ -37,6 +38,11 @@ const ContactsContent = () => {
                     {contact?.agent && (
                         <Box sx={{width: '100%'}}>
                             <ContactsClientsList/>
+                        </Box>
+                    )}
+                    {contact?.subcontractor && (
+                        <Box sx={{width: '100%'}}>
+                            <ContactsSupplier/>
                         </Box>
                     )}
                 </Stack>

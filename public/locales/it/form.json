@@ -69,6 +69,9 @@
       "list": "Lista clienti"
     },
     "supplier": "Fornitore",
+    "suppliers": {
+      "list": "Lista fornitori"
+    },
     "subcontractor": "Terzista",
     "agent": "Agente",
     "agents": {

@@ -26,7 +26,7 @@ const ContactsSubcontractorsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
-    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor) || [];
+    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor).filter(Boolean) || [];
 
     const {mutateAsync: deleteSubcontractor} = useRemoveSubcontractorFromContact(selectedContactId as number);
 
