@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
 
-interface IAddAgentToContactPayload {
+export interface IAddAgentToContactPayload {
     agent_id: number;
 }
 
