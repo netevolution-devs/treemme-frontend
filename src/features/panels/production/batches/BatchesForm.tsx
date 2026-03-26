@@ -215,30 +215,32 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                                 precision={0}
                                 required
                             />
-                            <NumberFieldControlled<IBatchesForm>
-                                name="quantity"
-                                label={t("production.batch.quantity")}
-                                precision={2}
-                                step={1}
-                                required
-                            />
-                            <SelectFieldControlled<IBatchesForm>
-                                name="measurement_unit_id"
-                                label={t("production.batch.measurement_unit")}
-                                options={measurementUnits.map(x => ({label: x.name, value: x.id}))}
-                                required
-                            />
-                            <TextFieldValue
-                                label={t("production.batch.stock_items")}
-                                value={batchItem?.stock_items}
-                                isFilled={!!selectedBatchId}
-                            />
-                            <TextFieldValue
-                                label={t("production.batch.stock_quantity")}
-                                value={batchItem?.stock_quantity}
-                                isFilled={!!selectedBatchId}
-                                precision={2}
-                            />
+                            {/*<NumberFieldControlled<IBatchesForm>*/}
+                            {/*    name="quantity"*/}
+                            {/*    label={t("production.batch.quantity")}*/}
+                            {/*    precision={2}*/}
+                            {/*    step={1}*/}
+                            {/*    required*/}
+                            {/*/>*/}
+                            {/*<SelectFieldControlled<IBatchesForm>*/}
+                            {/*    name="measurement_unit_id"*/}
+                            {/*    label={t("production.batch.measurement_unit")}*/}
+                            {/*    options={measurementUnits.map(x => ({label: x.name, value: x.id}))}*/}
+                            {/*    required*/}
+                            {/*/>*/}
+                            {selectedBatchId && (
+                                <TextFieldValue
+                                    label={t("production.batch.stock_items")}
+                                    value={batchItem?.stock_items}
+                                    isFilled={!!selectedBatchId}
+                                />
+                            )}
+                            {/*<TextFieldValue*/}
+                            {/*    label={t("production.batch.stock_quantity")}*/}
+                            {/*    value={batchItem?.stock_quantity}*/}
+                            {/*    isFilled={!!selectedBatchId}*/}
+                            {/*    precision={2}*/}
+                            {/*/>*/}
                         </Box>
 
                         {(!batchItem || batchItem.leather) && (
