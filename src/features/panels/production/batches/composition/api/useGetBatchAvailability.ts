@@ -5,10 +5,10 @@ import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
 const useGetBatchAvailability = () => {
     const { get } = useApi();
     return useQuery({
-        queryKey: ['BATCH-AVAILABILITY', 'LIST'],
+        queryKey: ['BATCH-SPLIT-AVAILABILITY', 'LIST'],
         queryFn: async () => {
 
-            const response = await get<IBatch[]>(`/batch/available`);
+            const response = await get<IBatch[]>(`/batch/split/available`);
             return response.data.data;
         },
         staleTime: 0,

@@ -1,27 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
+import type {
+    IBatchCompositionForm
+} from "@features/panels/production/batches/composition/BatchCompositionFormDialog.tsx";
 
-interface ICompositionPayload {
-    pieces: number;
-    // quantity: number;
-    note?: string;
-}
-
+type ICompositionPayload = Omit<IBatchCompositionForm, 'father_batch_id'>;
 const usePostBatchComposition = (batchId: number) => {
     const { postEncoded: post } = useApi();
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationKey: ['BATCH-COMPOSITION', batchId],
-        mutationFn: async (payload: ICompositionPayload & { father_batch_id: number }) => {
-            if (!batchId && !payload.father_batch_id) throw new Error("Batch Code is required for rework");
-
+        mutationFn: async (payload: ICompositionPayload) => {
             const response = await post<ICompositionPayload>(`/batch-composition`, {
-                father_batch_piece: payload.pieces,
-                // father_batch_quantity: payload.quantity,
                 batch_id: batchId,
-                father_batch_id: payload.father_batch_id,
-                composition_note: payload.note ?? '',
+                ...payload
             } as never);
             return response.data.data;
         },

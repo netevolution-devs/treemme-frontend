@@ -214,6 +214,7 @@
       "leather": "Pellame",
       "measurement_unit": "Unità di misura",
       "pieces": "Pezzi totali",
+      "pieces-string": "pezzi",
       "quantity": "Quantità",
       "sq_ft_average_expected": "Media PQ attesa",
       "sq_ft_average_found": "Media PQ trovata",
@@ -241,6 +242,7 @@
         "thickness": "Spessore"
       },
       "father_batch": "Lotto padre",
+      "father_batch_selection": "Scelta lotto",
       "machine": "Macchinario",
       "scheduled_date": "Data programmazione",
       "production_note": "Note produzione"
