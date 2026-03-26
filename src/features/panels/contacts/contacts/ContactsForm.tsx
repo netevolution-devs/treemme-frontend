@@ -14,6 +14,12 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm.tsx";
+import {paymentApi} from "@features/panels/shared/api/payment/paymentApi.ts";
+import {
+    shipmentConditionApi
+} from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -24,7 +30,13 @@ export type IContactForm = Omit<IContact, 'id'
     | 'contact_subcontractors'
     | 'specific_order_reference'
     | 'agent_percentage'
+    | 'agent_clients'
+    | 'agent_suppliers'
+    | 'payment'
+    | 'shipment_condition'
 > & {
+    payment_id: number | null;
+    shipment_condition_id: number | null;
     contact_type_id: number | null;
     agent_percentage: number | null;
 };
@@ -66,7 +78,9 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 subcontractor: false,
                 client_note: '',
                 client_shipment_note: '',
-                agent_percentage: null
+                agent_percentage: null,
+                payment_id: null,
+                shipment_condition_id: null,
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
@@ -79,6 +93,8 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 client_note: x.client_note ?? '',
                 client_shipment_note: x.client_shipment_note ?? '',
                 agent_percentage: x.agent_percentage,
+                payment_id: x.payment?.id || null,
+                shipment_condition_id: x.shipment_condition?.id || null,
             })}
             create={(payload) => createContact(payload)}
             onCreateSuccess={(id) => {
@@ -112,6 +128,8 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
 
     // const {data: contactTitles} = contactsTitleApi.useGetList();
     const {data: contactTypes} = contactsTypeApi.useGetList();
+    const {data: payments = []} = paymentApi.useGetList();
+    const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
 
     return (
         <>
@@ -180,7 +198,33 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
 
             {isClient && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.client_data")}</Typography>
+                    <Typography
+                        color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                        variant="subtitle1"
+                        sx={{mb: 1}}
+                    >
+                        {t("contacts.payment")}
+                    </Typography>
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                        <SelectFieldControlled<ICustomerOrderForm>
+                            name={"payment_id"}
+                            label={t("orders.payment")}
+                            options={payments.map(p => ({value: p.id, label: p.name}))}
+                            required
+                        />
+                        <SelectFieldControlled<ICustomerOrderForm>
+                            name={"shipment_condition_id"}
+                            label={t("orders.shipment-condition")}
+                            options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
+                        />
+                    </Box>
+                    <Typography
+                        color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                        variant="subtitle1"
+                        sx={{mb: 1}}
+                    >
+                        {t("contacts.client_data")}
+                    </Typography>
                     {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
                     {/*    <NumberFieldControlled<IContactForm>*/}
                     {/*        name="tolerance_quantity"*/}
@@ -211,7 +255,8 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
 
             {isAgent && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1" sx={{mb: 1}}>{t("contacts.agent")}</Typography>
+                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
+                                sx={{mb: 1}}>{t("contacts.agent")}</Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <NumberFieldControlled<IContactForm>
                             name="agent_percentage"

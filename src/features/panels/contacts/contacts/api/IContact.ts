@@ -1,6 +1,10 @@
 import type {IContactType} from "@features/panels/contacts/contacts/api/contacts-type/IContactType.ts";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
 import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
+import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {
+    IShipmentCondition
+} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
 
 export interface IContact {
     id: number;
@@ -16,8 +20,11 @@ export interface IContact {
     subcontractor: boolean;
     client_shipment_note: string | null;
     specific_order_reference: string | null;
+    agent_percentage: number | null;
     contact_agents: { agent: IContact }[];
     contact_subcontractors: { subcontractor: IContact }[];
     agent_clients: { contact: IContact }[];
     agent_suppliers: { supplier: IContact }[];
+    payment: IPayment;
+    shipment_condition: IShipmentCondition;
 }

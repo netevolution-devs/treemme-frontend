@@ -62,6 +62,7 @@
     "name": "Nazione"
   },
   "contacts": {
+    "payment": "Pagamento predefinito",
     "select": "Tipologia",
     "client": "Cliente",
     "clients": {
