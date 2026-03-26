@@ -49,8 +49,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     selectedCustomerOrderId: number | null | undefined
 }) => {
     const {t} = useTranslation(["form"]);
-
-
+    
     const {setValue, control} = useFormContext<ICustomerOrderForm>();
 
     const clientId = useWatch({
@@ -60,28 +59,34 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
 
     const selectedClient = clients.find(c => c.id === clientId);
 
-    const {data: client} = contactsApi.useGetDetail(clientId);
-    const clientAddresses = client?.contact_addresses || [];
+    const {data: clientDetail} = contactsApi.useGetDetail(clientId);
+    const clientAddresses = clientDetail?.contact_addresses || [];
 
-    const agentOptions = selectedClient?.contact_agents?.map(ca => ({
+    const agentOptions = (clientDetail || selectedClient)?.contact_agents?.map(ca => ({
         value: ca.agent.id,
         label: ca.agent.name
     })) ?? [];
 
     useEffect(() => {
-        if (clientId) {
-            const client = clients.find(c => c.id === clientId);
-            if (client && client.contact_agents && client.contact_agents.length > 0) {
+        if (clientId && !selectedCustomerOrderId && clientDetail) {
+            if (clientDetail.contact_agents && clientDetail.contact_agents.length > 0) {
                 const currentAgentId = control._formValues.agent_id;
-                const isAgentInContactAgents = client.contact_agents.some(ca => ca.agent.id === currentAgentId);
+                const isAgentInContactAgents = clientDetail.contact_agents.some(ca => ca.agent.id === currentAgentId);
                 if (!isAgentInContactAgents) {
-                    setValue('agent_id', client.contact_agents[0].agent.id);
+                    setValue('agent_id', clientDetail.contact_agents[0].agent.id);
                 }
             } else {
                 setValue('agent_id', undefined);
             }
+
+            if (clientDetail.payment) {
+                setValue('payment_id', clientDetail.payment.id);
+            }
+            if (clientDetail.shipment_condition) {
+                setValue('shipment_condition_id', clientDetail.shipment_condition.id);
+            }
         }
-    }, [clientId, clients, setValue, control]);
+    }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 
     const filterAddressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
         return addressLabels
@@ -271,6 +276,7 @@ const CustomerOrdersForm = () => {
                 agent_id: null,
                 address_id: null,
                 shipment_condition_id: null,
+                payment_id: null,
                 processed: false,
                 cancelled: false,
                 checked: false,
