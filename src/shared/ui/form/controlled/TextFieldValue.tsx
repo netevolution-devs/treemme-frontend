@@ -1,4 +1,5 @@
 import {TextField} from "@mui/material";
+import {alpha} from "@mui/material/styles";
 
 interface TextFieldValueProps {
     label: string;
@@ -25,6 +26,11 @@ const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps
             slotProps={{
                 inputLabel: {
                     shrink: isFilled
+                },
+                input: {
+                    sx: {
+                        backgroundColor: theme => alpha(theme.palette.primary.main, 0.1),
+                    }
                 }
             }}
             disabled
