@@ -200,6 +200,7 @@
     }
   },
   "production": {
+    "date": "Data",
     "title": "Produzione",
     "batch": {
       "workings": "Lavorazione",
