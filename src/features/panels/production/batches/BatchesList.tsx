@@ -50,18 +50,18 @@ const BatchesList = () => {
             accessorKey: "stock_items",
             header: t("production.batch.stock_items")
         },
-        {
-            accessorKey: "quantity",
-            header: t("production.batch.quantity")
-        },
-        {
-            accessorKey: "stock_quantity",
-            header: t("production.batch.stock_quantity")
-        },
-        {
-            accessorKey: "measurement_unit.prefix",
-            header: t("production.batch.measurement_unit")
-        }
+        // {
+        //     accessorKey: "quantity",
+        //     header: t("production.batch.quantity")
+        // },
+        // {
+        //     accessorKey: "stock_quantity",
+        //     header: t("production.batch.stock_quantity")
+        // },
+        // {
+        //     accessorKey: "measurement_unit.prefix",
+        //     header: t("production.batch.measurement_unit")
+        // }
     ], [t]);
 
     return (

@@ -100,7 +100,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                 entity={batchItem}
                 emptyValues={{
                     leather_id: null,
-                    batch_type_id: batchTypes.find(x => x.name === "Partita")?.id || null,
+                    batch_type_id: batchTypes.find(x => x.name === "Lotto")?.id || null,
                     measurement_unit_id: measurementUnits.find(x => x.name === "Piedi quadrati")?.id || null,
                     completed: false,
                     checked: false,
@@ -137,20 +137,25 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedBatchId: null})}
-                validateBeforeSave={(v) => (!!v.leather_id || !!batchItem?.article) && !!v.batch_type_id && !!v.quantity && !!v.pieces && !!v.measurement_unit_id && !!v.batch_date}
+                validateBeforeSave={(v) =>
+                    (!!v.leather_id || !!batchItem?.article) &&
+                    !!v.batch_type_id &&
+                    !!v.pieces &&
+                    !!v.batch_date
+                }
                 extraButtons={[
                     <CustomButton
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita"}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto"}
                         onClick={() => {openDialog(reworkDialogRef)}}
                     />,
                     <CustomButton
                         label={t("production.batch.split")}
                         color={"primary"}
                         icon={<CallSplitIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita" || batchItem?.batch_type.name === "Rinverdimento"}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
                     />
                 ]}

@@ -261,7 +261,9 @@
     "composition_note": "Note composizione",
     "title": "Composizione",
     "button": "Aggiungi",
-    "father_batch_code": "Codice lotto padre"
+    "father_batch_code": "Codice lotto padre",
+    "date-tf": "Data bolla",
+    "date": "Data lavorazione"
   },
   "movements": {
     "date": "Data",
