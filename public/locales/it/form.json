@@ -388,6 +388,17 @@
     "last_access": "Ultimo Accesso",
     "password": "Password"
   },
+  "group_management": {
+    "name": "Nome",
+    "description": "Descrizione"
+  },
+  "role_management": {
+    "name": "Nome"
+  },
+  "work_area_management": {
+    "name": "Nome",
+    "description": "Descrizione"
+  },
   "processes": {
     "scheduled_date": "Data programmazione",
     "batch_code": "Codice lotto",

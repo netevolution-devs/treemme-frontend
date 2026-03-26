@@ -69,5 +69,16 @@
       "print": "Print",
       "note": "Article note"
     }
+  },
+  "group_management": {
+    "name": "Name",
+    "description": "Description"
+  },
+  "role_management": {
+    "name": "Name"
+  },
+  "work_area_management": {
+    "name": "Name",
+    "description": "Description"
   }
 }
