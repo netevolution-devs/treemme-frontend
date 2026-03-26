@@ -10,7 +10,7 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {originAreaApi} from "@features/panels/leathers/origins/api/origin-area/originAreaApi.ts";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
@@ -20,21 +20,34 @@ import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm.tsx";
 
 export type IOriginForm =
-    Omit<IOrigin, "id" | "nation" | "flay" | "area" | "psp_yield_coefficient" | "crust_yield_coefficient" | "grain_yield_coefficient" | "trip_day" | "sea_shipment">
-    & {
+    Omit<IOrigin, "id"
+        | "nation"
+        | "flay"
+        | "area"
+        | "psp_yield_coefficient"
+        | "crust_yield_coefficient"
+        | "grain_yield_coefficient"
+        | "trip_day"
+        | "sea_shipment"
+        | "raw_yield_coefficient"
+        | "rind_yield_coefficient"
+> & {
     nation_id?: number | null;
     flay_id?: number | null;
     area_id?: number | null;
-    crust_yield_coefficient?: number | null;
-    grain_yield_coefficient?: number | null;
-    psp_yield_coefficient?: number | null;
     trip_day?: number | null;
     sea_shipment?: boolean;
+    psp_yield_coefficient?: number | null;
+    raw_yield_coefficient?: number | null;
+    grain_yield_coefficient?: number | null;
+    crust_yield_coefficient?: number | null;
+    rind_yield_coefficient?: number | null;
 };
 
 const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {useStore} = usePanel<unknown, IOriginsStoreState>();
     const selectedOriginId = useStore(state => state.uiState.selectedOriginId);
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
     const setUIState = useStore(state => state.setUIState);
 
     const {setFormState} = usePanelFormButtons();
@@ -64,6 +77,8 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 crust_yield_coefficient: 1,
                 grain_yield_coefficient: 1,
                 psp_yield_coefficient: 1,
+                raw_yield_coefficient: 1,
+                rind_yield_coefficient: 1,
                 sea_shipment: false,
                 trip_day: null,
             }}
@@ -75,6 +90,8 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 crust_yield_coefficient: x.crust_yield_coefficient,
                 grain_yield_coefficient: x.grain_yield_coefficient,
                 psp_yield_coefficient: x.psp_yield_coefficient,
+                raw_yield_coefficient: x.raw_yield_coefficient,
+                rind_yield_coefficient: x.rind_yield_coefficient,
                 sea_shipment: x.sea_shipment,
                 trip_day: x.trip_day,
             })}
@@ -91,14 +108,16 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                 !!v.flay_id &&
                 !!v.psp_yield_coefficient &&
                 !!v.crust_yield_coefficient &&
-                !!v.grain_yield_coefficient
+                !!v.grain_yield_coefficient &&
+                !!v.rind_yield_coefficient &&
+                !!v.raw_yield_coefficient
             }
-            renderFields={() => <OriginsFormFields/>}
+            renderFields={() => <OriginsFormFields isFormDisabled={isFormDisabled}/>}
         />
     )
 }
 
-const OriginsFormFields = () => {
+const OriginsFormFields = ({isFormDisabled}: {isFormDisabled: boolean}) => {
     const {t} = useTranslation(["form"]);
 
     const {data: nations = []} = nationsApi.useGetList();
@@ -179,6 +198,7 @@ const OriginsFormFields = () => {
                     })
                 }}
             />
+            <Typography sx={{mb: 1, fontSize: 16}} color={isFormDisabled ? "textDisabled" : "textPrimary"}>{t("leathers.origin.label-coeff")}</Typography>
             <Box sx={{display: 'flex', gap: 1}}>
                 <NumberFieldControlled<IOriginForm>
                     name="psp_yield_coefficient"
@@ -197,6 +217,20 @@ const OriginsFormFields = () => {
                 <NumberFieldControlled<IOriginForm>
                     name="crust_yield_coefficient"
                     label={t("leathers.origin.crust-yield-coefficient")}
+                    precision={3}
+                    step={1}
+                    required
+                />
+                <NumberFieldControlled<IOriginForm>
+                    name="raw_yield_coefficient"
+                    label={t("leathers.origin.raw-yield-coefficient")}
+                    precision={3}
+                    step={1}
+                    required
+                />
+                <NumberFieldControlled<IOriginForm>
+                    name="rind_yield_coefficient"
+                    label={t("leathers.origin.rind-yield-coefficient")}
                     precision={3}
                     step={1}
                     required

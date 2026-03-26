@@ -152,11 +152,14 @@
       "code": "Codice"
     },
     "origin": {
+      "label-coeff": "Coefficienti resa",
       "code": "Codice",
       "area": "Zona di provenienza",
-      "crust-yield-coefficient": "Crosta",
+      "crust-yield-coefficient": "Crust",
       "grain-yield-coefficient": "Fiore",
-      "psp-yield-coefficient": "Coefficiente resa PSP",
+      "psp-yield-coefficient": "Pieno spessore",
+      "rind-yield-coefficient": "Crosta",
+      "raw-yield-coefficient": "Grezzo",
       "sea-shipment": "Spedizione mare",
       "trip-day": "Giorni viaggio",
       "flay": "Scuoiatura predefinita"
