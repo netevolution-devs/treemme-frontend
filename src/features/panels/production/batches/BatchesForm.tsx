@@ -148,7 +148,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto"}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" && batchItem.stock_items > 0}
                         onClick={() => {openDialog(reworkDialogRef)}}
                     />,
                     <CustomButton
