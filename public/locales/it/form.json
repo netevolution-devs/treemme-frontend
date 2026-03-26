@@ -206,6 +206,7 @@
       "workings": "Lavorazione",
       "note": "Note composizione",
       "article": "Articolo",
+      "year": "Anno",
       "batch_code": "Lotto",
       "batch_date": "Data",
       "batch_type": "Tipo Lotto",

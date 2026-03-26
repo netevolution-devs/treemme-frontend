@@ -16,7 +16,8 @@ export interface IBatchesStoreState extends IPanelUIState {
 
 export interface IBatchesStoreFilter {
     filterBatchCode?: string;
-    filterBatchTypeId?: number | null;
+    filterBatchTypeId?: number | null
+    filterYear?: number | null;
 }
 
 export interface IBatchesStoreParams {
