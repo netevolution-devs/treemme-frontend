@@ -57,7 +57,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
             accessorKey: "composition_note",
             header: t("composition.composition_note"),
         }
-    ], [t]);
+    ], [t, isTForUF]);
 
     const compositionDialogRef = useRef<IDialogActions | null>(null);
 
