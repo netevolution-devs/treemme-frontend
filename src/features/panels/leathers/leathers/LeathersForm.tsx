@@ -301,7 +301,7 @@ const LeatherSelects = () => {
                     name={"species_id"}
                     label={t("leathers.leather.species")}
                     options={species.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -319,7 +319,7 @@ const LeatherSelects = () => {
                     name={"type_id"}
                     label={t("leathers.leather.type")}
                     options={types.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -337,7 +337,7 @@ const LeatherSelects = () => {
                     name={"status_id"}
                     label={t("leathers.leather.status")}
                     options={tanningStages.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     onNoOptionsMatch={(input) => {
@@ -356,7 +356,7 @@ const LeatherSelects = () => {
                     name={"weight_id"}
                     label={t("leathers.leather.weight")}
                     options={weights.map((x) => ({
-                        label: x.name,
+                        label: `${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -374,7 +374,7 @@ const LeatherSelects = () => {
                     name={"thickness_id"}
                     label={t("leathers.leather.thickness")}
                     options={thicknesses.map((x) => ({
-                        label: x.name,
+                        label: `${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -392,7 +392,7 @@ const LeatherSelects = () => {
                     name={"flay_id"}
                     label={t("leathers.leather.flay")}
                     options={flays.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     required
