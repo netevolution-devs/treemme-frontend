@@ -3,6 +3,8 @@ import useApi from "@api/useApi.ts";
 
 interface ISubcontractingReturnPayload {
     ddtRowId: number;
+    date: string;
+    pieces: number;
 }
 
 const usePostSubcontractingReturn = () => {
@@ -12,7 +14,10 @@ const usePostSubcontractingReturn = () => {
     return useMutation({
         mutationKey: ['DDT-ROW-RETURN'],
         mutationFn: async (payload: ISubcontractingReturnPayload) => {
-            const response = await post<unknown>(`/ddt-row/${payload.ddtRowId}/return`, {});
+            const response = await post<unknown>(`/ddt-row/${payload.ddtRowId}/return`, {
+                date: payload.date,
+                pieces: payload.pieces,
+            } as never);
             return response.data.data;
         },
         onSuccess: () => {

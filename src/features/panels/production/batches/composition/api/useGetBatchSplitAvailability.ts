@@ -2,7 +2,7 @@ import {useQuery} from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
 
-const useGetBatchAvailability = () => {
+const useGetBatchSplitAvailability = () => {
     const { get } = useApi();
     return useQuery({
         queryKey: ['BATCH-SPLIT-AVAILABILITY', 'LIST'],
@@ -16,4 +16,4 @@ const useGetBatchAvailability = () => {
     });
 };
 
-export default useGetBatchAvailability;
+export default useGetBatchSplitAvailability;

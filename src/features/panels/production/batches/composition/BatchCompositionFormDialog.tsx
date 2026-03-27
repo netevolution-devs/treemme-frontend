@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
 import usePostBatchComposition from "@features/panels/production/batches/composition/api/usePostBatchComposition.ts";
-import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
+import useGetBatchSplitAvailability from "@features/panels/production/batches/composition/api/useGetBatchSplitAvailability.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
@@ -91,7 +91,7 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
 const BatchCompositionFormFields = () => {
     const {t} = useTranslation(["form"]);
 
-    const {data: batches = []} = useGetBatchAvailability();
+    const {data: batches = []} = useGetBatchSplitAvailability();
 
     const watchedFatherBatchId = useWatch<IBatchCompositionForm>({name: "father_batch_id"});
     const watchedSelectionId = useWatch<IBatchCompositionForm>({name: "batch_selection_id"});

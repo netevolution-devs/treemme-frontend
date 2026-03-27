@@ -18,6 +18,8 @@ import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import DDTReturnFormDialog
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/DDTReturnFormDialog.tsx";
+import DDTTransferFormDialog
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/transfer/DDTTransferFormDialog.tsx";
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);
@@ -56,7 +58,7 @@ const SubcontractingNotReturnedList = () => {
     return (
         <>
             <DDTReturnFormDialog ref={ddtReturnDialogRef} />
-            <DDTReturnFormDialog ref={ddtTransferDialogRef} />
+            <DDTTransferFormDialog ref={ddtTransferDialogRef} />
 
             <GenericList<IDeliveryNoteRow>
                 minHeight={"800px"}

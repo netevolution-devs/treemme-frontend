@@ -19,7 +19,6 @@ import {
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
-import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
 import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
@@ -29,6 +28,8 @@ import CurrenciesExchangeFormDialog
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
+import useGetBatchAvailability
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetBatchAvailability.ts";
 
 type Props = unknown;
 
