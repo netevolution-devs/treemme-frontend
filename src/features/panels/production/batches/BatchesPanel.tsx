@@ -9,6 +9,8 @@ import BatchesSelection from "@features/panels/production/batches/selection/Batc
 import BatchesContent from "@features/panels/production/batches/BatchesContent.tsx";
 import type {IDockviewPanelProps} from "dockview";
 import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {useEffect, useState} from "react";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
 
 export interface IBatchesStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
@@ -25,6 +27,36 @@ export interface IBatchesStoreParams {
     batch_code: string;
 }
 
+const BatchesPanelContent = (props: IDockviewPanelProps<ICustomPanelProps<IBatchesStoreParams>>) => {
+    const [tabIndex, setTabIndex] = useState(0);
+    const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
+    const setUIState = useStore(state => state.setUIState);
+    const setFilters = useStore(state => state.setFilters);
+
+    useEffect(() => {
+        if (props.params.extra) {
+            setUIState({selectedBatchId: props.params.extra.id});
+            setFilters({filterBatchCode: props.params.extra.batch_code});
+        }
+    }, [props.params.extra, setUIState, setFilters]);
+
+    return (
+        <>
+            <BatchesList/>
+            <GenericTabContent
+                value={tabIndex}
+                onChange={(_, newValue) => setTabIndex(newValue)}
+                tabs={[
+                    {label: "Lotto", component: <BatchesContent {...props.params}/>},
+                    {label: "Cronologia", component: <BatchesChronology/>},
+                    {label: "Scelte", component: <BatchesSelection/>},
+                    {label: "Movimenti", component: <WarehouseMovementsList/>},
+                ]}
+            />
+        </>
+    )
+}
+
 const BatchesPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchesStoreParams>>) => {
     const initialUiState: IBatchesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
@@ -33,15 +65,7 @@ const BatchesPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchesStore
             kind={"batches"}
             initialState={{uiState: initialUiState}}
         >
-            <BatchesList/>
-            <GenericTabContent
-                tabs={[
-                    {label: "Lotto", component: <BatchesContent {...props.params}/>},
-                    {label: "Cronologia", component: <BatchesChronology/>},
-                    {label: "Scelte", component: <BatchesSelection/>},
-                    {label: "Movimenti", component: <WarehouseMovementsList/>},
-                ]}
-            />
+            <BatchesPanelContent {...props} />
         </GenericPanel>
     )
 }
