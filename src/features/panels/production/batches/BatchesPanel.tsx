@@ -47,7 +47,7 @@ const BatchesPanelContent = (props: IDockviewPanelProps<ICustomPanelProps<IBatch
                 value={tabIndex}
                 onChange={(_, newValue) => setTabIndex(newValue)}
                 tabs={[
-                    {label: "Lotto", component: <BatchesContent {...props.params}/>},
+                    {label: "Lotto", component: <BatchesContent/>},
                     {label: "Cronologia", component: <BatchesChronology/>},
                     {label: "Scelte", component: <BatchesSelection/>},
                     {label: "Movimenti", component: <WarehouseMovementsList/>},

@@ -2,10 +2,8 @@ import BatchesForm from "@features/panels/production/batches/BatchesForm.tsx";
 import {Box} from "@mui/material";
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
 import BatchesProductionList from "@features/panels/production/batches/production/BatchesProductionList.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import type {IBatchesStoreParams} from "@features/panels/production/batches/BatchesPanel.tsx";
 
-const BatchesContent = (props: ICustomPanelFormProps<IBatchesStoreParams>) => {
+const BatchesContent = () => {
     return (
         <>
             <Box sx={{
@@ -20,7 +18,7 @@ const BatchesContent = (props: ICustomPanelFormProps<IBatchesStoreParams>) => {
                     minWidth: '600px',
                     flex: '1 1 600px',
                 }}>
-                    <BatchesForm {...props}/>
+                    <BatchesForm/>
                 </Box>
                 <Box sx={{
                     display: 'flex',
