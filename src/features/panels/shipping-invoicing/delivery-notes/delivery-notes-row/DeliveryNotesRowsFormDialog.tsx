@@ -4,7 +4,7 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import {Box, Stack} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import {forwardRef, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
@@ -53,6 +53,8 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
 };
 
 const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+    const {t} = useTranslation(["form"]);
+
     const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
     const selectedDeliveryNoteId = useStore(state => state.uiState.selectedDeliveryNoteId);
     const selectedDeliveryNoteRowId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
@@ -132,6 +134,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 )}
             />
 
+            <Typography sx={{mb: 1, fontSize: 16, mt: 2}}>{t("shipping.composition-title")}</Typography>
             <BatchesCompositionList
                 customBatchId={deliveryNoteRow?.batch?.id as number}
                 enableToolbar={false}

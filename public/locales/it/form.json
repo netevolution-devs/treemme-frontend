@@ -386,6 +386,7 @@
     }
   },
   "shipping": {
+    "composition-title": "Composizione",
     "subcontractor_clients": "Terzista/Cliente",
     "ddt_number": "Numero DDT",
     "ddt_date": "Data DDT",
