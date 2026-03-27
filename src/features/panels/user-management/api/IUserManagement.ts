@@ -5,6 +5,7 @@ export interface IUserManagementGroup {
 }
 
 export interface IUserManagementGroupUser {
+    id: number;
     group: IUserManagementGroup;
 }
 
