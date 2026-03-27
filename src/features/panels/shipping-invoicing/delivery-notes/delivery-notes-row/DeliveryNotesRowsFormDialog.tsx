@@ -243,12 +243,12 @@ const DeliverNotesRowsFormFields = () => {
                     name="measurement_unit_id"
                     label={t("orders.row.measurement_unit")}
                     options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
-                    required={isSell}
+                    required
                 />
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="quantity"
                     label={t("orders.row.quantity")}
-                    required={isSell}
+                    required
                 />
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="half_piece"
