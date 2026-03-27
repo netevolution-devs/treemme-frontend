@@ -9,7 +9,7 @@ import useGetBatchAvailability from "@features/panels/production/batches/composi
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {useWatch} from "react-hook-form";
 import dayjs from "dayjs";
@@ -36,6 +36,8 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
+            <Typography variant="h5" sx={{mb: 2}}>{t("composition.title")}</Typography>
+
             <GenericForm<IBatchCompositionForm, unknown, IBatchesStoreState>
                 selectedId={null}
                 dialogMode
