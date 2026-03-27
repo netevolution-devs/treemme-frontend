@@ -30,6 +30,7 @@ import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
 import useGetBatchAvailability
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetBatchAvailability.ts";
+import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 
 type Props = unknown;
 
@@ -135,11 +136,15 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 )}
             />
 
-            <Typography sx={{mb: 1, fontSize: 16, mt: 2}}>{t("shipping.composition-title")}</Typography>
-            <BatchesCompositionList
-                customBatchId={deliveryNoteRow?.batch?.id as number}
-                enableToolbar={false}
-            />
+            {deliveryNoteRow && (
+                <>
+                    <Typography sx={{mb: 1, fontSize: 16, mt: 2}}>{t("shipping.composition-title")}</Typography>
+                    <BatchesCompositionList
+                        customBatchId={deliveryNoteRow?.batch?.id as number}
+                        enableToolbar={false}
+                    />
+                </>
+            )}
         </BaseDialog>
     );
 });
@@ -178,9 +183,13 @@ const DeliverNotesRowsFormFields = () => {
         return deliveryNote?.reason.name === "Vendita"
     }, [deliveryNote])
 
+    const watchedBatchId = useWatch<IDeliveryNoteRowForm>({name: "batch_id"});
     const watchedCurrencyId = useWatch<IDeliveryNoteRowForm>({name: "currency_id"});
     const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_change"});
 
+    const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
+
+    const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
 
     return (
         <Stack gap={1}>
@@ -208,6 +217,8 @@ const DeliverNotesRowsFormFields = () => {
                     name="pieces"
                     label={t("production.batch.selections.pieces")}
                     required
+                    deactivated={!watchedBatchId}
+                    max={batch?.stock_items as number}
                     precision={0}
                 />
                 {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
@@ -234,7 +245,7 @@ const DeliverNotesRowsFormFields = () => {
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center', mb: 1}}>
                 <TextFieldValue
                     label={t("orders.row.product")}
-                    value={deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name}
+                    value={productName}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>
