@@ -31,11 +31,16 @@ const CurrencyWatcher = ({ currencies, exchangeFieldName }: ICurrencyWatcherProp
                     if (isEur && hasValue) {
                         clearErrors(exchangeFieldName);
                     } else if (!hasValue || !isFirstRun.current) {
-                        setValue(exchangeFieldName, 0);
                         setError(exchangeFieldName, {
                             type: "manual",
                             message: "Ultimo cambio valuta non trovato. Inserirlo nella apposita scheda",
                         });
+                        if (currency.abbreviation.toUpperCase() === "EUR") {
+                            setValue(exchangeFieldName, 1);
+                            clearErrors(exchangeFieldName);
+                        } else {
+                            setValue(exchangeFieldName, 0);
+                        }
                     }
                 }
             }
