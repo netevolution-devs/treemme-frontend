@@ -386,7 +386,9 @@
     "user_code": "Codice Utente",
     "email": "Email",
     "last_access": "Ultimo Accesso",
-    "password": "Password"
+    "password": "Password",
+    "groups": "Gruppi",
+    "add_group": "Aggiungi gruppo"
   },
   "group_management": {
     "name": "Nome",

@@ -70,6 +70,14 @@
       "note": "Article note"
     }
   },
+  "user_management": {
+    "user_code": "User Code",
+    "email": "Email",
+    "last_access": "Last Access",
+    "password": "Password",
+    "groups": "Groups",
+    "add_group": "Add group"
+  },
   "group_management": {
     "name": "Name",
     "description": "Description"
