@@ -128,7 +128,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedDeliveryNoteRowId: null})}
-                validateBeforeSave={(v) => !!v.batch_id && !!v.measurement_unit_id && !!v.pieces && !!v.quantity}
+                validateBeforeSave={(v) => !!v.batch_id && !!v.pieces}
                 renderFields={() => (
                     <DeliverNotesRowsFormFields/>
                 )}
@@ -243,12 +243,12 @@ const DeliverNotesRowsFormFields = () => {
                     name="measurement_unit_id"
                     label={t("orders.row.measurement_unit")}
                     options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
-                    required
+                    required={isSell}
                 />
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="quantity"
                     label={t("orders.row.quantity")}
-                    required
+                    required={isSell}
                 />
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="half_piece"
