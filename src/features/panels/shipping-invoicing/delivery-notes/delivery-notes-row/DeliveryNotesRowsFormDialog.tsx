@@ -220,7 +220,7 @@ const DeliverNotesRowsFormFields = () => {
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center', mb: 1}}>
                 <TextFieldValue
                     label={t("orders.row.product")}
-                    value={deliveryNoteRow?.batch.article?.name}
+                    value={deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>
