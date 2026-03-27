@@ -14,6 +14,8 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {useWatch} from "react-hook-form";
 import dayjs from "dayjs";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 
 export interface IBatchCompositionForm {
     father_batch_piece: number | null;
@@ -25,6 +27,8 @@ export interface IBatchCompositionForm {
 }
 
 const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
+    const {t} = useTranslation(["form", "common"]);
+
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
 
@@ -36,6 +40,7 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 selectedId={null}
                 dialogMode
                 dialogRef={ref}
+                disabledBasicButtons
                 bypassConfirm
                 emptyValues={{
                     father_batch_piece: null,
@@ -65,6 +70,14 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
                     // v.quantity > 0 &&
                     !!v.batch_selection_id
                 }
+                extraButtons={[
+                    <CustomButton
+                        label={t("common:button.execute")}
+                        color={"primary"}
+                        icon={<AddToPhotosIcon/>}
+                        isSubmit
+                    />
+                ]}
                 renderFields={() => (
                     <BatchCompositionFormFields/>
                 )}
