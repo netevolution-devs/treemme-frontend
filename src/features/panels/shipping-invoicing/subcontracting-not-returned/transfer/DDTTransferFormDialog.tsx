@@ -16,7 +16,6 @@ import useGetDDTNotReturned from "@features/panels/shipping-invoicing/subcontrac
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {IContactForm} from "@features/panels/contacts/contacts/ContactsForm.tsx";
 
 type Props = unknown;
 
@@ -108,8 +107,8 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                             precision={0}
                             required
                         />
-                        <TextFieldControlled<IContactForm>
-                            name="contact_note"
+                        <TextFieldControlled<IDDTTransferForm>
+                            name="note"
                             label={t("contacts.notes")}
                             TextFieldProps={{multiline: true, rows: 2}}
                         />

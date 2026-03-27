@@ -3,22 +3,28 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {Stack, Typography} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import dayjs from "dayjs";
-import type {ISubcontractingNotReturnedStoreState} from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
-import usePostSubcontractingReturn from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/api/usePostSubcontractingReturn.ts";
+import type {
+    ISubcontractingNotReturnedStoreState
+} from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
+import usePostSubcontractingReturn
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/api/usePostSubcontractingReturn.ts";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
-import useGetDDTNotReturned from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned.ts";
+import useGetDDTNotReturned
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned.ts";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 
 type Props = unknown;
 
 export type IDDTReturnForm = {
     date: string;
-    pieces: number;
+    pieces: number | null;
+    note: string;
 }
 
 const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -44,17 +50,20 @@ const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 selectedId={selectedId}
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
-                    pieces: 0,
+                    pieces: null,
+                    note: ""
                 }}
                 emptyValues={{
                     date: dayjs().format("YYYY-MM-DD"),
-                    pieces: 0,
+                    pieces: null,
+                    note: ""
                 }}
-                mapEntityToForm={(x) => ({date: x.date, pieces: x.pieces})}
+                mapEntityToForm={(x) => ({date: x.date, pieces: x.pieces, note: x.note})}
                 create={(payload) => returnSubcontract({
                     ddtRowId: selectedId as number,
                     date: payload.date,
-                    pieces: payload.pieces
+                    pieces: payload.pieces as number,
+                    note: payload.note
                 })}
                 extraButtons={[
                     <CustomButton
@@ -66,18 +75,25 @@ const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 ]}
                 isSaving={isPending}
                 renderFields={() => (
-                    <Stack gap={1.5}>
-                        <DateFieldControlled<IDDTReturnForm>
-                            name={"date"}
-                            label={t("production.date")}
-                            required
-                        />
+                    <Stack gap={0.7}>
+                        <Box sx={{mb: 1}}>
+                            <DateFieldControlled<IDDTReturnForm>
+                                name={"date"}
+                                label={t("production.date")}
+                                required
+                            />
+                        </Box>
                         <NumberFieldControlled<IDDTReturnForm>
                             name={"pieces"}
                             label={t("production.batch.pieces")}
                             max={selectedRow?.pieces as number || 0}
                             precision={0}
                             required
+                        />
+                        <TextFieldControlled<IDDTReturnForm>
+                            name="note"
+                            label={t("contacts.notes")}
+                            TextFieldProps={{multiline: true, rows: 2}}
                         />
                     </Stack>
                 )}
