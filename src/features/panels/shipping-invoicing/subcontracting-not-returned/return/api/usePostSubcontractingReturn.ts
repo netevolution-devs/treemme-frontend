@@ -8,7 +8,7 @@ interface ISubcontractingReturnPayload {
     note: string;
 }
 
-const usePostSubcontractingReturn = () => {
+const usePostSubcontractingReturn = (batchId: number) => {
     const { postEncoded: post } = useApi();
     const queryClient = useQueryClient();
 
@@ -24,6 +24,7 @@ const usePostSubcontractingReturn = () => {
         },
         onSuccess: () => {
             void queryClient.invalidateQueries({ queryKey: ['DDT-ROW-NOT-RETURNED', 'LIST'] });
+            void queryClient.invalidateQueries({ queryKey: ['BATCH', 'DETAIL', batchId] });
         },
     });
 };

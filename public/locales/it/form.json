@@ -239,6 +239,7 @@
       "selection": "Scelta",
       "selections": {
         "pieces": "Pezzi totali",
+        "external-pieces": "Pezzi da ritornare",
         "stock_items": "Giacenza pezzi",
         "selection": "Tipo scelta",
         "note": "Note scelta",

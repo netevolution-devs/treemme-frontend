@@ -20,9 +20,12 @@ import DDTReturnFormDialog
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/DDTReturnFormDialog.tsx";
 import DDTTransferFormDialog
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/transfer/DDTTransferFormDialog.tsx";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);
+    const addPanel = useDockviewStore(state => state.addPanel);
 
     const {useStore} = usePanel<unknown, ISubcontractingNotReturnedStoreState>();
     const selectedSubcontractingNotReturnedId = useStore((state) => state.uiState.selectedSubcontractingNotReturnedId);
@@ -37,17 +40,17 @@ const SubcontractingNotReturnedList = () => {
             header: t("production.batch.batch_code"),
         },
         {
-            accessorKey: "pieces",
-            header: t("production.batch.selections.pieces"),
+            accessorKey: "stock_pieces",
+            header: t("production.batch.selections.external-pieces"),
         },
-        {
-            accessorKey: "quantity",
-            header: t("orders.row.quantity"),
-        },
-        {
-            accessorKey: "measurement_unit.name",
-            header: t("orders.row.measurement_unit"),
-        }
+        // {
+        //     accessorKey: "quantity",
+        //     header: t("orders.row.quantity"),
+        // },
+        // {
+        //     accessorKey: "measurement_unit.name",
+        //     header: t("orders.row.measurement_unit"),
+        // }
     ], [t]);
 
     const editRowDialogRef = useRef<IDialogActions | null>(null);
@@ -72,6 +75,23 @@ const SubcontractingNotReturnedList = () => {
                 additionalOptions={{
                     enableRowActions: true,
                     renderRowActionMenuItems: ({row, closeMenu}) => [
+                        <MenuItem key={"view_batch"} onClick={() => {
+                            addPanel({
+                                id: `batches:${crypto.randomUUID()}`,
+                                title: t("menu:menu.production.batches"),
+                                component: 'batches',
+                                params: {
+                                    extra: {
+                                        id: row.original.batch.id,
+                                        batch_code: row.original.batch.batch_code
+                                    }
+                                }
+                            });
+                            closeMenu();
+                        }}>
+                            <VisibilityIcon color={"primary"} sx={{mr: 1}} />
+                            {t("processes.view_batch")}
+                        </MenuItem>,
                         <MenuItem key="m-return" onClick={() => {
                             setUIState({selectedSubcontractingNotReturnedId: row.original.id})
                             openDialog(ddtReturnDialogRef)

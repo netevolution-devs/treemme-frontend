@@ -42,7 +42,8 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'selection' |
     'pieces' |
     'quantity' |
-    'processing'
+    'processing' |
+    'stock_pieces'
 > & {
     batch_id: number | null;
     measurement_unit_id: number | null;

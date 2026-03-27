@@ -24,4 +24,5 @@ export interface IDeliveryNoteRow {
     whole_piece: number | null;
     half_piece: number | null;
     processing: IWorking | null;
+    stock_pieces: number;
 }

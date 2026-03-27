@@ -36,7 +36,7 @@ const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const {data: ddtRowsNotReturned = []} = useGetDDTNotReturned();
     const selectedRow = ddtRowsNotReturned.find(x => x.id === selectedId);
 
-    const {mutateAsync: returnSubcontract, isPending} = usePostSubcontractingReturn();
+    const {mutateAsync: returnSubcontract, isPending} = usePostSubcontractingReturn(selectedRow?.batch.id as number);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -86,7 +86,7 @@ const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                         <NumberFieldControlled<IDDTReturnForm>
                             name={"pieces"}
                             label={t("production.batch.pieces")}
-                            max={selectedRow?.pieces as number || 0}
+                            max={selectedRow?.stock_pieces as number || 0}
                             precision={0}
                             required
                         />
