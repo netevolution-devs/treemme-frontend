@@ -71,10 +71,11 @@ const SubcontractingNotReturnedList = () => {
                 onRowDoubleClick={() => openDialog(editRowDialogRef)}
                 additionalOptions={{
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="m-return" onClick={() => {
                             setUIState({selectedSubcontractingNotReturnedId: row.original.id})
                             openDialog(ddtReturnDialogRef)
+                            closeMenu()
                         }}>
                             <AssignmentReturnIcon color={"primary"} sx={{mr: 1}}/>
                             {t("shipping.ddt_rows.return")}
@@ -82,6 +83,7 @@ const SubcontractingNotReturnedList = () => {
                         <MenuItem key="m-transfer" onClick={() => {
                             setUIState({selectedSubcontractingNotReturnedId: row.original.id})
                             openDialog(ddtTransferDialogRef)
+                            closeMenu()
                         }}>
                             <MoveDownIcon color={"warning"} sx={{mr: 1}}/>
                             {t("shipping.ddt_rows.transfer")}

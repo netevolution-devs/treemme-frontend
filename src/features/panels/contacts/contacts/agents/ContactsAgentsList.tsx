@@ -78,10 +78,11 @@ const ContactsAgentsList = () => {
                         />
                     ),
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
                             setUIState({selectedAgentId: row.original.id});
+                            closeMenu();
                         }}>
                             <DeleteIcon color={"error"}/>
                             {t("common:button.remove")}

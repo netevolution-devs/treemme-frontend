@@ -77,10 +77,11 @@ const ContactsSubcontractorsList = () => {
                         />
                     ),
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
                             setUIState({selectedSubcontractorId: row.original.id});
+                            closeMenu();
                         }}>
                             <DeleteIcon color={"error"}/>
                             {t("common:button.remove")}

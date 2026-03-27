@@ -15,13 +15,16 @@ import MoveDownIcon from '@mui/icons-material/MoveDown';
 import useGetDDTNotReturned from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned.ts";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {IContactForm} from "@features/panels/contacts/contacts/ContactsForm.tsx";
 
 type Props = unknown;
 
 export type IDDTTransferForm = {
     subcontractor_id: number;
     date: string;
-    pieces: number;
+    pieces: number | null;
+    note: string;
 }
 
 const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -51,25 +54,29 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                 entity={{
                     subcontractor_id: 0,
                     date: dayjs().format("YYYY-MM-DD"),
-                    pieces: 0,
+                    pieces: null,
+                    note: "",
                 }}
                 emptyValues={{
                     subcontractor_id: 0,
                     date: dayjs().format("YYYY-MM-DD"),
-                    pieces: 0,
+                    pieces: null,
+                    note: "",
                 }}
                 mapEntityToForm={(x) => ({
                     subcontractor_id: x.subcontractor_id,
                     date: x.date,
-                    pieces: x.pieces
+                    pieces: x.pieces,
+                    note: x.note
                 })}
                 create={(payload) => transferSubcontract({
                     ddtRowId: selectedId as number,
                     subcontractor_id: payload.subcontractor_id,
                     date: payload.date,
-                    pieces: payload.pieces
+                    pieces: payload.pieces as number,
+                    note: payload.note
                 })}
-                validateBeforeSave={(v) => v.pieces > 0 && v.subcontractor_id > 0}
+                validateBeforeSave={(v) => !!v.pieces && !!v.subcontractor_id}
                 extraButtons={[
                     <CustomButton
                         label={t("common:button.execute")}
@@ -100,6 +107,11 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                             max={selectedRow?.pieces as number || 0}
                             precision={0}
                             required
+                        />
+                        <TextFieldControlled<IContactForm>
+                            name="contact_note"
+                            label={t("contacts.notes")}
+                            TextFieldProps={{multiline: true, rows: 2}}
                         />
                     </Stack>
                 )}

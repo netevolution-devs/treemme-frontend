@@ -5,6 +5,7 @@ interface ISubcontractingReturnPayload {
     ddtRowId: number;
     date: string;
     pieces: number;
+    note: string;
 }
 
 const usePostSubcontractingReturn = () => {
@@ -17,6 +18,7 @@ const usePostSubcontractingReturn = () => {
             const response = await post<unknown>(`/ddt-row/${payload.ddtRowId}/return`, {
                 date: payload.date,
                 pieces: payload.pieces,
+                row_note: payload.note,
             } as never);
             return response.data.data;
         },

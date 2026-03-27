@@ -6,6 +6,7 @@ interface ISubcontractingTransferPayload {
     subcontractor_id: number;
     date: string;
     pieces: number;
+    note: string;
 }
 
 const usePostSubcontractingTransfer = () => {
@@ -19,6 +20,7 @@ const usePostSubcontractingTransfer = () => {
                 subcontractor_id: payload.subcontractor_id,
                 date: payload.date,
                 pieces: payload.pieces,
+                row_note: payload.note,
             } as never);
             return response.data.data;
         },
