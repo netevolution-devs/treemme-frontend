@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, memo, useEffect} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import {useTranslation} from "react-i18next";
@@ -12,8 +12,9 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import {useWatch} from "react-hook-form";
 
-type Props = { currencyId?: number, currencyValue?: number | null };
+type Props = { currencyId?: number, currencyValue?: number | null, onChangeValue?: (val: number | null) => void };
 
 export type ICurrenciesExchangeForm = {
     date: string;
@@ -21,7 +22,19 @@ export type ICurrenciesExchangeForm = {
     currency_id: number | null;
 }
 
-const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId, currencyValue = null}, ref) => {
+const FormValueWatcher = memo(({ onChangeValue }: { onChangeValue?: ((val: number | null) => void) | undefined }) => {
+    const watchedChangeValue = useWatch<ICurrenciesExchangeForm>({ name: 'change_value' });
+
+    useEffect(() => {
+        if (onChangeValue) {
+            onChangeValue(watchedChangeValue as number | null);
+        }
+    }, [watchedChangeValue, onChangeValue]);
+
+    return null;
+});
+
+const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId, currencyValue = null, onChangeValue}, ref) => {
     const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, ICurrenciesExchangeStoreState>();
@@ -71,6 +84,8 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                 isSaving={isPending}
                 renderFields={() => (
                     <Stack gap={2}>
+                        <FormValueWatcher onChangeValue={onChangeValue} />
+
                         <DateFieldControlled<ICurrenciesExchangeForm>
                             name={"date"}
                             label={t("currencies.date")}

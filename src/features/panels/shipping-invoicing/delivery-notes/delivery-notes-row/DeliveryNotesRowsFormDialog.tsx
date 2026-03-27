@@ -22,7 +22,7 @@ import {selectionApi} from "@features/panels/products/selection/api/selectionApi
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
 import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
-import {useWatch} from "react-hook-form";
+import {useFormContext, useWatch} from "react-hook-form";
 import CurrenciesExchangeFormDialog
     from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
@@ -187,6 +187,8 @@ const DeliverNotesRowsFormFields = () => {
     const watchedCurrencyId = useWatch<IDeliveryNoteRowForm>({name: "currency_id"});
     const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_change"});
 
+    const {setValue} = useFormContext<IDeliveryNoteRowForm>();
+
     const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
 
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
@@ -204,6 +206,7 @@ const DeliverNotesRowsFormFields = () => {
                     ? watchedCurrencyValue as number
                     : null
                 }
+                onChangeValue={(value) => {setValue("currency_change", value);}}
             />
 
             <Box sx={{display: 'flex', gap: 1}}>
