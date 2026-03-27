@@ -26,6 +26,10 @@ const WarehouseMovementsList = () => {
             )
         },
         {
+            accessorKey: "contact.name",
+            header: t("movements.contact")
+        },
+        {
             accessorKey: "reason.name",
             header: t("movements.reason")
         },

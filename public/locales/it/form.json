@@ -275,6 +275,7 @@
     "date": "Data lavorazione"
   },
   "movements": {
+    "contact": "Sede",
     "date": "Data",
     "reason": "Motivo",
     "piece": "Pezzi",
