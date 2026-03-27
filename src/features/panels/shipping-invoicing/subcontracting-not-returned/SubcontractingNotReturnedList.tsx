@@ -13,10 +13,11 @@ import useGetDDTNotReturned
 import type {
     ISubcontractingNotReturnedStoreState
 } from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
-import {CircularProgress, MenuItem} from "@mui/material";
-import usePostSubcontractingReturn
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/usePostSubcontractingReturn.ts";
+import {MenuItem} from "@mui/material";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
+import MoveDownIcon from '@mui/icons-material/MoveDown';
+import DDTReturnFormDialog
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/DDTReturnFormDialog.tsx";
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);
@@ -26,7 +27,7 @@ const SubcontractingNotReturnedList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: ddtRowsNotReturned = [], isLoading, isFetching} = useGetDDTNotReturned();
-    const {mutateAsync: returnSubcontract, isPending} = usePostSubcontractingReturn();
+    // const {mutateAsync: returnSubcontract, isPending} = usePostSubcontractingReturn();
 
     const columns = useMemo<MRT_ColumnDef<IDeliveryNoteRow>[]>(() => [
         {
@@ -49,32 +50,44 @@ const SubcontractingNotReturnedList = () => {
 
     const editRowDialogRef = useRef<IDialogActions | null>(null);
 
+    const ddtReturnDialogRef = useRef<IDialogActions | null>(null);
+    const ddtTransferDialogRef = useRef<IDialogActions | null>(null);
+
     return (
-        <GenericList<IDeliveryNoteRow>
-            data={ddtRowsNotReturned}
-            columns={columns}
-            isLoading={isLoading}
-            isFetching={isFetching}
-            selectedId={selectedSubcontractingNotReturnedId}
-            onRowSelect={(id) => setUIState({selectedSubcontractingNotReturnedId: id as number})}
-            onRowDoubleClick={() => openDialog(editRowDialogRef)}
-            additionalOptions={{
-                enableRowActions: true,
-                renderRowActionMenuItems: ({row}) => [
-                    <MenuItem key="dye" disabled={isPending || isFetching} onClick={async () => {
-                        setUIState({selectedSubcontractingNotReturnedId: row.original.id})
-                        await returnSubcontract({ddtRowId: row.original.id});
-                    }}>
-                        {isFetching || isPending ? (
-                            <CircularProgress size={20} color="inherit" sx={{mr: 1}} />
-                        ) : (
-                            <AssignmentReturnIcon color={"primary"} sx={{mr: 1}} />
-                        )}
-                        {t("shipping.ddt_rows.return")}
-                    </MenuItem>,
-                ],
-            }}
-        />
+        <>
+            <DDTReturnFormDialog ref={ddtReturnDialogRef} />
+            <DDTReturnFormDialog ref={ddtTransferDialogRef} />
+
+            <GenericList<IDeliveryNoteRow>
+                minHeight={"800px"}
+                data={ddtRowsNotReturned}
+                columns={columns}
+                isLoading={isLoading}
+                isFetching={isFetching}
+                selectedId={selectedSubcontractingNotReturnedId}
+                onRowSelect={(id) => setUIState({selectedSubcontractingNotReturnedId: id as number})}
+                onRowDoubleClick={() => openDialog(editRowDialogRef)}
+                additionalOptions={{
+                    enableRowActions: true,
+                    renderRowActionMenuItems: ({row}) => [
+                        <MenuItem key="m-return" onClick={() => {
+                            setUIState({selectedSubcontractingNotReturnedId: row.original.id})
+                            openDialog(ddtReturnDialogRef)
+                        }}>
+                            <AssignmentReturnIcon color={"primary"} sx={{mr: 1}}/>
+                            {t("shipping.ddt_rows.return")}
+                        </MenuItem>,
+                        <MenuItem key="m-transfer" onClick={() => {
+                            setUIState({selectedSubcontractingNotReturnedId: row.original.id})
+                            openDialog(ddtTransferDialogRef)
+                        }}>
+                            <MoveDownIcon color={"warning"} sx={{mr: 1}}/>
+                            {t("shipping.ddt_rows.transfer")}
+                        </MenuItem>
+                    ],
+                }}
+            />
+        </>
     )
 };
 
