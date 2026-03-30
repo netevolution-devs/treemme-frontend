@@ -2,7 +2,6 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {
     IBatchesStoreFilter,
-    IBatchesStoreParams,
     IBatchesStoreState
 } from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchApi, type IBatchesPayload} from "@features/panels/production/batches/api/batchApi.ts";
@@ -22,12 +21,11 @@ import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog.tsx";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog.tsx";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons.tsx";
 import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 
@@ -58,7 +56,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     pieces: number | null;
 };
 
-const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
+const BatchesForm = () => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -66,7 +64,6 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
     const isSaveMode = useStore((state) => state.uiState.buttonsState.save);
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
-    const setFilters = useStore((state) => state.setFilters);
 
     const {useGetDetail, usePost, usePut, useDelete} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
@@ -83,13 +80,6 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
 
-    useEffect(() => {
-        if (extra) {
-            setUIState({selectedBatchId: extra.id});
-            setFilters({filterBatchCode: extra.batch_code});
-        }
-    }, [extra, setUIState, setFilters]);
-
     return (
         <>
             <BatchesReworkFormDialog ref={reworkDialogRef}/>
@@ -100,7 +90,7 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                 entity={batchItem}
                 emptyValues={{
                     leather_id: null,
-                    batch_type_id: batchTypes.find(x => x.name === "Partita")?.id || null,
+                    batch_type_id: batchTypes.find(x => x.name === "Lotto")?.id || null,
                     measurement_unit_id: measurementUnits.find(x => x.name === "Piedi quadrati")?.id || null,
                     completed: false,
                     checked: false,
@@ -137,20 +127,25 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedBatchId: null})}
-                validateBeforeSave={(v) => (!!v.leather_id || !!batchItem?.article) && !!v.batch_type_id && !!v.quantity && !!v.pieces && !!v.measurement_unit_id && !!v.batch_date}
+                validateBeforeSave={(v) =>
+                    (!!v.leather_id || !!batchItem?.article) &&
+                    !!v.batch_type_id &&
+                    !!v.pieces &&
+                    !!v.batch_date
+                }
                 extraButtons={[
                     <CustomButton
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita"}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" && batchItem.stock_items > 0}
                         onClick={() => {openDialog(reworkDialogRef)}}
                     />,
                     <CustomButton
                         label={t("production.batch.split")}
                         color={"primary"}
                         icon={<CallSplitIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Partita" || batchItem?.batch_type.name === "Rinverdimento"}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
                     />
                 ]}
@@ -228,17 +223,19 @@ const BatchesForm = ({extra}: ICustomPanelFormProps<IBatchesStoreParams>) => {
                                 options={measurementUnits.map(x => ({label: x.name, value: x.id}))}
                                 required
                             />
-                            <TextFieldValue
-                                label={t("production.batch.stock_items")}
-                                value={batchItem?.stock_items}
-                                isFilled={!!selectedBatchId}
-                            />
-                            <TextFieldValue
-                                label={t("production.batch.stock_quantity")}
-                                value={batchItem?.stock_quantity}
-                                isFilled={!!selectedBatchId}
-                                precision={2}
-                            />
+                            {selectedBatchId && (
+                                <TextFieldValue
+                                    label={t("production.batch.stock_items")}
+                                    value={batchItem?.stock_items}
+                                    isFilled={!!selectedBatchId}
+                                />
+                            )}
+                            {/*<TextFieldValue*/}
+                            {/*    label={t("production.batch.stock_quantity")}*/}
+                            {/*    value={batchItem?.stock_quantity}*/}
+                            {/*    isFilled={!!selectedBatchId}*/}
+                            {/*    precision={2}*/}
+                            {/*/>*/}
                         </Box>
 
                         {(!batchItem || batchItem.leather) && (

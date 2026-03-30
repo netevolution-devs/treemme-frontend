@@ -6,16 +6,19 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 import useBatchSplit from "@features/panels/production/batches/split/api/useBatchSplit.ts";
-import {Typography} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import CallSplitIcon from "@mui/icons-material/CallSplit";
 import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import dayjs from "dayjs";
 
 type Props = unknown;
 
 export type ISplitForm = {
     pieces: number;
+    date: string;
 }
 
 const BatchesSplitFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -40,11 +43,13 @@ const BatchesSplitFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =
                 selectedId={selectedBatchId}
                 entity={{
                     pieces: 0,
+                    date: dayjs().format("YYYY-MM-DD"),
                 }}
                 emptyValues={{
                     pieces: 0,
+                    date: dayjs().format("YYYY-MM-DD"),
                 }}
-                mapEntityToForm={(x) => ({pieces: x.pieces})}
+                mapEntityToForm={(x) => ({pieces: x.pieces, date: x.date})}
                 create={(payload) => splitBatch(payload)}
                 validateBeforeSave={(v) => v.pieces > 0}
                 extraButtons={[
@@ -57,14 +62,18 @@ const BatchesSplitFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =
                 ]}
                 isSaving={isPending}
                 renderFields={() => (
-                    <>
+                    <Stack gap={1.5}>
+                        <DateFieldControlled<ISplitForm>
+                            name={"date"}
+                            label={t("production.date")}
+                        />
                         <NumberFieldControlled<ISplitForm>
                             name={"pieces"}
                             label={t("production.batch.pieces")}
                             max={batch?.stock_items as number}
                             precision={0}
                         />
-                    </>
+                    </Stack>
                 )}
             />
         </BaseDialog>

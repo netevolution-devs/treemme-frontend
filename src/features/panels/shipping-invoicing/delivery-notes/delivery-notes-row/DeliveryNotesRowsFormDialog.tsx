@@ -4,7 +4,7 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import {Box, Stack} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import {forwardRef, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import BaseDialog from "@ui/dialog/BaseDialog.tsx";
@@ -19,7 +19,6 @@ import {
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
 import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
-import useGetBatchAvailability from "@features/panels/production/batches/composition/api/useGetBatchAvailability.ts";
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
 import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
@@ -28,6 +27,10 @@ import CurrenciesExchangeFormDialog
     from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
+import useGetBatchAvailability
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetBatchAvailability.ts";
+import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 
 type Props = unknown;
 
@@ -39,7 +42,8 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'selection' |
     'pieces' |
     'quantity' |
-    'processing'
+    'processing' |
+    'stock_pieces'
 > & {
     batch_id: number | null;
     measurement_unit_id: number | null;
@@ -52,6 +56,8 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
 };
 
 const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+    const {t} = useTranslation(["form"]);
+
     const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
     const selectedDeliveryNoteId = useStore(state => state.uiState.selectedDeliveryNoteId);
     const selectedDeliveryNoteRowId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
@@ -125,16 +131,21 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedDeliveryNoteRowId: null})}
-                validateBeforeSave={(v) => !!v.batch_id && !!v.measurement_unit_id && !!v.pieces && !!v.quantity}
+                validateBeforeSave={(v) => !!v.batch_id && !!v.pieces}
                 renderFields={() => (
                     <DeliverNotesRowsFormFields/>
                 )}
             />
 
-            <BatchesCompositionList
-                customBatchId={deliveryNoteRow?.batch?.id as number}
-                enableToolbar={false}
-            />
+            {deliveryNoteRow && (
+                <>
+                    <Typography sx={{mb: 1, fontSize: 16, mt: 2}}>{t("shipping.composition-title")}</Typography>
+                    <BatchesCompositionList
+                        customBatchId={deliveryNoteRow?.batch?.id as number}
+                        enableToolbar={false}
+                    />
+                </>
+            )}
         </BaseDialog>
     );
 });
@@ -143,7 +154,9 @@ const DeliverNotesRowsFormFields = () => {
     const {t} = useTranslation(["form"]);
     const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
     const selectedDeliveryNoteRowId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
+    const selectedDeliveryNoteId = useStore(state => state.uiState.selectedDeliveryNoteId);
 
+    const {data: deliveryNote} = deliveryNoteApi.useGetDetail(selectedDeliveryNoteId);
     const {data: deliveryNoteRow} = deliveryNoteRowApi.useGetDetail(selectedDeliveryNoteRowId);
 
     const {data: batches = []} = useGetBatchAvailability();
@@ -167,8 +180,17 @@ const DeliverNotesRowsFormFields = () => {
         currencyId === currencies.find(c => c.abbreviation === 'EUR')?.id
     )
 
+    const isSell = useMemo(() => {
+        return deliveryNote?.reason.name === "Vendita"
+    }, [deliveryNote])
+
+    const watchedBatchId = useWatch<IDeliveryNoteRowForm>({name: "batch_id"});
     const watchedCurrencyId = useWatch<IDeliveryNoteRowForm>({name: "currency_id"});
     const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_change"});
+
+    const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
+
+    const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
 
     return (
         <Stack gap={1}>
@@ -196,6 +218,8 @@ const DeliverNotesRowsFormFields = () => {
                     name="pieces"
                     label={t("production.batch.selections.pieces")}
                     required
+                    deactivated={!watchedBatchId}
+                    max={batch?.stock_items as number}
                     precision={0}
                 />
                 {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
@@ -204,23 +228,25 @@ const DeliverNotesRowsFormFields = () => {
                 {/*/>*/}
             </Box>
 
-            <Box sx={{display: 'flex', gap: 1}}>
-                <SelectFieldControlled<IDeliveryNoteRowForm>
-                    name="selection_id"
-                    label={t("production.batch.selection")}
-                    options={selections.map(s => ({value: s.id, label: s.name}))}
-                />
-                <SelectFieldControlled<IDeliveryNoteRowForm>
-                    name="processing_id"
-                    label={t("production.batch.workings")}
-                    options={workings.map(s => ({value: s.id, label: s.name}))}
-                />
-            </Box>
+            {!isSell && (
+                <Box sx={{display: 'flex', gap: 1}}>
+                    <SelectFieldControlled<IDeliveryNoteRowForm>
+                        name="selection_id"
+                        label={t("production.batch.selection")}
+                        options={selections.map(s => ({value: s.id, label: s.name}))}
+                    />
+                    <SelectFieldControlled<IDeliveryNoteRowForm>
+                        name="processing_id"
+                        label={t("production.batch.workings")}
+                        options={workings.map(s => ({value: s.id, label: s.name}))}
+                    />
+                </Box>
+            )}
 
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center', mb: 1}}>
                 <TextFieldValue
                     label={t("orders.row.product")}
-                    value={deliveryNoteRow?.batch.article?.name}
+                    value={productName}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>

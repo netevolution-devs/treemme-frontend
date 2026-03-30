@@ -1,4 +1,4 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import ContactsAgentsList from "@features/panels/contacts/contacts/agents/ContactsAgentsList.tsx";
 import ContactsSubcontractorsList
     from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorsList.tsx";
@@ -6,6 +6,8 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList.tsx";
+import ContactsSupplier from "@features/panels/contacts/contacts/subcontractors/ContactsSupplier.tsx";
 
 const ContactsContent = () => {
     const {t} = useTranslation(["form", "shipping"]);
@@ -17,21 +19,33 @@ const ContactsContent = () => {
 
     return (
         <>
-            {(selectedContactId && (contact?.client || contact?.supplier)) && (
-                <Box sx={{display: 'flex', gap: 1, width: '100%'}}>
-                    {contact?.client && (
+            {(selectedContactId && (contact?.client || contact?.supplier || contact?.agent || contact?.subcontractor)) && (
+                <Stack sx={{width: '100%'}}>
+                    <Box sx={{display: 'flex', gap: 1, width: '100%'}}>
+                        {contact?.client && (
+                            <Box sx={{width: '100%'}}>
+                                <Typography variant="h6">{t("contacts.agents.list")}</Typography>
+                                <ContactsAgentsList/>
+                            </Box>
+                        )}
+                        {contact?.supplier && (
+                            <Box sx={{width: '100%'}}>
+                                <Typography variant="h6">{t("contacts.subcontractors.list")}</Typography>
+                                <ContactsSubcontractorsList/>
+                            </Box>
+                        )}
+                    </Box>
+                    {contact?.agent && (
                         <Box sx={{width: '100%'}}>
-                            <Typography variant="h6">{t("contacts.agents.list")}</Typography>
-                            <ContactsAgentsList/>
+                            <ContactsClientsList/>
                         </Box>
                     )}
-                    {contact?.supplier && (
+                    {contact?.subcontractor && (
                         <Box sx={{width: '100%'}}>
-                            <Typography variant="h6">{t("contacts.subcontractors.list")}</Typography>
-                            <ContactsSubcontractorsList/>
+                            <ContactsSupplier/>
                         </Box>
                     )}
-                </Box>
+                </Stack>
             )}
         </>
     )

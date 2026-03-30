@@ -26,7 +26,7 @@ const ContactsSubcontractorsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
-    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor) || [];
+    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor).filter(Boolean) || [];
 
     const {mutateAsync: deleteSubcontractor} = useRemoveSubcontractorFromContact(selectedContactId as number);
 
@@ -77,10 +77,11 @@ const ContactsSubcontractorsList = () => {
                         />
                     ),
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
                             setUIState({selectedSubcontractorId: row.original.id});
+                            closeMenu();
                         }}>
                             <DeleteIcon color={"error"}/>
                             {t("common:button.remove")}

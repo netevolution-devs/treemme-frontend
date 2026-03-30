@@ -15,6 +15,7 @@ import type {
 } from "@features/panels/production/batches/composition/api/IBatchComposition.ts";
 import {Typography} from "@mui/material";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import dayjs from "dayjs";
 
 interface ICompositionDialogProps {
     customBatchId?: number;
@@ -32,7 +33,14 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
 
     const canComposition = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
 
+    const isTForUF = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
+
     const columns = useMemo<MRT_ColumnDef<IBatchCompositionResponse>[]>(() => [
+        {
+            accessorKey: "date",
+            header: isTForUF ? t("composition.date-tf") : t("composition.date"),
+            Cell: ({row}) => dayjs(row.original.date).format("DD/MM/YYYY")
+        },
         {
             accessorKey: "father_batch.batch_code",
             header: t("composition.father_batch_code"),
@@ -49,7 +57,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
             accessorKey: "composition_note",
             header: t("composition.composition_note"),
         }
-    ], [t]);
+    ], [t, isTForUF]);
 
     const compositionDialogRef = useRef<IDialogActions | null>(null);
 

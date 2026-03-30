@@ -258,17 +258,17 @@ const OrderRowFormFields = () => {
                     label={t("orders.row.quantity")}
                     required
                 />
-                <NumberFieldControlled<IOrderRowForm>
-                    name="tolerance_quantity_percentage"
-                    label={t("orders.row.tolerance_quantity_percentage")}
-                />
+                {/*<NumberFieldControlled<IOrderRowForm>*/}
+                {/*    name="tolerance_quantity_percentage"*/}
+                {/*    label={t("orders.row.tolerance_quantity_percentage")}*/}
+                {/*/>*/}
             </Box>
 
             <Box sx={{display: 'flex', gap: 1, mb: 1.5}}>
-                <DateFieldControlled<IOrderRowForm>
-                    name="delivery_date_request"
-                    label={t("orders.row.delivery_date_request")}
-                />
+                {/*<DateFieldControlled<IOrderRowForm>*/}
+                {/*    name="delivery_date_request"*/}
+                {/*    label={t("orders.row.delivery_date_request")}*/}
+                {/*/>*/}
                 <DateFieldControlled<IOrderRowForm>
                     name="delivery_date_confirmed"
                     label={t("orders.row.delivery_date_confirmed")}

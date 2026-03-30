@@ -12,9 +12,7 @@ import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts"
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box, Typography} from "@mui/material";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
+import {Box} from "@mui/material";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
 import useCallablePanel from "@ui/panel/useCallablePanel.ts";
@@ -64,7 +62,6 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
 
     const {useStore} = usePanel<unknown, ILeathersStoreState>();
     const selectedLeatherId = useStore(state => state.uiState.selectedLeatherId);
-    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
     const setUIState = useStore(state => state.setUIState);
 
     const {useGetDetail, usePost, usePut, useDelete} = leatherApi;
@@ -122,7 +119,7 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
             validateBeforeSave={(v) => !!v.weight_id && !!v.species_id && !!v.thickness_id && !!v.flay_id && !!v.type_id && !!v.provenance_id && !!v.status_id}
             renderFields={() => (
                 <>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
                         <TextFieldValue
                             label={t("leathers.leather.code")}
                             value={leather?.code}
@@ -133,76 +130,76 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
                             value={leather?.name}
                             isFilled={!!selectedLeatherId}
                         />
-                        <FlagCheckBoxFieldControlled<ILeatherForm>
-                            name={"statistic_update"}
-                            label={t("leathers.leather.statistic_update")}
-                        />
+                        {/*<FlagCheckBoxFieldControlled<ILeatherForm>*/}
+                        {/*    name={"statistic_update"}*/}
+                        {/*    label={t("leathers.leather.statistic_update")}*/}
+                        {/*/>*/}
                     </Box>
 
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
-                        <Box>
-                            <Typography
-                                color={!isFormDisabled ? "text.primary" : "textDisabled"}
-                                sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>
-                            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                                <TextFieldValue
-                                    label={t("leathers.leather.leather-min")}
-                                    value={leather?.sqft_leather_min}
-                                    isFilled={!!selectedLeatherId && !!leather?.sqft_leather_min}
-                                />
-                                <TextFieldValue
-                                    label={t("leathers.leather.leather-max")}
-                                    value={leather?.sqft_leather_max}
-                                    isFilled={!!selectedLeatherId && !!leather?.sqft_leather_max}
-                                />
-                                <TextFieldValue
-                                    label={t("leathers.leather.leather-avg")}
-                                    value={leather?.sqft_leather_media}
-                                    isFilled={!!selectedLeatherId && !!leather?.sqft_leather_media}
-                                />
-                            </Box>
-                        </Box>
-                        <Box>
-                            <Typography
-                                color={!isFormDisabled ? "text.primary" : "textDisabled"}
-                                sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>
-                            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                                <TextFieldValue
-                                    label={t("leathers.leather.leather-min")}
-                                    value={leather?.kg_leather_min}
-                                    isFilled={!!selectedLeatherId && !!leather?.kg_leather_min}
-                                />
-                                <TextFieldValue
-                                    label={t("leathers.leather.leather-max")}
-                                    value={leather?.kg_leather_max}
-                                    isFilled={!!selectedLeatherId && !!leather?.kg_leather_max}
-                                />
-                                <TextFieldValue
-                                    label={t("leathers.leather.leather-avg")}
-                                    value={leather?.kg_leather_media}
-                                    isFilled={!!selectedLeatherId && !!leather?.kg_leather_media}
-                                />
-                            </Box>
-                        </Box>
-                    </Box>
+                    {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>*/}
+                    {/*    <Box>*/}
+                    {/*        <Typography*/}
+                    {/*            color={!isFormDisabled ? "text.primary" : "textDisabled"}*/}
+                    {/*            sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>*/}
+                    {/*        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+                    {/*            <TextFieldValue*/}
+                    {/*                label={t("leathers.leather.leather-min")}*/}
+                    {/*                value={leather?.sqft_leather_min}*/}
+                    {/*                isFilled={!!selectedLeatherId && !!leather?.sqft_leather_min}*/}
+                    {/*            />*/}
+                    {/*            <TextFieldValue*/}
+                    {/*                label={t("leathers.leather.leather-max")}*/}
+                    {/*                value={leather?.sqft_leather_max}*/}
+                    {/*                isFilled={!!selectedLeatherId && !!leather?.sqft_leather_max}*/}
+                    {/*            />*/}
+                    {/*            <TextFieldValue*/}
+                    {/*                label={t("leathers.leather.leather-avg")}*/}
+                    {/*                value={leather?.sqft_leather_media}*/}
+                    {/*                isFilled={!!selectedLeatherId && !!leather?.sqft_leather_media}*/}
+                    {/*            />*/}
+                    {/*        </Box>*/}
+                    {/*    </Box>*/}
+                    {/*    <Box>*/}
+                    {/*        <Typography*/}
+                    {/*            color={!isFormDisabled ? "text.primary" : "textDisabled"}*/}
+                    {/*            sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>*/}
+                    {/*        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+                    {/*            <TextFieldValue*/}
+                    {/*                label={t("leathers.leather.leather-min")}*/}
+                    {/*                value={leather?.kg_leather_min}*/}
+                    {/*                isFilled={!!selectedLeatherId && !!leather?.kg_leather_min}*/}
+                    {/*            />*/}
+                    {/*            <TextFieldValue*/}
+                    {/*                label={t("leathers.leather.leather-max")}*/}
+                    {/*                value={leather?.kg_leather_max}*/}
+                    {/*                isFilled={!!selectedLeatherId && !!leather?.kg_leather_max}*/}
+                    {/*            />*/}
+                    {/*            <TextFieldValue*/}
+                    {/*                label={t("leathers.leather.leather-avg")}*/}
+                    {/*                value={leather?.kg_leather_media}*/}
+                    {/*                isFilled={!!selectedLeatherId && !!leather?.kg_leather_media}*/}
+                    {/*            />*/}
+                    {/*        </Box>*/}
+                    {/*    </Box>*/}
+                    {/*</Box>*/}
                     <LeatherSelects/>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <NumberFieldControlled<ILeatherForm>
-                            name={"sqft_leather_expected"}
-                            label={t("leathers.leather.sqft-leather-expected")}
-                            maxWidth={"200px"}
-                        />
-                        <NumberFieldControlled<ILeatherForm>
-                            name={"kg_leather_expected"}
-                            label={t("leathers.leather.kg-leather-expected")}
-                            maxWidth={"200px"}
-                        />
-                        <NumberFieldControlled<ILeatherForm>
-                            name={"container_piece"}
-                            label={t("leathers.leather.container-piece")}
-                            precision={0}
-                        />
-                    </Box>
+                    {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+                    {/*    <NumberFieldControlled<ILeatherForm>*/}
+                    {/*        name={"sqft_leather_expected"}*/}
+                    {/*        label={t("leathers.leather.sqft-leather-expected")}*/}
+                    {/*        maxWidth={"200px"}*/}
+                    {/*    />*/}
+                    {/*    <NumberFieldControlled<ILeatherForm>*/}
+                    {/*        name={"kg_leather_expected"}*/}
+                    {/*        label={t("leathers.leather.kg-leather-expected")}*/}
+                    {/*        maxWidth={"200px"}*/}
+                    {/*    />*/}
+                    {/*    <NumberFieldControlled<ILeatherForm>*/}
+                    {/*        name={"container_piece"}*/}
+                    {/*        label={t("leathers.leather.container-piece")}*/}
+                    {/*        precision={0}*/}
+                    {/*    />*/}
+                    {/*</Box>*/}
                 </>
             )}
         />
@@ -304,7 +301,7 @@ const LeatherSelects = () => {
                     name={"species_id"}
                     label={t("leathers.leather.species")}
                     options={species.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -322,7 +319,7 @@ const LeatherSelects = () => {
                     name={"type_id"}
                     label={t("leathers.leather.type")}
                     options={types.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -340,7 +337,7 @@ const LeatherSelects = () => {
                     name={"status_id"}
                     label={t("leathers.leather.status")}
                     options={tanningStages.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     onNoOptionsMatch={(input) => {
@@ -359,7 +356,7 @@ const LeatherSelects = () => {
                     name={"weight_id"}
                     label={t("leathers.leather.weight")}
                     options={weights.map((x) => ({
-                        label: x.name,
+                        label: `${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -377,7 +374,7 @@ const LeatherSelects = () => {
                     name={"thickness_id"}
                     label={t("leathers.leather.thickness")}
                     options={thicknesses.map((x) => ({
-                        label: x.name,
+                        label: `${x.name}`,
                         value: x.id
                     }))}
                     required
@@ -395,7 +392,7 @@ const LeatherSelects = () => {
                     name={"flay_id"}
                     label={t("leathers.leather.flay")}
                     options={flays.map((x) => ({
-                        label: x.name,
+                        label: `${x.code} - ${x.name}`,
                         value: x.id
                     }))}
                     required

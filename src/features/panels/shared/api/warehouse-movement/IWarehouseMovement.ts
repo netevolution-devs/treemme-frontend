@@ -1,3 +1,5 @@
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
+
 export interface IWarehouseMovementReasonType {
     id: number;
     name: string;
@@ -19,4 +21,5 @@ export interface IWarehouseMovement {
     ddt_number: number | null;
     ddt_date: string | null;
     movement_note: string;
+    contact: IContact;
 }

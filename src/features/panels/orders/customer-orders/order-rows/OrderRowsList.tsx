@@ -68,10 +68,11 @@ const OrderRowsList = () => {
                 onRowDoubleClick={() => openDialog(editRowDialogRef)}
                 additionalOptions={{
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="dye" onClick={() => {
                             openDialog(dyeDialogRef)
                             setUIState({selectedOrderRowId: row.original.id})
+                            closeMenu()
                         }}>
                             <ColorLensIcon color={"primary"} sx={{mr: 1}} />
                             {t("orders.row.dye")}
@@ -79,6 +80,7 @@ const OrderRowsList = () => {
                         <MenuItem key="refinishing" onClick={() => {
                             openDialog(refinementDialogRef)
                             setUIState({selectedOrderRowId: row.original.id})
+                            closeMenu()
                         }}>
                             <SettingsInputHdmiIcon color={"success"} sx={{mr: 1}} />
                             {t("orders.row.refinement")}
