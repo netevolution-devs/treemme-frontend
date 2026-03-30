@@ -5,7 +5,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 /**
  * Custom SVG Icons for Leather ERP/Software.
  * All icons follow the Material UI 24x24px grid pattern.
- * Use 'currentColor' to ensure they respect MUI color props.
+ * Use 'currentColor' to ensure they respect MUI api props.
  */
 
 /** CONTACTS: Stylized person/address book icon */

@@ -63,7 +63,7 @@ const UserProfileCard = (
                     {/*                key={userRole.role.id}*/}
                     {/*                label={userRole.role.name}*/}
                     {/*                size="small"*/}
-                    {/*                color="primary"*/}
+                    {/*                api="primary"*/}
                     {/*            />*/}
                     {/*        ))}*/}
                     {/*    </Stack>*/}
@@ -92,35 +92,35 @@ const UserProfileCard = (
                         </Grid>
 
                         {/*<Grid size={{xs: 12, md: 6}}>*/}
-                        {/*    <Typography variant="caption" color="text.secondary">*/}
+                        {/*    <Typography variant="caption" api="text.secondary">*/}
                         {/*        {t("settings:profile.card.phone")}*/}
                         {/*    </Typography>*/}
                         {/*    <RowDisplay icon={PhoneIcon} text={user?.phone}/>*/}
                         {/*</Grid>*/}
 
                         {/*<Grid size={{xs: 12, md: 6}}>*/}
-                        {/*    <Typography variant="caption" color="text.secondary">*/}
+                        {/*    <Typography variant="caption" api="text.secondary">*/}
                         {/*        {t("settings:profile.card.fiscal-code")}*/}
                         {/*    </Typography>*/}
                         {/*    <RowDisplay icon={BadgeIcon} text={user?.fiscalCode}/>*/}
                         {/*</Grid>*/}
 
                         {/*<Grid size={{xs: 12, md: 6}}>*/}
-                        {/*    <Typography variant="caption" color="text.secondary">*/}
+                        {/*    <Typography variant="caption" api="text.secondary">*/}
                         {/*        {t("settings:profile.card.user-code")}*/}
                         {/*    </Typography>*/}
                         {/*    <RowDisplay icon={AccountIcon} text={user?.userCode}/>*/}
                         {/*</Grid>*/}
 
                         {/*<Grid size={12}>*/}
-                        {/*    <Typography variant="caption" color="text.secondary">*/}
+                        {/*    <Typography variant="caption" api="text.secondary">*/}
                         {/*        {t("settings:profile.card.address")}*/}
                         {/*    </Typography>*/}
                         {/*    <RowDisplay icon={HomeIcon} text={user?.address}/>*/}
                         {/*</Grid>*/}
 
                         {/*<Grid size={12}>*/}
-                        {/*    <Typography variant="caption" color="text.secondary">*/}
+                        {/*    <Typography variant="caption" api="text.secondary">*/}
                         {/*        {t("settings:profile.card.registration-date")}*/}
                         {/*    </Typography>*/}
                         {/*    <RowDisplay icon={CalendarIcon}*/}

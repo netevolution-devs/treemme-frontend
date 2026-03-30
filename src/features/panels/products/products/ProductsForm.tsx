@@ -197,9 +197,9 @@ const ProductsForm = () => {
 
                         {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
                         {/*    <SelectFieldControlled<IProductForm>*/}
-                        {/*        label={t("products.color")}*/}
+                        {/*        label={t("products.api")}*/}
                         {/*        name={"color_id"}*/}
-                        {/*        options={colors.map(c => ({value: c.id, label: c.color}))}*/}
+                        {/*        options={colors.map(c => ({value: c.id, label: c.api}))}*/}
                         {/*    />*/}
                         {/*</Box>*/}
 
