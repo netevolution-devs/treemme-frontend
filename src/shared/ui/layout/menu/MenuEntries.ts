@@ -46,6 +46,7 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.products.categories", component: "productCategories"},
             // {i18nKey: "menu.products.products-types", component: "productTypes"},
             {i18nKey: "menu.products.article-types", component: "articleTypes"},
+            { i18nKey: "menu.products.article-colors", component: "articleColors" },
         ]
     },
     {

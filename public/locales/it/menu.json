@@ -28,7 +28,8 @@
       "products": "Prodotti",
       "categories": "Categorie",
       "article-types": "Tipologie Articoli",
-      "products-types": "Tipologie Prodotti"
+      "products-types": "Tipologie Prodotti",
+      "article-colors": "Colori Articoli"
     },
     "orders": {
       "self": "Ordini",
