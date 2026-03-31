@@ -29,6 +29,7 @@ export type IArticleForm = {
     thickness_id: number | null;
     print_id: number | null;
     note: string;
+    client_code: string | null;
 }
 
 const ArticlesForm = () => {
@@ -76,7 +77,8 @@ const ArticlesForm = () => {
                 color_id: null,
                 thickness_id: null,
                 print_id: null,
-                note: ''
+                note: '',
+                client_code: null,
             }}
             mapEntityToForm={(a) => ({
                 code: a.code,
@@ -87,7 +89,8 @@ const ArticlesForm = () => {
                 color_id: a.color?.id ?? null,
                 thickness_id: a.thickness?.id ?? null,
                 print_id: a.print?.id ?? null,
-                note: a.note ?? ''
+                note: a.note ?? '',
+                client_code: a.client_code ?? null,
             })}
             create={(payload) => createArticle(payload)}
             update={(id, payload) => updateArticle({id, payload})}
@@ -194,6 +197,10 @@ const ArticlesFormFields = ({
                             }
                         })
                     }}
+                />
+                <TextFieldControlled<IArticleForm>
+                    name="client_code"
+                    label={t("products.articles.client_code")}
                 />
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>

@@ -18,4 +18,5 @@ export interface IArticle {
     note: string;
     product: IProduct;
     color: IColor;
+    client_code: string | null;
 }
