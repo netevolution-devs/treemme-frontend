@@ -25,7 +25,7 @@ export type IArticleForm = {
     client_id: number | null;
     article_type_id: number | null;
     article_variation: string;
-    article_color_id: number | null;
+    color_id: number | null;
     thickness_id: number | null;
     print_id: number | null;
     note: string;
@@ -73,7 +73,7 @@ const ArticlesForm = () => {
                 client_id: null,
                 article_type_id: null,
                 article_variation: '',
-                article_color_id: null,
+                color_id: null,
                 thickness_id: null,
                 print_id: null,
                 note: ''
@@ -84,7 +84,7 @@ const ArticlesForm = () => {
                 client_id: a.client?.id ?? null,
                 article_type_id: a.article_type?.id ?? null,
                 article_variation: a.article_variation ?? '',
-                article_color_id: a.color?.id ?? null,
+                color_id: a.color?.id ?? null,
                 thickness_id: a.thickness?.id ?? null,
                 print_id: a.print?.id ?? null,
                 note: a.note ?? ''
@@ -95,7 +95,7 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation && !!v.article_color_id}
+            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation && !!v.color_id}
             renderFields={() => <ArticlesFormFields
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}
@@ -145,7 +145,7 @@ const ArticlesFormFields = ({
         dependencyKey: "contacts"
     });
     useSubscribePanel<IArticleForm>({
-        formKey: "article_color_id",
+        formKey: "color_id",
         dependencyKey: "articleColors"
     });
     useSubscribePanel<IArticleForm>({
@@ -211,7 +211,7 @@ const ArticlesFormFields = ({
                     required
                 />
                 <SelectFieldControlled<IArticleForm>
-                    name="article_color_id"
+                    name="color_id"
                     label={t("products.articles.color")}
                     options={colorOptions}
                     required
