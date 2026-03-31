@@ -96,7 +96,7 @@ const ArticlesForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
             validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation && !!v.article_color_id}
-            renderFields={() => <ArticlesFormFields 
+            renderFields={() => <ArticlesFormFields
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}
                 clientOptions={clientOptions}
@@ -118,20 +118,17 @@ interface ArticlesFormFieldsProps {
 }
 
 const ArticlesFormFields = ({
-    article,
-    selectedArticledId,
-    clientOptions,
-    articleTypeOptions,
-    thicknessOptions,
-    printOptions,
-}: ArticlesFormFieldsProps) => {
+                                article,
+                                selectedArticledId,
+                                clientOptions,
+                                articleTypeOptions,
+                                thicknessOptions,
+                                printOptions,
+                            }: ArticlesFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
 
     const clientId = useWatch<IArticleForm>({name: "client_id"});
-    const {data: colors = []} = colorApi.useGetList({
-        queryParams: {client_id: clientId as number},
-        staleTime: 0
-    });
+    const {data: colors = []} = colorApi.useGetList({queryParams: {client: clientId as number}});
 
     const colorOptions = useMemo(() =>
             colors.map(c => ({value: c.id, label: `${c.color} - ${c.client_color}`})),
