@@ -114,7 +114,7 @@ const ArticleColorsFormFields = ({
                 label={t("products.article_colors.color_note")}
                 TextFieldProps={{
                     multiline: true,
-                    rows: 3
+                    rows: 2
                 }}
             />
         </>

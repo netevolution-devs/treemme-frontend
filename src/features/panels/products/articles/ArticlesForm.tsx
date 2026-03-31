@@ -16,6 +16,8 @@ import {Box} from "@mui/material";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import {useWatch} from "react-hook-form";
+import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
 
 export type IArticleForm = {
     code: string;
@@ -23,6 +25,7 @@ export type IArticleForm = {
     client_id: number | null;
     article_type_id: number | null;
     article_variation: string;
+    article_color_id: number | null;
     thickness_id: number | null;
     print_id: number | null;
     note: string;
@@ -70,6 +73,7 @@ const ArticlesForm = () => {
                 client_id: null,
                 article_type_id: null,
                 article_variation: '',
+                article_color_id: null,
                 thickness_id: null,
                 print_id: null,
                 note: ''
@@ -80,6 +84,7 @@ const ArticlesForm = () => {
                 client_id: a.client?.id ?? null,
                 article_type_id: a.article_type?.id ?? null,
                 article_variation: a.article_variation ?? '',
+                article_color_id: a.color?.id ?? null,
                 thickness_id: a.thickness?.id ?? null,
                 print_id: a.print?.id ?? null,
                 note: a.note ?? ''
@@ -90,7 +95,7 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation}
+            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation && !!v.article_color_id}
             renderFields={() => <ArticlesFormFields 
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}
@@ -121,6 +126,16 @@ const ArticlesFormFields = ({
     printOptions,
 }: ArticlesFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
+
+    const clientId = useWatch<IArticleForm>({name: "client_id"});
+    const {data: colors = []} = colorApi.useGetList({
+        queryParams: {client_id: clientId as number},
+        staleTime: 0
+    });
+
+    const colorOptions = useMemo(() =>
+            colors.map(c => ({value: c.id, label: `${c.color} - ${c.client_color}`})),
+        [colors]);
 
     const {add: addSelectPanel} = useCallablePanel();
     useSubscribePanel<IArticleForm>({
@@ -167,11 +182,20 @@ const ArticlesFormFields = ({
                     })}
                 />
             </Box>
-            <TextFieldControlled<IArticleForm>
-                name="article_variation"
-                label={t("products.articles.article_variation")}
-                required
-            />
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldControlled<IArticleForm>
+                    name="article_variation"
+                    label={t("products.articles.article_variation")}
+                    required
+                />
+                <SelectFieldControlled<IArticleForm>
+                    name="article_color_id"
+                    label={t("products.articles.color")}
+                    options={colorOptions}
+                    required
+                    deactivated={!clientId}
+                />
+            </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <SelectFieldControlled<IArticleForm>
                     name="thickness_id"
