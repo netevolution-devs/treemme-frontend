@@ -10,6 +10,8 @@ import RoleManagementList from "@features/panels/user-management/RoleManagementL
 import RoleManagementForm from "@features/panels/user-management/RoleManagementForm.tsx";
 import WorkAreaManagementList from "@features/panels/user-management/WorkAreaManagementList.tsx";
 import WorkAreaManagementForm from "@features/panels/user-management/WorkAreaManagementForm.tsx";
+import UserAccessForm from "@features/panels/user-management/UserAccessForm.tsx";
+import UserAccessList from "@features/panels/user-management/UserAccessList.tsx";
 import {Divider, Stack, Typography} from "@mui/material";
 
 export interface IUserManagementStoreState extends IPanelUIState {
@@ -22,15 +24,15 @@ export interface IUserManagementStoreState extends IPanelUIState {
 const SectionTitle = ({title}: { title: string }) => (
     <>
         <Typography variant="h6">{title}</Typography>
-        <Divider sx={{mb: 1}} />
+        <Divider sx={{mb: 1}}/>
     </>
 );
 
 const Permissions = () => (
     <Stack spacing={4}>
-        <div><SectionTitle title="Gruppi" /><GroupManagementList /><GroupManagementForm /></div>
-        <div><SectionTitle title="Ruoli" /><RoleManagementList /><RoleManagementForm /></div>
-        <div><SectionTitle title="Funzionalità" /><WorkAreaManagementList /><WorkAreaManagementForm /></div>
+        <div><SectionTitle title="Gruppi"/><GroupManagementList/><GroupManagementForm/></div>
+        <div><SectionTitle title="Ruoli"/><RoleManagementList/><RoleManagementForm/></div>
+        <div><SectionTitle title="Funzionalità"/><WorkAreaManagementList/><WorkAreaManagementForm/></div>
     </Stack>
 );
 
@@ -39,12 +41,16 @@ const UserManagementPanel = () => {
 
     const tabs = [
         {
+            label: "Accessi",
+            component: (<><UserAccessList/><UserAccessForm/></>),
+        },
+        {
             label: "Utenti",
-            component: (<><UserManagementList /><UserManagementForm /></>),
+            component: (<><UserManagementList/><UserManagementForm/></>),
         },
         {
             label: "Dettagli",
-            component: (<Permissions />),
+            component: (<Permissions/>),
         },
     ];
 
@@ -53,7 +59,7 @@ const UserManagementPanel = () => {
             kind={"user-management"}
             initialState={{uiState: initialUiState}}
         >
-            <GenericTabContent tabs={tabs} />
+            <GenericTabContent tabs={tabs}/>
         </GenericPanel>
     )
 }
