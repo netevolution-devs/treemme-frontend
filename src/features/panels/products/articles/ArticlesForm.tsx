@@ -95,7 +95,7 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.article_variation && !!v.color_id}
+            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.color_id}
             renderFields={() => <ArticlesFormFields
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}
@@ -156,10 +156,15 @@ const ArticlesFormFields = ({
     return (
         <>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <TextFieldControlled<IArticleForm>
-                    name="code"
+                {/*<TextFieldControlled<IArticleForm>*/}
+                {/*    name="code"*/}
+                {/*    label={t("products.articles.code")}*/}
+                {/*    required*/}
+                {/*/>*/}
+                <TextFieldValue
                     label={t("products.articles.code")}
-                    required
+                    value={article?.code}
+                    isFilled={!!selectedArticledId}
                 />
                 <TextFieldValue
                     label={t("products.articles.name")}
@@ -190,6 +195,12 @@ const ArticlesFormFields = ({
                         })
                     }}
                 />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                {/*<TextFieldControlled<IArticleForm>*/}
+                {/*    name="article_variation"*/}
+                {/*    label={t("products.articles.article_variation")}*/}
+                {/*/>*/}
                 <SelectFieldControlled<IArticleForm>
                     name="article_type_id"
                     label={t("products.articles.article_type")}
@@ -202,13 +213,6 @@ const ArticlesFormFields = ({
                             i18nKey: "products.articles.article_type"
                         }
                     })}
-                />
-            </Box>
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <TextFieldControlled<IArticleForm>
-                    name="article_variation"
-                    label={t("products.articles.article_variation")}
-                    required
                 />
                 <SelectFieldControlled<IArticleForm>
                     name="color_id"
