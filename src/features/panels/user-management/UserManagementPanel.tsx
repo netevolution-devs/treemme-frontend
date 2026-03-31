@@ -43,7 +43,7 @@ const UserManagementPanel = () => {
             component: (<><UserManagementList /><UserManagementForm /></>),
         },
         {
-            label: "Permessi",
+            label: "Dettagli",
             component: (<Permissions />),
         },
     ];
