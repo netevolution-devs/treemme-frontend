@@ -73,7 +73,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 contact_note: '',
                 // contact_title_id: null,
                 contact_type_id: null,
-                client: false,
+                client: extra?.client ?? false,
                 supplier: extra?.supplier ?? false,
                 agent: false,
                 subcontractor: false,

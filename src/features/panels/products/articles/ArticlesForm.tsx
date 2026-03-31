@@ -138,10 +138,15 @@ const ArticlesFormFields = ({
         [colors]);
 
     const {add: addSelectPanel} = useCallablePanel();
+
     useSubscribePanel<IArticleForm>({
         formKey: 'article_type_id',
         dependencyKey: 'articleTypes'
     });
+    useSubscribePanel<IArticleForm>({
+        formKey: "client_id",
+        dependencyKey: "contacts"
+    })
 
     return (
         <>
@@ -167,6 +172,18 @@ const ArticlesFormFields = ({
                     label={t("products.articles.client")}
                     options={clientOptions}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <SelectFieldControlled<IArticleForm>
                     name="article_type_id"
