@@ -148,6 +148,10 @@ const ArticlesFormFields = ({
         formKey: "article_color_id",
         dependencyKey: "articleColors"
     });
+    useSubscribePanel<IArticleForm>({
+        formKey: "thickness_id",
+        dependencyKey: "thicknesses"
+    });
 
     return (
         <>
@@ -232,6 +236,15 @@ const ArticlesFormFields = ({
                     label={t("products.articles.thickness")}
                     options={thicknessOptions}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "thicknesses",
+                                i18nKey: "menu.leathers.thicknesses",
+                            }
+                        })
+                    }}
                 />
                 <SelectFieldControlled<IArticleForm>
                     name="print_id"
@@ -244,7 +257,7 @@ const ArticlesFormFields = ({
                 label={t("products.articles.note")}
                 TextFieldProps={{
                     multiline: true,
-                    rows: 4
+                    rows: 2
                 }}
             />
         </>
