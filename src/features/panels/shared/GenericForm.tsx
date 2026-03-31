@@ -187,18 +187,23 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 handleCancel();
             }
 
-            if (event.key === "Enter" && isFormDisabled) {
+            if ((event.ctrlKey && event.key === "F7" || event.key == "Enter") && isFormDisabled) {
                 handleNew();
             }
 
             if (event.key === "Enter" && isFormDisabled && !!selectedId) {
                 handleEdit();
             }
+
+            if (event.key === "F10" && !isFormDisabled) {
+                event.preventDefault();
+                methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
+            }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId]);
+    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId, methods, onSubmit]);
 
     return (
         <Box sx={{width: '100%'}}>
