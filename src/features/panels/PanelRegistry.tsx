@@ -87,6 +87,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     productCategories:  () => <ProductCategoriesPanel/>,
     productTypes:       () => <ProductTypesPanel/>,
     articleTypes:       (props) => <ArticleTypesPanel {...props}/>,
+    articleColors:      (props) => <ArticleColorsPanel {...props}/>,
     // orders
     customerOrders: () => <CustomerOrdersPanel/>,
     // production
@@ -99,6 +100,5 @@ export const PANEL_REGISTRY: DockviewComponents = {
     reasons:                    () => <ReasonsPanel />,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     currenciesExchange: () => <CurrenciesExchangePanel />,
-    articleColors: () => <ArticleColorsPanel />,
     "not-implemented": () => <>To implement</>,
 }

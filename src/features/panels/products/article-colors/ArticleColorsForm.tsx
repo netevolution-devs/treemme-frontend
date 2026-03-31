@@ -1,6 +1,9 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IArticleColorsStoreState} from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
+import type {
+    IArticleColorsStoreParams,
+    IArticleColorsStoreState
+} from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
 import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import type {IColor} from "@features/panels/products/article-colors/api/IColor.ts";
@@ -9,6 +12,9 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import {useMemo} from "react";
 import {Box} from "@mui/material";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IColorForm = {
     color: string;
@@ -19,10 +25,18 @@ export type IColorForm = {
     client_id: number | null;
 }
 
-const ArticleColorsForm = () => {
+const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IArticleColorsStoreParams>) => {
     const {useStore} = usePanel<unknown, IArticleColorsStoreState>();
     const selectedColorId = useStore(state => state.uiState.selectedColorId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedColorId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = colorApi;
     const {data: colorEntity} = useGetDetail(selectedColorId);
@@ -38,15 +52,16 @@ const ArticleColorsForm = () => {
 
     return (
         <GenericForm<IColorForm, IColor, IArticleColorsStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedColorId}
             entity={colorEntity}
             emptyValues={{
-                color: '',
+                color: initialName ?? '',
                 shade: '',
                 var_color: '',
                 color_note: '',
                 client_color: '',
-                client_id: null,
+                client_id: extra?.client_id ?? null,
             }}
             mapEntityToForm={(c) => ({
                 color: c.color,
@@ -63,7 +78,7 @@ const ArticleColorsForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedColorId: null})}
             validateBeforeSave={(v) => !!v.color && !!v.client_id && !!v.client_color}
-            renderFields={() => <ArticleColorsFormFields 
+            renderFields={() => <ArticleColorsFormFields
                 clientOptions={clientOptions}
             />}
         />
@@ -75,8 +90,8 @@ interface ArticleColorsFormFieldsProps {
 }
 
 const ArticleColorsFormFields = ({
-    clientOptions,
-}: ArticleColorsFormFieldsProps) => {
+                                     clientOptions,
+                                 }: ArticleColorsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
 
     return (

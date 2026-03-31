@@ -146,7 +146,11 @@ const ArticlesFormFields = ({
     useSubscribePanel<IArticleForm>({
         formKey: "client_id",
         dependencyKey: "contacts"
-    })
+    });
+    useSubscribePanel<IArticleForm>({
+        formKey: "article_color_id",
+        dependencyKey: "articleColors"
+    });
 
     return (
         <>
@@ -211,6 +215,18 @@ const ArticlesFormFields = ({
                     options={colorOptions}
                     required
                     deactivated={!clientId}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client_id: clientId,
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "articleColors",
+                                i18nKey: "menu.products.article-colors"
+                            }
+                        })
+                    }}
                 />
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
