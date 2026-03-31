@@ -385,6 +385,14 @@
         "name": "Nome",
         "value": "Valore"
       }
+    },
+    "article_colors": {
+      "color": "Colore",
+      "shade": "Sfumatura",
+      "var_color": "Variante colore",
+      "client_color": "Colore cliente",
+      "client": "Cliente",
+      "color_note": "Note colore"
     }
   },
   "shipping": {

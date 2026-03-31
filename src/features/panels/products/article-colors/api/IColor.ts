@@ -6,5 +6,6 @@ export interface IColor {
     shade: string | null;
     var_color: string | null;
     color_note: string | null;
+    client_color: string;
     client: IContact;
 }

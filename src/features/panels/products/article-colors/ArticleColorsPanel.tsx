@@ -5,7 +5,7 @@ import ArticleColorsList from "@features/panels/products/article-colors/ArticleC
 import ArticleColorsForm from "@features/panels/products/article-colors/ArticleColorsForm.tsx";
 
 export interface IArticleColorsStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedColorId?: number | null;
 }
 
 const ArticleColorsPanel = () => {
