@@ -10,6 +10,10 @@ export interface IArticleColorsStoreState extends IPanelUIState {
     selectedColorId?: number | null;
 }
 
+export interface IArticleColorsStoreFilter {
+    filterClientId?: number;
+}
+
 export interface IArticleColorsStoreParams {
     client_id?: number;
 }
