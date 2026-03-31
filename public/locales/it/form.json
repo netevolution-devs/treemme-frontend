@@ -361,6 +361,8 @@
     "technical": "Dati tecnici",
     "product_category": "Categoria",
     "categories": {
+      "class": "Classe",
+      "leather_type": "Tipo pellame",
       "code": "Codice",
       "name": "Nome"
     },
@@ -393,6 +395,10 @@
       "client_color": "Colore cliente",
       "client": "Cliente",
       "color_note": "Note colore"
+    },
+    "article_classes": {
+      "name": "Nome classe",
+      "description": "Descrizione"
     }
   },
   "shipping": {

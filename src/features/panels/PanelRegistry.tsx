@@ -29,6 +29,7 @@ import ProcessesPanel from "@features/panels/production/processes/ProcessesPanel
 import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.tsx";
 import CurrenciesExchangePanel from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
 import ArticleColorsPanel from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
+import ArticleClassesPanel from "@features/panels/products/article-classes/ArticleClassesPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -60,6 +61,7 @@ export type TPanelKind =
     | 'workings'
     | 'currenciesExchange'
     | 'articleColors'
+    | 'articleClasses'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -88,6 +90,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     productTypes:       () => <ProductTypesPanel/>,
     articleTypes:       (props) => <ArticleTypesPanel {...props}/>,
     articleColors:      (props) => <ArticleColorsPanel {...props}/>,
+    articleClasses:     (props) => <ArticleClassesPanel {...props}/>,
     // orders
     customerOrders: () => <CustomerOrdersPanel/>,
     // production
