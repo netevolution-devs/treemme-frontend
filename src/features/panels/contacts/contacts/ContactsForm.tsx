@@ -126,6 +126,7 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
     const isClient = useWatch({name: 'client'});
     const isAgent = useWatch({name: 'agent'});
+    const isSupplier = useWatch({name: 'supplier'});
 
     // const {data: contactTitles} = contactsTitleApi.useGetList();
     const {data: contactTypes} = contactsTypeApi.useGetList();
@@ -196,6 +197,26 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                 label={t("contacts.notes")}
                 TextFieldProps={{multiline: true, rows: 2}}
             />
+
+            {isSupplier && (
+                <>
+                    <Typography
+                        color={!isFormDisabled ? "text.primary" : "textDisabled"}
+                        variant="subtitle1"
+                        sx={{mb: 1}}
+                    >
+                        {t("contacts.payment")}
+                    </Typography>
+                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                        <SelectFieldControlled<ICustomerOrderForm>
+                            name={"payment_id"}
+                            label={t("orders.payment")}
+                            options={payments.map(p => ({value: p.id, label: p.name}))}
+                            required
+                        />
+                    </Box>
+                </>
+            )}
 
             {isClient && (
                 <Box sx={{mt: 1, borderRadius: 1}}>
