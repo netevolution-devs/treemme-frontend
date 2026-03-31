@@ -139,7 +139,6 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_number")}
                     name={"client_order_number"}
-                    required
                 />
                 <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_date")}
@@ -326,7 +325,7 @@ const CustomerOrdersForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
-            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date && !!v.client_order_number}
+            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
             renderFields={() => (
                 <FormFields
                     clients={clients}
