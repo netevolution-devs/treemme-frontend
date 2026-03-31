@@ -31,6 +31,8 @@ import CurrenciesExchangePanel from "@features/panels/commercial/currenciesExcha
 import ArticleColorsPanel from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
 import ArticleClassesPanel from "@features/panels/products/article-classes/ArticleClassesPanel.tsx";
 
+import DeliveryNotesRowsPanel from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
+
 export type TPanelKind =
     | 'cap'
     | 'province'
@@ -54,6 +56,7 @@ export type TPanelKind =
     | 'machinery'
     | 'articleTypes'
     | 'deliveryNotes'
+    | 'deliveryNotesRows'
     | 'reasons'
     | 'selection'
     | 'subcontractingNotReturned'
@@ -100,6 +103,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     workings:   () => <WorkingsPanel />,
     // ddt
     deliveryNotes:              () => <DeliveryNotesPanel />,
+    deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
     reasons:                    () => <ReasonsPanel />,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     currenciesExchange: () => <CurrenciesExchangePanel />,
