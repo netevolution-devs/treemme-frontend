@@ -1,6 +1,8 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import ArticleColorsList from "@features/panels/products/article-colors/ArticleColorsList.tsx";
+import ArticleColorsForm from "@features/panels/products/article-colors/ArticleColorsForm.tsx";
 
 export interface IArticleColorsStoreState extends IPanelUIState {
     _placeholder?: string;
@@ -14,8 +16,8 @@ const ArticleColorsPanel = () => {
             kind={"articleColors"}
             initialState={{uiState: initialUiState}}
         >
-            <div>List placeholder for ArticleColors</div>
-            <div>Form placeholder for ArticleColors</div>
+            <ArticleColorsList/>
+            <ArticleColorsForm/>
         </GenericPanel>
     )
 }
