@@ -4,6 +4,7 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
 import {userManagementApi} from "@features/panels/user-management/api/userManagementApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
+import UserGroupAssignment from "@features/panels/user-management/UserGroupAssignment.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {Box, Button, Tooltip} from "@mui/material";
 import EmailField from "@ui/form/controlled/EmailField.tsx";
@@ -12,7 +13,7 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {useFormContext} from "react-hook-form";
 import dayjs from "dayjs";
 
-export type IUserForm = Omit<IUserManagement, "id"> & IUserManagementPayload;
+export type IUserForm = Omit<IUserManagement, "id" | "group_users"> & IUserManagementPayload;
 
 const PasswordGenerator = () => {
     const {t} = useTranslation(["form"]);
@@ -69,6 +70,7 @@ const UserManagementForm = () => {
     const {mutateAsync: deleteUser, isPending: isDeleting} = useDelete();
 
     return (
+        <>
         <GenericForm<IUserForm, IUserManagement, IUserManagementStoreState>
             selectedId={selectedUserId}
             entity={user}
@@ -124,6 +126,8 @@ const UserManagementForm = () => {
                 </>
             )}
         />
+        {user && <UserGroupAssignment user={user} />}
+        </>
     );
 };
 
