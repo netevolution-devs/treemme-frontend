@@ -229,7 +229,7 @@ const ArticlesFormFields = ({
                         initialValue: input,
                         menu: {
                             component: "articleTypes",
-                            i18nKey: "products.articles.article_type"
+                            i18nKey: "menu.products.article-types"
                         }
                     })}
                 />

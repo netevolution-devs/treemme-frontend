@@ -51,7 +51,7 @@ const OrderRowsList = () => {
             },
             menu: {
                 component: "orderRows",
-                i18nKey: "orders.rows"
+                i18nKey: "menu.orders.rows"
             },
             customId: "createOrderRows"
         });
@@ -75,7 +75,7 @@ const OrderRowsList = () => {
                     },
                     menu: {
                         component: "orderRows",
-                        i18nKey: "orders.rows"
+                        i18nKey: "menu.orders.rows"
                     },
                     customId: "updateOrderRows:" + selectedOrderRowId
                 });
