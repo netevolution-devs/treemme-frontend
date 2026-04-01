@@ -127,7 +127,7 @@ const ArticleTypesFields = () => {
                         initialValue: input,
                         menu: {
                             component: "articleClasses",
-                            i18nKey: "menu.products.article_classes"
+                            i18nKey: "menu.products.article-classes"
                         }
                     })
                 }}
