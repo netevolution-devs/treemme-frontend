@@ -41,7 +41,7 @@ const GenericPanel = <F, U>({
                     {children && (
                         <Stack gap={0.5} sx={{
                             flex: 1,
-                            borderTop: !disableBorders ? "6px solid" : "none",
+                            borderTop: !disableBorders ? "3px solid" : "none",
                             borderRadius: 1,
                             borderColor: "primary.main",
                             backgroundColor: "background.paper",
