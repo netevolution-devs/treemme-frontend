@@ -11,6 +11,7 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import {Typography} from "@mui/material";
 
 const ContactsDetailList = () => {
     const {t} = useTranslation(["form"]);
@@ -53,6 +54,7 @@ const ContactsDetailList = () => {
             <ContactsDetailFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactDetail>
+                disableBorder
                 data={contact?.contact_details || []}
                 isLoading={isLoading}
                 isFetching={isFetching}
@@ -64,6 +66,7 @@ const ContactsDetailList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar:
                         <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.details.list")}</Typography>}
                             buttons={[
                                 <NewButton
                                     isEnable={!!selectedContactId}

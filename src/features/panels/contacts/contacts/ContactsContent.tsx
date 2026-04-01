@@ -1,17 +1,14 @@
-import {Box, Stack, Typography} from "@mui/material";
+import {Box, Stack} from "@mui/material";
 import ContactsAgentsList from "@features/panels/contacts/contacts/agents/ContactsAgentsList.tsx";
 import ContactsSubcontractorsList
     from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorsList.tsx";
-import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
 import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList.tsx";
-import ContactsSupplier from "@features/panels/contacts/contacts/subcontractors/ContactsSupplier.tsx";
+import ContactsSupplierList from "@features/panels/contacts/contacts/subcontractors/ContactsSupplierList.tsx";
 
 const ContactsContent = () => {
-    const {t} = useTranslation(["form", "shipping"]);
-
     const {useStore} = usePanel<unknown, IContactsStoreState>();
     const selectedContactId = useStore((state) => state.uiState.selectedContactId);
 
@@ -20,29 +17,32 @@ const ContactsContent = () => {
     return (
         <>
             {(selectedContactId && (contact?.client || contact?.supplier || contact?.agent || contact?.subcontractor)) && (
-                <Stack sx={{width: '100%'}}>
-                    <Box sx={{display: 'flex', gap: 1, width: '100%'}}>
+                <Stack sx={{width: '100%', gap: 1}}> {/* Aggiunto gap qui invece di mb manuali */}
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: {xs: 'column', md: 'row'},
+                        gap: 1,
+                        width: '100%'
+                    }}>
                         {contact?.client && (
-                            <Box sx={{width: '100%'}}>
-                                <Typography variant="h6">{t("contacts.agents.list")}</Typography>
+                            <Box sx={{width: '100%', height: '100%'}}>
                                 <ContactsAgentsList/>
                             </Box>
                         )}
                         {contact?.supplier && (
-                            <Box sx={{width: '100%'}}>
-                                <Typography variant="h6">{t("contacts.subcontractors.list")}</Typography>
+                            <Box sx={{width: '100%', height: '100%'}}>
                                 <ContactsSubcontractorsList/>
                             </Box>
                         )}
                     </Box>
                     {contact?.agent && (
-                        <Box sx={{width: '100%'}}>
+                        <Box sx={{width: '100%', height: '100%'}}>
                             <ContactsClientsList/>
                         </Box>
                     )}
                     {contact?.subcontractor && (
-                        <Box sx={{width: '100%'}}>
-                            <ContactsSupplier/>
+                        <Box sx={{width: '100%', height: '100%'}}>
+                            <ContactsSupplierList/>
                         </Box>
                     )}
                 </Stack>

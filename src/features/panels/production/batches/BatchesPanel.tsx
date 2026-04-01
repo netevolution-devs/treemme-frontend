@@ -42,7 +42,6 @@ const BatchesPanelContent = (props: IDockviewPanelProps<ICustomPanelProps<IBatch
 
     return (
         <>
-            <BatchesList/>
             <GenericTabContent
                 value={tabIndex}
                 onChange={(_, newValue) => setTabIndex(newValue)}
@@ -64,6 +63,7 @@ const BatchesPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchesStore
         <GenericPanel<IBatchesStoreFilter, IBatchesStoreState>
             kind={"batches"}
             initialState={{uiState: initialUiState}}
+            listComponent={<BatchesList/>}
         >
             <BatchesPanelContent {...props} />
         </GenericPanel>

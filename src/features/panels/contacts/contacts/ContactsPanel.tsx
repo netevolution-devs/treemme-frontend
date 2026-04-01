@@ -3,9 +3,8 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import ContactsList from "@features/panels/contacts/contacts/ContactsList.tsx";
 import ContactsForm from "@features/panels/contacts/contacts/ContactsForm.tsx";
-import {Box, Stack, Typography} from "@mui/material";
+import {Box} from "@mui/material";
 import ContactsAddressList from "@features/panels/contacts/contacts/address/ContactsAddressList.tsx";
-import {useTranslation} from "react-i18next";
 import ContactsDetailList from "@features/panels/contacts/contacts/detail/ContactsDetailList.tsx";
 import ContactsContent from "@features/panels/contacts/contacts/ContactsContent.tsx";
 import type {IDockviewPanelProps} from "dockview";
@@ -31,7 +30,6 @@ export interface IContactsStoreParams {
 }
 
 const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsStoreParams>>) => {
-    const {t} = useTranslation(["form"]);
     const initialUiState: IContactsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -41,30 +39,31 @@ const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsSto
                 filters: {},
                 uiState: initialUiState
             }}
-        >
-            <Stack gap={2}>
+            listComponent={
                 <ContactsList/>
-                <Box sx={{display: 'flex', gap: 2, width: '100%'}}>
+            }
+        >
+            <>
+                <Box sx={{display: 'flex', gap: 0.5, width: '100%'}}>
                     <ContactsForm {...props.params}/>
-                    <ContactsContent />
+                    <ContactsContent/>
                 </Box>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: {xs: 'column', lg: 'row'},
                     flexWrap: 'wrap',
-                    gap: 1,
-                    width: '100%'
+                    gap: 0.5,
+                    width: '100%',
+                    mb: 1.5
                 }}>
                     <Box sx={{flex: '1 1 300px', minWidth: 0}}>
-                        <Typography variant="h6">{t("contacts.address.list")}</Typography>
-                        <ContactsAddressList />
+                        <ContactsAddressList/>
                     </Box>
                     <Box sx={{flex: '1 1 300px', minWidth: 0}}>
-                        <Typography variant="h6">{t("contacts.details.list")}</Typography>
-                        <ContactsDetailList />
+                        <ContactsDetailList/>
                     </Box>
                 </Box>
-            </Stack>
+            </>
         </GenericPanel>
     )
 }

@@ -1,5 +1,5 @@
 import React, {type ReactNode, type SyntheticEvent, useState} from 'react';
-import {Box, Tabs, Tab} from '@mui/material';
+import {Box, Tabs, Tab, Card} from '@mui/material';
 
 interface TabItem {
     label: string;
@@ -24,7 +24,7 @@ function CustomTabPanel(props: { children?: ReactNode; value: number; index: num
             {...other}
         >
             {value === index && (
-                <Box sx={{pt: 2}}>
+                <Box sx={{pt: 0.5}}>
                     {children}
                 </Box>
             )}
@@ -48,14 +48,14 @@ const GenericTabContent: React.FC<GenericTabContentProps> = ({tabs, value: exter
     };
 
     return (
-        <Box sx={{width: '100%', mt: -1.7}}>
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="generic tabs">
+        <Box sx={{width: '100%'}}>
+            <Card variant={"outlined"} sx={{borderBottom: 1, borderColor: 'divider'}}>
+                <Tabs value={value} onChange={handleChange} aria-label="generic tabs" textColor="primary" indicatorColor="primary">
                     {tabs.map((tab, index) => (
                         <Tab key={index} label={tab.label} />
                     ))}
                 </Tabs>
-            </Box>
+            </Card>
             {tabs.map((tab, index) => (
                 <CustomTabPanel key={index} value={value} index={index}>
                     {tab.component}

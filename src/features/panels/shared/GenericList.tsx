@@ -4,7 +4,7 @@ import {
     type MRT_TableOptions,
     useMaterialReactTable
 } from "material-react-table";
-import {Box, CircularProgress} from "@mui/material";
+import {Box, Card, CircularProgress} from "@mui/material";
 import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.ts";
 import type {SyntheticEvent} from "react";
 
@@ -24,6 +24,7 @@ interface GenericListProps<TData extends BaseEntity> {
     overrideOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
     minHeight?: string;
+    disableBorder?: boolean;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -38,6 +39,7 @@ const GenericList = <TData extends BaseEntity>({
                                                    overrideOptions: _overrideOptions,
                                                    maxHeight = '300px',
                                                    minHeight = '300px',
+                                                   disableBorder = false
                                                }: GenericListProps<TData>) => {
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
@@ -103,23 +105,40 @@ const GenericList = <TData extends BaseEntity>({
         },
     });
 
+    const content = () => {
+        return (
+            <Box sx={{width: '100%', position: 'relative', minHeight: _minHeight}}>
+                {(isFetching && !isLoading) && (
+                    <Box sx={{
+                        position: 'absolute',
+                        right: 10,
+                        top: additionalOptions?.enableTopToolbar ? 50 : 5,
+                        zIndex: 1000
+                    }}>
+                        <CircularProgress size={20} thickness={5}/>
+                    </Box>
+                )}
+
+                <Box sx={{overflowY: 'auto'}}>
+                    <MaterialReactTable table={table}/>
+                </Box>
+            </Box>
+
+        )
+    }
+
     return (
-        <Box sx={{ width: '100%', position: 'relative', minHeight: _minHeight }}>
-            {(isFetching && !isLoading) && (
-                <Box sx={{
-                    position: 'absolute',
-                    right: 10,
-                    top: additionalOptions?.enableTopToolbar ? 50 : 5,
-                    zIndex: 1000
-                }}>
-                    <CircularProgress size={20} thickness={5} />
+        <>
+            {!disableBorder ? (
+                <Card variant={"outlined"} sx={{minHeight: _minHeight, maxHeight: maxHeight}}>
+                    {content()}
+                </Card>
+            ) : (
+                <Box>
+                    {content()}
                 </Box>
             )}
-
-            <Box sx={{ overflowY: 'auto' }}>
-                <MaterialReactTable table={table} />
-            </Box>
-        </Box>
+        </>
     );
 };
 

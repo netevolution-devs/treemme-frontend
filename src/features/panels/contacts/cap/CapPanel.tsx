@@ -16,8 +16,10 @@ const CapPanel = () => {
         <GenericPanel<unknown, ICapStoreState>
             kind={"cap"}
             initialState={{uiState: initialUiState}}
+            listComponent={
+                <CapList/>
+            }
         >
-            <CapList />
             <CapForm />
         </GenericPanel>
     )
