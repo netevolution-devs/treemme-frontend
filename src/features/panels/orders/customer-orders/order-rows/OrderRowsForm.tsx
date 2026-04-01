@@ -235,6 +235,10 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
         formKey: "article_id",
         dependencyKey: "articles"
     })
+    useSubscribePanel<IOrderRowForm>({
+        formKey: "selection_id",
+        dependencyKey: "selection"
+    })
 
     return (
         <Stack gap={1}>
@@ -286,6 +290,15 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                 name={"selection_id"}
                 label={t("orders.row.selection")}
                 options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "selection",
+                            i18nKey: "menu.products.selection"
+                        }
+                    })
+                }}
             />
 
             <Box sx={{display: 'flex', gap: 1}}>
