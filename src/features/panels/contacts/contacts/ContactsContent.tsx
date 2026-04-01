@@ -17,7 +17,7 @@ const ContactsContent = () => {
     return (
         <>
             {(selectedContactId && (contact?.client || contact?.supplier || contact?.agent || contact?.subcontractor)) && (
-                <Stack sx={{width: '100%', gap: 1}}> {/* Aggiunto gap qui invece di mb manuali */}
+                <Stack sx={{width: '100%', gap: 1}}>
                     <Box sx={{
                         display: 'flex',
                         flexDirection: {xs: 'column', md: 'row'},
