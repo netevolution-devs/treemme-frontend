@@ -17,8 +17,8 @@ const ArticleClassesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, IArticleClassesStoreState>
             kind={"articleClasses"}
             initialState={{uiState: initialUiState}}
+            listComponent={<ArticleClassesList/>}
         >
-            <ArticleClassesList/>
             <ArticleClassesForm {...props.params}/>
         </GenericPanel>
     )
