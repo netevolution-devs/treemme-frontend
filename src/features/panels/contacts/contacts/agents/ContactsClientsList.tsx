@@ -29,8 +29,8 @@ const ContactsClientsList = () => {
     ], [t]);
 
     return (
-
         <GenericList<IContact>
+            disableBorder
             data={clients}
             isLoading={isLoading}
             isFetching={isFetching}

@@ -9,7 +9,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {Typography} from "@mui/material";
 
-const ContactsSupplier = () => {
+const ContactsSupplierList = () => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IContactsStoreState>();
@@ -29,8 +29,8 @@ const ContactsSupplier = () => {
     ], [t]);
 
     return (
-
         <GenericList<IContact>
+            disableBorder
             data={suppliers}
             isLoading={isLoading}
             isFetching={isFetching}
@@ -51,4 +51,4 @@ const ContactsSupplier = () => {
     )
 }
 
-export default ContactsSupplier;
+export default ContactsSupplierList;

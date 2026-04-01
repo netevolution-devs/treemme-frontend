@@ -12,7 +12,7 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import ContactsAgentFormDialog from "@features/panels/contacts/contacts/agents/ContactsAgentFormDialog.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import {MenuItem} from "@mui/material";
+import {MenuItem, Typography} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useRemoveAgentFromContact from "@features/panels/contacts/contacts/agents/api/useRemoveAgentFromContact.ts";
@@ -52,6 +52,7 @@ const ContactsAgentsList = () => {
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
+                disableBorder
                 data={agents}
                 isLoading={isLoading}
                 isFetching={isFetching}
@@ -64,6 +65,7 @@ const ContactsAgentsList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                     <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.agents.list")}</Typography>}
                             buttons={[
                                 <CustomButton
                                     isEnable={!!selectedContactId}

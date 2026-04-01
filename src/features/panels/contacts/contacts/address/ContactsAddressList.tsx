@@ -66,6 +66,7 @@ const ContactsAddressList = () => {
             <ContactsAddressFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactAddress>
+                disableBorder
                 data={contact?.contact_addresses || []}
                 isLoading={isLoading}
                 isFetching={isFetching}
@@ -77,6 +78,7 @@ const ContactsAddressList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar:
                         <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
                             buttons={[
                                 <NewButton
                                     isEnable={!!selectedContactId}

@@ -282,6 +282,7 @@
     "movement_note": "Note movimento"
   },
   "orders": {
+    "order_code": "Codice ordine",
     "shipment-condition": "Resa",
     "order_number": "Ordine",
     "order_date": "Data",

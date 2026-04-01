@@ -64,7 +64,7 @@ const SubcontractingNotReturnedList = () => {
             <DDTTransferFormDialog ref={ddtTransferDialogRef} />
 
             <GenericList<IDeliveryNoteRow>
-                minHeight={"800px"}
+                minHeight={"835px"}
                 data={ddtRowsNotReturned}
                 columns={columns}
                 isLoading={isLoading}

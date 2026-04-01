@@ -45,7 +45,9 @@ const WarehouseMovementsList = () => {
 
     return (
         <GenericList<IWarehouseMovement>
+            disableBorder
             data={movements}
+            minHeight={"400px"}
             isLoading={isLoading}
             isFetching={isFetching}
             columns={columns}

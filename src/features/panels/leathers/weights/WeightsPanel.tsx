@@ -19,8 +19,8 @@ const WeightsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, IWeightsStoreState>
             kind={"weights"}
             initialState={{uiState: initialUiState}}
+            listComponent={<WeightsList/>}
         >
-            <WeightsList/>
             <WeightsForm {...props.params}/>
             <WeightsContent/>
         </GenericPanel>

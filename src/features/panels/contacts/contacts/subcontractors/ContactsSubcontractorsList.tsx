@@ -11,7 +11,7 @@ import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import ContactsSubcontractorFormDialog from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorFormDialog.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import {MenuItem} from "@mui/material";
+import {MenuItem, Typography} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useRemoveSubcontractorFromContact from "@features/panels/contacts/contacts/subcontractors/api/useRemoveSubcontractorFromContact.ts";
@@ -51,6 +51,7 @@ const ContactsSubcontractorsList = () => {
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
+                disableBorder
                 data={subcontractors}
                 isLoading={isLoading}
                 isFetching={isFetching}
@@ -63,6 +64,7 @@ const ContactsSubcontractorsList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                         <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.subcontractors.list")}</Typography>}
                             buttons={[
                                 <CustomButton
                                     isEnable={!!selectedContactId}

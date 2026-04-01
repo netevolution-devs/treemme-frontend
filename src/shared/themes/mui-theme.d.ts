@@ -2,6 +2,7 @@ import '@mui/material/styles';
 
 declare module '@mui/material/styles' {
     interface PaletteBackground {
+        panel: string;
         topBar: string;
         card: {
             default: string;
@@ -10,6 +11,7 @@ declare module '@mui/material/styles' {
     }
 
     interface TypeBackground {
+        panel: string;
         topBar: string;
         card: {
             default: string;

@@ -223,7 +223,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId, methods, onSubmit, handleCloseDialog]);
 
     return (
-        <Box sx={{width: '100%'}}>
+       <Box sx={{width: '100%', height: '100%'}}>
             <FormProvider {...methods}>
                 <Stack
                     component="form"

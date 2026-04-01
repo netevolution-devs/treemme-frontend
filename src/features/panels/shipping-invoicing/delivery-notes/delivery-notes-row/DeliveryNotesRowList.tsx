@@ -56,7 +56,7 @@ const DeliveryNotesRowList = () => {
             },
             menu: {
                 component: "deliveryNotesRows",
-                i18nKey: "shipping.ddt_rows.row"
+                i18nKey: "menu.shipping-invoicing.rows"
             },
             customId: "createDeliveryNotesRows"
         });
@@ -64,6 +64,8 @@ const DeliveryNotesRowList = () => {
 
     return (
         <GenericList<IDeliveryNoteRow>
+            disableBorder
+            minHeight={"405px"}
             data={ddtRows}
             columns={columns}
             isLoading={isLoading}
@@ -80,7 +82,7 @@ const DeliveryNotesRowList = () => {
                     },
                     menu: {
                         component: "deliveryNotesRows",
-                        i18nKey: "shipping.ddt_rows.row"
+                        i18nKey: "menu.shipping-invoicing.rows"
                     },
                     customId: "updateDeliveryNotesRows:" + selectedDeliveryNoteRowId
                 });

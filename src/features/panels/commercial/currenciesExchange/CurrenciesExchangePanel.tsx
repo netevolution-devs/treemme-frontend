@@ -18,8 +18,8 @@ const CurrenciesExchangePanel = () => {
         <GenericPanel<unknown, ICurrenciesExchangeStoreState>
             kind={"currenciesExchange"}
             initialState={{uiState: initialUiState}}
+            listComponent={<CurrenciesList/>}
         >
-            <CurrenciesList/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',

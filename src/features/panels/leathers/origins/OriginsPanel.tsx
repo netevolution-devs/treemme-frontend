@@ -19,8 +19,8 @@ const OriginsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, IOriginsStoreState>
             kind={"origins"}
             initialState={{uiState: initialUiState}}
+            listComponent={<OriginsList/>}
         >
-            <OriginsList/>
             <OriginsForm {...props.params}/>
             <OriginsContent/>
         </GenericPanel>

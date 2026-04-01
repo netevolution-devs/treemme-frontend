@@ -70,7 +70,8 @@
       "deliveryNotes": "DeliveryNotes",
       "reasons": "Ragioni di trasporto",
       "subcontractingNotReturned": "SubcontractingNotReturned",
-      "subcontracting-not-returned": "Lotti conto lavoro"
+      "subcontracting-not-returned": "Lotti conto lavoro",
+      "rows": "Riga DDT"
     },
     "commercial": {
       "self": "Commerciale",

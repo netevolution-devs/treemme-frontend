@@ -18,9 +18,8 @@ const ProcessesPanel = () => {
         <GenericPanel<unknown, IProcessesStoreState>
             kind={"processes"}
             initialState={{uiState: initialUiState}}
-        >
-            <ProcessesList />
-        </GenericPanel>
+            listComponent={<ProcessesList />}
+        />
     )
 }
 

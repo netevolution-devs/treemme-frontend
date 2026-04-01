@@ -12,16 +12,16 @@ interface ListToolbarProps {
 
 const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'start'}: ListToolbarProps) => {
     return (
-        <Box sx={{display: 'flex', flexDirection: "row", gap: 0.5, minHeight: 32, mb: 1, mt: 0.5, alignItems: 'center', ...sx}}>
+        <Box sx={{display: 'flex', flexDirection: "row", gap: 0.5, minHeight: 32, mb: 1, alignItems: 'center', ...sx}}>
             {filters && filters.length > 0 && (
-                <>
-                    <SearchIcon color={"primary"} fontSize={"small"}/>
-                    <Box sx={{display: 'flex', flexDirection: "row", gap: 1, alignItems: 'end'}}>
+                <Box sx={{display: 'flex', flexDirection: "row", gap: 1, alignItems: 'center', ml: 0.7}}>
+                    <SearchIcon color={"primary"} fontSize={"medium"} sx={{mt: 0.8, mr: -0.5}}/>
+                    <Box sx={{display: 'flex', flexDirection: "row", gap: 1, alignItems: 'end', mt: 1}}>
                         {filters?.map((filterComponent) => (
                             <>{filterComponent}</>
                         ))}
                     </Box>
-                </>
+                </Box>
             )}
             {label && (
                 <Box sx={{display: 'inline', textWrap: 'nowrap', mr: 1}}>

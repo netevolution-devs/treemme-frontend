@@ -17,8 +17,8 @@ const SelectionPanel = (props:  IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, ISelectionStoreState>
             kind={"selection"}
             initialState={{uiState: initialUiState}}
+            listComponent={<SelectionList/>}
         >
-            <SelectionList/>
             <SelectionForm {...props.params}/>
         </GenericPanel>
     )

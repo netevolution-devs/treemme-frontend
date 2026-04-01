@@ -99,7 +99,6 @@ const DeliveryNotesRowsForm = ({
 
     return (
         <Box sx={{p: 0}}>
-            <pre>{JSON.stringify(floatingPanelUUID, null, 2)}</pre>
             <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
                 onSuccess={handlePanelSuccess}
                 dialogMode

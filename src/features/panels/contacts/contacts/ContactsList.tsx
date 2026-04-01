@@ -64,7 +64,7 @@ const ContactsList = () => {
             onRowSelect={(id) => setUIState({selectedContactId: id})}
             additionalOptions={{
                 enableTopToolbar: true,
-                renderTopToolbar:
+                renderTopToolbar: () => (
                     <ListToolbar
                         filters={[
                             <TextFieldFilter
@@ -81,6 +81,7 @@ const ContactsList = () => {
                             />,
                         ]}
                     />
+                )
             }}
         />
     );
