@@ -22,6 +22,11 @@ const AccessCheckbox = ({row, field}: { row: IUserGroupAccess; field: BooleanFie
         <Checkbox
             size="small"
             checked={row[field]}
+            sx={{
+                '&.Mui-checked': {
+                    color: 'text.secondary',
+                },
+            }}
             disabled={isPending}
             onChange={(e) => mutate({id: row.id, field, value: e.target.checked})}
             onClick={(e) => e.stopPropagation()}
