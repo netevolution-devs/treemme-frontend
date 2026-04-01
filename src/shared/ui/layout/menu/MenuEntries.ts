@@ -1,14 +1,17 @@
 import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
+import type {IPermissionCheck} from "@features/authz/permission.utils.ts";
 
 export interface IMenuEntry {
     i18nKey: string;
     subMenu?: IMenuEntry[];
     component?: TPanelKind;
+    permissionCheck?: IPermissionCheck;
 }
 
 export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.contacts.self",
+        permissionCheck: {resource: "contatti", action: "get"},
         subMenu: [
             {i18nKey: "menu.contacts.contacts", component: "contacts"},
             {i18nKey: "menu.contacts.cap", component: "cap"},
@@ -19,6 +22,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.leathers.self",
+        permissionCheck: {resource: "pellami", action: "get"},
         subMenu: [
             {i18nKey: "menu.leathers.leathers", component: "leathers"},
             {i18nKey: "menu.leathers.weights", component: "weights"},
@@ -33,6 +37,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.products.self",
+        permissionCheck: {resource: "prodotti", action: "get"},
         subMenu: [
             {i18nKey: "menu.products.products", component: "products"},
             {i18nKey: "menu.products.articles", component: "articles"},
@@ -45,6 +50,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.orders.self",
+        permissionCheck: {resource: "ordini", action: "get"},
         subMenu: [
             {i18nKey: "menu.orders.customer-orders", component: "customerOrders"},
             // {i18nKey: "menu.orders.supplier-orders"},
@@ -55,6 +61,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.warehouse.self",
+        permissionCheck: {resource: "magazzino", action: "get"},
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.warehouse.movements"},
@@ -66,6 +73,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.production.self",
+        permissionCheck: {resource: "produzione", action: "get"},
         subMenu: [
             {i18nKey: "menu.production.batches", component: "batches"},
             // {i18nKey: "menu.production.recipes"},
@@ -81,6 +89,8 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.shipping-invoicing.self",
+        permissionCheck: {resource: "ddt & fatture", action: "get"},
+
         subMenu: [
             {i18nKey: "menu.shipping-invoicing.delivery-notes", component: "deliveryNotes"},
             {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
@@ -91,6 +101,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.commercial.self",
+        permissionCheck: {resource: "commerciale", action: "get"},
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.commercial.customers"},
@@ -104,6 +115,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.analysis.self",
+        permissionCheck: {resource: "analisi", action: "get"},
         subMenu: [
             {i18nKey: "to-implement"},
             // {i18nKey: "menu.analysis.orders"},
@@ -122,6 +134,7 @@ export const MenuEntries: IMenuEntry[] = [
     },
     {
         i18nKey: "menu.system.self",
+        permissionCheck: {resource: "sistema", action: "get"},
         subMenu: [
             // {i18nKey: "menu.system.info"},
             // {i18nKey: "menu.system.tools"},
