@@ -4,7 +4,7 @@ export type RoleCheckMode = "any" | "all";
 export type ResourceAction = "get" | "post" | "put" | "delete";
 
 function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "all") {
-    if (roles.length === 0) return mode === "all" ? true : false;
+    if (roles.length === 0) return mode === "all";
     return mode === "all"
         ? roles.every(role => set.has(role))
         : roles.some(role => set.has(role));
@@ -130,8 +130,7 @@ export function permissionEngine(accessControl: IAccessControl[]): PermissionEng
         },
 
         hasDeniedRoles(roles, mode = "any") {
-            const deniedMatch = checkRoles(roleSet, roles, mode);
-            return deniedMatch;
+            return checkRoles(roleSet, roles, mode);
         },
     };
 }
