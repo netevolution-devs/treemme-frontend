@@ -25,8 +25,10 @@ const LeathersPanel = (props: IDockviewPanelProps<ICustomPanelProps<ILeatherStor
         <GenericPanel<unknown, ILeathersStoreState>
             kind={"leathers"}
             initialState={{uiState: initialUiState}}
+            listComponent={
+                <LeathersList enableFilters={false}/>
+            }
         >
-            <LeathersList enableFilters={false}/>
             <LeathersForm {...props.params}/>
         </GenericPanel>
     )
