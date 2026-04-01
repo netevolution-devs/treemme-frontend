@@ -62,6 +62,34 @@ export const useUpdateGroupAccess = () => {
     });
 };
 
+export const useDeleteGroupAccess = () => {
+    const {DELETE} = useApi();
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (id: number) => {
+            const response = await DELETE(`/api/user/remove-group/${id}`);
+            return response.data;
+        },
+        onSuccess: () => {
+            void queryClient.invalidateQueries({queryKey: [GROUP_ACCESS_QUERY_KEY, "LIST"]});
+        },
+    });
+};
+
+export const useUpdateGroupAccessForm = () => {
+    const {put} = useApi();
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({id, group_id, role_id, work_area_id}: { id: number; group_id: number; role_id: number; work_area_id: number }) => {
+            const response = await put(`/group-role-work-area/${id}`, {group_id, role_id, work_area_id});
+            return response.data.data;
+        },
+        onSuccess: () => {
+            void queryClient.invalidateQueries({queryKey: [GROUP_ACCESS_QUERY_KEY, "LIST"]});
+        },
+    });
+};
+
 export const useAssignGroupAccess = () => {
     const {post} = useApi();
     const queryClient = useQueryClient();
