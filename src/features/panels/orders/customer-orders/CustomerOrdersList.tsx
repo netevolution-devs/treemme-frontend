@@ -1,21 +1,42 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
+import type {
+    ICustomerOrdersFilters,
+    ICustomerOrdersStoreState
+} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
 import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
 import dayjs from "dayjs";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
 
 const CustomerOrdersList = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
+    const {useStore} = usePanel<ICustomerOrdersFilters, ICustomerOrdersStoreState>();
     const selectedCustomerOrderId = useStore(state => state.uiState.selectedCustomerOrderId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: customerOrders = [], isLoading, isFetching} = customerOrderApi.useGetList();
+    const filterOrderCode = useStore(state => state.filters.filterOrderCode);
+    const filterOrderClientId = useStore(state => state.filters.filterOrderClientId);
+    const setFilters = useStore(state => state.setFilters);
+
+    const queryParams = useMemo(() => cleanFilters(
+        {
+            client: filterOrderClientId,
+            order_number: filterOrderCode,
+        }
+    ), [filterOrderCode, filterOrderClientId]);
+
+    const {data: customerOrders = [], isLoading, isFetching} = customerOrderApi.useGetList({queryParams});
+    const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
+
 
     const columns = useMemo<MRT_ColumnDef<ICustomerOrder>[]>(() => [
         {
@@ -34,7 +55,6 @@ const CustomerOrdersList = () => {
         }
     ], [t]);
 
-
     return (
         <GenericList<ICustomerOrder>
             data={customerOrders}
@@ -43,6 +63,28 @@ const CustomerOrdersList = () => {
             columns={columns}
             selectedId={selectedCustomerOrderId}
             onRowSelect={(id) => setUIState({selectedCustomerOrderId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        filters={[
+                            <TextFieldFilter
+                                key={"f-order_code"}
+                                label={t("orders.order_code")}
+                                value={filterOrderCode}
+                                onFilterChange={(val) => setFilters({filterOrderCode: val as string})}
+                            />,
+                            <SelectFieldFilter
+                                key={"f-client"}
+                                label={t("orders.client")}
+                                value={filterOrderClientId}
+                                options={clients.map(s => ({value: s.id, label: s.name}))}
+                                onFilterChange={(value) => setFilters({filterOrderClientId: value as number})}
+                            />,
+                        ]}
+                    />
+                )
+            }}
         />
     )
 }
