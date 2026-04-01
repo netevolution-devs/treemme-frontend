@@ -43,6 +43,8 @@ const CurrenciesExchangeList = () => {
         <>
             <CurrenciesExchangeFormDialog ref={addExchangeDialogRef}/>
             <GenericList<ICurrencyChange>
+                disableBorder
+                minHeight={"450px"}
                 data={selectedCurrencyId ? currenciesExchange : []}
                 isLoading={isLoading}
                 isFetching={isFetching}
