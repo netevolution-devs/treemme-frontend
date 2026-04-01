@@ -19,8 +19,8 @@ const CustomerOrdersPanel = () => {
         <GenericPanel<unknown, ICustomerOrdersStoreState>
             kind={"customerOrders"}
             initialState={{uiState: initialUiState}}
+            listComponent={<CustomerOrdersList/>}
         >
-            <CustomerOrdersList/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',

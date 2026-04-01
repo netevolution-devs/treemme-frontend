@@ -20,6 +20,7 @@ const OrderRowsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IOrderRowsS
 
     return (
         <GenericPanel<unknown, IOrderRowsStoreState>
+            disableBorders
             kind={"orderRows"}
             initialState={{uiState: initialUiState}}
         >

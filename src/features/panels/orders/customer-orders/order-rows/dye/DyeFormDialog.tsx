@@ -10,7 +10,7 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
 import dayjs from "dayjs";
 
@@ -37,6 +37,7 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
+            <Typography variant={"h5"} sx={{mb: 2}}>{t("orders.row.dye")}</Typography>
             <GenericForm<IDyeForm, unknown, ICustomerOrdersStoreState>
                 selectedId={null}
                 dialogMode

@@ -9,13 +9,15 @@ interface GenericPanelProps<F, U> {
     initialState: Partial<PanelState<F, U>>;
     children: ReactNode;
     listComponent?: ReactNode;
+    disableBorders?: boolean;
 }
 
 const GenericPanel = <F, U>({
                                 kind,
                                 initialState,
                                 children,
-                                listComponent
+                                listComponent,
+                                disableBorders = false
                             }: GenericPanelProps<F, U>) => {
     return (
         <PanelProvider<F, U>
@@ -23,7 +25,7 @@ const GenericPanel = <F, U>({
             initialState={initialState}
         >
             <Box sx={{
-                p: 1.5,
+                p: !disableBorders ? 1.5 : 0,
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
@@ -38,7 +40,7 @@ const GenericPanel = <F, U>({
                     {listComponent}
                     <Stack gap={0.5} sx={{
                         flex: 1,
-                        borderTop: "6px solid",
+                        borderTop: !disableBorders ? "6px solid" : "none",
                         borderRadius: 1,
                         borderColor: "primary.main",
                         backgroundColor: "background.paper",
