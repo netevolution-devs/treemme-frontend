@@ -11,23 +11,39 @@ import {hasPermission} from "@features/authz/permission.utils.ts";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
 
 function filterMenuEntries(entries: IMenuEntry[], accessControl: IAccessControl[]): IMenuEntry[] {
-    return entries
-        .map(entry => {
-            console.log(entry.permissionCheck)
-            if (entry.permissionCheck) {
-                const has_permission = hasPermission(accessControl, entry.permissionCheck);
-                console.log("user has permission: ", has_permission, " for ", entry.permissionCheck);
-                return has_permission ? entry : null;
+    const result: IMenuEntry[] = [];
+
+    for (const entry of entries) {
+        let canRender = false;
+        let subMenu: IMenuEntry[] | undefined = entry.subMenu;
+
+        if (entry.permissionCheck) {
+            canRender = hasPermission(accessControl, entry.permissionCheck);
+        }
+
+        if (entry.subMenu) {
+            const filteredSubMenu = filterMenuEntries(entry.subMenu, accessControl);
+
+            if (filteredSubMenu.length > 0) {
+                subMenu = filteredSubMenu;
+                canRender = true;
+            }
+        }
+
+        if (canRender) {
+            const menuEntry: IMenuEntry = {
+                ...entry,
+            };
+
+            if (subMenu) {
+                menuEntry.subMenu = subMenu;
             }
 
-            if (entry.subMenu) {
-                const filteredSub = filterMenuEntries(entry.subMenu, accessControl);
-                return filteredSub.length > 0 ? {...entry, subMenu: filteredSub} : null;
-            }
+            result.push(menuEntry);
+        }
+    }
 
-            return entry;
-        })
-        .filter((e): e is IMenuEntry => e !== null);
+    return result;
 }
 
 const MenuToolbar = () => {
