@@ -72,6 +72,7 @@ const OrderRowsList = () => {
 
             <GenericList<IOrderRow>
                 disableBorder
+                minHeight={"455px"}
                 data={orderRows}
                 columns={columns}
                 isLoading={isLoading}

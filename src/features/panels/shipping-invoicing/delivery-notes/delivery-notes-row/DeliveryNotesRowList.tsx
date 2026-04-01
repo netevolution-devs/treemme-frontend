@@ -64,6 +64,8 @@ const DeliveryNotesRowList = () => {
 
     return (
         <GenericList<IDeliveryNoteRow>
+            disableBorder
+            minHeight={"405px"}
             data={ddtRows}
             columns={columns}
             isLoading={isLoading}

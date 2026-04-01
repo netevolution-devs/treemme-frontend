@@ -19,7 +19,6 @@ const ProcessesPanel = () => {
             kind={"processes"}
             initialState={{uiState: initialUiState}}
             listComponent={<ProcessesList />}
-            disableContent
         />
     )
 }
