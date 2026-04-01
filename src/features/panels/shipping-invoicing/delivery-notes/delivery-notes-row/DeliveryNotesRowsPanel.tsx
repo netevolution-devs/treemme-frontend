@@ -12,6 +12,7 @@ export interface IDeliveryNotesRowsStoreState extends IPanelUIState {
 export interface IDeliveryNotesRowsStoreParams {
     ddt_id?: number;
     ddt_row_id?: number;
+    panelId?: string;
 }
 
 const DeliveryNotesRowsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IDeliveryNotesRowsStoreParams>>) => {

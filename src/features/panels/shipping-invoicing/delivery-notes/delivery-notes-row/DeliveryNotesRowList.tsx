@@ -50,10 +50,15 @@ const DeliveryNotesRowList = () => {
         setUIState({selectedDeliveryNoteRowId: null});
         addSelectPanel({
             initialValue: '',
+            extra: {
+                ddt_id: selectedDeliveryNoteId,
+                panelId: "createDeliveryNotesRows"
+            },
             menu: {
                 component: "deliveryNotesRows",
                 i18nKey: "shipping.ddt_rows.row"
-            }
+            },
+            customId: "createDeliveryNotesRows"
         });
     }
 
@@ -71,11 +76,13 @@ const DeliveryNotesRowList = () => {
                     extra: {
                         ddt_id: selectedDeliveryNoteId,
                         ddt_row_id: selectedDeliveryNoteRowId,
+                        panelId: "updateDeliveryNotesRows:" + selectedDeliveryNoteRowId
                     },
                     menu: {
                         component: "deliveryNotesRows",
                         i18nKey: "shipping.ddt_rows.row"
-                    }
+                    },
+                    customId: "updateDeliveryNotesRows:" + selectedDeliveryNoteRowId
                 });
             }}
             additionalOptions={{

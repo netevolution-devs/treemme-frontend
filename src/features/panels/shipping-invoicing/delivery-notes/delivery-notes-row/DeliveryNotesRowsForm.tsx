@@ -1,3 +1,4 @@
+import {usePanel} from "@ui/panel/PanelContext.tsx";
 import {useTranslation} from "react-i18next";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
@@ -67,16 +68,22 @@ const DeliveryNotesRowsForm = ({
     const ddtId = extra?.ddt_id ?? 0;
     const ddtRowId = extra?.ddt_row_id ?? 0;
 
+    const {useStore} = usePanel<unknown, IDeliveryNotesRowsStoreState>();
+    const selectedStoreId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
+    const selectedDeliveryNoteRowId = ddtRowId || selectedStoreId;
+
+    const floatingPanelUUID = extra?.panelId as string;
+
     const {setFormState} = usePanelFormButtons();
     const {handlePanelSuccess} = usePanelFormLogic({
         initialName,
-        selectedId: ddtRowId,
+        selectedId: selectedDeliveryNoteRowId,
         onSuccess,
         setFormState
     });
 
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteRowApi;
-    const {data: deliveryNoteRow} = useGetDetail(ddtRowId);
+    const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
 
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
         invalidateQueries: ['DELIVERY-NOTE', String(ddtId), "DDT-ROW-NOT-RETURNED", "LIST"]
@@ -92,10 +99,13 @@ const DeliveryNotesRowsForm = ({
 
     return (
         <Box sx={{p: 0}}>
+            <pre>{JSON.stringify(floatingPanelUUID, null, 2)}</pre>
             <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
                 onSuccess={handlePanelSuccess}
                 dialogMode
-                selectedId={ddtRowId}
+                floatingPanelMode
+                floatingPanelUUID={floatingPanelUUID}
+                selectedId={selectedDeliveryNoteRowId}
                 entity={deliveryNoteRow}
                 emptyValues={{
                     batch_id: null,
