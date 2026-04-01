@@ -8,6 +8,8 @@ import {
     useUpdateGroupAccess,
     type IUserGroupAccess
 } from "@features/panels/user-management/api/userManagementApi.ts";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
 
 const getName = (field: { id: number; name?: string } | []) =>
     Array.isArray(field) ? "-" : (field.name ?? "-");
@@ -30,6 +32,10 @@ const AccessCheckbox = ({row, field}: { row: IUserGroupAccess; field: BooleanFie
 const UserAccessList = () => {
     const {t} = useTranslation(["form"]);
     const {data: accesses = [], isLoading} = useGetGroupAccessList();
+
+    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const selectedAccessId = useStore(state => state.uiState.selectedAccessId);
+    const setUIState = useStore(state => state.setUIState);
 
     const columns = useMemo<MRT_ColumnDef<IUserGroupAccess>[]>(() => [
         {
@@ -84,6 +90,8 @@ const UserAccessList = () => {
             data={accesses}
             isLoading={isLoading}
             columns={columns}
+            selectedId={selectedAccessId}
+            onRowSelect={(id) => setUIState({selectedAccessId: id as number})}
         />
     );
 };
