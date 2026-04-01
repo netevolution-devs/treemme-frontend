@@ -6,15 +6,38 @@ import {useTranslation} from "react-i18next";
 import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
 import {useNavigate} from "react-router";
 import {useMenuStore} from "@ui/layout/default/layoutStore.ts";
+import {useAuth} from "@features/auth/model/AuthContext.tsx";
+import {hasPermission} from "@features/authz/permission.utils.ts";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
+
+function filterMenuEntries(entries: IMenuEntry[], accessControl: IAccessControl[]): IMenuEntry[] {
+    return entries
+        .map(entry => {
+            console.log(entry.permissionCheck)
+            if (entry.permissionCheck) {
+                const has_permission = hasPermission(accessControl, entry.permissionCheck);
+                console.log("user has permission: ", has_permission, " for ", entry.permissionCheck);
+                return has_permission ? entry : null;
+            }
+
+            if (entry.subMenu) {
+                const filteredSub = filterMenuEntries(entry.subMenu, accessControl);
+                return filteredSub.length > 0 ? {...entry, subMenu: filteredSub} : null;
+            }
+
+            return entry;
+        })
+        .filter((e): e is IMenuEntry => e !== null);
+}
 
 const MenuToolbar = () => {
     const {t} = useTranslation(["menu"]);
-    // const {setShowTopBar, showTopBar} = useLayout()
-
     const {hideMenu, isMenuVisible} = useMenuStore();
-
     const navigate = useNavigate();
     const addPanel = useDockviewStore(state => state.addPanel);
+    const {user} = useAuth();
+    const accessControl = (user?.accessControl ?? []) as IAccessControl[];
+    const visibleEntries = filterMenuEntries(MenuEntries, accessControl);
 
     const handlePanelOpen = async (menu: IMenuEntry) => {
         addPanel({
@@ -35,7 +58,7 @@ const MenuToolbar = () => {
             <Toolbar disableGutters sx={{px: 1}} variant="dense">
                 <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                     <Box>
-                        {MenuEntries.map((entry) => (
+                        {visibleEntries.map((entry) => (
                             <MenuEntry
                                 key={entry.i18nKey}
                                 entry={entry}
