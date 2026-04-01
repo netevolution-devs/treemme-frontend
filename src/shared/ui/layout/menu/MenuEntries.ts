@@ -41,11 +41,13 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             // {i18nKey: "menu.products.products", component: "products"},
             {i18nKey: "menu.products.articles", component: "articles"},
-            {i18nKey: "menu.products.selection", component: "selection" },
+            {i18nKey: "menu.products.selection", component: "selection"},
             // {i18nKey: "menu.products.search"},
             // {i18nKey: "menu.products.categories", component: "productCategories"},
             // {i18nKey: "menu.products.products-types", component: "productTypes"},
             {i18nKey: "menu.products.article-types", component: "articleTypes"},
+            {i18nKey: "menu.products.article-colors", component: "articleColors"},
+            {i18nKey: "menu.products.article-classes", component: "articleClasses"},
         ]
     },
     {
@@ -79,8 +81,8 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.production.recipes"},
             {i18nKey: "menu.production.machinery", component: "machinery"},
             // {i18nKey: "menu.production.progress"},
-            {i18nKey: "menu.production.processes", component: "processes" },
-            {i18nKey: "menu.production.workings", component: "workings" },
+            {i18nKey: "menu.production.processes", component: "processes"},
+            {i18nKey: "menu.production.workings", component: "workings"},
             // {i18nKey: "menu.production.bom"},
             // {i18nKey: "menu.production.batch-selection"},
             // {i18nKey: "menu.production.pirovano-monitor"},
@@ -95,7 +97,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
             // {i18nKey: "menu.shipping-invoicing.invoices"},
             // {i18nKey: "menu.shipping-invoicing.search"},
-            { i18nKey: "menu.shipping-invoicing.subcontracting-not-returned", component: "subcontractingNotReturned" },
+            {i18nKey: "menu.shipping-invoicing.subcontracting-not-returned", component: "subcontractingNotReturned"},
         ]
     },
     {
@@ -108,7 +110,7 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.commercial.product-costs"},
             // {i18nKey: "menu.commercial.price-list"},
             // {i18nKey: "menu.commercial.work-reports"},
-            {i18nKey: "menu.commercial.currencies-exchange", component: "currenciesExchange" }
+            {i18nKey: "menu.commercial.currencies-exchange", component: "currenciesExchange"}
         ]
     },
     {

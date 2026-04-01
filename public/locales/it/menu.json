@@ -28,7 +28,9 @@
       "products": "Prodotti",
       "categories": "Categorie",
       "article-types": "Tipologie Articoli",
-      "products-types": "Tipologie Prodotti"
+      "products-types": "Tipologie Prodotti",
+      "article-colors": "Colori Articoli",
+      "article-classes": "Classi Articoli"
     },
     "orders": {
       "self": "Ordini",
@@ -36,7 +38,8 @@
       "supplier-orders": "Ordini Fornitori",
       "search-customer-orders": "Ricerca Ordini Clienti",
       "supplier-schedule": "Scadenziario Fornitori",
-      "search-supplier-orders": "Ricerca Ordini Fornitori"
+      "search-supplier-orders": "Ricerca Ordini Fornitori",
+      "rows": "Riga Ordine"
     },
     "warehouse": {
       "self": "Magazzino",

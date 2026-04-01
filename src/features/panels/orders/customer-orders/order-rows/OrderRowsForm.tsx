@@ -6,11 +6,9 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import {Box, Stack} from "@mui/material";
-import {forwardRef, useMemo, useRef} from "react";
+import {useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
 import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
@@ -29,8 +27,15 @@ import {selectionApi} from "@features/panels/products/selection/api/selectionApi
 import CurrenciesExchangeFormDialog
     from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
 import {useWatch} from "react-hook-form";
-
-type Props = unknown;
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {
+    IOrderRowsStoreParams,
+    IOrderRowsStoreState
+} from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -43,7 +48,6 @@ export type IOrderRowForm = Omit<IOrderRow,
     'selection'
 > & {
     id?: number;
-    // product_id: number;
     article_id: number | null;
     measurement_unit_id: number | null;
     currency_id: number | null;
@@ -52,25 +56,38 @@ export type IOrderRowForm = Omit<IOrderRow,
     selection_id: number | null;
 };
 
-const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IOrderRowsStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
-    const selectedCustomerOrderId = useStore(state => state.uiState.selectedCustomerOrderId);
-    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
+    const clientOrderId = extra?.client_order_id;
+    const orderRowId = extra?.order_row_id;
+
+    const {useStore} = usePanel<unknown, IOrderRowsStoreState>();
+    const selectedStoreId = useStore(state => state.uiState.selectedOrderRowId);
+    const selectedOrderRowId = orderRowId ?? selectedStoreId;
     const setUIState = useStore(state => state.setUIState);
+
+    const floatingPanelUUID = extra?.panelId as string;
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedOrderRowId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = orderRowApi;
     const {data: orderRow} = useGetDetail(selectedOrderRowId);
 
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
-        invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
+        invalidateQueries: ['CLIENT-ORDER', String(clientOrderId)]
     });
     const {mutateAsync: updateRow, isPending: isPutting} = usePut({
-        invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
+        invalidateQueries: ['CLIENT-ORDER', String(clientOrderId)]
     });
     const {mutateAsync: deleteRow, isPending: isDeleting} = useDelete({
-        invalidateQueries: ['CLIENT-ORDER', String(selectedCustomerOrderId)]
+        invalidateQueries: ['CLIENT-ORDER', String(clientOrderId)]
     });
 
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
@@ -80,17 +97,18 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
     const refinementDialogRef = useRef<IDialogActions | null>(null);
 
     return (
-        <BaseDialog ref={ref} sx={{p: 2}}>
+        <Box sx={{p: 0}}>
             <DyeFormDialog ref={dyeDialogRef}/>
             <RefinementFormDialog ref={refinementDialogRef}/>
 
-            <GenericForm<IOrderRowForm, IOrderRow>
+            <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
+                onSuccess={handlePanelSuccess}
                 dialogMode
-                dialogRef={ref}
+                floatingPanelMode
+                floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedOrderRowId}
                 entity={orderRow}
                 emptyValues={{
-                    // product_id: 0,
                     measurement_unit_id: measurementUnits.find(x => x.name === "Metri quadrati")?.id || null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
                     processed: false,
@@ -109,11 +127,10 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     delivery_date_request: null,
                     delivery_date_confirmed: null,
                     article_id: null,
-                    client_order_id: selectedCustomerOrderId ?? 0,
+                    client_order_id: clientOrderId ?? 0,
                     selection_id: null,
                 }}
                 mapEntityToForm={(x) => ({
-                    // product_id: x.product.id,
                     measurement_unit_id: x.measurement_unit.id,
                     currency_id: x.currency?.id ?? null,
                     processed: x.processed,
@@ -132,14 +149,14 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     delivery_date_request: x.delivery_date_request,
                     delivery_date_confirmed: x.delivery_date_confirmed,
                     article_id: x.article.id,
-                    client_order_id: selectedCustomerOrderId ?? 0,
-                    selection_id: x.selection.id ?? null,
+                    client_order_id: clientOrderId ?? 0,
+                    selection_id: x.selection?.id ?? null,
                 })}
                 create={(payload) => createRow({
                     ...payload,
                     article_id: payload.article_id as number,
                     measurement_unit_id: payload.measurement_unit_id as number,
-                    client_order_id: selectedCustomerOrderId as number
+                    client_order_id: clientOrderId as number
                 })}
                 update={(id, payload) => updateRow({
                     id,
@@ -147,7 +164,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                         ...payload,
                         article_id: payload.article_id as number,
                         measurement_unit_id: payload.measurement_unit_id as number,
-                        client_order_id: selectedCustomerOrderId as number
+                        client_order_id: clientOrderId as number
                     }
                 })}
                 remove={(id) => deleteRow(id)}
@@ -157,6 +174,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 validateBeforeSave={(v) => !!v.article_id && !!v.measurement_unit_id && !!v.quantity}
                 extraButtons={[
                     <CustomButton
+                        key="dye"
                         label={t("orders.row.dye")}
                         color={"primary"}
                         icon={<ColorLensIcon/>}
@@ -164,6 +182,7 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                         isEnable={!!selectedOrderRowId}
                     />,
                     <CustomButton
+                        key="refinement"
                         label={t("orders.row.refinement")}
                         color={"success"}
                         icon={<SettingsInputHdmiIcon/>}
@@ -172,24 +191,28 @@ const OrderRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     />,
                 ]}
                 renderFields={() => (
-                    <OrderRowFormFields/>
+                    <OrderRowFormFields
+                        clientOrderId={clientOrderId as number}
+                        selectedOrderRowId={selectedOrderRowId as number}
+                    />
                 )}
             />
-        </BaseDialog>
+        </Box>
     );
-});
+};
 
-const OrderRowFormFields = () => {
+interface OrderRowFormFieldsProps {
+    clientOrderId?: number;
+    selectedOrderRowId?: number;
+}
+
+const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
-
-    const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
-    const selectedCustomerOrderId = useStore(state => state.uiState.selectedCustomerOrderId);
-    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: currencies = []} = currencyApi.useGetList();
-    const {data: order} = customerOrderApi.useGetDetail(selectedCustomerOrderId);
+    const {data: order} = customerOrderApi.useGetDetail(clientOrderId);
     const {data: articles = []} = articleApi.useGetList({queryParams: {client: order?.client.id as number}});
     const {data: selections = []} = selectionApi.useGetList();
 
@@ -205,6 +228,17 @@ const OrderRowFormFields = () => {
 
     const watchedCurrencyId = useWatch<IOrderRowForm>({name: "currency_id"});
     const watchedCurrencyValue = useWatch<IOrderRowForm>({name: "currency_exchange"});
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IOrderRowForm>({
+        formKey: "article_id",
+        dependencyKey: "articles"
+    })
+    useSubscribePanel<IOrderRowForm>({
+        formKey: "selection_id",
+        dependencyKey: "selection"
+    })
 
     return (
         <Stack gap={1}>
@@ -227,6 +261,18 @@ const OrderRowFormFields = () => {
                     label={t("orders.row.article")}
                     options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                clientId: order?.client.id as number,
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "articles",
+                                i18nKey: "menu.products.articles"
+                            }
+                        })
+                    }}
                 />
                 <FlagCheckBoxFieldControlled<IOrderRowForm>
                     name="processed"
@@ -244,6 +290,15 @@ const OrderRowFormFields = () => {
                 name={"selection_id"}
                 label={t("orders.row.selection")}
                 options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "selection",
+                            i18nKey: "menu.products.selection"
+                        }
+                    })
+                }}
             />
 
             <Box sx={{display: 'flex', gap: 1}}>
@@ -258,53 +313,14 @@ const OrderRowFormFields = () => {
                     label={t("orders.row.quantity")}
                     required
                 />
-                {/*<NumberFieldControlled<IOrderRowForm>*/}
-                {/*    name="tolerance_quantity_percentage"*/}
-                {/*    label={t("orders.row.tolerance_quantity_percentage")}*/}
-                {/*/>*/}
             </Box>
 
             <Box sx={{display: 'flex', gap: 1, mb: 1.5}}>
-                {/*<DateFieldControlled<IOrderRowForm>*/}
-                {/*    name="delivery_date_request"*/}
-                {/*    label={t("orders.row.delivery_date_request")}*/}
-                {/*/>*/}
                 <DateFieldControlled<IOrderRowForm>
                     name="delivery_date_confirmed"
                     label={t("orders.row.delivery_date_confirmed")}
                 />
             </Box>
-
-            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-            {/*    <SelectFieldControlled<IOrderRowForm>*/}
-            {/*        name="currency_id"*/}
-            {/*        label={t("orders.row.currency")}*/}
-            {/*        options={currencyOptions}*/}
-            {/*    />*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="currency_price"*/}
-            {/*        label={t("orders.row.currency_price")}*/}
-            {/*    />*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="currency_exchange"*/}
-            {/*        label={t("orders.row.currency_exchange")}*/}
-            {/*    />*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="total_currency_price"*/}
-            {/*        label={t("orders.row.total_currency_price")}*/}
-            {/*    />*/}
-            {/*</Box>*/}
-
-            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="price"*/}
-            {/*        label={t("orders.row.price")}*/}
-            {/*    />*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="total_price"*/}
-            {/*        label={t("orders.row.total_price")}*/}
-            {/*    />*/}
-            {/*</Box>*/}
 
             <Box sx={{display: 'flex', gap: 1}}>
                 <SelectFieldControlled<IOrderRowForm>
@@ -338,10 +354,6 @@ const OrderRowFormFields = () => {
                         disableLabel
                     />
                 </Box>
-                {/*<NumberFieldControlled<IOrderRowForm>*/}
-                {/*    name="currency_price"*/}
-                {/*    label={t("orders.row.currency_price")}*/}
-                {/*/>*/}
                 <TextFieldValue
                     label={t("orders.row.currency_price")}
                     value={orderRow?.currency_price ?? undefined}
@@ -353,31 +365,8 @@ const OrderRowFormFields = () => {
                     isFilled={!!orderRow}
                 />
             </Box>
-
-            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="agent_percentage_row"*/}
-            {/*        label={t("orders.row.agent_percentage_row")}*/}
-            {/*    />*/}
-            {/*    <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="weight"*/}
-            {/*        label={t("orders.row.weight")}*/}
-            {/*    />*/}
-            {/*</Box>*/}
-
-            {/*<Box sx={{display: 'flex', gap: 1}}>*/}
-            {/*     <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="shipment_schedule"*/}
-            {/*        label={t("orders.row.shipment_schedule")}*/}
-            {/*    />*/}
-            {/*     <NumberFieldControlled<IOrderRowForm>*/}
-            {/*        name="production_schedule"*/}
-            {/*        label={t("orders.row.production_schedule")}*/}
-            {/*    />*/}
-            {/*</Box>*/}
         </Stack>
     )
 }
 
-
-export default OrderRowsFormDialog;
+export default OrderRowsForm;

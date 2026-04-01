@@ -30,8 +30,8 @@ const ArticleList = () => {
                 header: t("products.articles.article_type"),
             },
             // {
-            //     accessorKey: "color",
-            //     header: t("products.articles.color"),
+            //     accessorKey: "api",
+            //     header: t("products.articles.api"),
             // }
         ],
         [t]

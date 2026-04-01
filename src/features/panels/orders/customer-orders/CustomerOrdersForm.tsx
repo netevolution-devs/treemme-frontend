@@ -26,6 +26,8 @@ import type {
 import {
     shipmentConditionApi
 } from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -94,6 +96,13 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
             .join(', ');
     };
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<ICustomerOrderForm>({
+        formKey: "client_id",
+        dependencyKey: "contacts"
+    })
+
     return (
         <>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
@@ -135,11 +144,22 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     label={t("orders.client")}
                     options={clients.map(c => ({value: c.id, label: c.name}))}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_number")}
                     name={"client_order_number"}
-                    required
                 />
                 <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_date")}
@@ -326,7 +346,7 @@ const CustomerOrdersForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
-            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date && !!v.client_order_number}
+            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
             renderFields={() => (
                 <FormFields
                     clients={clients}

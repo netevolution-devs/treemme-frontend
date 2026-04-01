@@ -139,7 +139,7 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
                     {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>*/}
                     {/*    <Box>*/}
                     {/*        <Typography*/}
-                    {/*            color={!isFormDisabled ? "text.primary" : "textDisabled"}*/}
+                    {/*            api={!isFormDisabled ? "text.primary" : "textDisabled"}*/}
                     {/*            sx={{mb: 0.4}}>{t("leathers.leather.sqft-label")}</Typography>*/}
                     {/*        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
                     {/*            <TextFieldValue*/}
@@ -161,7 +161,7 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
                     {/*    </Box>*/}
                     {/*    <Box>*/}
                     {/*        <Typography*/}
-                    {/*            color={!isFormDisabled ? "text.primary" : "textDisabled"}*/}
+                    {/*            api={!isFormDisabled ? "text.primary" : "textDisabled"}*/}
                     {/*            sx={{mb: 0.4}}>{t("leathers.leather.kg-label")}</Typography>*/}
                     {/*        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
                     {/*            <TextFieldValue*/}

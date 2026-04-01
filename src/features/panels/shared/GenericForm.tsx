@@ -9,6 +9,8 @@ import {closeDialog, openDialog} from "@shared/ui/dialog/dialogHelper.ts";
 import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog.tsx";
 import type {FieldValues} from "react-hook-form";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import type {IDockviewPanel} from "dockview";
 
 export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     selectedId: number | null | undefined;
@@ -34,6 +36,9 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     // used if form data is inside a dialog
     dialogMode?: boolean;
     dialogRef?: ForwardedRef<IDialogActions>;
+
+    floatingPanelMode?: boolean;
+    floatingPanelUUID?: string;
 
     extraButtons?: ReactNode[];
     disabledBasicButtons?: boolean;
@@ -62,9 +67,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         extraButtons,
         disabledBasicButtons = false,
         bypassConfirm = false,
-        onCreateSuccess
+        onCreateSuccess,
+        floatingPanelMode = false,
+        floatingPanelUUID
     }: GenericFormProps<TForm, TEntity>
 ) => {
+    const dockviewApi = useDockviewStore(state => state.api);
+
     const {useStore} = usePanel<unknown, TUI>();
     const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
     const {setFormState} = usePanelFormButtons<unknown, TUI>();
@@ -81,6 +90,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     const handleCloseDialog = React.useCallback(() => {
         if (dialogRef) {
             closeDialog(dialogRef)
+        }
+        if (floatingPanelMode) {
+            console.log("Removing floating panel");
+            console.log("Floating panel UUID", floatingPanelUUID);
+            const panel = dockviewApi?.getPanel(floatingPanelUUID as string) as IDockviewPanel;
+            console.log("Panel", panel);
+            dockviewApi?.removePanel(panel);
         }
     }, [dialogRef]);
 
@@ -187,18 +203,24 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 handleCancel();
             }
 
-            if (event.key === "Enter" && isFormDisabled) {
+            if ((event.ctrlKey && event.key === "F7" || event.key == "Enter") && isFormDisabled) {
                 handleNew();
             }
 
             if (event.key === "Enter" && isFormDisabled && !!selectedId) {
                 handleEdit();
             }
+
+            if (event.ctrlKey && event.key === "F10" && !isFormDisabled) {
+                event.preventDefault();
+                methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
+                handleCloseDialog();
+            }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId]);
+    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId, methods, onSubmit, handleCloseDialog]);
 
     return (
         <Box sx={{width: '100%'}}>

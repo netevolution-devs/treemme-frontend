@@ -1,7 +1,7 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
 import type {IProductType} from "@features/panels/products/product-types/api/IProductType.ts";
-import type {IColor} from "@features/panels/products/articles/api/color/IColor.ts";
+import type {IColor} from "@features/panels/products/article-colors/api/IColor.ts";
 import type {IProductCategory} from "@features/panels/products/product-categories/api/IProductCategory.ts";
 
 export interface IProduct {

@@ -5,13 +5,11 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import {Box, Stack, Typography} from "@mui/material";
-import {forwardRef, useMemo, useRef} from "react";
+import {useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
 import type {
     IDeliveryNoteRow
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
-import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
 import {
     deliveryNoteRowApi,
@@ -31,8 +29,13 @@ import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-note
 import useGetBatchAvailability
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetBatchAvailability.ts";
 import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-
-type Props = unknown;
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import type {
+    IDeliveryNotesRowsStoreParams,
+    IDeliveryNotesRowsStoreState
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -55,34 +58,53 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     processing_id: number | null;
 };
 
-const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
+const DeliveryNotesRowsForm = ({
+                                   initialName,
+                                   onSuccess,
+                                   extra
+                               }: ICustomPanelFormProps<IDeliveryNotesRowsStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
-    const selectedDeliveryNoteId = useStore(state => state.uiState.selectedDeliveryNoteId);
-    const selectedDeliveryNoteRowId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
-    const setUIState = useStore(state => state.setUIState);
+    const ddtId = extra?.ddt_id ?? 0;
+    const ddtRowId = extra?.ddt_row_id ?? 0;
+
+    const {useStore} = usePanel<unknown, IDeliveryNotesRowsStoreState>();
+    const selectedStoreId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
+    const selectedDeliveryNoteRowId = ddtRowId || selectedStoreId;
+
+    const floatingPanelUUID = extra?.panelId as string;
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedDeliveryNoteRowId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteRowApi;
     const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
 
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
-        invalidateQueries: ['DELIVERY-NOTE', String(selectedDeliveryNoteId), "DDT-ROW-NOT-RETURNED", "LIST"]
+        invalidateQueries: ['DELIVERY-NOTE', String(ddtId), "DDT-ROW-NOT-RETURNED", "LIST"]
     });
     const {mutateAsync: updateRow, isPending: isPutting} = usePut({
-        invalidateQueries: ['DELIVERY-NOTE', String(selectedDeliveryNoteId)]
+        invalidateQueries: ['DELIVERY-NOTE', String(ddtId)]
     });
     const {mutateAsync: deleteRow, isPending: isDeleting} = useDelete({
-        invalidateQueries: ['DELIVERY-NOTE', String(selectedDeliveryNoteId)]
+        invalidateQueries: ['DELIVERY-NOTE', String(ddtId)]
     });
 
     const {data: currencies = []} = currencyApi.useGetList();
 
     return (
-        <BaseDialog ref={ref} sx={{p: 2}}>
-            <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesStoreState>
+        <Box sx={{p: 0}}>
+            <pre>{JSON.stringify(floatingPanelUUID, null, 2)}</pre>
+            <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
+                onSuccess={handlePanelSuccess}
                 dialogMode
-                dialogRef={ref}
+                floatingPanelMode
+                floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedDeliveryNoteRowId}
                 entity={deliveryNoteRow}
                 emptyValues={{
@@ -102,7 +124,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     row_note: "",
                     whole_piece: null,
                     half_piece: 0,
-                    ddt_id: selectedDeliveryNoteId ?? 0,
+                    ddt_id: ddtId,
                     processing_id: null,
                 }}
                 mapEntityToForm={(x) => ({
@@ -122,7 +144,7 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     row_note: x.row_note || "",
                     whole_piece: x.whole_piece,
                     half_piece: x.half_piece || 0,
-                    ddt_id: selectedDeliveryNoteId ?? 0,
+                    ddt_id: ddtId,
                     processing_id: x.processing?.id ?? 0
                 })}
                 create={(payload) => createRow(payload)}
@@ -130,10 +152,10 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                 remove={(id) => deleteRow(id)}
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
-                onClearSelection={() => setUIState({selectedDeliveryNoteRowId: null})}
+                // onClearSelection={() => setUIState({selectedDeliveryNoteRowId: null})}
                 validateBeforeSave={(v) => !!v.batch_id && !!v.pieces}
                 renderFields={() => (
-                    <DeliverNotesRowsFormFields/>
+                    <DeliverNotesRowsFormFields ddtId={ddtId} ddtRowId={ddtRowId}/>
                 )}
             />
 
@@ -146,18 +168,15 @@ const DeliveryNotesRowsFormDialog = forwardRef<IDialogActions, Props>((_props, r
                     />
                 </>
             )}
-        </BaseDialog>
+        </Box>
     );
-});
+};
 
-const DeliverNotesRowsFormFields = () => {
+const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId: number }) => {
     const {t} = useTranslation(["form"]);
-    const {useStore} = usePanel<unknown, IDeliveryNotesStoreState>();
-    const selectedDeliveryNoteRowId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
-    const selectedDeliveryNoteId = useStore(state => state.uiState.selectedDeliveryNoteId);
 
-    const {data: deliveryNote} = deliveryNoteApi.useGetDetail(selectedDeliveryNoteId);
-    const {data: deliveryNoteRow} = deliveryNoteRowApi.useGetDetail(selectedDeliveryNoteRowId);
+    const {data: deliveryNote} = deliveryNoteApi.useGetDetail(ddtId);
+    const {data: deliveryNoteRow} = deliveryNoteRowApi.useGetDetail(ddtRowId);
 
     const {data: batches = []} = useGetBatchAvailability();
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
@@ -222,10 +241,6 @@ const DeliverNotesRowsFormFields = () => {
                     max={batch?.stock_items as number}
                     precision={0}
                 />
-                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
-                {/*    name="kg_weight"*/}
-                {/*    label={t("orders.row.weight")}*/}
-                {/*/>*/}
             </Box>
 
             {!isSell && (
@@ -267,10 +282,6 @@ const DeliverNotesRowsFormFields = () => {
                     name="half_piece"
                     label={t("shipping.ddt_rows.half_piece")}
                 />
-                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
-                {/*    name="whole_piece"*/}
-                {/*    label={t("shipping.ddt_rows.whole_piece")}*/}
-                {/*/>*/}
                 <TextFieldValue
                     label={t("shipping.ddt_rows.whole_piece")}
                     value={deliveryNoteRow?.whole_piece as number}
@@ -310,10 +321,6 @@ const DeliverNotesRowsFormFields = () => {
                         disableLabel
                     />
                 </Box>
-                {/*<NumberFieldControlled<IDeliveryNoteRowForm>*/}
-                {/*    name="currency_price"*/}
-                {/*    label={t("orders.row.currency_price")}*/}
-                {/*/>*/}
                 <TextFieldValue
                     label={t("orders.row.currency_price")}
                     value={deliveryNoteRow?.currency_price ?? undefined}
@@ -336,4 +343,4 @@ const DeliverNotesRowsFormFields = () => {
     )
 }
 
-export default DeliveryNotesRowsFormDialog;
+export default DeliveryNotesRowsForm;
