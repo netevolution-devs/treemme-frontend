@@ -2,6 +2,16 @@ import type {IAccessControl, IRoles} from "@features/user/model/RoleInterfaces.t
 
 export type RoleCheckMode = "any" | "all";
 export type ResourceAction = "get" | "post" | "put" | "delete";
+export type ResourceName = "contatti"
+    | "pellami"
+    | "prodotti"
+    | "ordini"
+    | "magazzino"
+    | "produzione"
+    | "ddt & fatture"
+    | "commerciale"
+    | "analisi"
+    | "sistema"
 
 function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "all") {
     if (roles.length === 0) return mode === "all";
@@ -11,7 +21,7 @@ function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "al
 }
 
 export interface IPermissionCheck {
-    resource?: string; //TODO strict type resources
+    resource?: ResourceName; //TODO strict type resources
     action?: ResourceAction;
     requiredRoles?: IRoles[];
     deniedRoles?: IRoles[];
@@ -28,14 +38,15 @@ export function normalizePermissions(accessControl: IAccessControl[]): Normalize
     const normalized: NormalizedPermissions = {};
 
     for (const ac of accessControl) {
-        if (!normalized[ac.resource]) {
-            normalized[ac.resource] = {get: false, post: false, put: false, delete: false};
+        const resourceKey = ac.resource.toLowerCase();
+        if (!normalized[resourceKey]) {
+            normalized[resourceKey] = {get: false, post: false, put: false, delete: false};
         }
 
-        normalized[ac.resource].get ||= ac.canGet;
-        normalized[ac.resource].post ||= ac.canPost;
-        normalized[ac.resource].put ||= ac.canPut;
-        normalized[ac.resource].delete ||= ac.canDelete;
+        normalized[resourceKey].get ||= ac.canGet;
+        normalized[resourceKey].post ||= ac.canPost;
+        normalized[resourceKey].put ||= ac.canPut;
+        normalized[resourceKey].delete ||= ac.canDelete;
     }
 
     return normalized;
@@ -46,7 +57,7 @@ export function hasResourcePermission(
     resource: string,
     action: ResourceAction
 ): boolean {
-    return normalized[resource]?.[action] === true;
+    return normalized[resource.toLowerCase()]?.[action] === true;
 }
 
 //
@@ -118,7 +129,7 @@ export function permissionEngine(accessControl: IAccessControl[]): PermissionEng
 
     return {
         can(resource, action) {
-            return normalized[resource]?.[action] === true;
+            return normalized[resource.toLowerCase()]?.[action] === true;
         },
 
         hasRole(role) {
