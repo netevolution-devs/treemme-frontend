@@ -1,5 +1,5 @@
 import React, {type ReactNode, type SyntheticEvent, useState} from 'react';
-import {Box, Tabs, Tab, Card} from '@mui/material';
+import {Box, Tabs, Tab} from '@mui/material';
 
 interface TabItem {
     label: string;
@@ -49,13 +49,13 @@ const GenericTabContent: React.FC<GenericTabContentProps> = ({tabs, value: exter
 
     return (
         <Box sx={{width: '100%'}}>
-            <Card variant={"outlined"} sx={{borderBottom: 1, borderColor: 'divider'}}>
+            <Box sx={{mt: -1.5, mb: 1, borderBottom: 1, borderColor: 'divider', mx: -1}}>
                 <Tabs value={value} onChange={handleChange} aria-label="generic tabs" textColor="primary" indicatorColor="primary">
                     {tabs.map((tab, index) => (
-                        <Tab key={index} label={tab.label} />
+                        <Tab key={index} label={tab.label} sx={{pb: 1}} />
                     ))}
                 </Tabs>
-            </Card>
+            </Box>
             {tabs.map((tab, index) => (
                 <CustomTabPanel key={index} value={value} index={index}>
                     {tab.component}

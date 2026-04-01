@@ -8,6 +8,7 @@ import type {IBatchProduction} from "@features/panels/production/batches/product
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import dayjs from "dayjs";
 import {Typography} from "@mui/material";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 
 const BatchesProductionList = () => {
     const {t} = useTranslation(["form"]);
@@ -38,12 +39,20 @@ const BatchesProductionList = () => {
 
     return (
         <>
-            <Typography variant="h6">{t("production.title")}</Typography>
             <GenericList<IBatchProduction>
+                disableBorder
                 data={productionList}
                 isLoading={isLoading}
                 isFetching={isFetching}
                 columns={columns}
+                additionalOptions={{
+                    enableTopToolbar: true,
+                    renderTopToolbar: () => (
+                        <ListToolbar
+                            label={<Typography variant="h6">{t("production.title")}</Typography>}
+                        />
+                    )
+                }}
             />
         </>
     )

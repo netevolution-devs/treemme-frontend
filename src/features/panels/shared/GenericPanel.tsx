@@ -7,9 +7,10 @@ import type {ReactNode} from "react";
 interface GenericPanelProps<F, U> {
     kind: TPanelKind;
     initialState: Partial<PanelState<F, U>>;
-    children: ReactNode;
+    children?: ReactNode;
     listComponent?: ReactNode;
     disableBorders?: boolean;
+    disableContent?: boolean;
 }
 
 const GenericPanel = <F, U>({
@@ -17,7 +18,8 @@ const GenericPanel = <F, U>({
                                 initialState,
                                 children,
                                 listComponent,
-                                disableBorders = false
+                                disableBorders = false,
+                                disableContent = false,
                             }: GenericPanelProps<F, U>) => {
     return (
         <PanelProvider<F, U>
@@ -38,16 +40,18 @@ const GenericPanel = <F, U>({
             }}>
                 <Stack gap={1.5} sx={{height: "100%"}}>
                     {listComponent}
-                    <Stack gap={0.5} sx={{
-                        flex: 1,
-                        borderTop: !disableBorders ? "6px solid" : "none",
-                        borderRadius: 1,
-                        borderColor: "primary.main",
-                        backgroundColor: "background.paper",
-                        p: 1,
-                    }}>
-                        {children}
-                    </Stack>
+                    {!disableContent && (
+                        <Stack gap={0.5} sx={{
+                            flex: 1,
+                            borderTop: !disableBorders ? "6px solid" : "none",
+                            borderRadius: 1,
+                            borderColor: "primary.main",
+                            backgroundColor: "background.paper",
+                            p: 1,
+                        }}>
+                            {children}
+                        </Stack>
+                    )}
                 </Stack>
             </Box>
         </PanelProvider>

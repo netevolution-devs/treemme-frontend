@@ -66,6 +66,8 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
             <BatchCompositionFormDialog ref={compositionDialogRef} />
 
             <GenericList<IBatchCompositionResponse>
+                disableBorder
+                minHeight={"265px"}
                 columns={columns}
                 data={compositions}
                 isLoading={isLoading}
