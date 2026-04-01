@@ -56,7 +56,7 @@ const DeliveryNotesRowList = () => {
             },
             menu: {
                 component: "deliveryNotesRows",
-                i18nKey: "shipping.ddt_rows.row"
+                i18nKey: "menu.shipping-invoicing.rows"
             },
             customId: "createDeliveryNotesRows"
         });
@@ -82,7 +82,7 @@ const DeliveryNotesRowList = () => {
                     },
                     menu: {
                         component: "deliveryNotesRows",
-                        i18nKey: "shipping.ddt_rows.row"
+                        i18nKey: "menu.shipping-invoicing.rows"
                     },
                     customId: "updateDeliveryNotesRows:" + selectedDeliveryNoteRowId
                 });
