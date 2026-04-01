@@ -89,7 +89,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     origins:        (props) => <OriginsPanel {...props}/>,
     // products
     products:           () => <ProductsPanel/>,
-    articles:           () => <ArticlesPanel/>,
+    articles:           (props) => <ArticlesPanel {...props}/>,
     selection:          () => <SelectionPanel />,
     productCategories:  () => <ProductCategoriesPanel/>,
     productTypes:       () => <ProductTypesPanel/>,

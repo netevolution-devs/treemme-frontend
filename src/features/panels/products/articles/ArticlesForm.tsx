@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IArticlesStoreState} from "@features/panels/products/articles/ArticlesPanel.tsx";
+import type {IArticlesStoreState, IArticleStoreParams} from "@features/panels/products/articles/ArticlesPanel.tsx";
 import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
@@ -18,13 +18,16 @@ import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 import {useWatch} from "react-hook-form";
 import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IArticleForm = {
     code: string;
     full_grain: boolean;
     client_id: number | null;
     article_type_id: number | null;
-    article_variation: string;
+    // article_variation: string;
     color_id: number | null;
     thickness_id: number | null;
     print_id: number | null;
@@ -32,10 +35,18 @@ export type IArticleForm = {
     client_code: string | null;
 }
 
-const ArticlesForm = () => {
+const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IArticleStoreParams>) => {
     const {useStore} = usePanel<unknown, IArticlesStoreState>();
     const selectedArticledId = useStore(state => state.uiState.selectedArticledId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedArticledId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = articleApi;
     const {data: article} = useGetDetail(selectedArticledId);
@@ -66,14 +77,15 @@ const ArticlesForm = () => {
 
     return (
         <GenericForm<IArticleForm, IArticle, IArticlesStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedArticledId}
             entity={article}
             emptyValues={{
                 code: '',
                 full_grain: false,
-                client_id: null,
+                client_id: extra?.clientId ?? null,
                 article_type_id: null,
-                article_variation: '',
+                // article_variation: '',
                 color_id: null,
                 thickness_id: null,
                 print_id: null,
@@ -85,7 +97,7 @@ const ArticlesForm = () => {
                 full_grain: a.full_grain,
                 client_id: a.client?.id ?? null,
                 article_type_id: a.article_type?.id ?? null,
-                article_variation: a.article_variation ?? '',
+                // article_variation: a.article_variation ?? '',
                 color_id: a.color?.id ?? null,
                 thickness_id: a.thickness?.id ?? null,
                 print_id: a.print?.id ?? null,
@@ -98,7 +110,7 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && !!v.client_id && !!v.article_type_id && !!v.color_id}
+            validateBeforeSave={(v) => !!v.client_id && !!v.article_type_id && !!v.color_id}
             renderFields={() => <ArticlesFormFields
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}

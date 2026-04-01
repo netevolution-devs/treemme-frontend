@@ -34,6 +34,8 @@ import type {
 } from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -227,6 +229,13 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
     const watchedCurrencyId = useWatch<IOrderRowForm>({name: "currency_id"});
     const watchedCurrencyValue = useWatch<IOrderRowForm>({name: "currency_exchange"});
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IOrderRowForm>({
+        formKey: "article_id",
+        dependencyKey: "articles"
+    })
+
     return (
         <Stack gap={1}>
             <CurrencyWatcher
@@ -248,6 +257,18 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     label={t("orders.row.article")}
                     options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                clientId: order?.client.id as number,
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "articles",
+                                i18nKey: "menu.products.articles"
+                            }
+                        })
+                    }}
                 />
                 <FlagCheckBoxFieldControlled<IOrderRowForm>
                     name="processed"
