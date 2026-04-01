@@ -19,6 +19,7 @@ export interface IUserManagementStoreState extends IPanelUIState {
     selectedGroupId?: number | null;
     selectedRoleId?: number | null;
     selectedWorkAreaId?: number | null;
+    selectedAccessId?: number | null;
 }
 
 const SectionTitle = ({title}: { title: string }) => (

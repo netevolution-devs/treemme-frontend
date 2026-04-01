@@ -1,11 +1,18 @@
 import {useTranslation} from "react-i18next";
-import {FormProvider, useForm} from "react-hook-form";
-import {Box, Button, CircularProgress, Stack} from "@mui/material";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi.ts";
 import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi.ts";
 import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi.ts";
-import {useAssignGroupAccess} from "@features/panels/user-management/api/userManagementApi.ts";
+import {
+    useAssignGroupAccess,
+    useDeleteGroupAccess,
+    useGetGroupAccessList,
+    useUpdateGroupAccessForm,
+    type IUserGroupAccess,
+} from "@features/panels/user-management/api/userManagementApi.ts";
+import {usePanel} from "@ui/panel/PanelContext.tsx";
+import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
+import GenericForm from "@features/panels/shared/GenericForm.tsx";
 
 interface IAccessForm {
     group_id: number;
@@ -18,8 +25,16 @@ const emptyValues: IAccessForm = {group_id: 0, role_id: 0, work_area_id: 0};
 const UserAccessForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const methods = useForm<IAccessForm>({defaultValues: emptyValues});
-    const {mutateAsync: assignAccess, isPending} = useAssignGroupAccess();
+    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const selectedAccessId = useStore(state => state.uiState.selectedAccessId);
+    const setUIState = useStore(state => state.setUIState);
+
+    const {data: accesses = []} = useGetGroupAccessList();
+    const selectedAccess = accesses.find(a => a.id === selectedAccessId) ?? null;
+
+    const {mutateAsync: createAccess, isPending: isPosting} = useAssignGroupAccess();
+    const {mutateAsync: updateAccess, isPending: isPutting} = useUpdateGroupAccessForm();
+    const {mutateAsync: deleteAccess, isPending: isDeleting} = useDeleteGroupAccess();
 
     const {data: groups = []} = groupManagementApi.useGetList();
     const {data: roles = []} = roleManagementApi.useGetList();
@@ -29,56 +44,48 @@ const UserAccessForm = () => {
     const roleOptions = roles.map(r => ({value: r.id, label: r.name}));
     const workAreaOptions = workAreas.map(w => ({value: w.id, label: w.name}));
 
-    const onSubmit = async (data: IAccessForm) => {
-        await assignAccess({group_id: data.group_id, role_id: data.role_id, work_area_id: data.work_area_id});
-        methods.reset(emptyValues);
-    };
+    const getFieldId = (field: IUserGroupAccess["group"] | IUserGroupAccess["work_area"]) =>
+        Array.isArray(field) ? 0 : field.id;
 
     return (
-        <FormProvider {...methods}>
-            <Stack
-                direction="row"
-                component="form"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    void methods.handleSubmit(onSubmit)(e);
-                }}
-                autoComplete="off"
-                spacing={2}
-                sx={{mt: 2}}
-            >
-                <SelectFieldControlled<IAccessForm>
-                    name="group_id"
-                    label={t("form:access_management.group_id")}
-                    options={groupOptions}
-                    required
-                />
-                <SelectFieldControlled<IAccessForm>
-                    name="role_id"
-                    label={t("form:access_management.role_id")}
-                    options={roleOptions}
-                    required
-                />
-                <SelectFieldControlled<IAccessForm>
-                    name="work_area_id"
-                    label={t("form:access_management.work_area_id")}
-                    options={workAreaOptions}
-                    required
-                />
-                <Box sx={{display: "flex", justifyContent: "flex-end", mt: 1}}>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        size="small"
-                        disabled={isPending}
-                        startIcon={isPending ? <CircularProgress size={14} /> : undefined}
-                    >
-                        {t("form:access_management.submit")}
-                    </Button>
-                </Box>
-            </Stack>
-        </FormProvider>
+        <GenericForm<IAccessForm, IUserGroupAccess, IUserManagementStoreState>
+            selectedId={selectedAccessId}
+            entity={selectedAccess}
+            emptyValues={emptyValues}
+            mapEntityToForm={(a) => ({
+                group_id: getFieldId(a.group),
+                role_id: getFieldId(a.role),
+                work_area_id: getFieldId(a.work_area),
+            })}
+            create={(payload) => createAccess(payload)}
+            update={(id, payload) => updateAccess({id, ...payload})}
+            remove={(id) => deleteAccess(id)}
+            isSaving={isPosting || isPutting}
+            isDeleting={isDeleting}
+            onClearSelection={() => setUIState({selectedAccessId: null})}
+            renderFields={() => (
+                <>
+                    <SelectFieldControlled<IAccessForm>
+                        name="group_id"
+                        label={t("form:access_management.group_id")}
+                        options={groupOptions}
+                        required
+                    />
+                    <SelectFieldControlled<IAccessForm>
+                        name="role_id"
+                        label={t("form:access_management.role_id")}
+                        options={roleOptions}
+                        required
+                    />
+                    <SelectFieldControlled<IAccessForm>
+                        name="work_area_id"
+                        label={t("form:access_management.work_area_id")}
+                        options={workAreaOptions}
+                        required
+                    />
+                </>
+            )}
+        />
     );
 };
 
