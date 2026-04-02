@@ -22,9 +22,10 @@ interface LeatherListProps {
         "weight" |
         undefined
     selectedQueryId?: number;
+    disableBorders?: boolean;
 }
 
-const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: LeatherListProps) => {
+const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disableBorders = false}: LeatherListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<ILeatherStoreFilter, ILeathersStoreState>();
@@ -136,6 +137,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
 
     return (
         <GenericList<ILeather>
+            disableBorder={disableBorders}
             data={leathers}
             isLoading={isLoading}
             isFetching={isFetching}

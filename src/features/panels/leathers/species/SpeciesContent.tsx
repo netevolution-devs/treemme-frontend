@@ -9,7 +9,7 @@ const SpeciesContent = () => {
     return (
         <>
             {selectedId && (
-                <LeathersList panelFilter={"species"} selectedQueryId={selectedId}/>
+                <LeathersList panelFilter={"species"} selectedQueryId={selectedId} disableBorders/>
             )}
         </>
     )
