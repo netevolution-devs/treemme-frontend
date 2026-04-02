@@ -47,8 +47,8 @@ const ${panelNameCapitalized}Panel = () => {
         <GenericPanel<unknown, I${panelNameCapitalized}StoreState>
             kind={"${panelNameLower}"}
             initialState={{uiState: initialUiState}}
+            listComponent={<div>List placeholder for ${panelNameCapitalized}</div>}
         >
-            <div>List placeholder for ${panelNameCapitalized}</div>
             <div>Form placeholder for ${panelNameCapitalized}</div>
         </GenericPanel>
     )
