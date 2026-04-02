@@ -443,5 +443,9 @@
     "last_rate": "Ultimo cambio",
     "change_value": "Cambio",
     "date": "Data cambio"
+  },
+  "lots-batch": {
+    "name": "Scelta",
+    "available_pieces": "Pezzi disponibili"
   }
 }

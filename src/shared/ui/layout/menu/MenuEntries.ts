@@ -65,10 +65,9 @@ export const MenuEntries: IMenuEntry[] = [
         i18nKey: "menu.warehouse.self",
         icon: "WAREHOUSE",
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.warehouse.movements"},
             // {i18nKey: "menu.warehouse.pallet-types"},
-            // {i18nKey: "menu.warehouse.lots-batches"},
+            {i18nKey: "menu.warehouse.lots-batches", component: "lotsBatches" },
             // {i18nKey: "menu.warehouse.search-lots-batches"},
             // {i18nKey: "menu.warehouse.subcontracting-lots"}
         ]
