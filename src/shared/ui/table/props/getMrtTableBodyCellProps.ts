@@ -1,12 +1,6 @@
-import type {TableCellProps as MUITableCellProps, Theme} from "@mui/material";
-import type {MRT_Column, MRT_RowData} from "material-react-table";
+import type {TableCellProps as MUITableCellProps} from "@mui/material";
 
-export const getMrtTableBodyCellProps = <TData extends MRT_RowData>(
-    _column: MRT_Column<TData>,
-    _theme: Theme,
-): MUITableCellProps => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const __ = { _column, _theme };
+export const getMrtTableBodyCellProps = (): MUITableCellProps => {
     return {
         sx: {
             border: 0,

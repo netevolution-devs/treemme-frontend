@@ -4,7 +4,7 @@ import type {
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
 import type {
     IDeliveryNoteRowForm
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsFormDialog.tsx";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsForm.tsx";
 
 type IDeliveryNoteRowPayload = IDeliveryNoteRowForm;
 
