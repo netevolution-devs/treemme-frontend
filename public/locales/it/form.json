@@ -204,6 +204,7 @@
     }
   },
   "production": {
+    "batches": "Lotti",
     "date": "Data",
     "title": "Produzione",
     "batch": {

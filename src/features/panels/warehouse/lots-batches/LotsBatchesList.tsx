@@ -32,7 +32,6 @@ const LotsBatchesList = () => {
             data={selectionStocksAvailable}
             isLoading={isLoading}
             isFetching={isFetching}
-            minHeight={"835px"}
             columns={columns}
             selectedId={selectedSelectionStockId}
             onRowSelect={(id) => setUIState({selectedSelectionStockId: id})}

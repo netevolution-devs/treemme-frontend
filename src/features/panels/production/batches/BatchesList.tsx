@@ -13,7 +13,14 @@ import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
 import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
 import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
 
-const BatchesList = () => {
+interface BatchesListProps {
+    disableBorder?: boolean;
+    enableFilters?: boolean;
+    data?: IBatch[];
+    minHeight?: string;
+}
+
+const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px"}: BatchesListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -35,6 +42,8 @@ const BatchesList = () => {
 
     const {data: batches = [], isLoading, isFetching} = batchApi.useGetList({queryParams});
     const {data: batchTypes = []} = batchTypeApi.useGetList();
+
+    const batchesFetched = data ? data : batches;
 
     const columns = useMemo<MRT_ColumnDef<IBatch>[]>(() => [
         {
@@ -69,14 +78,16 @@ const BatchesList = () => {
 
     return (
         <GenericList<IBatch>
-            data={batches}
+            disableBorder={disableBorder}
+            data={batchesFetched}
             isLoading={isLoading}
             isFetching={isFetching}
+            minHeight={minHeight}
             columns={columns}
             selectedId={selectedBatchId}
             onRowSelect={(id) => setUIState({selectedBatchId: id})}
             additionalOptions={{
-                enableTopToolbar: true,
+                enableTopToolbar: enableFilters,
                 renderTopToolbar: () => (
                     <ListToolbar
                         filters={[
