@@ -409,7 +409,7 @@ const darkTheme: Theme = createTheme({
                 default: "#151414",
                 notSelected: "#080808"
             },
-            panel: "#2d3436"
+            panel: "#272727;"
         },
         text: {
             primary: 'rgba(255,255,255,0.92)',
