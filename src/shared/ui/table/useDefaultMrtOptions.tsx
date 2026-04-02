@@ -82,7 +82,7 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
 
         defaultColumn: {
             muiTableHeadCellProps: () => getMrtTableHeadCellProps(),
-            muiTableBodyCellProps: (props) => getMrtTableBodyCellProps<TData>(props.column, theme),
+            muiTableBodyCellProps: () => getMrtTableBodyCellProps(),
         },
 
         muiTableBodyRowProps: ({table, row, staticRowIndex, isDetailPanel}) =>
