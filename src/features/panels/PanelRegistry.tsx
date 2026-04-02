@@ -100,6 +100,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     articleClasses:     (props) => <ArticleClassesPanel {...props}/>,
     // orders
     customerOrders: () => <CustomerOrdersPanel/>,
+    orderRows:      (props) => <OrderRowsPanel {...props}/>,
+    // warehouse
+    lotsBatches: () => <LotsBatchesPanel />,
     // production
     batches:    (props) => <BatchesPanel {...props}/>,
     machinery:  () => <MachineryPanel/>,
@@ -108,10 +111,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     // ddt
     deliveryNotes:              () => <DeliveryNotesPanel />,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
-    orderRows:                  (props) => <OrderRowsPanel {...props}/>,
     reasons:                    () => <ReasonsPanel />,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
+    // commercial
     currenciesExchange: () => <CurrenciesExchangePanel />,
-    lotsBatches: () => <LotsBatchesPanel />,
     "not-implemented": () => <>To implement</>,
 }
