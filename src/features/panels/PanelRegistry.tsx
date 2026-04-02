@@ -33,6 +33,7 @@ import ArticleClassesPanel from "@features/panels/products/article-classes/Artic
 
 import DeliveryNotesRowsPanel from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
 import OrderRowsPanel from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
+import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatchesPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -67,6 +68,7 @@ export type TPanelKind =
     | 'currenciesExchange'
     | 'articleColors'
     | 'articleClasses'
+    | 'lotsBatches'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -110,5 +112,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     reasons:                    () => <ReasonsPanel />,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     currenciesExchange: () => <CurrenciesExchangePanel />,
+    lotsBatches: () => <LotsBatchesPanel />,
     "not-implemented": () => <>To implement</>,
 }

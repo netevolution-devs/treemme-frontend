@@ -272,15 +272,16 @@ const BatchesForm = () => {
                                 label={t("production.batch.batch_note")}
                                 TextFieldProps={{multiline: true, rows: 2}}
                             />
+                            <TextFieldControlled<IBatchesForm>
+                                name="selection_note"
+                                label={t("production.batch.selection_note")}
+                                TextFieldProps={{multiline: true, rows: 2}}
+                            />
                         </Box>
 
                         {/*<Box sx={{mt: 2}}>*/}
                         {/*    <Typography variant="subtitle2" sx={{mb: 1}}>{t("production.batch.notes_section")}</Typography>*/}
-                        {/*    <TextFieldControlled<IBatchesForm>*/}
-                        {/*        name="selection_note"*/}
-                        {/*        label={t("production.batch.selection_note")}*/}
-                        {/*        TextFieldProps={{multiline: true, rows: 2}}*/}
-                        {/*    />*/}
+                        {/*
                         {/*</Box>*/}
 
                         {/*<Box sx={{mt: 2, p: 2, bgcolor: 'action.hover', borderRadius: 1}}>*/}

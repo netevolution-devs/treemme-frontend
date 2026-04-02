@@ -1,5 +1,5 @@
 import type {MRT_Localization, MRT_RowData, MRT_TableOptions} from "material-react-table";
-import {useMediaQuery, useTheme} from "@mui/material";
+import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {MRT_Localization_IT} from "material-react-table/locales/it";
 import {getMrtContainerProps} from "@ui/table/props/getMrtContainerProps.ts";
@@ -40,6 +40,21 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
         globalFilterFn: 'contains',
 
         localization: tableLocale[i18n.language],
+        renderEmptyRowsFallback: () => (
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100px',
+                width: '100%',
+                padding: '20px',
+                textAlign: 'center'
+            }}>
+                <Typography sx={{ whiteSpace: 'nowrap', mt: -5}} color={"textSecondary"} fontStyle={"italic"}>
+                    {tableLocale[i18n.language]?.noRecordsToDisplay || 'Nessun record da mostrare'}
+                </Typography>
+            </Box>
+        ),
         enableEditing: false,
 
         positionPagination: "bottom",

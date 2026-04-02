@@ -45,7 +45,7 @@
       "self": "Magazzino",
       "movements": "Movimenti di Magazzino",
       "pallet-types": "Tipologie Pallets",
-      "lots-batches": "Lotti e Partite",
+      "lots-batches": "Magazzino Lotti",
       "search-lots-batches": "Ricerca Lotti/Partite",
       "subcontracting-lots": "Lotti in Conto Lavorazione"
     },
