@@ -14,7 +14,7 @@ const OriginsList = () => {
     const selectedOriginId = useStore(state => state.uiState.selectedOriginId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: origins = [], isLoading} = originApi.useGetList();
+    const {data: origins = [], isLoading, isFetching} = originApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IOrigin>[]>(() => [
         {
@@ -35,6 +35,7 @@ const OriginsList = () => {
         <GenericList<IOrigin>
             data={origins}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedOriginId}
             onRowSelect={(id) => setUIState({selectedOriginId: id})}

@@ -26,6 +26,8 @@ import type {
 import {
     shipmentConditionApi
 } from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -49,8 +51,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     selectedCustomerOrderId: number | null | undefined
 }) => {
     const {t} = useTranslation(["form"]);
-
-
+    
     const {setValue, control} = useFormContext<ICustomerOrderForm>();
 
     const clientId = useWatch({
@@ -60,34 +61,47 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
 
     const selectedClient = clients.find(c => c.id === clientId);
 
-    const {data: client} = contactsApi.useGetDetail(clientId);
-    const clientAddresses = client?.contact_addresses || [];
+    const {data: clientDetail} = contactsApi.useGetDetail(clientId);
+    const clientAddresses = clientDetail?.contact_addresses || [];
 
-    const agentOptions = selectedClient?.contact_agents?.map(ca => ({
+    const agentOptions = (clientDetail || selectedClient)?.contact_agents?.map(ca => ({
         value: ca.agent.id,
         label: ca.agent.name
     })) ?? [];
 
     useEffect(() => {
-        if (clientId) {
-            const client = clients.find(c => c.id === clientId);
-            if (client && client.contact_agents && client.contact_agents.length > 0) {
+        if (clientId && !selectedCustomerOrderId && clientDetail) {
+            if (clientDetail.contact_agents && clientDetail.contact_agents.length > 0) {
                 const currentAgentId = control._formValues.agent_id;
-                const isAgentInContactAgents = client.contact_agents.some(ca => ca.agent.id === currentAgentId);
+                const isAgentInContactAgents = clientDetail.contact_agents.some(ca => ca.agent.id === currentAgentId);
                 if (!isAgentInContactAgents) {
-                    setValue('agent_id', client.contact_agents[0].agent.id);
+                    setValue('agent_id', clientDetail.contact_agents[0].agent.id);
                 }
             } else {
                 setValue('agent_id', undefined);
             }
+
+            if (clientDetail.payment) {
+                setValue('payment_id', clientDetail.payment.id);
+            }
+            if (clientDetail.shipment_condition) {
+                setValue('shipment_condition_id', clientDetail.shipment_condition.id);
+            }
         }
-    }, [clientId, clients, setValue, control]);
+    }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 
     const filterAddressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
         return addressLabels
             .filter((label): label is string => !!label && label.trim().length > 0)
             .join(', ');
     };
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<ICustomerOrderForm>({
+        formKey: "client_id",
+        dependencyKey: "contacts"
+    })
 
     return (
         <>
@@ -130,11 +144,22 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     label={t("orders.client")}
                     options={clients.map(c => ({value: c.id, label: c.name}))}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_number")}
                     name={"client_order_number"}
-                    required
                 />
                 <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_date")}
@@ -271,6 +296,7 @@ const CustomerOrdersForm = () => {
                 agent_id: null,
                 address_id: null,
                 shipment_condition_id: null,
+                payment_id: null,
                 processed: false,
                 cancelled: false,
                 checked: false,
@@ -320,7 +346,7 @@ const CustomerOrdersForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
-            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date && !!v.client_order_number}
+            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
             renderFields={() => (
                 <FormFields
                     clients={clients}

@@ -19,17 +19,17 @@ const DateFieldRangeFilter = ({
                                   endLabel
                               }: DateFieldRangeFilterProps) => {
 
-    const handleStartChange = (newStart: string | undefined) => {
-        onStartFilterChange(newStart);
-        if (newStart && endValue && dayjs(newStart).isAfter(dayjs(endValue))) {
-            onEndFilterChange(newStart);
+    const handleStartChange = (newStart: string | number | undefined) => {
+        onStartFilterChange(newStart as string | undefined);
+        if (newStart && endValue && dayjs(newStart.toString()).isAfter(dayjs(endValue))) {
+            onEndFilterChange(newStart as string | undefined);
         }
     };
 
-    const handleEndChange = (newEnd: string | undefined) => {
-        onEndFilterChange(newEnd);
-        if (newEnd && startValue && dayjs(newEnd).isBefore(dayjs(startValue))) {
-            onStartFilterChange(newEnd);
+    const handleEndChange = (newEnd: string | number | undefined) => {
+        onEndFilterChange(newEnd as string | undefined);
+        if (newEnd && startValue && dayjs(newEnd.toString()).isBefore(dayjs(startValue))) {
+            onStartFilterChange(newEnd as string | undefined);
         }
     };
 

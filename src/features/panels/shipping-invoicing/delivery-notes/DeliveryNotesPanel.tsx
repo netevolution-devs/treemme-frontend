@@ -25,8 +25,8 @@ const DeliveryNotesPanel = () => {
         <GenericPanel<IDeliveryNotesStoreFilter, IDeliveryNotesStoreState>
             kind={"deliveryNotes"}
             initialState={{uiState: initialUiState}}
+            listComponent={<DeliveryNotesList/>}
         >
-            <DeliveryNotesList/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',

@@ -15,8 +15,10 @@ const SeaportsPanel = () => {
         <GenericPanel<unknown, ISeaportsStoreState>
             kind={"seaports"}
             initialState={{uiState: initialUiState}}
+            listComponent={
+                <SeaPortsList/>
+            }
         >
-            <SeaPortsList/>
             <SeaPortsForm/>
         </GenericPanel>
     )

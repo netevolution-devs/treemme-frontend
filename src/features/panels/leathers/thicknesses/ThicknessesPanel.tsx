@@ -19,8 +19,8 @@ const ThicknessesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, IThicknessesStoreState>
             kind={"thicknesses"}
             initialState={{uiState: initialUiState}}
+            listComponent={<ThicknessesList/>}
         >
-            <ThicknessesList/>
             <ThicknessesForm {...props.params}/>
             <ThicknessesContent/>
         </GenericPanel>

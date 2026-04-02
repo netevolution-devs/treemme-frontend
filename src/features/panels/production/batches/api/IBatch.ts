@@ -14,6 +14,7 @@ export interface IFatherBatch {
     father_batch_piece: number;
     father_batch_quantity: number;
     composition_note: string;
+    date: string;
 }
 
 export interface IBatch {

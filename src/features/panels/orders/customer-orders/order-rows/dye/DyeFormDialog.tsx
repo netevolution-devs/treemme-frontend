@@ -10,8 +10,9 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
+import dayjs from "dayjs";
 
 export interface IDyeForm {
     quantity: number;
@@ -36,6 +37,7 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
+            <Typography variant={"h5"} sx={{mb: 2}}>{t("orders.row.dye")}</Typography>
             <GenericForm<IDyeForm, unknown, ICustomerOrdersStoreState>
                 selectedId={null}
                 dialogMode
@@ -43,12 +45,12 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
                 bypassConfirm
                 emptyValues={{
                     quantity: null as unknown as number,
-                    scheduled_date: '',
+                    scheduled_date: dayjs().format('YYYY-MM-DD'),
                     machine_id: null
                 }}
                 mapEntityToForm={() => ({
                     quantity: 0,
-                    scheduled_date: '',
+                    scheduled_date: dayjs().format('YYYY-MM-DD'),
                     machine_id: null
                 })}
                 create={(data) => {

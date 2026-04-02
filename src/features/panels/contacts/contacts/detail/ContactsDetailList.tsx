@@ -11,6 +11,7 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import {Typography} from "@mui/material";
 
 const ContactsDetailList = () => {
     const {t} = useTranslation(["form"]);
@@ -20,7 +21,7 @@ const ContactsDetailList = () => {
     const selectedDetailId = useStore(state => state.uiState.selectedDetailId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
 
     const columns = useMemo<MRT_ColumnDef<IContactDetail>[]>(() => [
         {
@@ -53,8 +54,10 @@ const ContactsDetailList = () => {
             <ContactsDetailFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactDetail>
+                disableBorder
                 data={contact?.contact_details || []}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedDetailId}
                 onRowSelect={(id) => setUIState({selectedDetailId: id})}
@@ -63,6 +66,7 @@ const ContactsDetailList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar:
                         <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.details.list")}</Typography>}
                             buttons={[
                                 <NewButton
                                     isEnable={!!selectedContactId}

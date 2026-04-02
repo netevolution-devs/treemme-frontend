@@ -27,6 +27,13 @@ import SelectionPanel from "@features/panels/products/selection/SelectionPanel.t
 import SubcontractingNotReturnedPanel from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
 import ProcessesPanel from "@features/panels/production/processes/ProcessesPanel.tsx";
 import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.tsx";
+import CurrenciesExchangePanel from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
+import ArticleColorsPanel from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
+import ArticleClassesPanel from "@features/panels/products/article-classes/ArticleClassesPanel.tsx";
+
+import DeliveryNotesRowsPanel from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
+import OrderRowsPanel from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
+import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatchesPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -51,11 +58,17 @@ export type TPanelKind =
     | 'machinery'
     | 'articleTypes'
     | 'deliveryNotes'
+    | 'deliveryNotesRows'
+    | 'orderRows'
     | 'reasons'
     | 'selection'
     | 'subcontractingNotReturned'
     | 'processes'
     | 'workings'
+    | 'currenciesExchange'
+    | 'articleColors'
+    | 'articleClasses'
+    | 'lotsBatches'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -78,11 +91,13 @@ export const PANEL_REGISTRY: DockviewComponents = {
     origins:        (props) => <OriginsPanel {...props}/>,
     // products
     products:           () => <ProductsPanel/>,
-    articles:           () => <ArticlesPanel/>,
-    selection:          () => <SelectionPanel />,
+    articles:           (props) => <ArticlesPanel {...props}/>,
+    selection:          (props) => <SelectionPanel {...props}/>,
     productCategories:  () => <ProductCategoriesPanel/>,
     productTypes:       () => <ProductTypesPanel/>,
     articleTypes:       (props) => <ArticleTypesPanel {...props}/>,
+    articleColors:      (props) => <ArticleColorsPanel {...props}/>,
+    articleClasses:     (props) => <ArticleClassesPanel {...props}/>,
     // orders
     customerOrders: () => <CustomerOrdersPanel/>,
     // production
@@ -92,7 +107,11 @@ export const PANEL_REGISTRY: DockviewComponents = {
     workings:   () => <WorkingsPanel />,
     // ddt
     deliveryNotes:              () => <DeliveryNotesPanel />,
+    deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
+    orderRows:                  (props) => <OrderRowsPanel {...props}/>,
     reasons:                    () => <ReasonsPanel />,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
+    currenciesExchange: () => <CurrenciesExchangePanel />,
+    lotsBatches: () => <LotsBatchesPanel />,
     "not-implemented": () => <>To implement</>,
 }

@@ -8,6 +8,8 @@ interface TabItem {
 
 interface GenericTabContentProps {
     tabs: TabItem[];
+    value?: number;
+    onChange?: (_: SyntheticEvent, newValue: number) => void;
 }
 
 function CustomTabPanel(props: { children?: ReactNode; value: number; index: number }) {
@@ -22,7 +24,7 @@ function CustomTabPanel(props: { children?: ReactNode; value: number; index: num
             {...other}
         >
             {value === index && (
-                <Box sx={{pt: 2}}>
+                <Box sx={{pt: 0.5}}>
                     {children}
                 </Box>
             )}
@@ -30,19 +32,27 @@ function CustomTabPanel(props: { children?: ReactNode; value: number; index: num
     );
 }
 
-const GenericTabContent: React.FC<GenericTabContentProps> = ({tabs}) => {
-    const [value, setValue] = useState<number>(0);
+const GenericTabContent: React.FC<GenericTabContentProps> = ({tabs, value: externalValue, onChange: externalOnChange}) => {
+    const [internalValue, setInternalValue] = useState<number>(0);
 
-    const handleChange = (_: SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const isControlled = externalValue !== undefined;
+    const value = isControlled ? externalValue : internalValue;
+
+    const handleChange = (event: SyntheticEvent, newValue: number) => {
+        if (!isControlled) {
+            setInternalValue(newValue);
+        }
+        if (externalOnChange) {
+            externalOnChange(event, newValue);
+        }
     };
 
     return (
-        <Box sx={{width: '100%', mt: -1.7}}>
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="generic tabs">
+        <Box sx={{width: '100%'}}>
+            <Box sx={{mt: -1.5, mb: 1, borderBottom: 1, borderColor: 'divider', mx: -1}}>
+                <Tabs value={value} onChange={handleChange} aria-label="generic tabs" textColor="primary" indicatorColor="primary">
                     {tabs.map((tab, index) => (
-                        <Tab key={index} label={tab.label} />
+                        <Tab key={index} label={tab.label} sx={{pb: 1}} />
                     ))}
                 </Tabs>
             </Box>

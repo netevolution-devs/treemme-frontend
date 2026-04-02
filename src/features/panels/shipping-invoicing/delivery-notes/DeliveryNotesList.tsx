@@ -36,7 +36,7 @@ const DeliveryNotesList = () => {
         }
     ), [filterSubcontractorId, filterStartDate, filterEndDate]);
 
-    const {data: deliveryNotes = [], isLoading} = deliveryNoteApi.useGetList({queryParams});
+    const {data: deliveryNotes = [], isLoading, isFetching} = deliveryNoteApi.useGetList({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
@@ -71,6 +71,7 @@ const DeliveryNotesList = () => {
         <GenericList<IDeliveryNote>
             data={deliveryNotes}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedDeliveryNoteId}
             onRowSelect={(id) => setUIState({selectedDeliveryNoteId: id})}

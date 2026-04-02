@@ -4,6 +4,7 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 import {SimpleTreeView, TreeItem} from "@mui/x-tree-view";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
+import dayjs from "dayjs";
 
 interface TreeNodeProps {
     batch: IBatch;
@@ -30,11 +31,17 @@ const TreeNode = ({ batch }: TreeNodeProps) => {
     const random1 = useMemo(() => crypto.getRandomValues(new Uint32Array(1))[0], []);
     const random2 = useMemo(() => crypto.getRandomValues(new Uint32Array(1))[0], []);
 
+    const label = () => (
+        <>
+            <span style={{fontWeight: 600}}>{`${batch.batch_code}`}</span> {`- (${batch.stock_items}/${batch.pieces}) - ${dayjs(batch.batch_date).format('DD/MM/YYYY')}`}
+        </>
+    );
+
     if (!hasChildren) {
         return (
             <TreeItem
                 itemId={batch.batch_code + random1}
-                label={batch.batch_code}
+                label={label()}
             />
         );
     }
@@ -42,7 +49,7 @@ const TreeNode = ({ batch }: TreeNodeProps) => {
     return (
         <TreeItem
             itemId={batch.batch_code + random2}
-            label={batch.batch_code}
+            label={label()}
         >
             {batch.son_batches.map((son) => {
                 if (!son.batch) return null;

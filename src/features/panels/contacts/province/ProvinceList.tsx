@@ -14,7 +14,7 @@ const ProvinceList = () => {
     const selectedProvinceId = useStore(state => state.uiState.selectedProvinceId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: provinces = [], isLoading} = provinceApi.useGetList();
+    const {data: provinces = [], isLoading, isFetching} = provinceApi.useGetList();
     const sortedProvinces = useMemo(() => provinces.sort((a, b) => a.acronym.localeCompare(b.acronym)), [provinces]);
 
     const columns = useMemo<MRT_ColumnDef<IProvince>[]>(() => [
@@ -32,6 +32,7 @@ const ProvinceList = () => {
         <GenericList<IProvince>
             data={sortedProvinces}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedProvinceId}
             onRowSelect={(id) => setUIState({selectedProvinceId: id})}

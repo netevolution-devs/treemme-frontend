@@ -7,7 +7,7 @@ import type {IArticleType} from "@features/panels/products/article-types/api/IAr
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
-import {articleClassApi} from "@features/panels/products/articles/api/article-class/articleClassApi.ts";
+import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi.ts";
 import {useMemo} from "react";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
@@ -90,6 +90,11 @@ const ArticleTypesFields = () => {
         dependencyKey: "types"
     })
 
+    useSubscribePanel<IArticleTypeForm>({
+        formKey: "article_class_id",
+        dependencyKey: "articleClasses"
+    })
+
     return (
         <>
             <TextFieldControlled<IArticleTypeForm>
@@ -117,6 +122,15 @@ const ArticleTypesFields = () => {
                 label={t("products.articles.article_class")}
                 options={articleClassOptions}
                 required
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "articleClasses",
+                            i18nKey: "menu.products.article-classes"
+                        }
+                    })
+                }}
             />
         </>
     )

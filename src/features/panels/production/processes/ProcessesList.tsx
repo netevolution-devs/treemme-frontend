@@ -39,7 +39,7 @@ const ProcessesList = () => {
         [filterScheduledDate],
     );
 
-    const {data: processes = [], isLoading} = processApi.useGetList({queryParams});
+    const {data: processes = [], isLoading, isFetching} = processApi.useGetList({queryParams});
 
     const columns = useMemo<MRT_ColumnDef<IProcess>[]>(() => [
         {
@@ -75,8 +75,9 @@ const ProcessesList = () => {
         <GenericList<IProcess>
             data={processes}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
-            minHeight={"700px"}
+            minHeight={"790px"}
             selectedId={selectedProcessId}
             onRowSelect={(id) => setUIState({selectedProcessId: id})}
             additionalOptions={{

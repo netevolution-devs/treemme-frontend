@@ -9,7 +9,7 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const CapList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: caps = [], isLoading} = capApi.useGetList();
+    const {data: caps = [], isLoading, isFetching} = capApi.useGetList();
 
     const {useStore} = usePanel<unknown, ICapStoreState>();
     const {selectedCapId} = useStore(state => state.uiState);
@@ -37,6 +37,7 @@ const CapList = () => {
         <GenericList<ICap>
             data={caps}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedCapId}
             onRowSelect={(id) => setUIState({selectedCapId: id})}

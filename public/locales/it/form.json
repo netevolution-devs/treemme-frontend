@@ -62,9 +62,16 @@
     "name": "Nazione"
   },
   "contacts": {
+    "payment": "Pagamento predefinito",
     "select": "Tipologia",
     "client": "Cliente",
+    "clients": {
+      "list": "Lista clienti"
+    },
     "supplier": "Fornitore",
+    "suppliers": {
+      "list": "Lista fornitori"
+    },
     "subcontractor": "Terzista",
     "agent": "Agente",
     "agents": {
@@ -79,7 +86,7 @@
     "title": "Titolo",
     "notes": "Note",
     "type": "Tipo contatto",
-    "client_data": "Dati cliente",
+    "client_data": "Note",
     "tolerance_quantity": "Tolleranza quantità",
     "tolerance_start_days": "Giorni tolleranza inizio",
     "client_note": "Note cliente",
@@ -87,7 +94,7 @@
     "agent_percentage": "Provvigione agente",
     "address": {
       "list": "Lista indirizzi",
-      "name": "Nome",
+      "name": "Tipologia indirizzo",
       "address": "Indirizzo",
       "cap": "Cap e provincia",
       "address-1": "Riga 1",
@@ -149,11 +156,14 @@
       "code": "Codice"
     },
     "origin": {
+      "label-coeff": "Coefficienti resa",
       "code": "Codice",
       "area": "Zona di provenienza",
-      "crust-yield-coefficient": "Crosta",
+      "crust-yield-coefficient": "Crust",
       "grain-yield-coefficient": "Fiore",
-      "psp-yield-coefficient": "Coefficiente resa PSP",
+      "psp-yield-coefficient": "Pieno spessore",
+      "rind-yield-coefficient": "Crosta",
+      "raw-yield-coefficient": "Grezzo",
       "sea-shipment": "Spedizione mare",
       "trip-day": "Giorni viaggio",
       "flay": "Scuoiatura predefinita"
@@ -194,17 +204,21 @@
     }
   },
   "production": {
+    "batches": "Lotti",
+    "date": "Data",
     "title": "Produzione",
     "batch": {
       "workings": "Lavorazione",
       "note": "Note composizione",
       "article": "Articolo",
+      "year": "Anno",
       "batch_code": "Lotto",
       "batch_date": "Data",
       "batch_type": "Tipo Lotto",
       "leather": "Pellame",
       "measurement_unit": "Unità di misura",
       "pieces": "Pezzi totali",
+      "pieces-string": "pezzi",
       "quantity": "Quantità",
       "sq_ft_average_expected": "Media PQ attesa",
       "sq_ft_average_found": "Media PQ trovata",
@@ -226,10 +240,14 @@
       "selection": "Scelta",
       "selections": {
         "pieces": "Pezzi totali",
+        "external-pieces": "Pezzi da ritornare",
         "stock_items": "Giacenza pezzi",
-        "selection": "Nome scelta"
+        "selection": "Tipo scelta",
+        "note": "Note scelta",
+        "thickness": "Spessore"
       },
       "father_batch": "Lotto padre",
+      "father_batch_selection": "Scelta lotto",
       "machine": "Macchinario",
       "scheduled_date": "Data programmazione",
       "production_note": "Note produzione"
@@ -253,23 +271,27 @@
     "composition_note": "Note composizione",
     "title": "Composizione",
     "button": "Aggiungi",
-    "father_batch_code": "Codice lotto padre"
+    "father_batch_code": "Codice lotto padre",
+    "date-tf": "Data bolla",
+    "date": "Data lavorazione"
   },
   "movements": {
+    "contact": "Sede",
     "date": "Data",
     "reason": "Motivo",
     "piece": "Pezzi",
     "movement_note": "Note movimento"
   },
   "orders": {
+    "order_code": "Codice ordine",
     "shipment-condition": "Resa",
     "order_number": "Ordine",
     "order_date": "Data",
     "client": "Cliente",
     "agent": "Agente",
-    "agent_order_number": "Codice ordine agente",
+    "agent_order_number": "Numero ordine agente",
     "agent_order_date": "Data ordine agente",
-    "client_order_number": "Codice Ordine cliente",
+    "client_order_number": "Numero Ordine cliente",
     "client_order_date": "Data ordine cliente",
     "percentage_agent": "Provv. %",
     "percentage_tolerance_quantity": "Tolleranza quantità",
@@ -341,6 +363,8 @@
     "technical": "Dati tecnici",
     "product_category": "Categoria",
     "categories": {
+      "class": "Classe",
+      "leather_type": "Tipo pellame",
       "code": "Codice",
       "name": "Nome"
     },
@@ -349,6 +373,7 @@
       "name": "Nome"
     },
     "articles": {
+      "client_code": "Riferimento codice cliente",
       "name": "Nome",
       "code": "Codice",
       "client": "Cliente",
@@ -365,9 +390,22 @@
         "name": "Nome",
         "value": "Valore"
       }
+    },
+    "article_colors": {
+      "color": "Colore",
+      "shade": "Sfumatura",
+      "var_color": "Variante colore",
+      "client_color": "Colore cliente",
+      "client": "Cliente",
+      "color_note": "Note colore"
+    },
+    "article_classes": {
+      "name": "Nome classe",
+      "description": "Descrizione"
     }
   },
   "shipping": {
+    "composition-title": "Composizione",
     "subcontractor_clients": "Terzista/Cliente",
     "ddt_number": "Numero DDT",
     "ddt_date": "Data DDT",
@@ -381,6 +419,7 @@
       "warehouse_movement_reason": "Causale magazzino"
     },
     "ddt_rows": {
+      "transfer": "Trasferisci lotto",
       "row": "Righe DDT",
       "half_piece": "Mezze",
       "whole_piece": "Intere",
@@ -397,5 +436,17 @@
     "today": "Oggi",
     "machine_name": "Macchinario",
     "view_batch": "Vedi lotto"
+  },
+  "currencies": {
+    "name": "Nome",
+    "sign": "Simbolo",
+    "abbreviation": "Sigla",
+    "last_rate": "Ultimo cambio",
+    "change_value": "Cambio",
+    "date": "Data cambio"
+  },
+  "lots-batch": {
+    "name": "Scelta",
+    "available_pieces": "Pezzi disponibili"
   }
 }

@@ -39,13 +39,15 @@ export const MenuEntries: IMenuEntry[] = [
         i18nKey: "menu.products.self",
         icon: "PRODUCTS",
         subMenu: [
-            {i18nKey: "menu.products.products", component: "products"},
+            // {i18nKey: "menu.products.products", component: "products"},
             {i18nKey: "menu.products.articles", component: "articles"},
-            {i18nKey: "menu.products.selection", component: "selection" },
+            {i18nKey: "menu.products.selection", component: "selection"},
             // {i18nKey: "menu.products.search"},
-            {i18nKey: "menu.products.categories", component: "productCategories"},
-            {i18nKey: "menu.products.products-types", component: "productTypes"},
+            // {i18nKey: "menu.products.categories", component: "productCategories"},
+            // {i18nKey: "menu.products.products-types", component: "productTypes"},
             {i18nKey: "menu.products.article-types", component: "articleTypes"},
+            {i18nKey: "menu.products.article-colors", component: "articleColors"},
+            {i18nKey: "menu.products.article-classes", component: "articleClasses"},
         ]
     },
     {
@@ -63,10 +65,9 @@ export const MenuEntries: IMenuEntry[] = [
         i18nKey: "menu.warehouse.self",
         icon: "WAREHOUSE",
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.warehouse.movements"},
             // {i18nKey: "menu.warehouse.pallet-types"},
-            // {i18nKey: "menu.warehouse.lots-batches"},
+            {i18nKey: "menu.warehouse.lots-batches", component: "lotsBatches" },
             // {i18nKey: "menu.warehouse.search-lots-batches"},
             // {i18nKey: "menu.warehouse.subcontracting-lots"}
         ]
@@ -79,8 +80,8 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.production.recipes"},
             {i18nKey: "menu.production.machinery", component: "machinery"},
             // {i18nKey: "menu.production.progress"},
-            {i18nKey: "menu.production.processes", component: "processes" },
-            {i18nKey: "menu.production.workings", component: "workings" },
+            {i18nKey: "menu.production.processes", component: "processes"},
+            {i18nKey: "menu.production.workings", component: "workings"},
             // {i18nKey: "menu.production.bom"},
             // {i18nKey: "menu.production.batch-selection"},
             // {i18nKey: "menu.production.pirovano-monitor"},
@@ -95,21 +96,20 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.shipping-invoicing.reasons", component: "reasons"},
             // {i18nKey: "menu.shipping-invoicing.invoices"},
             // {i18nKey: "menu.shipping-invoicing.search"},
-            { i18nKey: "menu.shipping-invoicing.subcontracting-not-returned", component: "subcontractingNotReturned" },
+            {i18nKey: "menu.shipping-invoicing.subcontracting-not-returned", component: "subcontractingNotReturned"},
         ]
     },
     {
         i18nKey: "menu.commercial.self",
         icon: "COMMERCIAL",
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.commercial.customers"},
             // {i18nKey: "menu.commercial.suppliers"},
             // {i18nKey: "menu.commercial.batch-data"},
             // {i18nKey: "menu.commercial.product-costs"},
             // {i18nKey: "menu.commercial.price-list"},
             // {i18nKey: "menu.commercial.work-reports"},
-            // {i18nKey: "menu.commercial.currencies-exchange"}
+            {i18nKey: "menu.commercial.currencies-exchange", component: "currenciesExchange"}
         ]
     },
     {

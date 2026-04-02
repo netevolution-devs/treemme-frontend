@@ -14,7 +14,7 @@ const WeightsList = () => {
     const selectedWeightId = useStore((state) => state.uiState.selectedWeightId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {data: weights = [], isLoading} = weightApi.useGetList();
+    const {data: weights = [], isLoading, isFetching} = weightApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IWeight>[]>(() => [
         {
@@ -27,6 +27,7 @@ const WeightsList = () => {
         <GenericList<IWeight>
             data={weights}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedWeightId}
             onRowSelect={(id) => setUIState({ selectedWeightId: id })}

@@ -16,7 +16,7 @@ const ProductCategoriesList = () => {
     const selectedProductCategoryId = useStore(state => state.uiState.selectedProductCategoryId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: productCategories = [], isLoading} = productCategoryApi.useGetList();
+    const {data: productCategories = [], isLoading, isFetching} = productCategoryApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IProductCategory>[]>(() => [
         {
@@ -33,6 +33,7 @@ const ProductCategoriesList = () => {
         <GenericList<IProductCategory>
             data={productCategories}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedProductCategoryId}
             onRowSelect={(id) => setUIState({selectedProductCategoryId: id})}

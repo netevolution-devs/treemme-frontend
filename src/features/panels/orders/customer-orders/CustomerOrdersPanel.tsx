@@ -12,15 +12,20 @@ export interface ICustomerOrdersStoreState extends IPanelUIState {
     selectedOrderRowId?: number | null;
 }
 
+export interface ICustomerOrdersFilters {
+    filterOrderCode?: string;
+    filterOrderClientId?: number;
+}
+
 const CustomerOrdersPanel = () => {
     const initialUiState: ICustomerOrdersStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, ICustomerOrdersStoreState>
+        <GenericPanel<ICustomerOrdersFilters, ICustomerOrdersStoreState>
             kind={"customerOrders"}
             initialState={{uiState: initialUiState}}
+            listComponent={<CustomerOrdersList/>}
         >
-            <CustomerOrdersList/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',

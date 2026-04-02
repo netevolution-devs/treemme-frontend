@@ -22,9 +22,10 @@ interface LeatherListProps {
         "weight" |
         undefined
     selectedQueryId?: number;
+    disableBorders?: boolean;
 }
 
-const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: LeatherListProps) => {
+const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disableBorders = false}: LeatherListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<ILeatherStoreFilter, ILeathersStoreState>();
@@ -42,7 +43,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
         [panelFilter, selectedQueryId]
     ) as Record<string, string | number>
 
-    const {data: leathers = [], isLoading} = leatherApi.useGetList({queryParams});
+    const {data: leathers = [], isLoading, isFetching} = leatherApi.useGetList({queryParams});
 
     const columns = useMemo<MRT_ColumnDef<ILeather>[]>(() => [
         {
@@ -136,8 +137,10 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId}: Leat
 
     return (
         <GenericList<ILeather>
+            disableBorder={disableBorders}
             data={leathers}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={panelFilter ? specificColumns : columns}
             selectedId={selectedLeatherId}
             onRowSelect={(id) => setUIState({selectedLeatherId: id})}

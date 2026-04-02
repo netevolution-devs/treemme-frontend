@@ -12,5 +12,7 @@ export interface IOrigin {
     psp_yield_coefficient: number;
     grain_yield_coefficient: number;
     crust_yield_coefficient: number;
+    raw_yield_coefficient: number;
+    rind_yield_coefficient: number;
     sea_shipment: boolean;
 }

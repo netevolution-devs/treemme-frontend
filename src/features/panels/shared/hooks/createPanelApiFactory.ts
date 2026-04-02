@@ -20,8 +20,11 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
         // GET LIST
         useGetList: (options?: ApiOptions) => {
             const {get} = useApi();
+            const extraKeys = options?.invalidateQueries ? [{extra: options?.invalidateQueries}] : [];
+            const queryKeys = options?.queryParams ? [options.queryParams] : [];
+
             return useQuery({
-                queryKey: [queryKey, 'LIST', options?.queryParams],
+                queryKey: [queryKey, 'LIST', ...extraKeys, ...queryKeys],
                 queryFn: async () => {
                     const response = await get<T[]>(baseEndpoint, {params: options?.queryParams});
                     return response.data.data;
