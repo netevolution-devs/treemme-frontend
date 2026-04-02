@@ -4,11 +4,15 @@ import {
     selectionStockAvailableDetailApi
 } from "@features/panels/warehouse/lots-batches/api/selectionStockAvailableApi.ts";
 import BatchesList from "@features/panels/production/batches/BatchesList.tsx";
-import {Typography} from "@mui/material";
+import {MenuItem, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
 
 const LotsBatchesDetailList = () => {
     const {t} = useTranslation(["form"]);
+
+    const addPanel = useDockviewStore(state => state.addPanel);
 
     const {useStore} = usePanel<unknown, ILotsBatchesStoreState>();
     const selectedSelectionStockId = useStore(state => state.uiState.selectedSelectionStockId);
@@ -25,6 +29,28 @@ const LotsBatchesDetailList = () => {
                 enableFilters={false}
                 disableBorder
                 minHeight={"470px"}
+                additionalOptions={{
+                    enableRowActions: true,
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
+                        <MenuItem key={"view_batch"} onClick={() => {
+                            addPanel({
+                                id: `batches:${crypto.randomUUID()}`,
+                                title: t("menu:menu.production.batches"),
+                                component: 'batches',
+                                params: {
+                                    extra: {
+                                        id: row.original.id,
+                                        batch_code: row.original.batch_code
+                                    }
+                                }
+                            });
+                            closeMenu();
+                        }}>
+                            <VisibilityIcon color={"primary"} sx={{mr: 1}} />
+                            {t("processes.view_batch")}
+                        </MenuItem>
+                    ],
+                }}
             />
         </>
     )

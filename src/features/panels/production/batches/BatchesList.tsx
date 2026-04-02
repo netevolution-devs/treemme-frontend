@@ -3,7 +3,7 @@ import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IBatchesStoreFilter, IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
 import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
 import {useMemo} from "react";
-import type {MRT_ColumnDef} from "material-react-table";
+import type {MRT_ColumnDef, MRT_TableOptions} from "material-react-table";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
@@ -18,9 +18,10 @@ interface BatchesListProps {
     enableFilters?: boolean;
     data?: IBatch[];
     minHeight?: string;
+    additionalOptions?: Partial<MRT_TableOptions<IBatch>>;
 }
 
-const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px"}: BatchesListProps) => {
+const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions}: BatchesListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -113,7 +114,8 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
                             />,
                         ]}
                     />
-                )
+                ),
+                ...additionalOptions
             }}
         />
     );
