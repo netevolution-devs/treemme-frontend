@@ -117,7 +117,7 @@ const DeliveryNotesRowList = () => {
                                 onClick={() => handleOpenCreateRowDialog()}
                             />
                         ]}
-                        label={<Typography variant={"h5"} >{t("shipping.ddt_rows.row")}</Typography>}
+                        label={<Typography variant={"h6"} >{t("shipping.ddt_rows.row")}</Typography>}
                         sx={{mt: 0}}
                     />
                 )

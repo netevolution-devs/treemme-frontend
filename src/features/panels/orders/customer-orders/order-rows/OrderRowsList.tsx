@@ -123,7 +123,7 @@ const OrderRowsList = () => {
                                     onClick={() => handleOpenCreateRowDialog()}
                                 />
                             ]}
-                            label={<Typography variant={"h5"}>{t("orders.rows")}</Typography>}
+                            label={<Typography variant={"h6"}>{t("orders.rows")}</Typography>}
                             sx={{mt: 0}}
                         />
                     )
