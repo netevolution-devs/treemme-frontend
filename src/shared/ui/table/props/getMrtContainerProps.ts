@@ -7,7 +7,7 @@ export const getMrtContainerProps = (theme: Theme, overrideProps?: TableContaine
         overflowY: 'auto',
         minHeight: 320,
         scrollbarWidth: 'thin',
-        scrollbarColor: `${theme.palette.primary.main} ${theme.palette.background.default}`,
+        scrollbarColor: `${theme.palette.text.disabled} transparent`,
     };
 
     return {
