@@ -18,6 +18,8 @@ export const StyledDockviewWrapper = styled('div')(({ theme }) => ({
         '--dv-separator-border': `${theme.palette.divider}`,
         '--dv-activegroup-hiddenpanel-tab-background-color': theme.palette.background.paper,
         '--dv-color-abyss': theme.palette.background.paper,
+        '--dv-inactivegroup-hiddenpanel-tab-background-color': theme.palette.background.paper,
+        '--dv-inactivegroup-hiddenpanel-tab-color': theme.palette.text.secondary,
 
         // Tabs
         '& .dv-tab': {
@@ -25,6 +27,7 @@ export const StyledDockviewWrapper = styled('div')(({ theme }) => ({
             color: theme.palette.text.secondary,
             borderBottom: `1px solid ${theme.palette.divider}`,
             transition: theme.transitions.create(['background-color', 'color']),
+            borderRight: `1px solid ${theme.palette.divider}`,
 
             '&:hover': {
                 backgroundColor: theme.palette.action.hover,
