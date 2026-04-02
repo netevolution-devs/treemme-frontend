@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
+import dayjs from "dayjs";
 
 interface IDyePayload {
     quantity: number;
@@ -22,6 +23,7 @@ const usePostBatchDye = (clientOrderRowId: number) => {
             void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'LIST'] });
             void queryClient.invalidateQueries({ queryKey: ['CLIENT-ORDER-ROW', 'DETAIL', clientOrderRowId] });
             void queryClient.invalidateQueries({ queryKey: ['BATCH', 'LIST'] });
+            void queryClient.invalidateQueries({ queryKey: ['PROCESS', 'LIST', { scheduled_date: dayjs().format('YYYY-MM-DD') }] });
         },
     });
 };
