@@ -70,6 +70,36 @@
       "note": "Article note"
     }
   },
+  "user_management": {
+    "user_code": "User Code",
+    "email": "Email",
+    "last_access": "Last Access",
+    "password": "Password",
+    "groups": "Groups",
+    "add_group": "Add group"
+  },
+  "access_management": {
+    "group_id": "Group",
+    "role_id": "Role",
+    "work_area_id": "Work Area",
+    "submit": "Assign",
+    "can_get": "View",
+    "can_post": "Create",
+    "can_put": "Edit",
+    "can_delete": "Delete",
+    "check_order": "Chk. Order"
+  },
+  "group_management": {
+    "name": "Name",
+    "description": "Description"
+  },
+  "role_management": {
+    "name": "Name"
+  },
+  "work_area_management": {
+    "name": "Name",
+    "description": "Description"
+  },
   "currencies": {
     "name": "Name",
     "sign": "Sign",

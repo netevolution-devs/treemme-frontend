@@ -427,6 +427,36 @@
       "return": "Rientra lotto"
     }
   },
+  "user_management": {
+    "user_code": "Codice Utente",
+    "email": "Email",
+    "last_access": "Ultimo Accesso",
+    "password": "Password",
+    "groups": "Gruppi",
+    "add_group": "Aggiungi gruppo"
+  },
+  "access_management": {
+    "group_id": "Gruppo",
+    "role_id": "Ruolo",
+    "work_area_id": "Area di lavoro",
+    "submit": "Assegna",
+    "can_get": "Visualizza",
+    "can_post": "Crea",
+    "can_put": "Modifica",
+    "can_delete": "Elimina",
+    "check_order": "Contr. Ordine"
+  },
+  "group_management": {
+    "name": "Nome",
+    "description": "Descrizione"
+  },
+  "role_management": {
+    "name": "Nome"
+  },
+  "work_area_management": {
+    "name": "Nome",
+    "description": "Descrizione"
+  },
   "processes": {
     "scheduled_date": "Data programmazione",
     "batch_code": "Codice lotto",

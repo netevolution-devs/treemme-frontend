@@ -30,12 +30,14 @@ import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.ts
 import CurrenciesExchangePanel from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
 import ArticleColorsPanel from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
 import ArticleClassesPanel from "@features/panels/products/article-classes/ArticleClassesPanel.tsx";
-
 import DeliveryNotesRowsPanel from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
 import OrderRowsPanel from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
 import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatchesPanel.tsx";
 import PaymentTypesPanel from "@features/panels/commercial/payment-types/PaymentTypesPanel.tsx";
 import ShipmentConditionsPanel from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel.tsx";
+import UserManagementPanel from "@features/panels/user-management/UserManagementPanel.tsx";
+import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel.tsx";
+import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -67,6 +69,9 @@ export type TPanelKind =
     | 'subcontractingNotReturned'
     | 'processes'
     | 'workings'
+    | 'user-management'
+    | 'organization-management'
+    | 'functionality-management'
     | 'currenciesExchange'
     | 'articleColors'
     | 'articleClasses'
@@ -121,5 +126,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     currenciesExchange: () => <CurrenciesExchangePanel />,
     paymentTypes:       (props) => <PaymentTypesPanel {...props}/>,
     shipmentConditions: (props) => <ShipmentConditionsPanel {...props}/>,
+    // system
+    "user-management": () => <UserManagementPanel />,
+    "organization-management": () => <OrganizationManagementPanel />,
+    "functionality-management": () => <FunctionalityManagementPanel />,
     "not-implemented": () => <>To implement</>,
 }
