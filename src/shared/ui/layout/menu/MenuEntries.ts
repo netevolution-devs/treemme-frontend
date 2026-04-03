@@ -159,7 +159,9 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.system.info"},
             // {i18nKey: "menu.system.tools"},
             // {i18nKey: "menu.system.console"},
-            {i18nKey: "menu.system.access-management", component: "user-management", permissionCheck: {resource: "sistema - gestione accessi", action: "get"}},
+            {i18nKey: "menu.system.access-management", component: "user-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
+            {i18nKey: "menu.system.organization", component: "organization-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
+            {i18nKey: "menu.system.functionality", component: "functionality-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
             // {i18nKey: "menu.system.logout"},
         ]
     }

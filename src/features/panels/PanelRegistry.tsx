@@ -28,6 +28,8 @@ import SubcontractingNotReturnedPanel from "@features/panels/shipping-invoicing/
 import ProcessesPanel from "@features/panels/production/processes/ProcessesPanel.tsx";
 import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.tsx";
 import UserManagementPanel from "@features/panels/user-management/UserManagementPanel.tsx";
+import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel.tsx";
+import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -58,6 +60,8 @@ export type TPanelKind =
     | 'processes'
     | 'workings'
     | 'user-management'
+    | 'organization-management'
+    | 'functionality-management'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -94,5 +98,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     processes: () => <ProcessesPanel />,
     workings: () => <WorkingsPanel />,
     "user-management": () => <UserManagementPanel />,
+    "organization-management": () => <OrganizationManagementPanel />,
+    "functionality-management": () => <FunctionalityManagementPanel />,
     "not-implemented": () => <>To implement</>,
 }
