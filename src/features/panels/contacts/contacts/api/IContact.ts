@@ -4,7 +4,7 @@ import type {IContactDetail} from "@features/panels/contacts/contacts/api/contac
 import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 import type {
     IShipmentCondition
-} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
 
 export interface IContact {
     id: number;

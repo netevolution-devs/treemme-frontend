@@ -22,10 +22,10 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import dayjs from "dayjs";
 import type {
     IShipmentCondition
-} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
 import {
     shipmentConditionApi
-} from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
+} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
 import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
@@ -200,7 +200,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 />
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"shipment_condition_id"}
-                    label={t("orders.shipment-condition")}
+                    label={t("orders.api")}
                     options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
                 />
             </Box>

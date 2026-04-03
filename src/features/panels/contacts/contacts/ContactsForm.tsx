@@ -19,7 +19,7 @@ import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/C
 import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
 import {
     shipmentConditionApi
-} from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
+} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -236,7 +236,7 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                         />
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"shipment_condition_id"}
-                            label={t("orders.shipment-condition")}
+                            label={t("orders.api")}
                             options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
                         />
                     </Box>
