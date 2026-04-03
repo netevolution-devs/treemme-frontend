@@ -211,7 +211,7 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                 TextFieldProps={{multiline: true, rows: 2}}
             />
 
-            {isSupplier && (
+            {(isSupplier && !isClient) && (
                 <Box sx={{mt: 1}}>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}

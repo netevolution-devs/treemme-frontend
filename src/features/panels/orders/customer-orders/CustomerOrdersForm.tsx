@@ -194,13 +194,13 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 */}
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"payment_id"}
-                    label={t("orders.api")}
+                    label={t("orders.payment")}
                     options={payments.map(p => ({value: p.id, label: p.name}))}
                     required
                 />
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"shipment_condition_id"}
-                    label={t("orders.api")}
+                    label={t("orders.shipment-condition")}
                     options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
                 />
             </Box>
