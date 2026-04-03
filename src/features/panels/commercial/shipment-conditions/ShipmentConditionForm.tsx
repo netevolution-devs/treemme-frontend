@@ -7,9 +7,8 @@ import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditi
 import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 
-export type IShipmentConditionForm = Omit<IShipmentCondition, 'id'>;
+export type IShipmentConditionForm = Omit<IShipmentCondition, 'id' | 'borne_by_customer'>;
 
 const ShipmentConditionForm = () => {
     const {t} = useTranslation(["form"]);
@@ -30,11 +29,11 @@ const ShipmentConditionForm = () => {
             entity={condition}
             emptyValues={{
                 name: '',
-                borne_by_customer: false
+                // borne_by_customer: false
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
-                borne_by_customer: x.borne_by_customer
+                // borne_by_customer: x.borne_by_customer
             })}
             create={(payload) => createCondition(payload)}
             update={(id, payload) => updateCondition({id, payload})}
@@ -50,10 +49,10 @@ const ShipmentConditionForm = () => {
                         label={t("shipment_conditions.name")}
                         required
                     />
-                    <FlagCheckBoxFieldControlled<IShipmentConditionForm>
-                        name="borne_by_customer"
-                        label={t("shipment_conditions.borne_by_customer")}
-                    />
+                    {/*<FlagCheckBoxFieldControlled<IShipmentConditionForm>*/}
+                    {/*    name="borne_by_customer"*/}
+                    {/*    label={t("shipment_conditions.borne_by_customer")}*/}
+                    {/*/>*/}
                 </>
             )}
         />
