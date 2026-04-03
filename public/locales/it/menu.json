@@ -97,7 +97,9 @@
       "info": "Informazioni di Sistema",
       "tools": "Strumenti",
       "console": "Console di Comando",
-      "access-management": "Gestione Accessi",
+      "access-management": "Permessi",
+      "organization": "Organizzazione",
+      "functionality": "Funzionalità",
       "logout": "Fine Sessione"
     }
   },
