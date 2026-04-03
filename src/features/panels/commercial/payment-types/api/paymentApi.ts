@@ -2,6 +2,6 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 
 export const paymentApi = createPanelApi<IPayment>({
-    baseEndpoint: "/api",
+    baseEndpoint: "/payment",
     queryKey: "PAYMENT"
 });

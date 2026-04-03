@@ -448,5 +448,8 @@
   "lots-batch": {
     "name": "Scelta",
     "available_pieces": "Pezzi disponibili"
+  },
+  "payment_types": {
+    "name": "Tipo pagamento"
   }
 }
