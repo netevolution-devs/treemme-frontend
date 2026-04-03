@@ -82,7 +82,9 @@
       "price-list": "Listino Prodotti",
       "work-reports": "Rapportini di Lavoro",
       "currencies-exchange": "Valute e Cambi",
-      "currenciesExchange": "CurrenciesExchange"
+      "currenciesExchange": "CurrenciesExchange",
+      "payment-types": "Tipi pagamento",
+      "shipment-conditions": "Condizioni resa"
     },
     "analysis": {
       "self": "Analisi",

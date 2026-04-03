@@ -1,10 +1,10 @@
 import type {IContactType} from "@features/panels/contacts/contacts/api/contacts-type/IContactType.ts";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
 import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
-import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 import type {
     IShipmentCondition
-} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
 
 export interface IContact {
     id: number;

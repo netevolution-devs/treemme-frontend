@@ -109,7 +109,9 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.commercial.product-costs"},
             // {i18nKey: "menu.commercial.price-list"},
             // {i18nKey: "menu.commercial.work-reports"},
-            {i18nKey: "menu.commercial.currencies-exchange", component: "currenciesExchange"}
+            {i18nKey: "menu.commercial.currencies-exchange", component: "currenciesExchange"},
+            {i18nKey: "menu.commercial.payment-types", component: "paymentTypes" },
+            {i18nKey: "menu.commercial.shipment-conditions", component: "shipmentConditions" }
         ]
     },
     {
