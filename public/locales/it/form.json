@@ -451,5 +451,9 @@
   },
   "payment_types": {
     "name": "Tipo pagamento"
+  },
+  "shipment_conditions": {
+    "name": "Condizione di spedizione",
+    "borne_by_customer": "A carico del cliente"
   }
 }

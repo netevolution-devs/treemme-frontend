@@ -199,44 +199,44 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
             />
 
             {isSupplier && (
-                <>
+                <Box sx={{mt: 1}}>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}
                         variant="subtitle1"
                         sx={{mb: 1}}
                     >
-                        {t("contacts.api")}
+                        {t("contacts.payment")}
                     </Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"payment_id"}
-                            label={t("orders.api")}
+                            label={t("orders.payment")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
                         />
                     </Box>
-                </>
+                </Box>
             )}
 
             {isClient && (
-                <Box sx={{mt: 1, borderRadius: 1}}>
+                <Box sx={{mt: 1}}>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}
                         variant="subtitle1"
                         sx={{mb: 1}}
                     >
-                        {t("contacts.api")}
+                        {t("contacts.payment")}
                     </Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"payment_id"}
-                            label={t("orders.api")}
+                            label={t("orders.payment")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
                         />
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"shipment_condition_id"}
-                            label={t("orders.api")}
+                            label={t("orders.shipment-condition")}
                             options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
                         />
                     </Box>

@@ -4,6 +4,6 @@ import type {
 } from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
 
 export const shipmentConditionApi = createPanelApi<IShipmentCondition>({
-    baseEndpoint: "/api",
+    baseEndpoint: "/shipment-condition",
     queryKey: "SHIPMENT-CONDITION",
 });
