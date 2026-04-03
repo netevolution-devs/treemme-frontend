@@ -55,6 +55,7 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
                 {isRemoving && <CircularProgress size={16} sx={{alignSelf: "center"}} />}
             </Box>
 
+            {/*TODO Use controlled autocomplete*/}
             <Autocomplete
                 size="small"
                 options={availableGroups}

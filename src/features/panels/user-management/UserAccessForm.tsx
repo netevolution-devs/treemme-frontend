@@ -11,8 +11,8 @@ import {
     type IUserGroupAccess,
 } from "@features/panels/user-management/api/userManagementApi.ts";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
+import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel.tsx";
 
 interface IAccessForm {
     group_id: number;
@@ -25,7 +25,7 @@ const emptyValues: IAccessForm = {group_id: 0, role_id: 0, work_area_id: 0};
 const UserAccessForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IUserAccessStoreState>();
     const selectedAccessId = useStore(state => state.uiState.selectedAccessId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -48,7 +48,7 @@ const UserAccessForm = () => {
         Array.isArray(field) ? 0 : field.id;
 
     return (
-        <GenericForm<IAccessForm, IUserGroupAccess, IUserManagementStoreState>
+        <GenericForm<IAccessForm, IUserGroupAccess, IUserAccessStoreState>
             selectedId={selectedAccessId}
             entity={selectedAccess}
             emptyValues={emptyValues}

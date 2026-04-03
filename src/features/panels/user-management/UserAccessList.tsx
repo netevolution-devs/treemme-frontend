@@ -9,7 +9,7 @@ import {
     type IUserGroupAccess
 } from "@features/panels/user-management/api/userManagementApi.ts";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
+import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel.tsx";
 
 const getName = (field: { id: number; name?: string } | []) =>
     Array.isArray(field) ? "-" : (field.name ?? "-");
@@ -38,7 +38,7 @@ const UserAccessList = () => {
     const {t} = useTranslation(["form"]);
     const {data: accesses = [], isLoading} = useGetGroupAccessList();
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IUserAccessStoreState>();
     const selectedAccessId = useStore(state => state.uiState.selectedAccessId);
     const setUIState = useStore(state => state.setUIState);
 
