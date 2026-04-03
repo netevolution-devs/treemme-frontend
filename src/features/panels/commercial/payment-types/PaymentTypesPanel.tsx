@@ -3,12 +3,14 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import PaymentTypeForm from "@features/panels/commercial/payment-types/PaymentTypeForm.tsx";
 import PaymentTypesList from "@features/panels/commercial/payment-types/PaymentTypesList.tsx";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
 
 export interface IPaymentTypesStoreState extends IPanelUIState {
     selectedPaymentId?: number | null;
 }
 
-const PaymentTypesPanel = () => {
+const PaymentTypesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IPaymentTypesStoreState = {
         isFormDisabled: true,
         buttonsState: BaseButtonState
@@ -20,7 +22,7 @@ const PaymentTypesPanel = () => {
             initialState={{uiState: initialUiState}}
             listComponent={<PaymentTypesList/>}
         >
-            <PaymentTypeForm/>
+            <PaymentTypeForm {...props.params}/>
         </GenericPanel>
     )
 }

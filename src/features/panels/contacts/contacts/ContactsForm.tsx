@@ -20,6 +20,8 @@ import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentA
 import {
     shipmentConditionApi
 } from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -133,6 +135,17 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     const {data: payments = []} = paymentApi.useGetList();
     const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IContactForm>({
+        formKey: "payment_id",
+        dependencyKey: "paymentTypes"
+    })
+    useSubscribePanel<IContactForm>({
+        formKey: "shipment_condition_id",
+        dependencyKey: "shipmentConditions"
+    })
+
     return (
         <>
             {/* Contact typology selection */}
@@ -213,6 +226,15 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             label={t("orders.payment")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "paymentTypes",
+                                        i18nKey: "menu.contacts.payment-types"
+                                    }
+                                })
+                            }}
                         />
                     </Box>
                 </Box>
@@ -233,11 +255,29 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             label={t("orders.payment")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "paymentTypes",
+                                        i18nKey: "menu.contacts.payment-types"
+                                    }
+                                })
+                            }}
                         />
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"shipment_condition_id"}
                             label={t("orders.shipment-condition")}
                             options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "shipmentConditions",
+                                        i18nKey: "menu.contacts.shipment-conditions"
+                                    }
+                                })
+                            }}
                         />
                     </Box>
                     <Typography

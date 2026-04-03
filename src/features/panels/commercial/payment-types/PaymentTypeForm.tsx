@@ -7,15 +7,26 @@ import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentA
 import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IPaymentForm = Omit<IPayment, 'id'>;
 
-const PaymentTypeForm = () => {
+const PaymentTypeForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IPaymentTypesStoreState>();
     const selectedPaymentId = useStore((state) => state.uiState.selectedPaymentId);
     const setUIState = useStore((state) => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedPaymentId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = paymentApi;
     const {data: payment} = useGetDetail(selectedPaymentId);
@@ -24,11 +35,12 @@ const PaymentTypeForm = () => {
     const {mutateAsync: deletePayment, isPending: isDeleting} = useDelete();
 
     return (
-        <GenericForm<IPaymentForm>
+        <GenericForm<IPaymentForm, IPayment>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedPaymentId}
             entity={payment}
             emptyValues={{
-                name: ''
+                name: initialName ?? ''
             }}
             mapEntityToForm={(x) => ({
                 name: x.name
