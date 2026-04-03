@@ -4,8 +4,8 @@ import {
     type MRT_TableOptions,
     useMaterialReactTable
 } from "material-react-table";
-import {Box} from "@mui/material";
-import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.ts";
+import {Box, Card, CircularProgress} from "@mui/material";
+import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.tsx";
 import type {SyntheticEvent} from "react";
 
 export interface BaseEntity {
@@ -15,6 +15,7 @@ export interface BaseEntity {
 interface GenericListProps<TData extends BaseEntity> {
     data: TData[];
     isLoading: boolean;
+    isFetching?: boolean;
     columns: MRT_ColumnDef<TData>[];
     selectedId?: string | number | null | undefined;
     onRowSelect?: (id: TData["id"]) => void;
@@ -23,11 +24,13 @@ interface GenericListProps<TData extends BaseEntity> {
     overrideOptions?: Partial<MRT_TableOptions<TData>>;
     maxHeight?: string;
     minHeight?: string;
+    disableBorder?: boolean;
 }
 
 const GenericList = <TData extends BaseEntity>({
                                                    data = [],
-                                                   isLoading,
+                                                   isLoading = false,
+                                                   isFetching = false,
                                                    columns,
                                                    selectedId,
                                                    onRowSelect,
@@ -36,6 +39,7 @@ const GenericList = <TData extends BaseEntity>({
                                                    overrideOptions: _overrideOptions,
                                                    maxHeight = '300px',
                                                    minHeight = '300px',
+                                                   disableBorder = false
                                                }: GenericListProps<TData>) => {
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
@@ -71,21 +75,24 @@ const GenericList = <TData extends BaseEntity>({
         ...additionalOptions,
         displayColumnDefOptions: ({
             'mrt-row-actions': {
-                size: 30,
-                minSize: 30,
-                maxSize: 30,
+                size: 50,
+                minSize: 50,
+                maxSize: 50,
                 muiTableHeadCellProps: {
                     sx: {
                         padding: 0,
-                        width: '30px',
-                        maxWidth: '30px',
+                        width: '50px',
+                        maxWidth: '50px',
+                        borderBottom: 'none',
+                        pl: 0.8
                     },
                 },
                 muiTableBodyCellProps: {
                     sx: {
                         padding: 0,
-                        width: '30px',
-                        maxWidth: '30px',
+                        width: '50px',
+                        maxWidth: '50px',
+                        borderBottom: 'none',
                     },
                 },
             },
@@ -98,10 +105,40 @@ const GenericList = <TData extends BaseEntity>({
         },
     });
 
+    const content = () => {
+        return (
+            <Box sx={{width: '100%', position: 'relative', minHeight: _minHeight}}>
+                {(isFetching && !isLoading) && (
+                    <Box sx={{
+                        position: 'absolute',
+                        right: 10,
+                        top: additionalOptions?.enableTopToolbar ? 50 : 5,
+                        zIndex: 1000
+                    }}>
+                        <CircularProgress size={20} thickness={5}/>
+                    </Box>
+                )}
+
+                <Box sx={{overflowY: 'auto'}}>
+                    <MaterialReactTable table={table}/>
+                </Box>
+            </Box>
+
+        )
+    }
+
     return (
-        <Box sx={{width: '100%', overflowY: 'scroll', minHeight: _minHeight}}>
-            <MaterialReactTable table={table}/>
-        </Box>
+        <>
+            {!disableBorder ? (
+                <Card variant={"outlined"} sx={{minHeight: _minHeight, maxHeight: maxHeight}}>
+                    {content()}
+                </Card>
+            ) : (
+                <Box>
+                    {content()}
+                </Box>
+            )}
+        </>
     );
 };
 

@@ -9,7 +9,7 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const SelectionList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: selections = [], isLoading} = selectionApi.useGetList();
+    const {data: selections = [], isLoading, isFetching} = selectionApi.useGetList();
 
     const {useStore} = usePanel<unknown, ISelectionStoreState>();
     const selectedSelectionId = useStore(state => state.uiState.selectedSelectionId);
@@ -33,6 +33,7 @@ const SelectionList = () => {
         <GenericList<ISelection>
             data={selections}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedSelectionId}
             onRowSelect={(id) => setUIState({selectedSelectionId: id})}

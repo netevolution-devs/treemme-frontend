@@ -14,7 +14,7 @@ const WorkingsList = () => {
     const selectedWorkingId = useStore(state => state.uiState.selectedWorkingId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: workings = [], isLoading} = workingApi.useGetList();
+    const {data: workings = [], isLoading, isFetching} = workingApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IWorking>[]>(() => [
         {
@@ -28,6 +28,7 @@ const WorkingsList = () => {
             data={workings}
             columns={columns}
             isLoading={isLoading}
+            isFetching={isFetching}
             selectedId={selectedWorkingId}
             onRowSelect={(id) => setUIState({selectedWorkingId: id})}
         />

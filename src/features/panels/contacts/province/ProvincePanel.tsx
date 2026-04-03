@@ -17,8 +17,10 @@ const ProvincePanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, IProvinceStoreState>
             kind={"province"}
             initialState={{uiState: initialUiState}}
+            listComponent={
+                <ProvinceList/>
+            }
         >
-            <ProvinceList />
             <ProvinceForm {...props.params}/>
         </GenericPanel>
     )

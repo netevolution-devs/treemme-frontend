@@ -36,7 +36,7 @@ const DateFieldControlled = <TFieldValues extends FieldValues>({
                             label={formattedLabel}
                             value={value ? dayjs(value) : null}
                             onChange={(newValue) => {
-                                onChange(newValue ? newValue.format("YYYY-MM-DD") : "");
+                                onChange(newValue ? newValue.format("YYYY-MM-DD") : null);
                             }}
                             disabled={disabled}
                             slotProps={{

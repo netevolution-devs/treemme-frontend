@@ -2,7 +2,8 @@ import { useTranslation } from "react-i18next";
 import { TextField, InputAdornment, Typography } from "@mui/material";
 import { Controller, type FieldValues, useFormContext, type Path, type PathValue, type RegisterOptions } from "react-hook-form";
 import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
-import type {ReactNode} from "react";
+import React, {type ReactNode} from "react";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
 
 interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     precision?: number;
@@ -11,6 +12,7 @@ interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledF
     min?: number;
     max?: number;
     startAdornment?: ReactNode;
+    deactivated?: boolean;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -24,6 +26,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      min = 0,
                                                                      max,
                                                                      startAdornment,
+                                                                     deactivated = false,
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -88,7 +91,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                         label={formattedLabel}
                         size="small"
                         fullWidth
-                        disabled={disabled}
+                        disabled={disabled || deactivated}
                         error={!!error}
                         onKeyDown={handleKeyDown}
                         onBlur={() => {
@@ -100,7 +103,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                     onChange(toFixedString(num));
                                 }
                             } else if (displayValue === "-") {
-                                onChange("");
+                                onChange(null);
                             }
                             onBlur();
                         }}
@@ -111,7 +114,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                             if (val === "" || (min < 0 && val === "-") || regex.test(val)) {
                                 if (val !== "" && val !== "-" && max !== undefined && parseFloat(val) > max) return;
 
-                                onChange(val);
+                                onChange(val === "" ? null : val);
                             }
                         }}
                         placeholder={toFixedString(0)}
@@ -123,12 +126,10 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                 max: max,
                                 inputMode: "decimal"
                             },
-                            inputLabel: { shrink: (displayValue !== "" || !!startAdornment) || undefined },
+                            inputLabel: { shrink: (displayValue !== "" || !!startAdornment) },
                             formHelperText: {
-                                sx: {
-                                    textAlign: 'left',
-                                    fontFamily: 'monospace'
-                                }
+                                component: ({children}) =>
+                                    <ErrorFormHelperText isError={!!error} children={children}/>
                             },
                             input: {
                                 startAdornment: startAdornment ? (

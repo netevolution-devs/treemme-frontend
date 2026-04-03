@@ -27,14 +27,14 @@ export type IProductForm = Omit<IProduct, "id"
     | "alarm"
     | "stock_quantity"
 > & {
-    product_type_id: number;
-    supplier_id: number;
-    measurement_unit_id: number;
-    color_id: number;
-    contact_id: number;
-    product_category_id: number;
-    weight_measurement_unit_id: number;
-    thickness_measurement_unit_id: number;
+    product_type_id: number | null;
+    supplier_id: number | null;
+    measurement_unit_id: number | null;
+    color_id: number | null;
+    contact_id: number | null;
+    product_category_id: number | null;
+    weight_measurement_unit_id: number | null;
+    thickness_measurement_unit_id: number | null;
 };
 
 const ProductsForm = () => {
@@ -75,14 +75,14 @@ const ProductsForm = () => {
                 bill_of_material_quantity: null,
                 last_cost: null,
                 last_price: null,
-                product_type_id: 0,
-                supplier_id: 0,
-                measurement_unit_id: 0,
-                color_id: 0,
-                weight_measurement_unit_id: 0,
-                thickness_measurement_unit_id: 0,
-                product_category_id: 0,
-                contact_id: 0,
+                product_type_id: null,
+                supplier_id: null,
+                measurement_unit_id: null,
+                color_id: null,
+                weight_measurement_unit_id: null,
+                thickness_measurement_unit_id: null,
+                product_category_id: null,
+                contact_id: null,
             } as IProductForm}
             create={(payload) => createProduct(payload as IProductPayload)}
             update={(id, payload) => updateProduct({id, payload: payload as IProductPayload})}
@@ -91,6 +91,7 @@ const ProductsForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedProductId: null})}
             mapEntityToForm={(p) => ({
+                product_code: p.product_code,
                 name: p.name,
                 internal_name: p.internal_name,
                 external_name: p.external_name,
@@ -103,14 +104,14 @@ const ProductsForm = () => {
                 bill_of_material_quantity: p.bill_of_material_quantity,
                 last_cost: p.last_cost,
                 last_price: p.last_price,
-                product_category_id: p.product_category?.id,
-                product_type_id: p.product_type?.id,
-                supplier_id: p.supplier?.id,
-                measurement_unit_id: p.measurement_unit?.id,
-                color_id: p.color?.id,
-                contact_id: p.contact?.id,
-                weight_measurement_unit_id: p.weight_measurement_unit?.id,
-                thickness_measurement_unit_id: p.thickness_measurement_unit?.id,
+                product_category_id: p.product_category?.id || null,
+                product_type_id: p.product_type?.id || null,
+                supplier_id: p.supplier?.id || null,
+                measurement_unit_id: p.measurement_unit?.id || null,
+                color_id: p.color?.id || null,
+                contact_id: p.contact?.id || null,
+                weight_measurement_unit_id: p.weight_measurement_unit?.id || null,
+                thickness_measurement_unit_id: p.thickness_measurement_unit?.id || null,
             } as IProductForm)}
             validateBeforeSave={(v) => !!v.name && !!v.product_type_id && !!v.product_category_id && !!v.measurement_unit_id}
             renderFields={() => (
@@ -196,9 +197,9 @@ const ProductsForm = () => {
 
                         {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
                         {/*    <SelectFieldControlled<IProductForm>*/}
-                        {/*        label={t("products.color")}*/}
+                        {/*        label={t("products.api")}*/}
                         {/*        name={"color_id"}*/}
-                        {/*        options={colors.map(c => ({value: c.id, label: c.color}))}*/}
+                        {/*        options={colors.map(c => ({value: c.id, label: c.api}))}*/}
                         {/*    />*/}
                         {/*</Box>*/}
 

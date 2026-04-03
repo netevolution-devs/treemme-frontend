@@ -9,7 +9,7 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const MachineryList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: machines = [], isLoading} = machineApi.useGetList();
+    const {data: machines = [], isLoading, isFetching} = machineApi.useGetList();
 
     const {useStore} = usePanel<unknown, IMachineryStoreState>();
     const {selectedMachineryId} = useStore(state => state.uiState);
@@ -17,6 +17,10 @@ const MachineryList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IMachine>[]>(
         () => [
+            {
+                accessorKey: "prefix",
+                header: t("production.machinery.prefix"),
+            },
             {
                 accessorKey: "name",
                 header: t("production.machinery.name"),
@@ -29,6 +33,7 @@ const MachineryList = () => {
         <GenericList<IMachine>
             data={machines}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedMachineryId}
             onRowSelect={(id) => setUIState({selectedMachineryId: id})}

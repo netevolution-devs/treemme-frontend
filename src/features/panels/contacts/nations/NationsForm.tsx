@@ -5,15 +5,26 @@ import type {INationsStoreState} from "@features/panels/contacts/nations/Nations
 import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type INationForm = Omit<INation, "id">;
 
-const NationsForm = () => {
+const NationsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, INationsStoreState>();
     const selectedNationId = useStore(state => state.uiState.selectedNationId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedNationId,
+        onSuccess,
+        setFormState
+    });
 
     const { useGetDetail, usePost, usePut, useDelete } = nationsApi;
     const {data: nation} = useGetDetail(selectedNationId);
@@ -23,9 +34,10 @@ const NationsForm = () => {
 
     return (
         <GenericForm<INationForm, INation, INationsStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedNationId}
             entity={nation}
-            emptyValues={{ name: '' }}
+            emptyValues={{ name: initialName ?? '' }}
             mapEntityToForm={(n) => ({ name: n.name })}
             create={(payload) => createNation(payload)}
             update={(id, payload) => updateNation({ id, payload })}

@@ -3,6 +3,8 @@ import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldPr
 import { useTranslation } from "react-i18next";
 import { Autocomplete, TextField, Box } from "@mui/material";
 import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
+import { useEffect, useState } from "react";
+import { useDockviewStore } from "@ui/panel/store/DockviewStore.ts";
 
 interface SelectFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     options: { value: string | number; label: string }[];
@@ -28,6 +30,13 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
         formState: { disabled }
     } = useFormContext<TFieldValues>();
 
+    const activePanelId = useDockviewStore(state => state.activePanelId);
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        setOpen(false);
+    }, [activePanelId]);
+
     const formattedLabel = required && label ? `${label} *` : label;
 
     return (
@@ -44,13 +53,16 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                     <Autocomplete
                         sx={{ minWidth, width: "100%" }}
                         options={options}
+                        open={open}
+                        onOpen={() => setOpen(true)}
+                        onClose={() => setOpen(false)}
                         disabled={disabled || deactivated}
                         value={selectedOption}
                         noOptionsText={t("common:search.no-options")}
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
                         onChange={(_, newValue) => {
-                            onChange(newValue ? newValue.value : 0);
+                            onChange(newValue ? newValue.value : null);
                         }}
                         onBlur={onBlur}
                         onKeyDown={(e) => {

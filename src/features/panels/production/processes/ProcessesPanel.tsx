@@ -4,7 +4,7 @@ import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
 import ProcessesList from "@features/panels/production/processes/ProcessesList.tsx";
 
 export interface IProcessesStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedProcessId?: number | null;
 }
 
 export interface IProcessStoreFilter {
@@ -18,9 +18,8 @@ const ProcessesPanel = () => {
         <GenericPanel<unknown, IProcessesStoreState>
             kind={"processes"}
             initialState={{uiState: initialUiState}}
-        >
-            <ProcessesList />
-        </GenericPanel>
+            listComponent={<ProcessesList />}
+        />
     )
 }
 

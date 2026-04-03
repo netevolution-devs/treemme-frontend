@@ -99,5 +99,13 @@
   "work_area_management": {
     "name": "Name",
     "description": "Description"
+  },
+  "currencies": {
+    "name": "Name",
+    "sign": "Sign",
+    "abbreviation": "Abbreviation",
+    "last_rate": "Last rate",
+    "change_value": "Change",
+    "date": "Date"
   }
 }

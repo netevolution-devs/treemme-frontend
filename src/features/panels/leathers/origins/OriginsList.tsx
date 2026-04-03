@@ -14,17 +14,20 @@ const OriginsList = () => {
     const selectedOriginId = useStore(state => state.uiState.selectedOriginId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: origins = [], isLoading} = originApi.useGetList();
+    const {data: origins = [], isLoading, isFetching} = originApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IOrigin>[]>(() => [
         {
             accessorKey: "code",
             header: t("leathers.origin.code"),
-            size: 0
         },
         {
             accessorKey: "nation.name",
             header: t("nations.name"),
+        },
+        {
+            accessorKey: "area.name",
+            header: t("leathers.origin.area"),
         },
     ], [t]);
 
@@ -32,6 +35,7 @@ const OriginsList = () => {
         <GenericList<IOrigin>
             data={origins}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedOriginId}
             onRowSelect={(id) => setUIState({selectedOriginId: id})}

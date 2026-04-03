@@ -27,6 +27,14 @@ import SelectionPanel from "@features/panels/products/selection/SelectionPanel.t
 import SubcontractingNotReturnedPanel from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
 import ProcessesPanel from "@features/panels/production/processes/ProcessesPanel.tsx";
 import WorkingsPanel from "@features/panels/production/workings/WorkingsPanel.tsx";
+import CurrenciesExchangePanel from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
+import ArticleColorsPanel from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
+import ArticleClassesPanel from "@features/panels/products/article-classes/ArticleClassesPanel.tsx";
+import DeliveryNotesRowsPanel from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
+import OrderRowsPanel from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
+import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatchesPanel.tsx";
+import PaymentTypesPanel from "@features/panels/commercial/payment-types/PaymentTypesPanel.tsx";
+import ShipmentConditionsPanel from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel.tsx";
 import UserManagementPanel from "@features/panels/user-management/UserManagementPanel.tsx";
 import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel.tsx";
 import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel.tsx";
@@ -54,6 +62,8 @@ export type TPanelKind =
     | 'machinery'
     | 'articleTypes'
     | 'deliveryNotes'
+    | 'deliveryNotesRows'
+    | 'orderRows'
     | 'reasons'
     | 'selection'
     | 'subcontractingNotReturned'
@@ -62,6 +72,12 @@ export type TPanelKind =
     | 'user-management'
     | 'organization-management'
     | 'functionality-management'
+    | 'currenciesExchange'
+    | 'articleColors'
+    | 'articleClasses'
+    | 'lotsBatches'
+    | 'paymentTypes'
+    | 'shipmentConditions'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -71,10 +87,10 @@ export const PANEL_REGISTRY: DockviewComponents = {
     contacts:   (props) => <ContactsPanel {...props}/>,
     cap:        () => <CapPanel/>,
     province:   (props) => <ProvincePanel {...props}/>,
-    nations:    () => <NationsPanel/>,
+    nations:    (props) => <NationsPanel {...props}/>,
     seaports:   () => <SeaportsPanel/>,
     // leathers
-    leathers:       () => <LeathersPanel/>,
+    leathers:       (props) => <LeathersPanel {...props}/>,
     weights:        (props) => <WeightsPanel {...props}/>,
     species:        (props) => <SpeciesPanel {...props}/>,
     thicknesses:    (props) => <ThicknessesPanel {...props}/>,
@@ -82,21 +98,35 @@ export const PANEL_REGISTRY: DockviewComponents = {
     flaying:        (props) => <FlayingPanel {...props}/>,
     tanningStages:  (props) => <TanningStagesPanel {...props}/>,
     origins:        (props) => <OriginsPanel {...props}/>,
-    // production
-    batches: () => <BatchesPanel/>,
+    // products
+    products:           () => <ProductsPanel/>,
+    articles:           (props) => <ArticlesPanel {...props}/>,
+    selection:          (props) => <SelectionPanel {...props}/>,
+    productCategories:  () => <ProductCategoriesPanel/>,
+    productTypes:       () => <ProductTypesPanel/>,
+    articleTypes:       (props) => <ArticleTypesPanel {...props}/>,
+    articleColors:      (props) => <ArticleColorsPanel {...props}/>,
+    articleClasses:     (props) => <ArticleClassesPanel {...props}/>,
+    // orders
     customerOrders: () => <CustomerOrdersPanel/>,
-    products: () => <ProductsPanel/>,
-    productCategories: () => <ProductCategoriesPanel/>,
-    productTypes: () => <ProductTypesPanel/>,
-    articles: () => <ArticlesPanel/>,
-    machinery: () => <MachineryPanel/>,
-    articleTypes: (props) => <ArticleTypesPanel {...props}/>,
-    deliveryNotes: () => <DeliveryNotesPanel />,
-    reasons: () => <ReasonsPanel />,
-    selection: () => <SelectionPanel />,
-    subcontractingNotReturned: () => <SubcontractingNotReturnedPanel />,
-    processes: () => <ProcessesPanel />,
-    workings: () => <WorkingsPanel />,
+    orderRows:      (props) => <OrderRowsPanel {...props}/>,
+    // warehouse
+    lotsBatches: () => <LotsBatchesPanel />,
+    // production
+    batches:    (props) => <BatchesPanel {...props}/>,
+    machinery:  () => <MachineryPanel/>,
+    processes:  () => <ProcessesPanel />,
+    workings:   () => <WorkingsPanel />,
+    // ddt
+    deliveryNotes:              () => <DeliveryNotesPanel />,
+    deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
+    reasons:                    () => <ReasonsPanel />,
+    subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
+    // commercial
+    currenciesExchange: () => <CurrenciesExchangePanel />,
+    paymentTypes:       (props) => <PaymentTypesPanel {...props}/>,
+    shipmentConditions: (props) => <ShipmentConditionsPanel {...props}/>,
+    // system
     "user-management": () => <UserManagementPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
     "functionality-management": () => <FunctionalityManagementPanel />,

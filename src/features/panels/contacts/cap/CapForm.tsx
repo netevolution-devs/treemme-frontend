@@ -13,7 +13,7 @@ import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 export type ICapForm = {
     cap: string;
     name: string;
-    province_id: number;
+    province_id: number | null;
 };
 
 const CapForm = () => {
@@ -31,11 +31,11 @@ const CapForm = () => {
         <GenericForm<ICapForm, ICap, ICapStoreState>
             selectedId={selectedCapId}
             entity={cap}
-            emptyValues={{ cap: '', name: '', province_id: 0 }}
+            emptyValues={{ cap: '', name: '', province_id: null }}
             mapEntityToForm={(c) => ({
                 cap: c.cap,
                 name: c.name,
-                province_id: c.province.id
+                province_id: c.province?.id || null
             })}
             create={(payload) => createCap(payload)}
             update={(id, payload) => updateCap({ id, payload })}

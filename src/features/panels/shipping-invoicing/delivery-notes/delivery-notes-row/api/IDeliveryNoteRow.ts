@@ -3,6 +3,7 @@ import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-uni
 import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
 
 import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
+import type {IWorking} from "@features/panels/production/workings/api/IWorking.ts";
 
 export interface IDeliveryNoteRow {
     id: number;
@@ -22,4 +23,6 @@ export interface IDeliveryNoteRow {
     row_note: string | null;
     whole_piece: number | null;
     half_piece: number | null;
+    processing: IWorking | null;
+    stock_pieces: number;
 }

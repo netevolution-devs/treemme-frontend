@@ -15,8 +15,8 @@ const WorkingsPanel = () => {
         <GenericPanel<unknown, IWorkingsStoreState>
             kind={"workings"}
             initialState={{uiState: initialUiState}}
+            listComponent={<WorkingsList/>}
         >
-            <WorkingsList/>
             <WorkingsForm/>
         </GenericPanel>
     )

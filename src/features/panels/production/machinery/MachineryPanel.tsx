@@ -15,8 +15,8 @@ const MachineryPanel = () => {
         <GenericPanel<unknown, IMachineryStoreState>
             kind={"machinery"}
             initialState={{uiState: initialUiState}}
+            listComponent={<MachineryList/>}
         >
-            <MachineryList/>
             <MachineryForm/>
         </GenericPanel>
     )

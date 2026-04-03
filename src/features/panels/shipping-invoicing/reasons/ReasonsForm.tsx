@@ -10,10 +10,9 @@ import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import {Box} from "@mui/material";
 
 export type IDeliveryReasonForm = Omit<IDeliveryReason, "id" | "warehouse_movement_reason"> & {
-    warehouse_movement_reason_id: number;
+    warehouse_movement_reason_id: number | null;
 };
 
 const ReasonsForm = () => {
@@ -37,11 +36,11 @@ const ReasonsForm = () => {
             entity={deliveryReason}
             emptyValues={{
                 name: "",
-                warehouse_movement_reason_id: 0,
+                warehouse_movement_reason_id: null,
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
-                warehouse_movement_reason_id: x.warehouse_movement_reason?.id,
+                warehouse_movement_reason_id: x.warehouse_movement_reason?.id ?? null,
             })}
             create={(payload) => createReason(payload as IDeliveryReasonPayload)}
             update={(id, payload) => updateReason({id, payload: payload as IDeliveryReasonPayload})}
@@ -51,7 +50,7 @@ const ReasonsForm = () => {
             onClearSelection={() => setUIState({selectedDeliveryReasonId: null})}
             validateBeforeSave={(v) => !!v.name && !!v.warehouse_movement_reason_id}
             renderFields={() => (
-                <Box sx={{display: 'flex', flexDirection: 'column', gap: 1}}>
+                <>
                     <TextFieldControlled<IDeliveryReasonForm>
                         name="name"
                         label={t("shipping.reasons.name")}
@@ -63,7 +62,7 @@ const ReasonsForm = () => {
                         options={warehouseMovementReasons.map(x => ({label: x.name, value: x.id}))}
                         required
                     />
-                </Box>
+                </>
             )}
         />
     )

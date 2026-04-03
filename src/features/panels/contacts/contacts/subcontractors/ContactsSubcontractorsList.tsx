@@ -11,7 +11,7 @@ import CustomButton from "@features/panels/shared/CustomButton.tsx";
 import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import ContactsSubcontractorFormDialog from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorFormDialog.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import {MenuItem} from "@mui/material";
+import {MenuItem, Typography} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useRemoveSubcontractorFromContact from "@features/panels/contacts/contacts/subcontractors/api/useRemoveSubcontractorFromContact.ts";
@@ -25,8 +25,8 @@ const ContactsSubcontractorsList = () => {
     const selectedSubcontractorId = useStore(state => state.uiState.selectedSubcontractorId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
-    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor) || [];
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
+    const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor).filter(Boolean) || [];
 
     const {mutateAsync: deleteSubcontractor} = useRemoveSubcontractorFromContact(selectedContactId as number);
 
@@ -51,8 +51,10 @@ const ContactsSubcontractorsList = () => {
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
+                disableBorder
                 data={subcontractors}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedSubcontractorId}
                 onRowSelect={(id) => setUIState({selectedSubcontractorId: id})}
@@ -62,6 +64,7 @@ const ContactsSubcontractorsList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                         <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.subcontractors.list")}</Typography>}
                             buttons={[
                                 <CustomButton
                                     isEnable={!!selectedContactId}
@@ -76,10 +79,11 @@ const ContactsSubcontractorsList = () => {
                         />
                     ),
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
                             setUIState({selectedSubcontractorId: row.original.id});
+                            closeMenu();
                         }}>
                             <DeleteIcon color={"error"}/>
                             {t("common:button.remove")}

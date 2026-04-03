@@ -21,14 +21,16 @@
       "tanning-stages": "Stati di Lavorazione"
     },
     "products": {
-      "self": "Prodotti",
+      "self": "Articoli",
       "selection": "Scelte",
       "articles": "Articoli",
       "search": "Ricerca Prodotti",
       "products": "Prodotti",
       "categories": "Categorie",
       "article-types": "Tipologie Articoli",
-      "products-types": "Tipologie Prodotti"
+      "products-types": "Tipologie Prodotti",
+      "article-colors": "Colori Articoli",
+      "article-classes": "Classi Articoli"
     },
     "orders": {
       "self": "Ordini",
@@ -36,13 +38,14 @@
       "supplier-orders": "Ordini Fornitori",
       "search-customer-orders": "Ricerca Ordini Clienti",
       "supplier-schedule": "Scadenziario Fornitori",
-      "search-supplier-orders": "Ricerca Ordini Fornitori"
+      "search-supplier-orders": "Ricerca Ordini Fornitori",
+      "rows": "Riga Ordine"
     },
     "warehouse": {
       "self": "Magazzino",
       "movements": "Movimenti di Magazzino",
       "pallet-types": "Tipologie Pallets",
-      "lots-batches": "Lotti e Partite",
+      "lots-batches": "Magazzino Lotti",
       "search-lots-batches": "Ricerca Lotti/Partite",
       "subcontracting-lots": "Lotti in Conto Lavorazione"
     },
@@ -67,7 +70,8 @@
       "deliveryNotes": "DeliveryNotes",
       "reasons": "Ragioni di trasporto",
       "subcontractingNotReturned": "SubcontractingNotReturned",
-      "subcontracting-not-returned": "Lotti conto lavoro"
+      "subcontracting-not-returned": "Lotti conto lavoro",
+      "rows": "Riga DDT"
     },
     "commercial": {
       "self": "Commerciale",
@@ -77,7 +81,10 @@
       "product-costs": "Costo Prodotti",
       "price-list": "Listino Prodotti",
       "work-reports": "Rapportini di Lavoro",
-      "currencies-exchange": "Valute e Cambi"
+      "currencies-exchange": "Valute e Cambi",
+      "currenciesExchange": "CurrenciesExchange",
+      "payment-types": "Tipi pagamento",
+      "shipment-conditions": "Condizioni resa"
     },
     "analysis": {
       "self": "Analisi",

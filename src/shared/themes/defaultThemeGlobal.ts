@@ -43,6 +43,17 @@ const baseTheme: ThemeOptions = {
             }),
         },
 
+        MuiCard: {
+            variants: [
+                {
+                    props: {variant: 'outlined'},
+                    style: () => ({
+                        boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+                    }),
+                },
+            ],
+        },
+
         MuiTypography: {
             styleOverrides: {
                 root: {
@@ -136,6 +147,17 @@ const baseTheme: ThemeOptions = {
             defaultProps: {
                 disableRipple: true,
             },
+        },
+
+        MuiButton: {
+            styleOverrides: {
+                contained: {
+                    boxShadow: 'none',
+                    '&:hover': {
+                        boxShadow: 'none',
+                    },
+                }
+            }
         },
 
         MuiIconButton: {
@@ -273,6 +295,12 @@ const lightTheme: Theme = createTheme({
     palette: {
         mode: 'light',
         primary: getPrimaryColors(),
+        secondary: {
+            main: '#64748b',
+            light: '#94a3b8',
+            dark: '#475569',
+            contrastText: '#ffffff',
+        },
         success: {
             main: '#2e7d32',
             light: '#4caf50',
@@ -304,7 +332,8 @@ const lightTheme: Theme = createTheme({
             card: {
                 default: '#ffffff',
                 notSelected: '#ececec'
-            }
+            },
+            panel: "#E4EBEE"
         },
         text: {
             primary: '#0f172a',
@@ -366,6 +395,12 @@ const darkTheme: Theme = createTheme({
     palette: {
         mode: 'dark',
         primary: getPrimaryColors(),
+        secondary: {
+            main: '#94a3b8',
+            light: '#cbd5e1',
+            dark: '#64748b',
+            contrastText: '#000000',
+        },
         background: {
             default: '#1e1e1e',
             paper: '#151414',
@@ -373,7 +408,8 @@ const darkTheme: Theme = createTheme({
             card: {
                 default: "#151414",
                 notSelected: "#080808"
-            }
+            },
+            panel: "#272727;"
         },
         text: {
             primary: 'rgba(255,255,255,0.92)',
@@ -401,7 +437,7 @@ const darkTheme: Theme = createTheme({
             }
         },
         ...baseTheme.components,
-    }
+    },
 });
 
 export type ThemeMode = 'light' | 'dark';

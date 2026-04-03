@@ -8,19 +8,25 @@ const BatchesContent = () => {
         <>
             <Box sx={{
                 display: 'flex',
-                flexDirection: {sm: 'column', md: 'row'},
+                flexDirection: 'row',
+                flexWrap: 'wrap',
                 alignItems: 'flex-start',
                 gap: 2,
                 width: '100%'
             }}>
-                <Box sx={{minWidth: 0}}>
+                <Box sx={{
+                    minWidth: '600px',
+                    flex: '1 1 600px',
+                }}>
                     <BatchesForm/>
                 </Box>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: "column",
+                    flex: '1 1 350px',
                     gap: 1,
-                    minWidth: 0
+                    overflow: 'hidden',
+                    minWidth: '300px',
                 }}>
                     <BatchesCompositionList/>
                 </Box>
