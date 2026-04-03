@@ -231,7 +231,7 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                                     initialValue: input,
                                     menu: {
                                         component: "paymentTypes",
-                                        i18nKey: "menu.contacts.payment-types"
+                                        i18nKey: "menu.commercial.payment-types"
                                     }
                                 })
                             }}
@@ -260,7 +260,7 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                                     initialValue: input,
                                     menu: {
                                         component: "paymentTypes",
-                                        i18nKey: "menu.contacts.payment-types"
+                                        i18nKey: "menu.commercial.payment-types"
                                     }
                                 })
                             }}
@@ -274,7 +274,7 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                                     initialValue: input,
                                     menu: {
                                         component: "shipmentConditions",
-                                        i18nKey: "menu.contacts.shipment-conditions"
+                                        i18nKey: "menu.commercial.shipment-conditions"
                                     }
                                 })
                             }}
