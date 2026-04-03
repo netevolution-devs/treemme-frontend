@@ -83,8 +83,8 @@
       "work-reports": "Rapportini di Lavoro",
       "currencies-exchange": "Valute e Cambi",
       "currenciesExchange": "CurrenciesExchange",
-      "paymentTypes": "PaymentTypes",
-      "shipmentConditions": "ShipmentConditions"
+      "payment-types": "Tipi pagamento",
+      "shipment-conditions": "Condizioni resa"
     },
     "analysis": {
       "self": "Analisi",

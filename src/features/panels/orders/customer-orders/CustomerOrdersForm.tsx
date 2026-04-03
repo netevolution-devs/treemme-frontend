@@ -4,10 +4,10 @@ import {Box} from "@mui/material";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import {paymentApi} from "@features/panels/shared/api/payment/paymentApi.ts";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
 import {useEffect} from "react";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
@@ -194,7 +194,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 */}
                 <SelectFieldControlled<ICustomerOrderForm>
                     name={"payment_id"}
-                    label={t("orders.payment")}
+                    label={t("orders.api")}
                     options={payments.map(p => ({value: p.id, label: p.name}))}
                     required
                 />

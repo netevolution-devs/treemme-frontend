@@ -1,6 +1,6 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
 import type {IUser} from "@features/user/model/UserInterfaces.ts";
-import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 import type {
     IShipmentCondition
 } from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";

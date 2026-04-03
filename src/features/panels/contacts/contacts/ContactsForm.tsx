@@ -16,7 +16,7 @@ import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormBut
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm.tsx";
-import {paymentApi} from "@features/panels/shared/api/payment/paymentApi.ts";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
 import {
     shipmentConditionApi
 } from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
@@ -205,12 +205,12 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                         variant="subtitle1"
                         sx={{mb: 1}}
                     >
-                        {t("contacts.payment")}
+                        {t("contacts.api")}
                     </Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"payment_id"}
-                            label={t("orders.payment")}
+                            label={t("orders.api")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
                         />
@@ -225,12 +225,12 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                         variant="subtitle1"
                         sx={{mb: 1}}
                     >
-                        {t("contacts.payment")}
+                        {t("contacts.api")}
                     </Typography>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"payment_id"}
-                            label={t("orders.payment")}
+                            label={t("orders.api")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
                         />
