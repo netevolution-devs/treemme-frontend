@@ -1,4 +1,6 @@
 import {TextField} from "@mui/material";
+import {alpha} from "@mui/material/styles";
+import {useMemo} from "react";
 
 interface TextFieldValueProps {
     label: string;
@@ -8,15 +10,16 @@ interface TextFieldValueProps {
 }
 
 const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps) => {
-    let displayValue: string | number = "";
-
-    if (isFilled && value !== undefined) {
+    const displayValue = useMemo(() => {
+        if (value === undefined || value === null) return "";
         if (typeof value === "number" && precision !== undefined) {
-            displayValue = value.toFixed(precision);
-        } else {
-            displayValue = value;
+            return value.toFixed(precision);
         }
-    }
+        return value.toString();
+    }, [value, precision]);
+
+    const shouldShrink = isFilled || (value !== undefined && value !== null && value !== "");
+
     return (
         <TextField
             label={label}
@@ -24,7 +27,12 @@ const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps
             sx={{mb: 0.5}}
             slotProps={{
                 inputLabel: {
-                    shrink: isFilled
+                    shrink: shouldShrink
+                },
+                input: {
+                    sx: {
+                        backgroundColor: theme => alpha(theme.palette.primary.main, 0.1),
+                    }
                 }
             }}
             disabled

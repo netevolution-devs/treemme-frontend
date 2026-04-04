@@ -21,7 +21,7 @@ const ContactsAddressList = () => {
     const selectedAddressId = useStore(state => state.uiState.selectedAddressId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
 
     const columns = useMemo<MRT_ColumnDef<IContactAddress>[]>(() => [
         {
@@ -66,8 +66,10 @@ const ContactsAddressList = () => {
             <ContactsAddressFormDialog ref={editDialogRef}/>
 
             <GenericList<IContactAddress>
+                disableBorder
                 data={contact?.contact_addresses || []}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedAddressId}
                 onRowSelect={(id) => setUIState({selectedAddressId: id})}
@@ -76,6 +78,7 @@ const ContactsAddressList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar:
                         <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
                             buttons={[
                                 <NewButton
                                     isEnable={!!selectedContactId}

@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
 import type {
     IBatchSelectionForm,

@@ -19,8 +19,8 @@ const TanningStagesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, ITanningStagesStoreState>
             kind={"tanningStages"}
             initialState={{uiState: initialUiState}}
+            listComponent={<TanningStagesList/>}
         >
-            <TanningStagesList/>
             <TanningStagesForm {...props.params}/>
             <TanningStagesContent/>
         </GenericPanel>

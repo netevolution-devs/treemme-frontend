@@ -15,8 +15,8 @@ const ReasonsPanel = () => {
         <GenericPanel<unknown, IReasonsStoreState>
             kind={"reasons"}
             initialState={{uiState: initialUiState}}
+            listComponent={<ReasonsList/>}
         >
-            <ReasonsList/>
             <ReasonsForm/>
         </GenericPanel>
     )

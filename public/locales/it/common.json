@@ -45,7 +45,9 @@
       "at-least-one-select-required": "Selezionare almeno uno",
       "only-numbers": "Solo numeri consentiti",
       "unsaved_changes": "Ci sono modifiche non salvate",
-      "pending_save": "Salvataggio in corso..."
+      "pending_save": "Salvataggio in corso...",
+      "min": "Inserire un valore maggiore o uguale a ",
+      "max": "Inserire un valore minore o uguale a "
     }
   },
   "search": {

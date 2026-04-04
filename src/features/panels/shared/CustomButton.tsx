@@ -1,4 +1,4 @@
-import {Button} from "@mui/material";
+import {Button, CircularProgress, type SxProps} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import type {ReactNode} from "react";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,11 +9,14 @@ interface CustomButtonProps {
     color: "primary" | "success" | "error" | "warning" | "inherit";
     isSubmit?: boolean;
     isEnable?: boolean;
+    isLoading?: boolean;
     icon: ReactNode;
     variant?: "text" | "outlined" | "contained";
+    minWidth?: number;
+    sx?: SxProps;
 }
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, icon, variant = "outlined"}: CustomButtonProps) => {
+const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, isLoading = false, icon, variant = "outlined", minWidth = 100, sx}: CustomButtonProps) => {
     const {t} = useTranslation(["common"]);
 
     return (
@@ -22,15 +25,16 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             onClick={onClick}
             color={color}
             size="small"
-            startIcon={icon}
+            startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : icon}
             sx={{
                 height: "100%",
-                minWidth: 100,
+                minWidth: minWidth,
                 fontWeight: 'bold',
-                textTransform: 'none'
+                textTransform: 'none',
+                ...sx
             }}
             type={isSubmit ? "submit" : "button"}
-            disabled={!isEnable}
+            disabled={!isEnable || isLoading}
         >
             {t(label)}
         </Button>
@@ -40,16 +44,20 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
 interface CustomButtonPropsEvent {
     onClick: () => void;
     isEnable?: boolean;
+    disableLabel?: boolean;
+    sx?: SxProps;
 }
 
-export const NewButton = ({onClick, isEnable = true}: CustomButtonPropsEvent) => {
+export const NewButton = ({onClick, isEnable = true, disableLabel = false, sx}: CustomButtonPropsEvent) => {
     return (
         <CustomButton
             onClick={onClick}
-            label={"button.new"}
+            label={!disableLabel ? "button.new" : ""}
             color={"primary"}
+            minWidth={disableLabel ? 0 : 100}
             icon={<AddIcon/>}
             isEnable={isEnable}
+            sx={sx as SxProps}
         />
     )
 }

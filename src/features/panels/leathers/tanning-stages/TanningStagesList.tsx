@@ -14,7 +14,7 @@ const TanningStagesList = () => {
     const selectedTanningStageId = useStore(state => state.uiState.selectedTanningStageId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: tanningStages = [], isLoading} = tanningStageApi.useGetList();
+    const {data: tanningStages = [], isLoading, isFetching} = tanningStageApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<ITanningStage>[]>(() => [
         {
@@ -32,6 +32,7 @@ const TanningStagesList = () => {
         <GenericList<ITanningStage>
             data={tanningStages}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedTanningStageId}
             onRowSelect={(id) => setUIState({selectedTanningStageId: id})}

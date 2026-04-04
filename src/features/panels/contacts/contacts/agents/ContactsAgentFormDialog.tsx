@@ -5,7 +5,9 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import useAddAgentToContact from "@features/panels/contacts/contacts/agents/api/useAddAgentToContact.ts";
+import useAddAgentToContact, {
+    type IAddAgentToContactPayload
+} from "@features/panels/contacts/contacts/agents/api/useAddAgentToContact.ts";
 import {Typography} from "@mui/material";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import CustomButton from "@features/panels/shared/CustomButton.tsx";
@@ -15,7 +17,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 type Props = unknown;
 
 export type IContactAgentForm = {
-    agent_id: number;
+    agent_id: number | null;
 }
 
 const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -45,13 +47,13 @@ const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
                 bypassConfirm
                 selectedId={selectedContactId}
                 entity={{
-                    agent_id: 0,
+                    agent_id: null,
                 }}
                 emptyValues={{
-                    agent_id: 0,
+                    agent_id: null,
                 }}
                 mapEntityToForm={(x) => ({agent_id: x.agent_id})}
-                create={(payload) => addAgent(payload)}
+                create={(payload) => addAgent(payload as IAddAgentToContactPayload)}
                 validateBeforeSave={(v) => !!v.agent_id}
                 extraButtons={[
                     <CustomButton
@@ -68,6 +70,7 @@ const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
                             name={"agent_id"}
                             label={t("contacts.agent")}
                             options={filteredAgents.map((x) => ({label: x.name, value: x.id}))}
+                            required
                         />
                     </>
                 )}

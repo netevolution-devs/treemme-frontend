@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {
     IDeliveryReason
 } from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason.ts";

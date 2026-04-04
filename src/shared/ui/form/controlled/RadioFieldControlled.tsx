@@ -19,7 +19,7 @@ const RadioFieldControlled = <TFieldValues extends FieldValues>({
                                                                      name,
                                                                      label,
                                                                      required = false,
-                                                                     showHelperRow = true,
+                                                                     showHelperRow = false,
                                                                      options = [],
                                                                      row = true,
                                                                  }: RadioFieldProps<TFieldValues>) => {
@@ -48,14 +48,14 @@ const RadioFieldControlled = <TFieldValues extends FieldValues>({
                                 {formattedLabel}
                             </FormLabel>
                         )}
-                        <Box sx={{ p: 1 }}>
+                        <Box sx={{ px: 1, pt: 1 }}>
                             <RadioGroup
                                 row={row}
                                 value={currentValue === "" ? "" : String(currentValue)}
                                 onChange={(event) => {
                                     const val = event.target.value;
                                     const option = options.find(opt => String(opt.value) === val);
-                                    onChange(option ? option.value : val);
+                                    onChange(option ? option.value : null);
                                 }}
                                 onBlur={onBlur}
                                 ref={ref}

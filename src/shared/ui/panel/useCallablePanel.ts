@@ -11,6 +11,7 @@ interface CallablePanelProps<TExtra = unknown> {
         'i18nKey'
     >
     extra?: TExtra;
+    customId?: string;
 }
 
 const useCallablePanel = () => {
@@ -18,7 +19,7 @@ const useCallablePanel = () => {
     const addPanel = useDockviewStore(state => state.addPanel);
     const queryClient = useQueryClient();
 
-    const add = useCallback(({initialValue, menu, extra}: CallablePanelProps) => {
+    const add = useCallback(({initialValue, menu, extra, customId}: CallablePanelProps) => {
         const dockviewApi = useDockviewStore.getState().api;
 
         let floatingPanelsCount = 0;
@@ -30,7 +31,7 @@ const useCallablePanel = () => {
         const offset = (floatingPanelsCount % 6) * 50;
 
         addPanel({
-            id: `${menu.component}:${crypto.randomUUID()}`,
+            id: customId || `${menu.component}:${crypto.randomUUID()}`,
             component: menu.component || "not-implemented",
             title: t(menu.i18nKey),
             floating: {
@@ -46,7 +47,7 @@ const useCallablePanel = () => {
                 },
                 extra
             }
-        });
+        }, {overrideLogic: true});
     }, [addPanel, t, queryClient]);
 
     return {add};

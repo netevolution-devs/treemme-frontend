@@ -4,11 +4,12 @@ import UserProfileCard from "./UserProfileCard.tsx";
 import ButtonLogout from "@features/auth/ui/ButtonLogout.tsx";
 import {SettingsSection} from "@features/settings/ui/default/SettingsPage.tsx";
 import BaseSettingsContainer from "@ui/container/BaseSettingsContainer.tsx";
-import {Stack} from "@mui/material";
+import {Box, Stack, Typography} from "@mui/material";
 import ButtonStartOtpSetup from "@features/auth/ui/ButtonStartOtpSetup.tsx";
 // import useGetProfile from "@features/profile/api/useGetProfile.ts";
 // import {useAuth} from "@features/auth/model/AuthContext.tsx";
 // import UserProfileCardSkeleton from "@features/profile/ui/default/UserProfileCardSkeleton.tsx";
+import {version} from "../../../../../package.json";
 
 const ProfilePage = () => {
     const {t} = useTranslation(["settings"]);
@@ -28,6 +29,11 @@ const ProfilePage = () => {
                         <ButtonStartOtpSetup/>
                         <ButtonLogout/>
                     </Stack>
+                    <Box sx={{width: "100%", mt: 2, mb: 2, textAlign: "center"}}>
+                        <Typography variant="caption" color="text.secondary" textAlign={"center"}>
+                            Versione di sviluppo {version}
+                        </Typography>
+                    </Box>
                 </SettingsSection>
             </BaseSettingsContainer>
         </BasePage>

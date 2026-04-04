@@ -9,6 +9,8 @@ import {closeDialog, openDialog} from "@shared/ui/dialog/dialogHelper.ts";
 import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog.tsx";
 import type {FieldValues} from "react-hook-form";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import type {IDockviewPanel} from "dockview";
 import {useAuth} from "@features/auth/model/AuthContext.tsx";
 import {permissionEngine, type ResourceName} from "@features/authz/permission.utils.ts";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
@@ -38,9 +40,14 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     dialogMode?: boolean;
     dialogRef?: ForwardedRef<IDialogActions>;
 
+    floatingPanelMode?: boolean;
+    floatingPanelUUID?: string;
+
     extraButtons?: ReactNode[];
     disabledBasicButtons?: boolean;
     bypassConfirm?: boolean;
+
+    onCreateSuccess?: (id: number) => void;
     resource?: ResourceName;
 }
 
@@ -64,9 +71,15 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         extraButtons,
         disabledBasicButtons = false,
         bypassConfirm = false,
+        onCreateSuccess,
+        floatingPanelMode = false,
+        floatingPanelUUID
+        bypassConfirm = false,
         resource,
     }: GenericFormProps<TForm, TEntity>
 ) => {
+    const dockviewApi = useDockviewStore(state => state.api);
+
     const {useStore} = usePanel<unknown, TUI>();
     const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
     const {setFormState} = usePanelFormButtons<unknown, TUI>();
@@ -81,7 +94,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     const saveRef = useRef<IDialogActions>(null);
 
     const methods = useForm<TForm>({
-        disabled: !dialogMode && isFormDisabled,
+        disabled: (!dialogMode && isFormDisabled) || isSaving,
         mode: "onSubmit",
         defaultValues: emptyValues as DefaultValues<TForm>,
     });
@@ -89,6 +102,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     const handleCloseDialog = React.useCallback(() => {
         if (dialogRef) {
             closeDialog(dialogRef)
+        }
+        if (floatingPanelMode) {
+            console.log("Removing floating panel");
+            console.log("Floating panel UUID", floatingPanelUUID);
+            const panel = dockviewApi?.getPanel(floatingPanelUUID as string) as IDockviewPanel;
+            console.log("Panel", panel);
+            dockviewApi?.removePanel(panel);
         }
     }, [dialogRef]);
 
@@ -156,10 +176,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                     setFormState('selected');
                 }
             } else {
-                const res = await create?.(cleanData);
+                const res = await create?.(cleanData) as {id: number};
                 if (res) {
                     onSuccess?.(res as TEntity);
-                    methods.reset(emptyValues);
+                    onCreateSuccess?.(res.id);
+                    if (!dialogMode) {
+                        methods.reset(emptyValues);
+                    }
                     setFormState('init');
                 }
             }
@@ -192,21 +215,27 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 handleCancel();
             }
 
-            if (event.key === "Enter" && isFormDisabled) {
+            if ((event.ctrlKey && event.key === "F7" || event.key == "Enter") && isFormDisabled) {
                 handleNew();
             }
 
             if (event.key === "Enter" && isFormDisabled && !!selectedId) {
                 handleEdit();
             }
+
+            if (event.ctrlKey && event.key === "F10" && !isFormDisabled) {
+                event.preventDefault();
+                methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
+                handleCloseDialog();
+            }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId]);
+    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId, methods, onSubmit, handleCloseDialog]);
 
     return (
-        <Box sx={{width: '100%'}}>
+       <Box sx={{width: '100%', height: '100%'}}>
             <FormProvider {...methods}>
                 <Stack
                     component="form"
@@ -229,13 +258,22 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete}
                             hideSave={disabledBasicButtons || (!canPost && !canPut)}
                             overrideButtonState={dialogMode}
+                            isLoading={isSaving}
                         />
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, flexWrap: 'wrap'}}>
-                            {extraButtons?.map((button, index) => (
-                                <React.Fragment key={index}>
-                                    {button}
-                                </React.Fragment>
-                            ))}
+                            {extraButtons?.map((button, index) => {
+                                if (React.isValidElement(button) && (button.props as {isSubmit?: boolean}).isSubmit) {
+                                    return React.cloneElement(button as React.ReactElement<{isLoading?: boolean}>, {
+                                        key: index,
+                                        isLoading: isSaving
+                                    });
+                                }
+                                return (
+                                    <React.Fragment key={index}>
+                                        {button}
+                                    </React.Fragment>
+                                );
+                            })}
                         </Box>
                     </Box>
                     <Stack sx={{mt: 3}}>

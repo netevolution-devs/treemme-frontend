@@ -4,10 +4,10 @@ import {Box} from "@mui/material";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import {paymentApi} from "@features/panels/shared/api/payment/paymentApi.ts";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
 import {useEffect} from "react";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
 import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
@@ -22,10 +22,12 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx
 import dayjs from "dayjs";
 import type {
     IShipmentCondition
-} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
 import {
     shipmentConditionApi
-} from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
+} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
+import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -34,11 +36,11 @@ export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "shipment_condition"
     | "address"
 > & {
-    client_id: number;
-    payment_id?: number;
-    agent_id?: number;
-    shipment_condition_id?: number;
-    address_id?: number;
+    client_id: number | null;
+    payment_id?: number | null;
+    agent_id?: number | null;
+    shipment_condition_id?: number | null;
+    address_id?: number | null;
 };
 
 const FormFields = ({clients, payments, shipmentConditions, order, selectedCustomerOrderId}: {
@@ -49,8 +51,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     selectedCustomerOrderId: number | null | undefined
 }) => {
     const {t} = useTranslation(["form"]);
-
-
+    
     const {setValue, control} = useFormContext<ICustomerOrderForm>();
 
     const clientId = useWatch({
@@ -60,34 +61,47 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
 
     const selectedClient = clients.find(c => c.id === clientId);
 
-    const {data: client} = contactsApi.useGetDetail(clientId);
-    const clientAddresses = client?.contact_addresses || [];
+    const {data: clientDetail} = contactsApi.useGetDetail(clientId);
+    const clientAddresses = clientDetail?.contact_addresses || [];
 
-    const agentOptions = selectedClient?.contact_agents?.map(ca => ({
+    const agentOptions = (clientDetail || selectedClient)?.contact_agents?.map(ca => ({
         value: ca.agent.id,
         label: ca.agent.name
     })) ?? [];
 
     useEffect(() => {
-        if (clientId) {
-            const client = clients.find(c => c.id === clientId);
-            if (client && client.contact_agents && client.contact_agents.length > 0) {
+        if (clientId && !selectedCustomerOrderId && clientDetail) {
+            if (clientDetail.contact_agents && clientDetail.contact_agents.length > 0) {
                 const currentAgentId = control._formValues.agent_id;
-                const isAgentInContactAgents = client.contact_agents.some(ca => ca.agent.id === currentAgentId);
+                const isAgentInContactAgents = clientDetail.contact_agents.some(ca => ca.agent.id === currentAgentId);
                 if (!isAgentInContactAgents) {
-                    setValue('agent_id', client.contact_agents[0].agent.id);
+                    setValue('agent_id', clientDetail.contact_agents[0].agent.id);
                 }
             } else {
                 setValue('agent_id', undefined);
             }
+
+            if (clientDetail.payment) {
+                setValue('payment_id', clientDetail.payment.id);
+            }
+            if (clientDetail.shipment_condition) {
+                setValue('shipment_condition_id', clientDetail.shipment_condition.id);
+            }
         }
-    }, [clientId, clients, setValue, control]);
+    }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 
     const filterAddressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
         return addressLabels
             .filter((label): label is string => !!label && label.trim().length > 0)
             .join(', ');
     };
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<ICustomerOrderForm>({
+        formKey: "client_id",
+        dependencyKey: "contacts"
+    })
 
     return (
         <>
@@ -106,14 +120,20 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
                         name={"cancelled"}
                         label={t("orders.cancelled")}
+                        width={100}
+                        disabled
                     />
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
                         name={"processed"}
                         label={t("orders.processed")}
+                        width={81}
+                        disabled
                     />
                     <FlagCheckBoxFieldControlled<ICustomerOrderForm>
                         name={"checked"}
                         label={t("orders.checked")}
+                        width={110}
+                        disabled
                     />
                 </Box>
             </Box>
@@ -124,11 +144,22 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     label={t("orders.client")}
                     options={clients.map(c => ({value: c.id, label: c.name}))}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_number")}
                     name={"client_order_number"}
-                    required
                 />
                 <DateFieldControlled<ICustomerOrderForm>
                     label={t("orders.client_order_date")}
@@ -261,10 +292,11 @@ const CustomerOrdersForm = () => {
             selectedId={selectedCustomerOrderId}
             entity={order}
             emptyValues={{
-                client_id: 0,
-                agent_id: 0,
-                address_id: 0,
-                shipment_condition_id: 0,
+                client_id: null,
+                agent_id: null,
+                address_id: null,
+                shipment_condition_id: null,
+                payment_id: null,
                 processed: false,
                 cancelled: false,
                 checked: false,
@@ -284,11 +316,11 @@ const CustomerOrdersForm = () => {
                 agent_order_date: "",
             } as ICustomerOrderForm}
             mapEntityToForm={(x) => ({
-                client_id: x.client?.id || 0,
-                agent_id: x.agent?.id,
-                address_id: x.address?.id,
-                shipment_condition_id: x.shipment_condition?.id,
-                payment_id: x.payment?.id,
+                client_id: x.client?.id || null,
+                agent_id: x.agent?.id || null,
+                address_id: x.address?.id || null,
+                shipment_condition_id: x.shipment_condition?.id || null,
+                payment_id: x.payment?.id || null,
                 processed: x.processed,
                 cancelled: x.cancelled,
                 checked: x.checked,
@@ -308,12 +340,13 @@ const CustomerOrdersForm = () => {
                 agent_order_date: x.agent_order_date,
             } as ICustomerOrderForm)}
             create={(payload) => createOrder(payload as ICustomerOrderPayload)}
+            onCreateSuccess={(id) => setUIState({selectedCustomerOrderId: id})}
             update={(id, payload) => updateOrder({id, payload: payload as ICustomerOrderPayload})}
             remove={(id) => deleteOrder(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
-            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date && !!v.client_order_number}
+            validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
             renderFields={() => (
                 <FormFields
                     clients={clients}

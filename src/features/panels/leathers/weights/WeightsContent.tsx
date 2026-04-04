@@ -9,7 +9,7 @@ const WeightsContent = () => {
     return (
         <>
             {selectedWeightId && (
-                <LeathersList panelFilter={"weight"} selectedQueryId={selectedWeightId}/>
+                <LeathersList panelFilter={"weight"} selectedQueryId={selectedWeightId} disableBorders/>
             )}
         </>
     )

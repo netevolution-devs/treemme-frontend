@@ -7,7 +7,7 @@ import type {IArticleType} from "@features/panels/products/article-types/api/IAr
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
 import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
-import {articleClassApi} from "@features/panels/products/articles/api/article-class/articleClassApi.ts";
+import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi.ts";
 import {useMemo} from "react";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
@@ -16,8 +16,8 @@ import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
 
 export type IArticleTypeForm = Omit<IArticleType, 'id' | 'article_class' | 'leather_type'> & {
-    leather_type_id: number;
-    article_class_id: number;
+    leather_type_id?: number | null;
+    article_class_id?: number | null;
 }
 
 const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
@@ -46,13 +46,13 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
             entity={articleType}
             emptyValues={{
                 name: initialName ?? '',
-                leather_type_id: 0,
-                article_class_id: 0
+                leather_type_id: null,
+                article_class_id: null
             }}
             mapEntityToForm={(at) => ({
                 name: at.name,
-                leather_type_id: at.leather_type?.id ?? 0,
-                article_class_id: at.article_class?.id ?? 0
+                leather_type_id: at.leather_type?.id ?? null,
+                article_class_id: at.article_class?.id ?? null
             })}
             create={(payload) => createArticleType(payload)}
             update={(id, payload) => updateArticleType({id, payload})}
@@ -61,7 +61,7 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticleTypeId: null})}
             onSuccess={handlePanelSuccess}
-            validateBeforeSave={(v) => !!v.name && v.leather_type_id > 0 && v.article_class_id > 0}
+            validateBeforeSave={(v) => !!v.name && !!v.leather_type_id && !!v.article_class_id}
             renderFields={() => (
                 <ArticleTypesFields/>
             )}
@@ -88,6 +88,11 @@ const ArticleTypesFields = () => {
     useSubscribePanel<IArticleTypeForm>({
         formKey: "leather_type_id",
         dependencyKey: "types"
+    })
+
+    useSubscribePanel<IArticleTypeForm>({
+        formKey: "article_class_id",
+        dependencyKey: "articleClasses"
     })
 
     return (
@@ -117,6 +122,15 @@ const ArticleTypesFields = () => {
                 label={t("products.articles.article_class")}
                 options={articleClassOptions}
                 required
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "articleClasses",
+                            i18nKey: "menu.products.article-classes"
+                        }
+                    })
+                }}
             />
         </>
     )

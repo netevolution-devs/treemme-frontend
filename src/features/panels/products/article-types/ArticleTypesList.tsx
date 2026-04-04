@@ -9,7 +9,7 @@ import GenericList from "@features/panels/shared/GenericList.tsx";
 
 const ArticleTypesList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: articleTypes = [], isLoading} = articleTypeApi.useGetList();
+    const {data: articleTypes = [], isLoading, isFetching} = articleTypeApi.useGetList();
 
     const {useStore} = usePanel<unknown, IArticleTypesStoreState>();
     const selectedArticleTypeId = useStore(state => state.uiState.selectedArticleTypeId);
@@ -23,11 +23,11 @@ const ArticleTypesList = () => {
             },
             {
                 accessorKey: "leather_type.name",
-                header: t("leathers.type.name"),
+                header: t("products.categories.leather_type"),
             },
             {
                 accessorKey: "article_class.name",
-                header: t("products.categories.name"),
+                header: t("products.categories.class"),
             }
         ],
         [t]
@@ -37,6 +37,7 @@ const ArticleTypesList = () => {
         <GenericList<IArticleType>
             data={articleTypes}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedArticleTypeId}
             onRowSelect={(id) => setUIState({selectedArticleTypeId: id})}

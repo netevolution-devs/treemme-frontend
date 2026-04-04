@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
-import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.ts";
+import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.tsx";
 import {
     MaterialReactTable,
     type MRT_ColumnDef,

@@ -14,7 +14,7 @@ const ThicknessesList = () => {
     const selectedThicknessId = useStore(state => state.uiState.selectedThicknessId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: thicknesses = [], isLoading} = thicknessApi.useGetList();
+    const {data: thicknesses = [], isLoading, isFetching} = thicknessApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IThickness>[]>(() => [
         {
@@ -33,6 +33,7 @@ const ThicknessesList = () => {
         <GenericList<IThickness>
             data={thicknesses}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedThicknessId}
             onRowSelect={(id) => setUIState({selectedThicknessId: id})}

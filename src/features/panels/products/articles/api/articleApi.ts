@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
 import type {IArticleForm} from "@features/panels/products/articles/ArticlesForm.tsx";
 

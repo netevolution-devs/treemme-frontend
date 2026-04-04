@@ -14,7 +14,7 @@ const TypesList = () => {
     const selectedTypeId = useStore(state => state.uiState.selectedTypeId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: types = [], isLoading} = leatherTypeApi.useGetList();
+    const {data: types = [], isLoading, isFetching} = leatherTypeApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<ILeatherType>[]>(() => [
         {
@@ -32,6 +32,7 @@ const TypesList = () => {
         <GenericList<ILeatherType>
             data={types}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedTypeId}
             onRowSelect={(id) => setUIState({ selectedTypeId: id })}

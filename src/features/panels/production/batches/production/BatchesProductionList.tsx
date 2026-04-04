@@ -8,6 +8,7 @@ import type {IBatchProduction} from "@features/panels/production/batches/product
 import GenericList from "@features/panels/shared/GenericList.tsx";
 import dayjs from "dayjs";
 import {Typography} from "@mui/material";
+import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
 
 const BatchesProductionList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,7 +16,7 @@ const BatchesProductionList = () => {
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
 
-    const {data: batch, isLoading} = batchApi.useGetDetail(selectedBatchId);
+    const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId);
     const productionList = batch?.productions ?? [];
 
     const columns = useMemo<MRT_ColumnDef<IBatchProduction>[]>(() => [
@@ -38,11 +39,20 @@ const BatchesProductionList = () => {
 
     return (
         <>
-            <Typography variant="h6">{t("production.title")}</Typography>
             <GenericList<IBatchProduction>
+                disableBorder
                 data={productionList}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
+                additionalOptions={{
+                    enableTopToolbar: true,
+                    renderTopToolbar: () => (
+                        <ListToolbar
+                            label={<Typography variant="h6">{t("production.title")}</Typography>}
+                        />
+                    )
+                }}
             />
         </>
     )

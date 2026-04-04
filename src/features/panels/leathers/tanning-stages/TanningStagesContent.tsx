@@ -9,7 +9,7 @@ const TanningStagesContent = () => {
     return (
         <>
             {selectedId && (
-                <LeathersList panelFilter={"status"} selectedQueryId={selectedId}/>
+                <LeathersList panelFilter={"status"} selectedQueryId={selectedId} disableBorders/>
             )}
         </>
     )

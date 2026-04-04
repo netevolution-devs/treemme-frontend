@@ -9,7 +9,7 @@ const ThicknessesContent = () => {
     return (
         <>
             {selectedId && (
-                <LeathersList panelFilter={"thickness"} selectedQueryId={selectedId}/>
+                <LeathersList panelFilter={"thickness"} selectedQueryId={selectedId} disableBorders/>
             )}
         </>
     )

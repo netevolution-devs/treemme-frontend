@@ -12,7 +12,7 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
 import ContactsAgentFormDialog from "@features/panels/contacts/contacts/agents/ContactsAgentFormDialog.tsx";
 import {openDialog} from "@ui/dialog/dialogHelper.ts";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import {MenuItem} from "@mui/material";
+import {MenuItem, Typography} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog.tsx";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useRemoveAgentFromContact from "@features/panels/contacts/contacts/agents/api/useRemoveAgentFromContact.ts";
@@ -25,7 +25,7 @@ const ContactsAgentsList = () => {
     const selectedAgentId = useStore(state => state.uiState.selectedAgentId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: contact, isLoading} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
     const agents = contact?.contact_agents.map((x) => x.agent) || [];
 
     const {mutateAsync: deleteAgent} = useRemoveAgentFromContact(selectedContactId as number);
@@ -52,8 +52,10 @@ const ContactsAgentsList = () => {
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
+                disableBorder
                 data={agents}
                 isLoading={isLoading}
+                isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedAgentId}
                 onRowSelect={(id) => setUIState({selectedAgentId: id})}
@@ -63,6 +65,7 @@ const ContactsAgentsList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                     <ListToolbar
+                            label={<Typography variant="h6">{t("contacts.agents.list")}</Typography>}
                             buttons={[
                                 <CustomButton
                                     isEnable={!!selectedContactId}
@@ -77,10 +80,11 @@ const ContactsAgentsList = () => {
                         />
                     ),
                     enableRowActions: true,
-                    renderRowActionMenuItems: ({row}) => [
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="delete" onClick={() => {
                             openDialog(deleteConfirmDialogRef);
                             setUIState({selectedAgentId: row.original.id});
+                            closeMenu();
                         }}>
                             <DeleteIcon color={"error"}/>
                             {t("common:button.remove")}

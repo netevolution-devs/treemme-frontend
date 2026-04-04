@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IArticlesStoreState} from "@features/panels/products/articles/ArticlesPanel.tsx";
+import type {IArticlesStoreState, IArticleStoreParams} from "@features/panels/products/articles/ArticlesPanel.tsx";
 import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
@@ -16,22 +16,37 @@ import {Box} from "@mui/material";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
 import useCallablePanel from "@ui/panel/useCallablePanel.ts";
 import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import {useWatch} from "react-hook-form";
+import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
 
 export type IArticleForm = {
     code: string;
     full_grain: boolean;
-    client_id: number;
-    article_type_id: number;
-    article_variation: string;
-    thickness_id: number;
-    print_id: number;
+    client_id: number | null;
+    article_type_id: number | null;
+    // article_variation: string;
+    color_id: number | null;
+    thickness_id: number | null;
+    print_id: number | null;
     note: string;
+    client_code: string | null;
 }
 
-const ArticlesForm = () => {
+const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IArticleStoreParams>) => {
     const {useStore} = usePanel<unknown, IArticlesStoreState>();
     const selectedArticledId = useStore(state => state.uiState.selectedArticledId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedArticledId,
+        onSuccess,
+        setFormState
+    });
 
     const {useGetDetail, usePost, usePut, useDelete} = articleApi;
     const {data: article} = useGetDetail(selectedArticledId);
@@ -62,27 +77,32 @@ const ArticlesForm = () => {
 
     return (
         <GenericForm<IArticleForm, IArticle, IArticlesStoreState>
+            onSuccess={handlePanelSuccess}
             selectedId={selectedArticledId}
             entity={article}
             emptyValues={{
                 code: '',
                 full_grain: false,
-                client_id: 0,
-                article_type_id: 0,
-                article_variation: '',
-                thickness_id: 0,
-                print_id: 0,
-                note: ''
+                client_id: extra?.clientId ?? null,
+                article_type_id: null,
+                // article_variation: '',
+                color_id: null,
+                thickness_id: null,
+                print_id: null,
+                note: '',
+                client_code: null,
             }}
             mapEntityToForm={(a) => ({
                 code: a.code,
                 full_grain: a.full_grain,
-                client_id: a.client?.id ?? 0,
-                article_type_id: a.article_type?.id ?? 0,
-                article_variation: a.article_variation ?? '',
-                thickness_id: a.thickness?.id ?? 0,
-                print_id: a.print?.id ?? 0,
-                note: a.note ?? ''
+                client_id: a.client?.id ?? null,
+                article_type_id: a.article_type?.id ?? null,
+                // article_variation: a.article_variation ?? '',
+                color_id: a.color?.id ?? null,
+                thickness_id: a.thickness?.id ?? null,
+                print_id: a.print?.id ?? null,
+                note: a.note ?? '',
+                client_code: a.client_code ?? null,
             })}
             create={(payload) => createArticle(payload)}
             update={(id, payload) => updateArticle({id, payload})}
@@ -90,8 +110,8 @@ const ArticlesForm = () => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticledId: null})}
-            validateBeforeSave={(v) => !!v.code && v.client_id > 0 && v.article_type_id > 0}
-            renderFields={() => <ArticlesFormFields 
+            validateBeforeSave={(v) => !!v.client_id && !!v.article_type_id && !!v.color_id}
+            renderFields={() => <ArticlesFormFields
                 article={article as IArticle}
                 selectedArticledId={selectedArticledId as number}
                 clientOptions={clientOptions}
@@ -113,28 +133,53 @@ interface ArticlesFormFieldsProps {
 }
 
 const ArticlesFormFields = ({
-    article,
-    selectedArticledId,
-    clientOptions,
-    articleTypeOptions,
-    thicknessOptions,
-    printOptions,
-}: ArticlesFormFieldsProps) => {
+                                article,
+                                selectedArticledId,
+                                clientOptions,
+                                articleTypeOptions,
+                                thicknessOptions,
+                                printOptions,
+                            }: ArticlesFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
 
+    const clientId = useWatch<IArticleForm>({name: "client_id"});
+    const {data: colors = []} = colorApi.useGetList({queryParams: {client: clientId as number}});
+
+    const colorOptions = useMemo(() =>
+            colors.map(c => ({value: c.id, label: `${c.color} - ${c.client_color}`})),
+        [colors]);
+
     const {add: addSelectPanel} = useCallablePanel();
+
     useSubscribePanel<IArticleForm>({
         formKey: 'article_type_id',
         dependencyKey: 'articleTypes'
+    });
+    useSubscribePanel<IArticleForm>({
+        formKey: "client_id",
+        dependencyKey: "contacts"
+    });
+    useSubscribePanel<IArticleForm>({
+        formKey: "color_id",
+        dependencyKey: "articleColors"
+    });
+    useSubscribePanel<IArticleForm>({
+        formKey: "thickness_id",
+        dependencyKey: "thicknesses"
     });
 
     return (
         <>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <TextFieldControlled<IArticleForm>
-                    name="code"
+                {/*<TextFieldControlled<IArticleForm>*/}
+                {/*    name="code"*/}
+                {/*    label={t("products.articles.code")}*/}
+                {/*    required*/}
+                {/*/>*/}
+                <TextFieldValue
                     label={t("products.articles.code")}
-                    required
+                    value={article?.code}
+                    isFilled={!!selectedArticledId}
                 />
                 <TextFieldValue
                     label={t("products.articles.name")}
@@ -152,7 +197,29 @@ const ArticlesFormFields = ({
                     label={t("products.articles.client")}
                     options={clientOptions}
                     required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
+                <TextFieldControlled<IArticleForm>
+                    name="client_code"
+                    label={t("products.articles.client_code")}
+                />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                {/*<TextFieldControlled<IArticleForm>*/}
+                {/*    name="article_variation"*/}
+                {/*    label={t("products.articles.article_variation")}*/}
+                {/*/>*/}
                 <SelectFieldControlled<IArticleForm>
                     name="article_type_id"
                     label={t("products.articles.article_type")}
@@ -162,20 +229,45 @@ const ArticlesFormFields = ({
                         initialValue: input,
                         menu: {
                             component: "articleTypes",
-                            i18nKey: "products.articles.article_type"
+                            i18nKey: "menu.products.article-types"
                         }
                     })}
                 />
+                <SelectFieldControlled<IArticleForm>
+                    name="color_id"
+                    label={t("products.articles.color")}
+                    options={colorOptions}
+                    required
+                    deactivated={!clientId}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                client_id: clientId,
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "articleColors",
+                                i18nKey: "menu.products.article-colors"
+                            }
+                        })
+                    }}
+                />
             </Box>
-            <TextFieldControlled<IArticleForm>
-                name="article_variation"
-                label={t("products.articles.article_variation")}
-            />
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <SelectFieldControlled<IArticleForm>
                     name="thickness_id"
                     label={t("products.articles.thickness")}
                     options={thicknessOptions}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "thicknesses",
+                                i18nKey: "menu.leathers.thicknesses",
+                            }
+                        })
+                    }}
                 />
                 <SelectFieldControlled<IArticleForm>
                     name="print_id"
@@ -188,7 +280,7 @@ const ArticlesFormFields = ({
                 label={t("products.articles.note")}
                 TextFieldProps={{
                     multiline: true,
-                    rows: 4
+                    rows: 2
                 }}
             />
         </>

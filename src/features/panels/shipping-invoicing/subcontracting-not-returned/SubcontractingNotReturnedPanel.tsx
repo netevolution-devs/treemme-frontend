@@ -15,9 +15,8 @@ const SubcontractingNotReturnedPanel = () => {
         <GenericPanel<unknown, ISubcontractingNotReturnedStoreState>
             kind={"subcontractingNotReturned"}
             initialState={{uiState: initialUiState}}
-        >
-            <SubcontractingNotReturnedList/>
-        </GenericPanel>
+            listComponent={<SubcontractingNotReturnedList/>}
+        />
     )
 }
 

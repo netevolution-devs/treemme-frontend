@@ -14,7 +14,7 @@ const ProductsList = () => {
     const selectedProductId = useStore(state => state.uiState.selectedProductId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {data: products = [], isLoading} = productsApi.useGetList();
+    const {data: products = [], isLoading, isFetching} = productsApi.useGetList();
 
     const columns = useMemo<MRT_ColumnDef<IProduct>[]>(() => [
         {
@@ -27,6 +27,7 @@ const ProductsList = () => {
         <GenericList<IProduct>
             data={products}
             isLoading={isLoading}
+            isFetching={isFetching}
             columns={columns}
             selectedId={selectedProductId}
             onRowSelect={(id) => setUIState({selectedProductId: id})}

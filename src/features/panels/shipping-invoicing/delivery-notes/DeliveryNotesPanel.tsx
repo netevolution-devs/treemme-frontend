@@ -12,15 +12,21 @@ export interface IDeliveryNotesStoreState extends IPanelUIState {
     selectedDeliveryNoteRowId?: number | null;
 }
 
+export interface IDeliveryNotesStoreFilter {
+    filterSubcontractorId?: number | null;
+    filterStartDate?: string;
+    filterEndDate?: string;
+}
+
 const DeliveryNotesPanel = () => {
     const initialUiState: IDeliveryNotesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, IDeliveryNotesStoreState>
+        <GenericPanel<IDeliveryNotesStoreFilter, IDeliveryNotesStoreState>
             kind={"deliveryNotes"}
             initialState={{uiState: initialUiState}}
+            listComponent={<DeliveryNotesList/>}
         >
-            <DeliveryNotesList/>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',

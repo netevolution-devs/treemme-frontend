@@ -10,13 +10,14 @@ import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {Box} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
+import dayjs from "dayjs";
 
 export interface IDyeForm {
     quantity: number;
     scheduled_date: string;
-    machine_id: number;
+    machine_id?: number | null;
 }
 
 const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
@@ -36,30 +37,32 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
+            <Typography variant={"h5"} sx={{mb: 2}}>{t("orders.row.dye")}</Typography>
             <GenericForm<IDyeForm, unknown, ICustomerOrdersStoreState>
                 selectedId={null}
                 dialogMode
                 dialogRef={ref}
                 bypassConfirm
                 emptyValues={{
-                    quantity: 0,
-                    scheduled_date: '',
-                    machine_id: 0
+                    quantity: null as unknown as number,
+                    scheduled_date: dayjs().format('YYYY-MM-DD'),
+                    machine_id: null
                 }}
                 mapEntityToForm={() => ({
                     quantity: 0,
-                    scheduled_date: '',
-                    machine_id: 0
+                    scheduled_date: dayjs().format('YYYY-MM-DD'),
+                    machine_id: null
                 })}
                 create={(data) => {
-                    if (!selectedOrderRowId) return;
+                    if (!selectedOrderRowId && !data.machine_id) return;
                     return createBatchDye({
                         ...data,
-                        client_order_row_id: selectedOrderRowId
+                        machine_id: data.machine_id as number,
+                        client_order_row_id: selectedOrderRowId as number
                     });
                 }}
                 isSaving={isPending}
-                validateBeforeSave={(v) => v.quantity > 0 && !!v.scheduled_date && v.machine_id > 0}
+                validateBeforeSave={(v) => !!v.quantity && v.quantity > 0 && !!v.scheduled_date && !!v.machine_id}
                 renderFields={() => (
                     <>
                         <Box sx={{mb: 1}}>

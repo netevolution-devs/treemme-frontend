@@ -8,7 +8,8 @@ import type {
 
 export interface IDeliveryNote {
     id: number;
-    subcontractor: IContact;
+    subcontractor: IContact | null;
+    client: IContact | null;
     ddt_number: string;
     ddt_date: string;
     ddt_start_date: string;

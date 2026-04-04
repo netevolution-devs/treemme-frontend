@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {INation} from "@features/panels/contacts/nations/api/INation.ts";
 
 export const nationsApi = createPanelApi<INation>({

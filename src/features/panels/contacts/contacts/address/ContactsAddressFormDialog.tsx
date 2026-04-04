@@ -22,8 +22,9 @@ export type IContactAddressForm = Omit<IContactAddress,
     'nation' |
     'town'
 > & {
-    nation_id: number;
-    town_id: number;
+    nation_id: number | null;
+    town_id: number | null;
+    contact_id: number | null;
 };
 
 const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -67,8 +68,9 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                     address_3: '',
                     address_4: '',
                     address_name: '',
-                    nation_id: 0,
-                    town_id: 0
+                    nation_id: null,
+                    town_id: null,
+                    contact_id: null,
                 }}
                 mapEntityToForm={(x) => ({
                     address: x.address,
@@ -77,7 +79,8 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                     address_4: x.address_4,
                     address_name: x.address_name,
                     nation_id: x.nation.id,
-                    town_id: x.town.id
+                    town_id: x.town.id,
+                    contact_id: selectedContactId as number
                 })}
                 create={(payload) => createAddress({...payload, contact_id: selectedContactId as number})}
                 update={(id, payload) => updateAddress({
