@@ -44,6 +44,7 @@ const TanningStagesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<ITanningStageForm, ITanningStage, ITanningStagesStoreState>
+            resource="pellami - stati di lavorazione"
             onSuccess={handlePanelSuccess}
             selectedId={selectedTanningStageId}
             entity={tanningStage}

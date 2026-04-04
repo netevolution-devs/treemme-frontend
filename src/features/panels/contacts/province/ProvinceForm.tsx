@@ -34,6 +34,7 @@ const ProvinceForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IProvinceForm, IProvince, IProvinceStoreState>
+            resource="contatti - province"
             onSuccess={handlePanelSuccess}
             selectedId={selectedProvinceId}
             entity={province}

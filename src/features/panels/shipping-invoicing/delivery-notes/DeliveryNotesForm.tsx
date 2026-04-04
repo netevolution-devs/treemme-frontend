@@ -101,6 +101,7 @@ const DeliveryNotesForm = () => {
 
     return (
         <GenericForm<IDeliveryNoteForm, IDeliveryNote, IDeliveryNotesStoreState>
+            resource="ddt & fatture - documenti di trasporto"
             selectedId={selectedDeliveryNoteId}
             entity={deliveryNote}
             emptyValues={{

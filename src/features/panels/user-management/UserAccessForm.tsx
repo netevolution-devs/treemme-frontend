@@ -49,6 +49,7 @@ const UserAccessForm = () => {
 
     return (
         <GenericForm<IAccessForm, IUserGroupAccess, IUserManagementStoreState>
+            resource="sistema - gestione accessi"
             selectedId={selectedAccessId}
             entity={selectedAccess}
             emptyValues={emptyValues}

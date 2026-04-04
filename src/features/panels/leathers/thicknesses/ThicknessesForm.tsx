@@ -37,6 +37,7 @@ const ThicknessesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IThicknessForm, IThickness, IThicknessesStoreState>
+            resource="pellami - spessori"
             onSuccess={handlePanelSuccess}
             selectedId={selectedThicknessId}
             entity={thickness}

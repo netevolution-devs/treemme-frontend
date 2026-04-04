@@ -39,6 +39,7 @@ const ContactsSubcontractorFormDialog = forwardRef<IDialogActions, Props>((_prop
             <Typography variant={"h5"} sx={{mb: 2}}>{t("contacts.subcontractors.add")}</Typography>
 
             <GenericForm<IContactSubcontractorForm>
+                resource="contatti - contatti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

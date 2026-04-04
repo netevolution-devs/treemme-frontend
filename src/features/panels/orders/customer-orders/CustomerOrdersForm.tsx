@@ -289,6 +289,7 @@ const CustomerOrdersForm = () => {
 
     return (
         <GenericForm<ICustomerOrderForm, ICustomerOrder, ICustomerOrdersStoreState>
+            resource="ordini - ordini clienti"
             selectedId={selectedCustomerOrderId}
             entity={order}
             emptyValues={{

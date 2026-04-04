@@ -23,6 +23,7 @@ const WorkAreaManagementForm = () => {
 
     return (
         <GenericForm<IWorkAreaForm, IWorkAreaManagement, IUserManagementStoreState>
+            resource="sistema - gestione accessi"
             selectedId={selectedWorkAreaId}
             entity={workArea}
             emptyValues={{name: "", description: ""}}

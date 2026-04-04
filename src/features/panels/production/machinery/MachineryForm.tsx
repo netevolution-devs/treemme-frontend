@@ -36,6 +36,7 @@ const MachineryForm = () => {
 
     return (
         <GenericForm<IMachineryForm, IMachine, IMachineryStoreState>
+            resource="produzione - macchinari"
             selectedId={selectedMachineryId}
             entity={machinery}
             emptyValues={{ name: '', prefix: '', batch_type_id: null }}

@@ -36,6 +36,7 @@ const BatchesSplitFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =
             <Typography variant="h5" sx={{mb: 2}}>{t("production.batch.split")}</Typography>
 
             <GenericForm<ISplitForm>
+                resource="produzione - lotti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

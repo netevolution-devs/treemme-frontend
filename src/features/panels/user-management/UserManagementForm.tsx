@@ -72,6 +72,7 @@ const UserManagementForm = () => {
     return (
         <>
         <GenericForm<IUserForm, IUserManagement, IUserManagementStoreState>
+            resource="sistema - gestione accessi"
             selectedId={selectedUserId}
             entity={user}
             emptyValues={{email: '', password: '', last_access: "", user_code: ""}}

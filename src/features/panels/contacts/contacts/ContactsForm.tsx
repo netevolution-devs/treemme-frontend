@@ -67,6 +67,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
 
     return (
         <GenericForm<IContactForm, IContact, IContactsStoreState>
+            resource="contatti - contatti"
             onSuccess={handlePanelSuccess}
             selectedId={selectedContactId}
             entity={contact}

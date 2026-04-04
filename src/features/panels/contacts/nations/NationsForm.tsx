@@ -34,6 +34,7 @@ const NationsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<INationForm, INation, INationsStoreState>
+            resource="contatti - nazioni"
             onSuccess={handlePanelSuccess}
             selectedId={selectedNationId}
             entity={nation}

@@ -58,6 +58,7 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
             <GenericForm<IContactAddressForm, IContactAddress, IPanelUIState>
+                resource="contatti - contatti"
                 dialogMode
                 dialogRef={ref}
                 selectedId={selectedAddressId}

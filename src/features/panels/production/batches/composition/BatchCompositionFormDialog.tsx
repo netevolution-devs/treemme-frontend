@@ -39,6 +39,7 @@ const BatchCompositionFormDialog = forwardRef<IDialogActions>((_, ref) => {
             <Typography variant="h5" sx={{mb: 2}}>{t("composition.title")}</Typography>
 
             <GenericForm<IBatchCompositionForm, unknown, IBatchesStoreState>
+                resource="produzione - lotti"
                 selectedId={null}
                 dialogMode
                 dialogRef={ref}

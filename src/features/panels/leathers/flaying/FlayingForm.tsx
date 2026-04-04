@@ -34,6 +34,7 @@ const FlayingForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IFlayingForm, IFlay, IFlayingStoreState>
+            resource="pellami - scuoiature"
             onSuccess={handlePanelSuccess}
             selectedId={selectedFlayId}
             entity={flayItem}

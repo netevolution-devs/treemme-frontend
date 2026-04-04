@@ -41,6 +41,7 @@ const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
             <Typography variant={"h5"} sx={{mb: 2}}>{t("contacts.agents.add")}</Typography>
 
             <GenericForm<IContactAgentForm>
+                resource="contatti - contatti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

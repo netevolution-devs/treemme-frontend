@@ -23,6 +23,7 @@ const SeaPortsForm = () => {
 
     return (
         <GenericForm<ISeaPortForm, ISeaPort, ISeaportsStoreState>
+            resource="contatti - porti marittimi"
             selectedId={selectedSeaPortId}
             entity={seaPort}
             emptyValues={{

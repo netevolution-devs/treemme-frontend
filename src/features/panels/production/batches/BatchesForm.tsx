@@ -86,6 +86,7 @@ const BatchesForm = () => {
             <BatchesSplitFormDialog ref={splitDialogRef}/>
 
             <GenericForm<IBatchesForm, IBatch, IBatchesStoreState>
+                resource="produzione - lotti"
                 selectedId={selectedBatchId}
                 entity={batchItem}
                 emptyValues={{

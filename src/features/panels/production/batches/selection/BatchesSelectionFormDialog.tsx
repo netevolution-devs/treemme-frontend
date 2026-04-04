@@ -41,6 +41,7 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
             <Typography variant="h5" sx={{mb: 2}}>{t("production.batch.selection")}</Typography>
 
             <GenericForm<IBatchSelectionForm>
+                resource="produzione - lotti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

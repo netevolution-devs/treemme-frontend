@@ -31,6 +31,7 @@ const RefinementFormDialog = forwardRef<IDialogActions>((_, ref) => {
         <BaseDialog ref={ref} sx={{p: 2}}>
             <Typography variant={"h5"} sx={{mb: 2}}>{t("orders.row.refinement")}</Typography>
             <GenericForm<IRefinementForm, unknown, ICustomerOrdersStoreState>
+                resource="ordini - ordini clienti"
                 selectedId={null}
                 dialogMode
                 dialogRef={ref}

@@ -78,6 +78,7 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
 
     return (
         <GenericForm<ILeatherForm, ILeather, ILeathersStoreState>
+            resource="pellami - pellami"
             selectedId={selectedLeatherId}
             entity={leather}
             emptyValues={{

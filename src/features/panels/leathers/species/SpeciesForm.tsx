@@ -34,6 +34,7 @@ const SpeciesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<ISpeciesForm, ISpecies, ISpeciesStoreState>
+            resource="pellami - specie"
             onSuccess={handlePanelSuccess}
             selectedId={selectedSpeciesId}
             entity={speciesItem}

@@ -66,6 +66,7 @@ const OriginsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IOriginForm, IOrigin, IOriginsStoreState>
+            resource="pellami - provenienze"
             onSuccess={handlePanelSuccess}
             selectedId={selectedOriginId}
             entity={origin}

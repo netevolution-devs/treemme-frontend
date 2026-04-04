@@ -42,6 +42,7 @@ const WeightsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IWeightForm, IWeight, IWeightsStoreState>
+            resource="pellami - pesi"
             onSuccess={handlePanelSuccess}
             selectedId={selectedWeightId}
             entity={weight}

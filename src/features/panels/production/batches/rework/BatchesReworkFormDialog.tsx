@@ -36,6 +36,7 @@ const BatchesReworkFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
             <Typography variant={"h5"} sx={{mb: 2}}>{t("production.batch.rework")}</Typography>
 
             <GenericForm<IReworkForm>
+                resource="produzione - lotti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

@@ -31,6 +31,7 @@ const WorkingsForm = () => {
 
     return (
         <GenericForm<IWorkingForm, IWorking, IWorkingsStoreState>
+            resource="produzione - lavorazioni"
             selectedId={selectedWorkingId}
             entity={working}
             emptyValues={{

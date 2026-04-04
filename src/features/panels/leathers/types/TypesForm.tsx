@@ -40,6 +40,7 @@ const TypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<ITypeForm, ILeatherType, ITypesStoreState>
+            resource="pellami - tipologie"
             onSuccess={handlePanelSuccess}
             selectedId={selectedTypeId}
             entity={type}

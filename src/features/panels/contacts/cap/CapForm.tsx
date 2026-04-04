@@ -29,6 +29,7 @@ const CapForm = () => {
 
     return (
         <GenericForm<ICapForm, ICap, ICapStoreState>
+            resource="contatti - cap"
             selectedId={selectedCapId}
             entity={cap}
             emptyValues={{ cap: '', name: '', province_id: null }}

@@ -32,6 +32,7 @@ const ReasonsForm = () => {
 
     return (
         <GenericForm<IDeliveryReasonForm, IDeliveryReason, IReasonsStoreState>
+            resource="ddt & fatture - ragioni di trasporto"
             selectedId={selectedDeliveryReasonId}
             entity={deliveryReason}
             emptyValues={{
