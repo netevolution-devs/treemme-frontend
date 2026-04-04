@@ -97,6 +97,7 @@ export type ResourceSystem = "sistema"
     | "sistema - strumenti"
     | "sistema - console di comando"
     | "sistema - permessi"
+    | "sistema - gestione accessi"
 
 function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "all") {
     if (roles.length === 0) return mode === "all";
@@ -106,7 +107,7 @@ function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "al
 }
 
 export interface IPermissionCheck {
-    resource?: ResourceName; //TODO strict type resources
+    resource?: ResourceName;
     action?: ResourceAction;
     requiredRoles?: IRoles[];
     deniedRoles?: IRoles[];
