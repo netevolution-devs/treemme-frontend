@@ -73,8 +73,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         bypassConfirm = false,
         onCreateSuccess,
         floatingPanelMode = false,
-        floatingPanelUUID
-        bypassConfirm = false,
+        floatingPanelUUID,
         resource,
     }: GenericFormProps<TForm, TEntity>
 ) => {
