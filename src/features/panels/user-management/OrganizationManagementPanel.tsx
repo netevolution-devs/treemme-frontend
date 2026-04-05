@@ -28,8 +28,8 @@ const OrganizationManagementPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <Stack spacing={4} sx={{p: 2}}>
-                <div><SectionTitle title="Gruppi"/><GroupManagementList/><GroupManagementForm/></div>
-                <div><SectionTitle title="Ruoli"/><RoleManagementList/><RoleManagementForm/></div>
+                <Stack spacing={2}><SectionTitle title="Gruppi"/><GroupManagementList/><GroupManagementForm/></Stack>
+                <Stack spacing={2}><SectionTitle title="Ruoli"/><RoleManagementList/><RoleManagementForm/></Stack>
             </Stack>
         </GenericPanel>
     )
