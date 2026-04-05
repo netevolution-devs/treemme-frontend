@@ -23,7 +23,7 @@ const GroupManagementForm = () => {
 
     return (
         <GenericForm<IGroupForm, IGroupManagement, IOrganizationManagementStoreState>
-            resource="sistema - gestione accessi"
+            resource={"sistema - organizzazione"}
             selectedId={selectedGroupId}
             entity={group}
             emptyValues={{name: "", description: ""}}

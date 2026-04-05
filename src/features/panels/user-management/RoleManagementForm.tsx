@@ -23,7 +23,7 @@ const RoleManagementForm = () => {
 
     return (
         <GenericForm<IRoleForm, IRoleManagement, IOrganizationManagementStoreState>
-            resource="sistema - gestione accessi"
+            resource="sistema - organizzazione"
             selectedId={selectedRoleId}
             entity={role}
             emptyValues={{name: ''}}

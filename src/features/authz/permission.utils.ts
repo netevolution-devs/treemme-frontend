@@ -97,7 +97,9 @@ export type ResourceSystem = "sistema"
     | "sistema - strumenti"
     | "sistema - console di comando"
     | "sistema - permessi"
-    | "sistema - gestione accessi"
+    | "sistema - utenti"
+    | "sistema - organizzazione"
+    | "sistema - funzionalità"
 
 function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "all") {
     if (roles.length === 0) return mode === "all";
