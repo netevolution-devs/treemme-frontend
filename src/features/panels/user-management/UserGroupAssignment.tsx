@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Autocomplete, Box, Chip, CircularProgress, Divider, TextField, Typography} from "@mui/material";
-import type {IUserManagement} from "@features/panels/user-management/api/IUserManagement.ts";
-import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/api/userManagementApi.ts";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi.ts";
+import type {IUserManagement} from "@features/panels/user-management/api/IUserManagement";
+import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/api/userManagementApi";
+import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
 
 interface UserGroupAssignmentProps {
     user: IUserManagement;

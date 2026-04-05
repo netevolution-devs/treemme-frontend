@@ -1,5 +1,5 @@
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IButtonState} from "@features/panels/shared/FormButtons.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IButtonState} from "@features/panels/shared/FormButtons";
 
 export type TPanelFormState = 'view' | 'edit' | 'new' | 'cancel' | 'init' | 'selected';
 

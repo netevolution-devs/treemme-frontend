@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
+import useApi from "@api/useApi";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
 
 interface IChangePassword {
   password: string;

@@ -1,18 +1,18 @@
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import {contactsDetailApi} from "@features/panels/contacts/contacts/api/contacts-detail/contactDetailApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import {contactsDetailApi} from "@features/panels/contacts/contacts/api/contacts-detail/contactDetailApi";
 import {
     contactsDetailTypeApi
-} from "@features/panels/contacts/contacts/api/contacts-detail-type/contactDetailTypeApi.ts";
-import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+} from "@features/panels/contacts/contacts/api/contacts-detail-type/contactDetailTypeApi";
+import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 type Props = unknown;
 

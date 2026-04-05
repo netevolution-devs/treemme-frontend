@@ -1,18 +1,18 @@
 import {useTranslation} from "react-i18next";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi.ts";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi.ts";
-import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi.ts";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
+import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi";
 import {
     useAssignGroupAccess,
     useDeleteGroupAccess,
     useGetGroupAccessList,
     useUpdateGroupAccessForm,
     type IUserGroupAccess,
-} from "@features/panels/user-management/api/userManagementApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel.tsx";
+} from "@features/panels/user-management/api/userManagementApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel";
 
 interface IAccessForm {
     group_id: number;

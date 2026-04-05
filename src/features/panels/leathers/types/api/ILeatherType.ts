@@ -1,4 +1,4 @@
-import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
 
 export interface ILeatherType {
     id: number;

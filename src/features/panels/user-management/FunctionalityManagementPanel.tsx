@@ -1,8 +1,8 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import WorkAreaManagementList from "@features/panels/user-management/WorkAreaManagementList.tsx";
-import WorkAreaManagementForm from "@features/panels/user-management/WorkAreaManagementForm.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import WorkAreaManagementList from "@features/panels/user-management/WorkAreaManagementList";
+import WorkAreaManagementForm from "@features/panels/user-management/WorkAreaManagementForm";
 import {Divider, Stack, Typography} from "@mui/material";
 
 export interface IFunctionalityManagementStoreState extends IPanelUIState {

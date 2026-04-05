@@ -1,6 +1,6 @@
-import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
-import type {MenuIconKey} from "@ui/layout/menu/MenuIcons.tsx";
-import type {IPermissionCheck} from "@features/authz/permission.utils.ts";
+import type {TPanelKind} from "@features/panels/PanelRegistry";
+import type {MenuIconKey} from "@ui/layout/menu/MenuIcons";
+import type {IPermissionCheck} from "@features/authz/permission.utils";
 
 export interface IMenuEntry {
     i18nKey: string;

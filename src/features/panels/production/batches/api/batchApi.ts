@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 
 export interface IBatchesPayload extends Omit<IBatch, 'id'
     | 'leather'

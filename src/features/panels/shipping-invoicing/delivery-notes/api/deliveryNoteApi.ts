@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote";
 
 export interface IDeliveryNotePayload extends Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'client' | 'ddt_rows'> {
     subcontractor_id: number | null;

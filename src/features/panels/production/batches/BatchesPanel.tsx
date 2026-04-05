@@ -1,16 +1,16 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import BatchesList from "@features/panels/production/batches/BatchesList.tsx";
-import GenericTabContent from "@features/panels/shared/GenericTabContent.tsx";
-import BatchesChronology from "@features/panels/production/batches/chronology/BatchesCronology.tsx";
-import WarehouseMovementsList from "@features/panels/production/batches/movements/WarehouseMovementsList.tsx";
-import BatchesContent from "@features/panels/production/batches/BatchesContent.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import BatchesList from "@features/panels/production/batches/BatchesList";
+import GenericTabContent from "@features/panels/shared/GenericTabContent";
+import BatchesChronology from "@features/panels/production/batches/chronology/BatchesCronology";
+import WarehouseMovementsList from "@features/panels/production/batches/movements/WarehouseMovementsList";
+import BatchesContent from "@features/panels/production/batches/BatchesContent";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 import {useEffect, useState} from "react";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import BatchesSelectionList from "@features/panels/production/batches/selection/BatchesSelectionList.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import BatchesSelectionList from "@features/panels/production/batches/selection/BatchesSelectionList";
 
 export interface IBatchesStoreState extends IPanelUIState {
     selectedBatchId?: number | null;

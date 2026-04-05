@@ -1,5 +1,5 @@
 import {CircularProgress, Autocomplete, TextField, Chip, Box} from "@mui/material";
-import useGetRoles from "../../api/useGetRoles.ts";
+import useGetRoles from "../../api/useGetRoles";
 import {Controller, type FieldValues, useFormContext} from "react-hook-form";
 import type {ControlledFieldProps} from "@shared/ui/form/controlled/ControlledFieldProps";
 import {useTranslation} from "react-i18next";

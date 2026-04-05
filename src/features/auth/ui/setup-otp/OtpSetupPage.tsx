@@ -4,8 +4,8 @@ import {useNavigate} from "react-router";
 import BasePage from "@shared/ui/layout/BasePage";
 import SetupOtp from "./SetupOtp";
 import VerifyDevice from "./VerifyDevice";
-import ButtonBackToApp from "@ui/ButtonGoBack.tsx";
-import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
+import ButtonBackToApp from "@ui/ButtonGoBack";
+import {useLayout} from "@ui/layout/default/LayoutContext";
 
 type TSteps = "setupOtp" | "verifyDevice";
 

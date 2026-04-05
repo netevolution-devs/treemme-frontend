@@ -2,8 +2,8 @@ import {Button, Menu, MenuItem, Box, Typography} from "@mui/material";
 import PopupState, {bindMenu, bindTrigger} from "material-ui-popup-state";
 import {useTranslation} from "react-i18next";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import type {IMenuEntry} from "@ui/layout/menu/MenuEntries.ts";
-import {MenuIconMap} from "@ui/layout/menu/MenuIcons.tsx";
+import type {IMenuEntry} from "@ui/layout/menu/MenuEntries";
+import {MenuIconMap} from "@ui/layout/menu/MenuIcons";
 // Import the icon map
 
 interface MenuEntryProps {

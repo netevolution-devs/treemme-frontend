@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     IShipmentConditionsStoreState
-} from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel.tsx";
+} from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
-import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
+import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
 
 const ShipmentConditionsList = () => {
     const {t} = useTranslation(["form"]);

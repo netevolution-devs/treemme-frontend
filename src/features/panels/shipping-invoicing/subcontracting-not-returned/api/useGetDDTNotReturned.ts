@@ -1,8 +1,8 @@
 import {useQuery} from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
+import useApi from "@api/useApi";
 import type {
   IDeliveryNoteRow
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
 
 const useGetDDTNotReturned = () => {
   const { get } = useApi();

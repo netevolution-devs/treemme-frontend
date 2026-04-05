@@ -1,13 +1,13 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-    import type {IWorkAreaManagement} from "@features/panels/user-management/api/IWorkAreaManagement.ts";
+import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi";
+import {usePanel} from "@ui/panel/PanelContext";
+    import type {IWorkAreaManagement} from "@features/panels/user-management/api/IWorkAreaManagement";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
 import type {
     IFunctionalityManagementStoreState
-} from "@features/panels/user-management/FunctionalityManagementPanel.tsx";
+} from "@features/panels/user-management/FunctionalityManagementPanel";
+import GenericList from "@features/panels/shared/GenericList";
 
 const WorkAreaManagementList = () => {
     const {t} = useTranslation(["form"]);

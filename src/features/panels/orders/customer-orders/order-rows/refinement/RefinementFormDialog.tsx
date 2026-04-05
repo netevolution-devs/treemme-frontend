@@ -1,15 +1,15 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel";
+import GenericForm from "@features/panels/shared/GenericForm";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import {Box, Typography} from "@mui/material";
-import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
-import useBatchRefinement from "@features/panels/orders/customer-orders/order-rows/refinement/api/useBatchRefinement.ts";
+import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
+import useBatchRefinement from "@features/panels/orders/customer-orders/order-rows/refinement/api/useBatchRefinement";
 import dayjs from "dayjs";
 
 export interface IRefinementForm {

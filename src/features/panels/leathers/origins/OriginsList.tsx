@@ -1,9 +1,9 @@
-import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin";
+import GenericList from "@features/panels/shared/GenericList";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IOriginsStoreState} from "@features/panels/leathers/origins/OriginsPanel.tsx";
-import {originApi} from "@features/panels/leathers/origins/api/originApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IOriginsStoreState} from "@features/panels/leathers/origins/OriginsPanel";
+import {originApi} from "@features/panels/leathers/origins/api/originApi";
 import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
 

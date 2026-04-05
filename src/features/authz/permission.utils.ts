@@ -1,4 +1,4 @@
-import type {IAccessControl, IRoles} from "@features/user/model/RoleInterfaces.ts";
+import type {IAccessControl, IRoles} from "@features/user/model/RoleInterfaces";
 
 export type RoleCheckMode = "any" | "all";
 export type ResourceAction = "get" | "post" | "put" | "delete";

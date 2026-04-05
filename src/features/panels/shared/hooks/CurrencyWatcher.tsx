@@ -1,6 +1,6 @@
 import {useFormContext, useWatch} from "react-hook-form";
 import {useEffect, useRef} from "react";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
 
 interface ICurrencyWatcherProps {
     currencies: ICurrency[];

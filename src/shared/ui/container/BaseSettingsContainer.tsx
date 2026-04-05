@@ -1,6 +1,6 @@
 import {Box, Stack, type SxProps} from "@mui/material";
 import type {ReactNode} from "react";
-import ButtonGoToApp from "@ui/ButtonGoToApp.tsx";
+import ButtonGoToApp from "@ui/ButtonGoToApp";
 
 interface Props {
     children: ReactNode;

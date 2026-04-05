@@ -1,4 +1,4 @@
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 
 export interface IBatchComposition {
     id: number;

@@ -1,8 +1,8 @@
-import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
-import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
-import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
-import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
+import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit";
+import type {IArticle} from "@features/panels/products/articles/api/IArticle";
+import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection";
 
 export interface IOrderRow {
     id: number;

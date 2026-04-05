@@ -1,14 +1,14 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICapStoreState} from "@features/panels/contacts/cap/CapPanel.tsx";
-import {capApi} from "@features/panels/contacts/cap/api/capApi.ts";
-import {provinceApi} from "@features/panels/contacts/province/api/proviceApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICapStoreState} from "@features/panels/contacts/cap/CapPanel";
+import {capApi} from "@features/panels/contacts/cap/api/capApi";
+import {provinceApi} from "@features/panels/contacts/province/api/proviceApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {ICap} from "@features/panels/contacts/cap/api/ICap";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type ICapForm = {
     cap: string;

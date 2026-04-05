@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { type FieldValues, type Path, type PathValue, useFormContext } from "react-hook-form";
-import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
+import type {TPanelKind} from "@features/panels/PanelRegistry";
 
 interface ISubscribeProps<T extends FieldValues> {
     formKey: Path<T>;

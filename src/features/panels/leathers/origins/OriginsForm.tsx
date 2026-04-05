@@ -1,23 +1,23 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IOriginsStoreState} from "@features/panels/leathers/origins/OriginsPanel.tsx";
-import {originApi, type IOriginPayload} from "@features/panels/leathers/origins/api/originApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin.ts";
-import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
-import {flayApi} from "@features/panels/leathers/flaying/api/flayApi.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IOriginsStoreState} from "@features/panels/leathers/origins/OriginsPanel";
+import {originApi, type IOriginPayload} from "@features/panels/leathers/origins/api/originApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin";
+import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi";
+import {flayApi} from "@features/panels/leathers/flaying/api/flayApi";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import {Box, Typography} from "@mui/material";
-import {originAreaApi} from "@features/panels/leathers/origins/api/origin-area/originAreaApi.ts";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
-import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm.tsx";
+import {originAreaApi} from "@features/panels/leathers/origins/api/origin-area/originAreaApi";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm";
 
 export type IOriginForm =
     Omit<IOrigin, "id"

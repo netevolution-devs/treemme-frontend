@@ -1,6 +1,6 @@
 import type {AxiosResponse} from 'axios';
 import {getDevFlags} from './DevTools';
-import type {IApiUser} from "@features/user/model/UserInterfaces.ts";
+import type {IApiUser} from "@features/user/model/UserInterfaces";
 
 export const devResponseInterceptor = async (response: AxiosResponse) => {
     // This check helps with tree-shaking

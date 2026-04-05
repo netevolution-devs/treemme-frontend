@@ -1,17 +1,17 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ITanningStagesStoreState} from "@features/panels/leathers/tanning-stages/TanningStagesPanel.tsx";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/ITanningStage.ts";
-import {type ITanningStagePayload, tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi.ts";
-import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ITanningStagesStoreState} from "@features/panels/leathers/tanning-stages/TanningStagesPanel";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/ITanningStage";
+import {type ITanningStagePayload, tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi";
+import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
 import {Box} from "@mui/material";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type ITanningStageForm = Omit<ITanningStage, 'id' | 'measurement_unit' | 'flower_yield_coefficient'> & {
     measurement_unit_id: number | null;

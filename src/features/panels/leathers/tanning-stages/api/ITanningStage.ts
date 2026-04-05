@@ -1,4 +1,4 @@
-import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
+import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit";
 
 export interface ITanningStage {
     id: number;

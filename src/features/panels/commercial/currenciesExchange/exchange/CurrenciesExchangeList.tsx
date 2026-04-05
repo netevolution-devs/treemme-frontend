@@ -1,19 +1,19 @@
 import {useTranslation} from "react-i18next";
 import type {
     ICurrenciesExchangeStoreState
-} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {currencyChangeApi} from "@features/panels/commercial/currenciesExchange/api/currencyChangeApi.ts";
+} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {currencyChangeApi} from "@features/panels/commercial/currenciesExchange/api/currencyChangeApi";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ICurrencyChange} from "@features/panels/commercial/currenciesExchange/api/ICurrencyChange.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import type {ICurrencyChange} from "@features/panels/commercial/currenciesExchange/api/ICurrencyChange";
+import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {NewButton} from "@features/panels/shared/CustomButton";
 import dayjs from "dayjs";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import CurrenciesExchangeFormDialog from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import CurrenciesExchangeFormDialog from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
 
 const CurrenciesExchangeList = () => {
     const {t} = useTranslation(["form"]);

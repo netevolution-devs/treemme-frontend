@@ -1,6 +1,6 @@
 import {useMutation} from "@tanstack/react-query";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
-import useApi from "@api/useApi.ts";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
+import useApi from "@api/useApi";
 
 interface PasswordResetData {
     email: string;

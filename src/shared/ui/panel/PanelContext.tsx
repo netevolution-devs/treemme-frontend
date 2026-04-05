@@ -5,12 +5,12 @@ import {
   useState,
 } from "react";
 import {useStore} from "zustand/react";
-import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
+import type {TPanelKind} from "@features/panels/PanelRegistry";
 import {
   createPanelStore,
   type PanelActions,
   type PanelState,
-} from "@ui/panel/store/PanelStore.ts";
+} from "@ui/panel/store/PanelStore";
 
 /**
  * Typed Zustand panel store.

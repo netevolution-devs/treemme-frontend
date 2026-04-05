@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
-import {provinceApi} from "@features/panels/contacts/province/api/proviceApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel";
+import {provinceApi} from "@features/panels/contacts/province/api/proviceApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IProvince} from "@features/panels/contacts/province/api/IProvince";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IProvinceForm = Omit<IProvince, 'id'>;
 

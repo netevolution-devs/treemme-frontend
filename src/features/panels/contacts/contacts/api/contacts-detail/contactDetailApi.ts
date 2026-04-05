@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail";
 
 export interface IContactDetailPayload extends Omit<IContactDetail, 'id' | 'detail_type'>{
     detail_type_id: number,

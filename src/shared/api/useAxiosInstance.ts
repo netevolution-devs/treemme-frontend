@@ -19,7 +19,7 @@ const useAxiosInstance = () => {
         const handleResponse = async (response: AxiosResponse) => {
             if (import.meta.env.DEV) {
                 try {
-                    const {devResponseInterceptor} = await import('@shared/dev-tools/devResponseInterceptor.ts');
+                    const {devResponseInterceptor} = await import('@shared/dev-tools/devResponseInterceptor');
                     return devResponseInterceptor(response);
                 } catch {
                     return response;

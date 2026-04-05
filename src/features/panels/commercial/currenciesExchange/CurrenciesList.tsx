@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     ICurrenciesExchangeStoreState
-} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
+} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
 
 const CurrenciesList = () => {
     const {t} = useTranslation(["form"]);

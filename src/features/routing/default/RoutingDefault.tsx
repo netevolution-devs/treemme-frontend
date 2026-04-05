@@ -1,16 +1,16 @@
 import {Navigate, Route, Routes} from "react-router";
-import AuthUserGuard from "../AuthUserGuard.tsx";
-import {useFilteredRoutes} from "@features/routing/ProtectedRoutes.tsx";
-import LoginPage from "@features/auth/ui/LoginPage.tsx";
-import OtpPage from "@features/auth/ui/setup-otp/OtpPage.tsx";
-import OtpSetupPage from "@features/auth/ui/setup-otp/OtpSetupPage.tsx";
-import Layout from "@ui/layout/default/Layout.tsx";
-import {defaultProtectedRoutes} from "@features/routing/default/defaultProtectedRoutes.tsx";
-import useAxiosInstance from "@api/useAxiosInstance.ts";
-import PermissionGuard from "@features/authz/PermissionGuard.tsx";
-import LogoutAndRedirect from "@features/routing/LogoutAndRedirect.tsx";
-import ResetPasswordPage from "@features/password-reset/ui/shared/ResetPasswordPage.tsx";
-import {EnumRoles} from "@features/user/model/RoleInterfaces.ts";
+import AuthUserGuard from "../AuthUserGuard";
+import {useFilteredRoutes} from "@features/routing/ProtectedRoutes";
+import LoginPage from "@features/auth/ui/LoginPage";
+import OtpPage from "@features/auth/ui/setup-otp/OtpPage";
+import OtpSetupPage from "@features/auth/ui/setup-otp/OtpSetupPage";
+import Layout from "@ui/layout/default/Layout";
+import {defaultProtectedRoutes} from "@features/routing/default/defaultProtectedRoutes";
+import useAxiosInstance from "@api/useAxiosInstance";
+import PermissionGuard from "@features/authz/PermissionGuard";
+import LogoutAndRedirect from "@features/routing/LogoutAndRedirect";
+import ResetPasswordPage from "@features/password-reset/ui/shared/ResetPasswordPage";
+import {EnumRoles} from "@features/user/model/RoleInterfaces";
 
 const RoutingDefault = () => {
     useAxiosInstance();

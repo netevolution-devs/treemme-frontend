@@ -1,14 +1,14 @@
 import {AppBar, Avatar, Box, Toolbar} from "@mui/material";
-import {type IMenuEntry, MenuEntries} from "@ui/layout/menu/MenuEntries.ts";
-import MenuEntry from "@ui/layout/menu/MenuEntry.tsx";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {type IMenuEntry, MenuEntries} from "@ui/layout/menu/MenuEntries";
+import MenuEntry from "@ui/layout/menu/MenuEntry";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import {useTranslation} from "react-i18next";
-import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
+import {ThemeSwitch} from "@ui/ThemeSwitch";
 import {useNavigate} from "react-router";
-import {useMenuStore} from "@ui/layout/default/layoutStore.ts";
-import {useAuth} from "@features/auth/model/AuthContext.tsx";
-import {hasPermission} from "@features/authz/permission.utils.ts";
-import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
+import {useMenuStore} from "@ui/layout/default/layoutStore";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {hasPermission} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
 function filterMenuEntries(entries: IMenuEntry[], accessControl: IAccessControl[]): IMenuEntry[] {
     const result: IMenuEntry[] = [];

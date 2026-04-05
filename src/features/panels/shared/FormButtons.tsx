@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import CustomButton from "@features/panels/shared/CustomButton";
 
 export interface IButtonState {
     new: boolean;

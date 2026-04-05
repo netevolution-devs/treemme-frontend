@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import type {IThicknessesStoreState} from "@features/panels/leathers/thicknesses/ThicknessesPanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
+import type {IThicknessesStoreState} from "@features/panels/leathers/thicknesses/ThicknessesPanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
+import GenericList from "@features/panels/shared/GenericList";
 
 const ThicknessesList = () => {
     const {t} = useTranslation(["form"]);

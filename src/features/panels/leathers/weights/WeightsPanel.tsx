@@ -1,12 +1,12 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import WeightsList from "@features/panels/leathers/weights/WeightsList.tsx";
-import WeightsForm from "@features/panels/leathers/weights/WeightsForm.tsx";
-import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import WeightsContent from "@features/panels/leathers/weights/WeightsContent.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import WeightsList from "@features/panels/leathers/weights/WeightsList";
+import WeightsForm from "@features/panels/leathers/weights/WeightsForm";
+import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel";
+import WeightsContent from "@features/panels/leathers/weights/WeightsContent";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface IWeightsStoreState extends IPanelUIState, ILeathersStoreState {
     selectedWeightId?: number | null;

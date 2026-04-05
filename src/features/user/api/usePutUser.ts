@@ -1,8 +1,8 @@
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
-import useApi from "@api/useApi.ts";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
+import useApi from "@api/useApi";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import type {IApiUserPayloadUpdate} from "../model/UserInterfaces.ts";
-import {type IApiUserProfile, type IUserProfile, UserProfileAdapter} from "@features/profile/model/IUserProfile.ts";
+import type {IApiUserPayloadUpdate} from "../model/UserInterfaces";
+import {type IApiUserProfile, type IUserProfile, UserProfileAdapter} from "@features/profile/model/IUserProfile";
 
 const usePutUser = () => {
     const {put} = useApi();

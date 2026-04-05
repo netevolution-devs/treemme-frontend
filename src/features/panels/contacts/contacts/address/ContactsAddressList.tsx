@@ -1,16 +1,16 @@
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
 import {useTranslation} from "react-i18next";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import ContactsAddressFormDialog from "@features/panels/contacts/contacts/address/ContactsAddressFormDialog.tsx";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import ContactsAddressFormDialog from "@features/panels/contacts/contacts/address/ContactsAddressFormDialog";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {NewButton} from "@features/panels/shared/CustomButton";
 import {Box, Typography} from "@mui/material";
 
 const ContactsAddressList = () => {

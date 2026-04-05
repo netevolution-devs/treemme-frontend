@@ -1,4 +1,4 @@
-import type {IMachine} from "@features/panels/production/machinery/api/IMachine.ts";
+import type {IMachine} from "@features/panels/production/machinery/api/IMachine";
 
 export interface IBatchProduction {
     id: number;

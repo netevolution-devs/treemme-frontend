@@ -2,8 +2,8 @@ import {type AxiosInstance, type  AxiosRequestConfig, type  AxiosResponse, isAxi
 import {customAxiosInstance} from "./customAxiosInstance";
 import {DEFAULT_LANGUAGE_CODE} from "../../i18n";
 import {useTranslation} from "react-i18next";
-import type {ILanguageCode} from "@interfaces/ILanguageCode.ts";
-import type {IGenericApiResponse} from "@api/interfaces/IGenericApiResponse.ts";
+import type {ILanguageCode} from "@interfaces/ILanguageCode";
+import type {IGenericApiResponse} from "@api/interfaces/IGenericApiResponse";
 
 const DEFAULT_ENDPOINT = import.meta.env.VITE_API;
 

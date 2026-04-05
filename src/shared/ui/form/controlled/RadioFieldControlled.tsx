@@ -1,5 +1,5 @@
 import { Controller, type FieldValues, useFormContext } from "react-hook-form";
-import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
+import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps";
 import { useTranslation } from "react-i18next";
 import {
     FormControl,
@@ -8,7 +8,7 @@ import {
     FormControlLabel,
     Radio, Box,
 } from "@mui/material";
-import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText";
 
 interface RadioFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     options: { value: string | number; label: string }[];

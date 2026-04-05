@@ -1,8 +1,8 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import UserAccessForm from "@features/panels/user-management/UserAccessForm.tsx";
-import UserAccessList from "@features/panels/user-management/UserAccessList.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import UserAccessForm from "@features/panels/user-management/UserAccessForm";
+import UserAccessList from "@features/panels/user-management/UserAccessList";
 
 export interface IUserAccessStoreState extends IPanelUIState {
     selectedAccessId?: number | null;

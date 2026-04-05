@@ -8,7 +8,7 @@ import {
     Typography
 } from '@mui/material';
 import {Language as LanguageIcon} from '@mui/icons-material';
-import {setLanguage} from "@helpers/languageDetection.ts";
+import {setLanguage} from "@helpers/languageDetection";
 
 interface Props {
     showIcon?: boolean

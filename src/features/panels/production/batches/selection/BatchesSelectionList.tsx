@@ -1,17 +1,17 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
+import GenericList from "@features/panels/shared/GenericList";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import BatchesSelectionFormDialog from "@features/panels/production/batches/selection/BatchesSelectionFormDialog.tsx";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import BatchesSelectionFormDialog from "@features/panels/production/batches/selection/BatchesSelectionFormDialog";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import CustomButton from "@features/panels/shared/CustomButton";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import {openDialog} from "@ui/dialog/dialogHelper";
 
 const BatchesSelectionList = () => {
     const {t} = useTranslation(["form"]);

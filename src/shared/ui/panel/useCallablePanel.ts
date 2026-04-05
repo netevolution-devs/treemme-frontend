@@ -1,6 +1,6 @@
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import {useCallback} from "react";
-import type {IMenuEntry} from "@ui/layout/menu/MenuEntries.ts";
+import type {IMenuEntry} from "@ui/layout/menu/MenuEntries";
 import {useTranslation} from "react-i18next";
 import {useQueryClient} from "@tanstack/react-query";
 

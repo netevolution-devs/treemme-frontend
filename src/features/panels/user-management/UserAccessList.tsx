@@ -2,14 +2,14 @@ import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
 import type {MRT_ColumnDef} from "material-react-table";
 import {Checkbox} from "@mui/material";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
 import {
     useGetGroupAccessList,
     useUpdateGroupAccess,
     type IUserGroupAccess
-} from "@features/panels/user-management/api/userManagementApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel.tsx";
+} from "@features/panels/user-management/api/userManagementApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel";
 
 const getName = (field: { id: number; name?: string } | []) =>
     Array.isArray(field) ? "-" : (field.name ?? "-");

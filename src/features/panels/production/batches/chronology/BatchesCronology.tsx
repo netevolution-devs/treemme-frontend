@@ -1,9 +1,9 @@
 import {useState, useEffect, useMemo} from "react";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
 import {SimpleTreeView, TreeItem} from "@mui/x-tree-view";
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import dayjs from "dayjs";
 
 interface TreeNodeProps {

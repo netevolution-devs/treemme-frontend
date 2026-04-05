@@ -1,9 +1,9 @@
 import React from "react";
 import {Controller, type FieldValues, useFormContext} from "react-hook-form";
-import type {ControlledFieldProps} from "@ui/form/controlled/ControlledFieldProps.ts";
+import type {ControlledFieldProps} from "@ui/form/controlled/ControlledFieldProps";
 import {useTranslation} from "react-i18next";
 import {TextField} from "@mui/material";
-import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText";
 
 const TextFieldControlled = <TFieldValues extends FieldValues>({
                                                                    name,

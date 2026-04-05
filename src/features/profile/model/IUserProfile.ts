@@ -1,11 +1,11 @@
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
-import type {IProfile} from "@features/profile/model/IProfile.ts";
+import type {IUser} from "@features/user/model/UserInterfaces";
+import type {IProfile} from "@features/profile/model/IProfile";
 import {
     type IAccessControl,
     type IApiUserRole,
     type IUserRole,
     UserRoleArrayAdapter
-} from "@features/user/model/RoleInterfaces.ts";
+} from "@features/user/model/RoleInterfaces";
 
 export interface IUserProfile {
     id?: number;

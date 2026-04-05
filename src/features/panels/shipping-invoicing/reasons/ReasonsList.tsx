@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IReasonsStoreState} from "@features/panels/shipping-invoicing/reasons/ReasonsPanel.tsx";
-import {deliveryReasonApi} from "@features/panels/shipping-invoicing/reasons/api/deliveryReasonApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IReasonsStoreState} from "@features/panels/shipping-invoicing/reasons/ReasonsPanel";
+import {deliveryReasonApi} from "@features/panels/shipping-invoicing/reasons/api/deliveryReasonApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason";
 
 const ReasonsList = () => {
     const {t} = useTranslation(["form"]);

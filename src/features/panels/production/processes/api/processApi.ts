@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IProcess} from "@features/panels/production/processes/api/IProcess.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IProcess} from "@features/panels/production/processes/api/IProcess";
 
 export const processApi = createPanelApi<IProcess>({
     baseEndpoint: "/production",

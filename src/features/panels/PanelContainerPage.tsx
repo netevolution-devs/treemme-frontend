@@ -1,12 +1,12 @@
 import {Box, useTheme} from "@mui/material";
-import {PANEL_REGISTRY} from "@features/panels/PanelRegistry.tsx";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {PANEL_REGISTRY} from "@features/panels/PanelRegistry";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import {DockviewReact} from "dockview";
-import {StyledDockviewWrapper} from "@themes/dockviewTheme.tsx";
+import {StyledDockviewWrapper} from "@themes/dockviewTheme";
 import {themeLight} from "dockview";
 import {themeDark} from "dockview";
 import {useEffect} from "react";
-import CustomDockviewTab from "@ui/panel/CustomDockviewTab.tsx";
+import CustomDockviewTab from "@ui/panel/CustomDockviewTab";
 
 const PanelContainerPage = () => {
     const {handleReady, api} = useDockviewStore(state => state);

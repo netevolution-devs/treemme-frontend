@@ -1,4 +1,4 @@
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
 
 export interface ICurrencyChange {
     id: number;

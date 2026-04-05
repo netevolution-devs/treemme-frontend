@@ -1,33 +1,33 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     IBatchesStoreFilter,
     IBatchesStoreState
-} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi, type IBatchesPayload} from "@features/panels/production/batches/api/batchApi.ts";
-import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
-import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
-import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi, type IBatchesPayload} from "@features/panels/production/batches/api/batchApi";
+import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
+import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi";
+import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import {Box} from "@mui/material";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import CustomButton from "@features/panels/shared/CustomButton";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {useRef} from "react";
-import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog.tsx";
-import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog.tsx";
+import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog";
+import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
-import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons.tsx";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
+import useCallablePanel from "@ui/panel/useCallablePanel";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'

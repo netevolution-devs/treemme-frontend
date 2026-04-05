@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IFlayingStoreState} from "@features/panels/leathers/flaying/FlayingPanel.tsx";
-import {flayApi} from "@features/panels/leathers/flaying/api/flayApi.ts";
-import type {IFlay} from "@features/panels/leathers/flaying/api/IFlay.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IFlayingStoreState} from "@features/panels/leathers/flaying/FlayingPanel";
+import {flayApi} from "@features/panels/leathers/flaying/api/flayApi";
+import type {IFlay} from "@features/panels/leathers/flaying/api/IFlay";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IFlayingForm = Omit<IFlay, 'id'>;
 

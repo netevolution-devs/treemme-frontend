@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ISpeciesStoreState} from "@features/panels/leathers/species/SpeciesPanel.tsx";
-import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {ISpecies} from "@features/panels/leathers/species/api/ISpecies.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ISpeciesStoreState} from "@features/panels/leathers/species/SpeciesPanel";
+import {speciesApi} from "@features/panels/leathers/species/api/speciesApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {ISpecies} from "@features/panels/leathers/species/api/ISpecies";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
 
 export type ISpeciesForm = Omit<ISpecies, 'id'>;
 

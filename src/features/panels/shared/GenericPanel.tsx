@@ -1,7 +1,7 @@
-import {PanelProvider} from "@ui/panel/PanelContext.tsx";
-import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
+import {PanelProvider} from "@ui/panel/PanelContext";
+import type {TPanelKind} from "@features/panels/PanelRegistry";
 import {Box, Stack} from "@mui/material";
-import type {PanelState} from "@ui/panel/store/PanelStore.ts";
+import type {PanelState} from "@ui/panel/store/PanelStore";
 import type {ReactNode} from "react";
 
 interface GenericPanelProps<F, U> {

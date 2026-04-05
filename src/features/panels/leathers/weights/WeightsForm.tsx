@@ -1,15 +1,15 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IWeightsStoreState} from "@features/panels/leathers/weights/WeightsPanel.tsx";
-import {type IWeightPayload, weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
-import type {IWeight} from "@features/panels/leathers/weights/api/IWeight.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IWeightsStoreState} from "@features/panels/leathers/weights/WeightsPanel";
+import {type IWeightPayload, weightApi} from "@features/panels/leathers/weights/api/weightApi";
+import type {IWeight} from "@features/panels/leathers/weights/api/IWeight";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import {Box} from "@mui/material";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IWeightForm = Omit<IWeight, 'id' | 'kg_weight' | 'cost_stripped_crust_manual' | 'cost_stripped_crust_various' | 'kg_leather_expected' | 'sqft_leather_expected'> & {
     kg_weight?: number | null;

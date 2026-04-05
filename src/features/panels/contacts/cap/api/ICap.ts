@@ -1,4 +1,4 @@
-import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
+import type {IProvince} from "@features/panels/contacts/province/api/IProvince";
 
 export interface ICap {
     id: number;

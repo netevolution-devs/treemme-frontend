@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IContactTitle} from "@features/panels/contacts/contacts/api/contacts-title/IContactTitle.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IContactTitle} from "@features/panels/contacts/contacts/api/contacts-title/IContactTitle";
 
 export const contactsTitleApi = createPanelApi<IContactTitle>({
     baseEndpoint: "/contact-title",

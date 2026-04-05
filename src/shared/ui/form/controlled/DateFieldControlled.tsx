@@ -1,11 +1,11 @@
 import {Controller, type FieldValues, useFormContext} from "react-hook-form";
-import type {ControlledFieldProps} from "@ui/form/controlled/ControlledFieldProps.ts";
+import type {ControlledFieldProps} from "@ui/form/controlled/ControlledFieldProps";
 import {useTranslation} from "react-i18next";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText";
 import "dayjs/locale/it";
 
 const DateFieldControlled = <TFieldValues extends FieldValues>({

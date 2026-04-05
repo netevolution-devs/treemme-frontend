@@ -1,20 +1,20 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     IArticleColorsStoreParams,
     IArticleColorsStoreState
-} from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
-import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IColor} from "@features/panels/products/article-colors/api/IColor.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+} from "@features/panels/products/article-colors/ArticleColorsPanel";
+import {colorApi} from "@features/panels/products/article-colors/api/colorApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IColor} from "@features/panels/products/article-colors/api/IColor";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {useMemo} from "react";
 import {Box} from "@mui/material";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IColorForm = {
     color: string;

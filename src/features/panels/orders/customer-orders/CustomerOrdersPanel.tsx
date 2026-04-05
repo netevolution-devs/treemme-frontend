@@ -1,11 +1,11 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {Box} from "@mui/material";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import CustomerOrdersList from "@features/panels/orders/customer-orders/CustomerOrdersList.tsx";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import CustomerOrdersList from "@features/panels/orders/customer-orders/CustomerOrdersList";
 
-import CustomerOrdersForm from "@features/panels/orders/customer-orders/CustomerOrdersForm.tsx";
-import OrderRowsList from "@features/panels/orders/customer-orders/order-rows/OrderRowsList.tsx";
+import CustomerOrdersForm from "@features/panels/orders/customer-orders/CustomerOrdersForm";
+import OrderRowsList from "@features/panels/orders/customer-orders/order-rows/OrderRowsList";
 
 export interface ICustomerOrdersStoreState extends IPanelUIState {
     selectedCustomerOrderId?: number | null;

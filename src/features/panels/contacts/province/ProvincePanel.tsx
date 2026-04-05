@@ -1,9 +1,9 @@
-import ProvinceForm from "@features/panels/contacts/province/ProvinceForm.tsx";
-import ProvinceList from "@features/panels/contacts/province/ProvinceList.tsx";
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import ProvinceForm from "@features/panels/contacts/province/ProvinceForm";
+import ProvinceList from "@features/panels/contacts/province/ProvinceList";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {IDockviewPanelProps} from "dockview";
 
 export interface IProvinceStoreState extends IPanelUIState {

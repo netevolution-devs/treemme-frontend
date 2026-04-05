@@ -1,5 +1,5 @@
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
-import type {IMachine} from "@features/panels/production/machinery/api/IMachine.ts";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
+import type {IMachine} from "@features/panels/production/machinery/api/IMachine";
 
 export interface IProcess {
     id: number;

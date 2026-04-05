@@ -1,20 +1,20 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import usePostBatchComposition from "@features/panels/production/batches/composition/api/usePostBatchComposition.ts";
-import useGetBatchSplitAvailability from "@features/panels/production/batches/composition/api/useGetBatchSplitAvailability.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import usePostBatchComposition from "@features/panels/production/batches/composition/api/usePostBatchComposition";
+import useGetBatchSplitAvailability from "@features/panels/production/batches/composition/api/useGetBatchSplitAvailability";
+import GenericForm from "@features/panels/shared/GenericForm";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {Box, Typography} from "@mui/material";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {useWatch} from "react-hook-form";
 import dayjs from "dayjs";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
+import CustomButton from "@features/panels/shared/CustomButton";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 
 export interface IBatchCompositionForm {

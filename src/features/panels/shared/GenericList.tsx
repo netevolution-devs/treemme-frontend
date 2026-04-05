@@ -5,7 +5,7 @@ import {
     useMaterialReactTable
 } from "material-react-table";
 import {Box, Card, CircularProgress} from "@mui/material";
-import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.tsx";
+import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions";
 import type {SyntheticEvent} from "react";
 
 export interface BaseEntity {

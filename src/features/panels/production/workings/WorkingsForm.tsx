@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IWorkingsStoreState} from "@features/panels/production/workings/WorkingsPanel.tsx";
-import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IWorking} from "@features/panels/production/workings/api/IWorking.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IWorkingsStoreState} from "@features/panels/production/workings/WorkingsPanel";
+import {workingApi} from "@features/panels/production/workings/api/workingApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IWorking} from "@features/panels/production/workings/api/IWorking";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import {Box} from "@mui/material";
 
 export interface IWorkingForm {

@@ -1,17 +1,17 @@
 import {forwardRef, useMemo} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import usePostBatchDye from "@features/panels/orders/customer-orders/order-rows/dye/api/useBatchDye.ts";
-import {machineApi} from "@features/panels/production/machinery/api/machineApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel";
+import usePostBatchDye from "@features/panels/orders/customer-orders/order-rows/dye/api/useBatchDye";
+import {machineApi} from "@features/panels/production/machinery/api/machineApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {Box, Typography} from "@mui/material";
-import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
+import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
 import dayjs from "dayjs";
 
 export interface IDyeForm {

@@ -1,4 +1,4 @@
-import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
+import DateFieldFilter from "@ui/form/filters/DateFieldFilter";
 import dayjs from "dayjs";
 
 interface DateFieldRangeFilterProps {
