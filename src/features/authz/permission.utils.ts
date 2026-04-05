@@ -199,7 +199,7 @@ export function hasPermission(
 }
 
 export interface PermissionEngine {
-    can: (resource: string, action: ResourceAction) => boolean;
+    can: (resource: ResourceName, action: ResourceAction) => boolean;
     hasRole: (role: IRoles) => boolean;
     hasRequiredRoles: (
         roles: IRoles[],
