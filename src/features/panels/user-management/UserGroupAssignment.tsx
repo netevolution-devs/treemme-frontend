@@ -1,17 +1,22 @@
-import {useState} from "react";
+import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
-import {Autocomplete, Box, Chip, CircularProgress, Divider, TextField, Typography} from "@mui/material";
+import {Box, Chip, CircularProgress, Divider, Typography} from "@mui/material";
 import type {IUserManagement} from "@features/panels/user-management/api/IUserManagement";
 import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/api/userManagementApi";
 import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {FormProvider, useForm} from "react-hook-form";
 
 interface UserGroupAssignmentProps {
     user: IUserManagement;
 }
 
+interface IGroupSelectForm {
+    group_id: number | null;
+}
+
 const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
     const {t} = useTranslation(["form"]);
-    const [pendingGroupId, setPendingGroupId] = useState<number | null>(null);
 
     const {data: allGroups = []} = groupManagementApi.useGetList();
     const {mutate: assignGroup, isPending: isAssigning} = useAssignGroup();
@@ -22,11 +27,14 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
         .filter(g => !assignedGroupIds.has(g.id))
         .map(g => ({value: g.id, label: g.name}));
 
-    const handleAdd = (_: unknown, option: { value: number; label: string } | null) => {
-        if (!option) return;
-        assignGroup({user_id: user.id, group_id: option.value});
-        setPendingGroupId(null);
-    };
+    const methods = useForm<IGroupSelectForm>({defaultValues: {group_id: null}});
+    const selectedGroupId = methods.watch("group_id");
+
+    useEffect(() => {
+        if (!selectedGroupId) return;
+        assignGroup({user_id: user.id, group_id: selectedGroupId});
+        methods.reset({group_id: null});
+    }, [selectedGroupId]);
 
     const handleRemove = (groupId: number) => {
         removeGroup({groupId, userId: user.id});
@@ -55,37 +63,14 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
                 {isRemoving && <CircularProgress size={16} sx={{alignSelf: "center"}} />}
             </Box>
 
-            {/*TODO Use controlled autocomplete*/}
-            <Autocomplete
-                size="small"
-                options={availableGroups}
-                value={null}
-                inputValue={pendingGroupId !== null ? String(pendingGroupId) : ""}
-                getOptionLabel={(o) => o.label}
-                isOptionEqualToValue={(o, v) => o.value === v.value}
-                onChange={handleAdd}
-                onInputChange={(_, val) => { if (!val) setPendingGroupId(null); }}
-                loading={isAssigning}
-                noOptionsText={t("common:search.no-options")}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label={t("form:user_management.add_group")}
-                        size="small"
-                        slotProps={{
-                            input: {
-                                ...params.InputProps,
-                                endAdornment: (
-                                    <>
-                                        {isAssigning && <CircularProgress size={16} />}
-                                        {params.InputProps.endAdornment}
-                                    </>
-                                ),
-                            }
-                        }}
-                    />
-                )}
-            />
+            <FormProvider {...methods}>
+                <SelectFieldControlled<IGroupSelectForm>
+                    name="group_id"
+                    label={t("form:user_management.add_group")}
+                    options={availableGroups}
+                    deactivated={isAssigning}
+                />
+            </FormProvider>
         </Box>
     );
 };
