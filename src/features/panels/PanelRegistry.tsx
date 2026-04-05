@@ -36,6 +36,7 @@ import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatche
 import PaymentTypesPanel from "@features/panels/commercial/payment-types/PaymentTypesPanel.tsx";
 import ShipmentConditionsPanel from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel.tsx";
 import UserManagementPanel from "@features/panels/user-management/UserManagementPanel.tsx";
+import UserAccessPanel from "@features/panels/user-management/UserAccessPanel.tsx";
 import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel.tsx";
 import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel.tsx";
 
@@ -70,6 +71,7 @@ export type TPanelKind =
     | 'processes'
     | 'workings'
     | 'user-management'
+    | 'user-access-management'
     | 'organization-management'
     | 'functionality-management'
     | 'currenciesExchange'
@@ -128,6 +130,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     shipmentConditions: (props) => <ShipmentConditionsPanel {...props}/>,
     // system
     "user-management": () => <UserManagementPanel />,
+    "user-access-management": () => <UserAccessPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
     "functionality-management": () => <FunctionalityManagementPanel />,
     "not-implemented": () => <>To implement</>,

@@ -1,17 +1,17 @@
 import {useTranslation} from "react-i18next";
 import type {IGroupManagement, IGroupManagementPayload} from "@features/panels/user-management/api/IGroupManagement.ts";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
 import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi.ts";
 import GenericForm from "@features/panels/shared/GenericForm.tsx";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel.tsx";
 
 type IGroupForm = IGroupManagementPayload;
 
 const GroupManagementForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IOrganizationManagementStoreState>();
     const selectedGroupId = useStore(state => state.uiState.selectedGroupId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -22,7 +22,7 @@ const GroupManagementForm = () => {
     const {mutateAsync: deleteGroup, isPending: isDeleting} = useDelete();
 
     return (
-        <GenericForm<IGroupForm, IGroupManagement, IUserManagementStoreState>
+        <GenericForm<IGroupForm, IGroupManagement, IOrganizationManagementStoreState>
             resource="sistema - gestione accessi"
             selectedId={selectedGroupId}
             entity={group}

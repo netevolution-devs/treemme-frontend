@@ -2,16 +2,18 @@ import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
 import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi.ts";
 import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import type {IWorkAreaManagement} from "@features/panels/user-management/api/IWorkAreaManagement.ts";
+    import type {IWorkAreaManagement} from "@features/panels/user-management/api/IWorkAreaManagement.ts";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {
+    IFunctionalityManagementStoreState
+} from "@features/panels/user-management/FunctionalityManagementPanel.tsx";
 
 const WorkAreaManagementList = () => {
     const {t} = useTranslation(["form"]);
     const {data: workAreas = [], isLoading} = workAreaManagementApi.useGetList();
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IFunctionalityManagementStoreState>();
     const selectedWorkAreaId = useStore(state => state.uiState.selectedWorkAreaId);
     const setUIState = useStore(state => state.setUIState);
 

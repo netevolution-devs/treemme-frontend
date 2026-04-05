@@ -1,37 +1,23 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
 import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import GenericTabContent from "@features/panels/shared/GenericTabContent.tsx";
 import UserManagementList from "@features/panels/user-management/UserManagementList.tsx";
 import UserManagementForm from "@features/panels/user-management/UserManagementForm.tsx";
-import UserAccessForm from "@features/panels/user-management/UserAccessForm.tsx";
-import UserAccessList from "@features/panels/user-management/UserAccessList.tsx";
 
 export interface IUserManagementStoreState extends IPanelUIState {
     selectedUserId?: number | null;
-    selectedAccessId?: number | null;
 }
 
 const UserManagementPanel = () => {
     const initialUiState: IUserManagementStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
-    const tabs = [
-        {
-            label: "Permessi",
-            component: (<><UserAccessList/><UserAccessForm/></>),
-        },
-        {
-            label: "Utenti",
-            component: (<><UserManagementList/><UserManagementForm/></>),
-        },
-    ];
-
     return (
         <GenericPanel<unknown, IUserManagementStoreState>
             kind={"user-management"}
             initialState={{uiState: initialUiState}}
+            listComponent={<UserManagementList/>}
         >
-            <GenericTabContent tabs={tabs}/>
+            <UserManagementForm/>
         </GenericPanel>
     )
 }

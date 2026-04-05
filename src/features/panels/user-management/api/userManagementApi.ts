@@ -1,4 +1,4 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
 import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/api/IUserManagement.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import useApi from "@api/useApi.ts";
