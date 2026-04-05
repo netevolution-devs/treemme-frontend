@@ -6,6 +6,9 @@ import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/a
 import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {FormProvider, useForm} from "react-hook-form";
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import {useAuth} from "@features/auth/model/AuthContext";
 
 interface UserGroupAssignmentProps {
     user: IUserManagement;
@@ -17,6 +20,10 @@ interface IGroupSelectForm {
 
 const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
     const {t} = useTranslation(["form"]);
+
+    const {user: u} = useAuth();
+    const engine = permissionEngine((u?.accessControl ?? []) as IAccessControl[]);
+    const canPut = engine.can("sistema - utenti", 'put');
 
     const {data: allGroups = []} = groupManagementApi.useGetList();
     const {mutate: assignGroup, isPending: isAssigning} = useAssignGroup();
@@ -45,7 +52,7 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
             <Typography variant="subtitle2" sx={{mb: 0.5}}>
                 {t("form:user_management.groups")}
             </Typography>
-            <Divider sx={{mb: 1.5}} />
+            <Divider sx={{mb: 1.5}}/>
 
             <Box sx={{display: "flex", flexWrap: "wrap", gap: 0.5, mb: 1.5, minHeight: 32}}>
                 {user.group_users.length === 0 && (
@@ -57,10 +64,10 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
                         label={gu.group.name}
                         size="small"
                         onDelete={() => handleRemove(gu.group.id)}
-                        disabled={isRemoving}
+                        disabled={isRemoving || !canPut}
                     />
                 ))}
-                {isRemoving && <CircularProgress size={16} sx={{alignSelf: "center"}} />}
+                {isRemoving && <CircularProgress size={16} sx={{alignSelf: "center"}}/>}
             </Box>
 
             <FormProvider {...methods}>
@@ -68,7 +75,7 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
                     name="group_id"
                     label={t("form:user_management.add_group")}
                     options={availableGroups}
-                    deactivated={isAssigning}
+                    deactivated={isAssigning || !canPut}
                 />
             </FormProvider>
         </Box>
