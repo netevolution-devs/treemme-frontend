@@ -1,12 +1,12 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi";
+import {workAreaManagementApi} from "@features/panels/user-management/work-area/api/workAreaManagementApi";
 import {usePanel} from "@ui/panel/PanelContext";
-    import type {IWorkAreaManagement} from "@features/panels/user-management/api/IWorkAreaManagement";
+    import type {IWorkAreaManagement} from "@features/panels/user-management/work-area/api/IWorkAreaManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {
     IFunctionalityManagementStoreState
-} from "@features/panels/user-management/FunctionalityManagementPanel";
+} from "@features/panels/user-management/work-area/WorkAreaPanel";
 import GenericList from "@features/panels/shared/GenericList";
 
 const WorkAreaManagementList = () => {

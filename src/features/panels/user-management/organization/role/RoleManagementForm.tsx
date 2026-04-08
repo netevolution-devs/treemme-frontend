@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
+import {roleManagementApi} from "@features/panels/user-management/organization/api/roleManagementApi";
 import GenericForm from "@features/panels/shared/GenericForm";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
-import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
-import type {IRoleManagement, IRoleManagementPayload} from "@features/panels/user-management/api/IRoleManagement";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/organization/OrganizationManagementPanel";
+import type {IRoleManagement, IRoleManagementPayload} from "@features/panels/user-management/organization/api/IRoleManagement";
 
 type IRoleForm = IRoleManagementPayload;
 

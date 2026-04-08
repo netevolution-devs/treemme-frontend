@@ -35,10 +35,10 @@ import OrderRowsPanel from "@features/panels/orders/customer-orders/order-rows/O
 import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatchesPanel";
 import PaymentTypesPanel from "@features/panels/commercial/payment-types/PaymentTypesPanel";
 import ShipmentConditionsPanel from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel";
-import UserManagementPanel from "@features/panels/user-management/UserManagementPanel";
-import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel";
-import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel";
-import UserAccessPanel from "@features/panels/user-management/UserAccessPanel";
+import UserManagementPanel from "@features/panels/user-management/users/UserManagementPanel";
+import OrganizationManagementPanel from "@features/panels/user-management/organization/OrganizationManagementPanel";
+import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
+import UserAccessPanel from "@features/panels/user-management/permission (legacy)/UserAccessPanel";
 
 export type TPanelKind =
     | 'cap'
@@ -132,6 +132,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     "user-management": () => <UserManagementPanel />,
     "user-access-management": () => <UserAccessPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
-    "functionality-management": () => <FunctionalityManagementPanel />,
+    "functionality-management": () => <WorkAreaPanel />,
     "not-implemented": () => <>To implement</>,
 }

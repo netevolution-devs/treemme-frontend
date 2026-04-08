@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
+import {roleManagementApi} from "@features/panels/user-management/organization/api/roleManagementApi";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IRoleManagement} from "@features/panels/user-management/api/IRoleManagement";
+import type {IRoleManagement} from "@features/panels/user-management/organization/api/IRoleManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
-import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/organization/OrganizationManagementPanel";
 
 const RoleManagementList = () => {
     const {t} = useTranslation(["form"]);

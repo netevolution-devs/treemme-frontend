@@ -1,9 +1,9 @@
 import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {Box, Chip, CircularProgress, Divider, Typography} from "@mui/material";
-import type {IUserManagement} from "@features/panels/user-management/api/IUserManagement";
-import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/api/userManagementApi";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import type {IUserManagement} from "@features/panels/user-management/users/api/IUserManagement";
+import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/users/api/userManagementApi";
+import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {FormProvider, useForm} from "react-hook-form";
 import {permissionEngine} from "@features/authz/permission.utils";

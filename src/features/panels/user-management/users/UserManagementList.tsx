@@ -1,9 +1,9 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {userManagementApi} from "@features/panels/user-management/api/userManagementApi";
+import {userManagementApi} from "@features/panels/user-management/users/api/userManagementApi";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel";
-import type {IUserManagement} from "@features/panels/user-management/api/IUserManagement";
+import type {IUserManagementStoreState} from "@features/panels/user-management/users/UserManagementPanel";
+import type {IUserManagement} from "@features/panels/user-management/users/api/IUserManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
 import dayjs from "dayjs";

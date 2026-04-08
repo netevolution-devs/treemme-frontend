@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/api/IUserManagement";
+import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/users/api/IUserManagement";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel";
-import {userManagementApi} from "@features/panels/user-management/api/userManagementApi";
+import type {IUserManagementStoreState} from "@features/panels/user-management/users/UserManagementPanel";
+import {userManagementApi} from "@features/panels/user-management/users/api/userManagementApi";
 import GenericForm from "@features/panels/shared/GenericForm";
-import UserGroupAssignment from "@features/panels/user-management/UserGroupAssignment";
+import UserGroupAssignment from "@features/panels/user-management/permission (legacy)/UserGroupAssignment";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Button, Tooltip} from "@mui/material";
 import EmailField from "@ui/form/controlled/EmailField";

@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import type {IWorkAreaManagement, IWorkAreaManagementPayload} from "@features/panels/user-management/api/IWorkAreaManagement";
+import type {IWorkAreaManagement, IWorkAreaManagementPayload} from "@features/panels/user-management/work-area/api/IWorkAreaManagement";
 import {usePanel} from "@ui/panel/PanelContext";
-import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi";
+import {workAreaManagementApi} from "@features/panels/user-management/work-area/api/workAreaManagementApi";
 import GenericForm from "@features/panels/shared/GenericForm";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import type {
     IFunctionalityManagementStoreState
-} from "@features/panels/user-management/FunctionalityManagementPanel";
-import WorkAreaPermissionsSection from "@features/panels/user-management/WorkAreaPermissionsSection";
+} from "@features/panels/user-management/work-area/WorkAreaPanel";
+import WorkAreaPermissions from "@features/panels/user-management/work-area/WorkAreaPermissions";
 
 type IWorkAreaForm = IWorkAreaManagementPayload;
 
@@ -58,7 +58,7 @@ const WorkAreaManagementForm = () => {
                 )}
             />
             {selectedWorkAreaId && workArea && (
-                <WorkAreaPermissionsSection
+                <WorkAreaPermissions
                     workAreaId={selectedWorkAreaId}
                     groupRoleWorkAreas={workArea.group_role_work_areas ?? []}
                 />

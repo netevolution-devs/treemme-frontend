@@ -19,10 +19,10 @@ import {
     useAssignGroupAccessForWorkArea,
     useDeleteGroupAccessForWorkArea,
     useUpdateGroupAccessInWorkArea,
-} from "@features/panels/user-management/api/userManagementApi";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
-import type {IWorkAreaGroupRoleAccess} from "@features/panels/user-management/api/IWorkAreaManagement";
+} from "@features/panels/user-management/users/api/userManagementApi";
+import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
+import {roleManagementApi} from "@features/panels/user-management/organization/api/roleManagementApi";
+import type {IWorkAreaGroupRoleAccess} from "@features/panels/user-management/work-area/api/IWorkAreaManagement";
 
 type BooleanField = "can_get" | "can_post" | "can_put" | "can_delete" | "check_order";
 
@@ -56,7 +56,7 @@ interface WorkAreaPermissionsSectionProps {
     groupRoleWorkAreas: IWorkAreaGroupRoleAccess[];
 }
 
-const WorkAreaPermissionsSection = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissionsSectionProps) => {
+const WorkAreaPermissions = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissionsSectionProps) => {
     const {t} = useTranslation(["form"]);
 
     const [groupId, setGroupId] = useState<number>(0);
@@ -194,4 +194,4 @@ const WorkAreaPermissionsSection = ({workAreaId, groupRoleWorkAreas}: WorkAreaPe
     );
 };
 
-export default WorkAreaPermissionsSection;
+export default WorkAreaPermissions;
