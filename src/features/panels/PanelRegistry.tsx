@@ -35,10 +35,10 @@ import OrderRowsPanel from "@features/panels/orders/customer-orders/order-rows/O
 import LotsBatchesPanel from "@features/panels/warehouse/lots-batches/LotsBatchesPanel";
 import PaymentTypesPanel from "@features/panels/commercial/payment-types/PaymentTypesPanel";
 import ShipmentConditionsPanel from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel";
-import UserManagementPanel from "@features/panels/user-management/UserManagementPanel";
-import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel";
-import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel";
-import UserAccessPanel from "@features/panels/user-management/UserAccessPanel";
+import UsersPanel from "@features/panels/user-management/users/UsersPanel";
+import OrganizationManagementPanel from "@features/panels/user-management/organization/OrganizationManagementPanel";
+import UserAccessPanel from "@features/panels/user-management/permission (legacy)/UserAccessPanel";
+import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
 import ArticleInternalColorsPanel from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
 
@@ -72,7 +72,7 @@ export type TPanelKind =
     | 'subcontractingNotReturned'
     | 'processes'
     | 'workings'
-    | 'user-management'
+    | 'users'
     | 'user-access-management'
     | 'organization-management'
     | 'functionality-management'
@@ -135,9 +135,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     paymentTypes:       (props) => <PaymentTypesPanel {...props}/>,
     shipmentConditions: (props) => <ShipmentConditionsPanel {...props}/>,
     // system
-    "user-management": () => <UserManagementPanel />,
+    "users": () => <UsersPanel />,
     "user-access-management": () => <UserAccessPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
-    "functionality-management": () => <FunctionalityManagementPanel />,
+    "functionality-management": () => <WorkAreaPanel />,
     "not-implemented": () => <>To implement</>,
 }

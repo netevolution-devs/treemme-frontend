@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IGroupManagement} from "@features/panels/user-management/api/IGroupManagement";
+import type {IGroupManagement} from "@features/panels/user-management/organization/api/IGroupManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
-import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/organization/OrganizationManagementPanel";
 
 const GroupManagementList = () => {
     const {t} = useTranslation(["form"]);

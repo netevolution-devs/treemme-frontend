@@ -1,10 +1,10 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
 import GenericPanel from "@features/panels/shared/GenericPanel";
-import GroupManagementList from "@features/panels/user-management/GroupManagementList";
-import GroupManagementForm from "@features/panels/user-management/GroupManagementForm";
-import RoleManagementList from "@features/panels/user-management/RoleManagementList";
-import RoleManagementForm from "@features/panels/user-management/RoleManagementForm";
+import GroupManagementList from "@features/panels/user-management/organization/group/GroupManagementList";
+import GroupManagementForm from "@features/panels/user-management/organization/group/GroupManagementForm";
+import RoleManagementList from "@features/panels/user-management/organization/role/RoleManagementList";
+import RoleManagementForm from "@features/panels/user-management/organization/role/RoleManagementForm";
 import {Stack, Typography} from "@mui/material";
 
 export interface IOrganizationManagementStoreState extends IPanelUIState {

@@ -283,13 +283,8 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.system.tools"},
             // {i18nKey: "menu.system.console"},
             {
-                i18nKey: "menu.system.user-management",
-                component: "user-management",
-                permissionCheck: {resource: "sistema - permessi", action: "get"}
-            },
-            {
-                i18nKey: "menu.system.access-management",
-                component: "user-access-management",
+                i18nKey: "menu.system.users",
+                component: "users",
                 permissionCheck: {resource: "sistema - permessi", action: "get"}
             },
             {

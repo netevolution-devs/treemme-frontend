@@ -1,9 +1,9 @@
 import {useTranslation} from "react-i18next";
-import type {IGroupManagement, IGroupManagementPayload} from "@features/panels/user-management/api/IGroupManagement";
+import type {IGroupManagement, IGroupManagementPayload} from "@features/panels/user-management/organization/api/IGroupManagement";
 import {usePanel} from "@ui/panel/PanelContext";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
-import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/organization/OrganizationManagementPanel";
 import GenericForm from "@features/panels/shared/GenericForm";
 
 type IGroupForm = IGroupManagementPayload;

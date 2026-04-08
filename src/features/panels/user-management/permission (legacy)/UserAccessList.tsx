@@ -7,9 +7,9 @@ import {
     useGetGroupAccessList,
     useUpdateGroupAccess,
     type IUserGroupAccess
-} from "@features/panels/user-management/api/userManagementApi";
+} from "@features/panels/user-management/users/api/usersApi";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel";
+import type {IUserAccessStoreState} from "@features/panels/user-management/permission (legacy)/UserAccessPanel";
 
 const getName = (field: { id: number; name?: string } | []) =>
     Array.isArray(field) ? "-" : (field.name ?? "-");

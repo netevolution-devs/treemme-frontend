@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/api/IUserManagement";
+import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/users/api/IUserManagement";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel";
-import {userManagementApi} from "@features/panels/user-management/api/userManagementApi";
+import type {IUsersStoreState} from "@features/panels/user-management/users/UsersPanel";
+import {usersApi} from "@features/panels/user-management/users/api/usersApi";
 import GenericForm from "@features/panels/shared/GenericForm";
-import UserGroupAssignment from "@features/panels/user-management/UserGroupAssignment";
+import UserGroupAssignment from "@features/panels/user-management/permission (legacy)/UserGroupAssignment";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Button, Tooltip} from "@mui/material";
 import EmailField from "@ui/form/controlled/EmailField";
@@ -56,14 +56,14 @@ const PasswordGenerator = () => {
     );
 };
 
-const UserManagementForm = () => {
+const UsersForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IUsersStoreState>();
     const selectedUserId = useStore(state => state.uiState.selectedUserId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {useGetDetail, usePost, usePut, useDelete} = userManagementApi;
+    const {useGetDetail, usePost, usePut, useDelete} = usersApi;
     const {data: user} = useGetDetail(selectedUserId);
     const {mutateAsync: createUser, isPending: isPosting} = usePost();
     const {mutateAsync: updateUser, isPending: isPutting} = usePut();
@@ -71,7 +71,7 @@ const UserManagementForm = () => {
 
     return (
         <>
-        <GenericForm<IUserForm, IUserManagement, IUserManagementStoreState>
+        <GenericForm<IUserForm, IUserManagement, IUsersStoreState>
             resource="sistema - utenti"
             selectedId={selectedUserId}
             entity={user}
@@ -132,4 +132,4 @@ const UserManagementForm = () => {
     );
 };
 
-export default UserManagementForm;
+export default UsersForm;

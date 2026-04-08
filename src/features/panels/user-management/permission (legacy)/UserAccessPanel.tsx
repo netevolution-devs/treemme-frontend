@@ -1,8 +1,8 @@
 import {BaseButtonState} from "@features/panels/shared/FormButtons";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
 import GenericPanel from "@features/panels/shared/GenericPanel";
-import UserAccessForm from "@features/panels/user-management/UserAccessForm";
-import UserAccessList from "@features/panels/user-management/UserAccessList";
+import UserAccessForm from "@features/panels/user-management/permission (legacy)/UserAccessForm";
+import UserAccessList from "@features/panels/user-management/permission (legacy)/UserAccessList";
 
 export interface IUserAccessStoreState extends IPanelUIState {
     selectedAccessId?: number | null;
