@@ -14,17 +14,22 @@ import {Box, Typography} from "@mui/material";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
 import dayjs from "dayjs";
 
+interface DyalogFormDialogProps {
+    order_row_id?: number;
+}
+
 export interface IDyeForm {
     quantity: number;
     scheduled_date: string;
     machine_id?: number | null;
 }
 
-const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
+const DyeFormDialog = forwardRef<IDialogActions, DyalogFormDialogProps>(({order_row_id} , ref) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
-    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
+    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId) || order_row_id;
+    console.log("selectedOrderRowId", selectedOrderRowId);
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
 
