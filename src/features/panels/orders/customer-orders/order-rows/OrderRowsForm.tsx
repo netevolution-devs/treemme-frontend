@@ -99,7 +99,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
     return (
         <Box sx={{p: 0}}>
             <DyeFormDialog ref={dyeDialogRef} order_row_id={selectedOrderRowId as number}/>
-            <RefinementFormDialog ref={refinementDialogRef}/>
+            <RefinementFormDialog ref={refinementDialogRef} order_row_id={selectedOrderRowId as number}/>
 
             <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
                 onSuccess={handlePanelSuccess}

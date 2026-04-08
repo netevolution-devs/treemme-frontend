@@ -29,7 +29,6 @@ const DyeFormDialog = forwardRef<IDialogActions, DyalogFormDialogProps>(({order_
 
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId) || order_row_id;
-    console.log("selectedOrderRowId", selectedOrderRowId);
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
 
