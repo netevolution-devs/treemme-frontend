@@ -23,6 +23,7 @@ import {
 import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
 import {roleManagementApi} from "@features/panels/user-management/organization/api/roleManagementApi";
 import type {IWorkAreaGroupRoleAccess} from "@features/panels/user-management/work-area/api/IWorkAreaManagement";
+import type {ResourceName} from "@features/authz/permission.utils";
 
 type BooleanField = "can_get" | "can_post" | "can_put" | "can_delete" | "check_order";
 
@@ -53,10 +54,11 @@ const AccessCheckbox = ({
 
 interface WorkAreaPermissionsSectionProps {
     workAreaId: number;
+    workAreaAsResource: ResourceName;
     groupRoleWorkAreas: IWorkAreaGroupRoleAccess[];
 }
 
-const WorkAreaPermissions = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissionsSectionProps) => {
+const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas}: WorkAreaPermissionsSectionProps) => {
     const {t} = useTranslation(["form"]);
 
     const [groupId, setGroupId] = useState<number>(0);
@@ -67,6 +69,8 @@ const WorkAreaPermissions = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissio
 
     const {mutate: deleteAccess, isPending: isDeleting} = useDeleteGroupAccessForWorkArea(workAreaId);
     const {mutate: assignAccess, isPending: isAssigning} = useAssignGroupAccessForWorkArea(workAreaId);
+
+    const showCheckOrder = workAreaAsResource === "ordini - ordini clienti";
 
     const handleAdd = () => {
         if (!groupId || !roleId) return;
@@ -116,13 +120,13 @@ const WorkAreaPermissions = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissio
             size: 60, minSize: 60, maxSize: 60,
             Cell: ({row}) => <AccessCheckbox row={row.original} field="can_delete" workAreaId={workAreaId}/>,
         },
-        {
+        ...(showCheckOrder ? [{
             accessorKey: "check_order",
             header: t("form:access_management.check_order"),
             size: 80, minSize: 80, maxSize: 80,
             Cell: ({row}) => <AccessCheckbox row={row.original} field="check_order" workAreaId={workAreaId}/>,
-        },
-    ], [t, workAreaId]);
+        }] : []),
+    ], [t, workAreaId, showCheckOrder]);
 
     return (
         <Stack gap={1.5} sx={{mt: 1}}>
@@ -134,7 +138,7 @@ const WorkAreaPermissions = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissio
             <Stack direction="row" gap={1} alignItems={"start"} flexWrap="wrap" justifyContent={"space-between"}>
 
                 <Stack direction="row" gap={4} alignItems="start" justifyContent={"space-between"}>
-                    <Stack gap={1} >
+                    <Stack gap={1}>
                         <FormControl sx={{minWidth: 400}}>
                             <InputLabel>{t("form:access_management.group_id")}</InputLabel>
                             <Select

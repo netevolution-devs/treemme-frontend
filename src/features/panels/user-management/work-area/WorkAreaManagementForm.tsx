@@ -8,6 +8,7 @@ import type {
     IFunctionalityManagementStoreState
 } from "@features/panels/user-management/work-area/WorkAreaPanel";
 import WorkAreaPermissions from "@features/panels/user-management/work-area/WorkAreaPermissions";
+import type {ResourceName} from "@features/authz/permission.utils";
 
 type IWorkAreaForm = IWorkAreaManagementPayload;
 
@@ -60,6 +61,7 @@ const WorkAreaManagementForm = () => {
             {selectedWorkAreaId && workArea && (
                 <WorkAreaPermissions
                     workAreaId={selectedWorkAreaId}
+                    workAreaAsResource={workArea.name.toLowerCase() as ResourceName}
                     groupRoleWorkAreas={workArea.group_role_work_areas ?? []}
                 />
             )}
