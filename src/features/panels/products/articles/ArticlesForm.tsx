@@ -10,7 +10,7 @@ import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldCo
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
-import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi";
+import {articlePrintApi} from "@features/panels/products/article-prints/api/articlePrintApi";
 import {useMemo} from "react";
 import {Box} from "@mui/material";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue";
@@ -168,6 +168,10 @@ const ArticlesFormFields = ({
         formKey: "thickness_id",
         dependencyKey: "thicknesses"
     });
+    useSubscribePanel<IArticleForm>({
+        formKey: 'print_id',
+        dependencyKey: 'articlePrints'
+    });
 
     return (
         <>
@@ -274,6 +278,13 @@ const ArticlesFormFields = ({
                     name="print_id"
                     label={t("products.articles.print")}
                     options={printOptions}
+                    onNoOptionsMatch={(input) => addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "articlePrints",
+                            i18nKey: "menu.products.article-prints"
+                        }
+                    })}
                 />
             </Box>
             <TextFieldControlled<IArticleForm>

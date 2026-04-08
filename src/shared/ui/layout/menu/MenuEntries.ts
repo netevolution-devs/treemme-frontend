@@ -130,6 +130,11 @@ export const MenuEntries: IMenuEntry[] = [
                 component: "articleClasses",
                 permissionCheck: {resource: "articoli - classi", action: "get"}
             },
+            {
+                i18nKey: "menu.products.article-prints", component: "articlePrints", permissionCheck: {
+                    resource: "articoli - stampe", action: "get"
+                }
+            },
         ]
     },
     {

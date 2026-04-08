@@ -42,6 +42,7 @@ export type ResourceProducts = "articoli"
     | "articoli - colori"
     | "articoli - classi"
     | "articoli - colori interni"
+    | "articoli - stampe"
 
 export type ResourceOrders = "ordini"
     | "ordini - ordini clienti"

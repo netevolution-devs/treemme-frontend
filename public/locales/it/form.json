@@ -405,6 +405,9 @@
     },
     "article_internal_colors": {
       "name": "Colore interno"
+    },
+    "article_prints": {
+      "name": "Stampa"
     }
   },
   "shipping": {
