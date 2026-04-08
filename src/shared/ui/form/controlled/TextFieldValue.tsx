@@ -15,7 +15,7 @@ const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps
         if (typeof value === "number" && precision !== undefined) {
             return value.toFixed(precision);
         }
-        return value.toString();
+        return value.toString().toUpperCase();
     }, [value, precision]);
 
     const shouldShrink = isFilled || (value !== undefined && value !== null && value !== "");

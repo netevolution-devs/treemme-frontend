@@ -47,7 +47,7 @@ const SelectFieldMultipleControlled = <TFieldValues extends FieldValues>({
                         disabled={disabled || deactivated}
                         value={selectedOptions}
                         noOptionsText={t("common:search.no-options")}
-                        getOptionLabel={(option) => option.label || ""}
+                        getOptionLabel={(option) => (option.label || "").toUpperCase()}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
                         onChange={(_, newValues) => {
                             onChange(newValues.map(v => v.value));
@@ -56,7 +56,7 @@ const SelectFieldMultipleControlled = <TFieldValues extends FieldValues>({
                         renderTags={(tagValues, getTagProps) =>
                             tagValues.map((option, index) => {
                                 const {key, ...tagProps} = getTagProps({index});
-                                return <Chip key={key} label={option.label} size="small" {...tagProps} />;
+                                return <Chip key={key} label={option.label} size="small" {...tagProps} sx={{textTransform: "uppercase"}} />;
                             })
                         }
                         renderInput={(params) => {
@@ -85,6 +85,7 @@ const SelectFieldMultipleControlled = <TFieldValues extends FieldValues>({
                                         },
                                         htmlInput: {
                                             ...inputProps,
+                                            sx: {textTransform: "uppercase"},
                                             ...(TextFieldProps?.slotProps?.htmlInput as object | undefined),
                                         },
                                         formHelperText: {
@@ -100,7 +101,7 @@ const SelectFieldMultipleControlled = <TFieldValues extends FieldValues>({
                         renderOption={(props, option) => {
                             const {key, ...otherProps} = props;
                             return (
-                                <Box component="li" key={key} {...otherProps}>
+                                <Box component="li" key={key} {...otherProps} sx={{textTransform: "uppercase"}}>
                                     {option.label}
                                 </Box>
                             );

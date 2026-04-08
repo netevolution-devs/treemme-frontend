@@ -37,8 +37,10 @@ import PaymentTypesPanel from "@features/panels/commercial/payment-types/Payment
 import ShipmentConditionsPanel from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel";
 import UsersPanel from "@features/panels/user-management/users/UsersPanel";
 import OrganizationManagementPanel from "@features/panels/user-management/organization/OrganizationManagementPanel";
-import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
 import UserAccessPanel from "@features/panels/user-management/permission (legacy)/UserAccessPanel";
+import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
+import ArticleInternalColorsPanel from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
+import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
 
 export type TPanelKind =
     | 'cap'
@@ -80,6 +82,8 @@ export type TPanelKind =
     | 'lotsBatches'
     | 'paymentTypes'
     | 'shipmentConditions'
+    | 'articleInternalColors'
+    | 'articlePrints'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -101,14 +105,16 @@ export const PANEL_REGISTRY: DockviewComponents = {
     tanningStages:  (props) => <TanningStagesPanel {...props}/>,
     origins:        (props) => <OriginsPanel {...props}/>,
     // products
-    products:           () => <ProductsPanel/>,
-    articles:           (props) => <ArticlesPanel {...props}/>,
-    selection:          (props) => <SelectionPanel {...props}/>,
-    productCategories:  () => <ProductCategoriesPanel/>,
-    productTypes:       () => <ProductTypesPanel/>,
-    articleTypes:       (props) => <ArticleTypesPanel {...props}/>,
-    articleColors:      (props) => <ArticleColorsPanel {...props}/>,
-    articleClasses:     (props) => <ArticleClassesPanel {...props}/>,
+    products:               () => <ProductsPanel/>,
+    articles:               (props) => <ArticlesPanel {...props}/>,
+    selection:              (props) => <SelectionPanel {...props}/>,
+    productCategories:      () => <ProductCategoriesPanel/>,
+    productTypes:           () => <ProductTypesPanel/>,
+    articleTypes:           (props) => <ArticleTypesPanel {...props}/>,
+    articleColors:          (props) => <ArticleColorsPanel {...props}/>,
+    articleInternalColors:  (props) => <ArticleInternalColorsPanel {...props}/>,
+    articleClasses:         (props) => <ArticleClassesPanel {...props}/>,
+    articlePrints:          (props) => <ArticlePrintsPanel {...props}/>,
     // orders
     customerOrders: () => <CustomerOrdersPanel/>,
     orderRows:      (props) => <OrderRowsPanel {...props}/>,

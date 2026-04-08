@@ -12,16 +12,20 @@ import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/ap
 import useBatchRefinement from "@features/panels/orders/customer-orders/order-rows/refinement/api/useBatchRefinement";
 import dayjs from "dayjs";
 
+interface RefinementFormDialogProps {
+    order_row_id?: number;
+}
+
 export interface IRefinementForm {
     quantity: number;
     scheduled_date: string;
 }
 
-const RefinementFormDialog = forwardRef<IDialogActions>((_, ref) => {
+const RefinementFormDialog = forwardRef<IDialogActions, RefinementFormDialogProps>(({order_row_id}, ref) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
-    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
+    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId) || order_row_id;
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
 
