@@ -131,36 +131,38 @@ const WorkAreaPermissions = ({workAreaId, groupRoleWorkAreas}: WorkAreaPermissio
                 Permessi
             </Typography>
 
-            <Stack direction="row" gap={1}  alignItems={"start"} flexWrap="wrap" justifyContent={"space-between"}>
+            <Stack direction="row" gap={1} alignItems={"start"} flexWrap="wrap" justifyContent={"space-between"}>
 
-                <Stack direction="row" gap={1} alignItems="center" flexWrap="wrap">
-                    <FormControl size="small" sx={{minWidth: 160}}>
-                        <InputLabel>{t("form:access_management.group_id")}</InputLabel>
-                        <Select
-                            value={groupId || ""}
-                            label={t("form:access_management.group_id")}
-                            onChange={(e) => setGroupId(Number(e.target.value))}
-                        >
-                            {groups.map((g) => (
-                                <MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl size="small" sx={{minWidth: 160}}>
-                        <InputLabel>{t("form:access_management.role_id")}</InputLabel>
-                        <Select
-                            value={roleId || ""}
-                            label={t("form:access_management.role_id")}
-                            onChange={(e) => setRoleId(Number(e.target.value))}
-                        >
-                            {roles.map((r) => (
-                                <MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                <Stack direction="row" gap={4} alignItems="start" justifyContent={"space-between"}>
+                    <Stack gap={1} >
+                        <FormControl sx={{minWidth: 400}}>
+                            <InputLabel>{t("form:access_management.group_id")}</InputLabel>
+                            <Select
+                                size="medium"
+                                value={groupId || ""}
+                                label={t("form:access_management.group_id")}
+                                onChange={(e) => setGroupId(Number(e.target.value))}
+                            >
+                                {groups.map((g) => (
+                                    <MenuItem key={g.id} value={g.id}>{g.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl sx={{minWidth: 400}}>
+                            <InputLabel>{t("form:access_management.role_id")}</InputLabel>
+                            <Select
+                                value={roleId || ""}
+                                label={t("form:access_management.role_id")}
+                                onChange={(e) => setRoleId(Number(e.target.value))}
+                            >
+                                {roles.map((r) => (
+                                    <MenuItem key={r.id} value={r.id}>{r.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Stack>
                     <Button
-                        variant="contained"
-                        size="small"
+                        variant={"outlined"}
                         disabled={!groupId || !roleId || isAssigning}
                         onClick={handleAdd}
                     >
