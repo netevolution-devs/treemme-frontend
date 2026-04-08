@@ -42,7 +42,7 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IArticleTypeForm, IArticleType, IArticleTypesStoreState>
-            resource="prodotti - tipologie articoli"
+            resource="articoli - tipologie articoli"
             selectedId={selectedArticleTypeId}
             entity={articleType}
             emptyValues={{

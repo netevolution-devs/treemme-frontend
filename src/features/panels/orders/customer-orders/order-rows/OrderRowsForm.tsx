@@ -45,7 +45,12 @@ export type IOrderRowForm = Omit<IOrderRow,
     'client_order' |
     'available_quantity' |
     'quantity' |
-    'selection'
+    'selection' |
+    'price' |
+    'total_price' |
+    'total_currency_price' |
+    'tolerance_quantity_percentage' |
+    'delivery_date_request'
 > & {
     id?: number;
     article_id: number | null;
@@ -98,8 +103,8 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
 
     return (
         <Box sx={{p: 0}}>
-            <DyeFormDialog ref={dyeDialogRef}/>
-            <RefinementFormDialog ref={refinementDialogRef}/>
+            <DyeFormDialog ref={dyeDialogRef} order_row_id={selectedOrderRowId as number}/>
+            <RefinementFormDialog ref={refinementDialogRef} order_row_id={selectedOrderRowId as number}/>
 
             <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
                 onSuccess={handlePanelSuccess}
@@ -115,16 +120,16 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     cancelled: false,
                     weight: null,
                     quantity: null,
-                    price: null,
-                    total_price: null,
+                    // price: null,
+                    // total_price: null,
                     currency_price: null,
                     currency_exchange: 1,
-                    total_currency_price: null,
+                    // total_currency_price: null,
                     agent_percentage_row: null,
-                    tolerance_quantity_percentage: 40,
+                    // tolerance_quantity_percentage: 40,
                     shipment_schedule: null,
                     production_schedule: null,
-                    delivery_date_request: null,
+                    // delivery_date_request: null,
                     delivery_date_confirmed: null,
                     article_id: null,
                     client_order_id: clientOrderId ?? 0,
@@ -137,16 +142,16 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     cancelled: x.cancelled,
                     weight: x.weight,
                     quantity: x.quantity,
-                    price: x.price,
-                    total_price: x.total_price,
+                    // price: x.price,
+                    // total_price: x.total_price,
                     currency_price: x.currency_price,
                     currency_exchange: x.currency_exchange,
-                    total_currency_price: x.total_currency_price,
+                    // total_currency_price: x.total_currency_price,
                     agent_percentage_row: x.agent_percentage_row,
-                    tolerance_quantity_percentage: x.tolerance_quantity_percentage,
+                    // tolerance_quantity_percentage: x.tolerance_quantity_percentage,
                     shipment_schedule: x.shipment_schedule,
                     production_schedule: x.production_schedule,
-                    delivery_date_request: x.delivery_date_request,
+                    // delivery_date_request: x.delivery_date_request,
                     delivery_date_confirmed: x.delivery_date_confirmed,
                     article_id: x.article.id,
                     client_order_id: clientOrderId ?? 0,
@@ -329,12 +334,12 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     options={currencyOptions}
                 />
                 <NumberFieldControlled<IOrderRowForm>
-                    name="price"
-                    label={t("orders.row.price")}
+                    name="currency_price"
+                    label={t("orders.row.currency_price")}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_price")}
-                    value={orderRow?.total_price ?? undefined}
+                    label={t("orders.row.total_currency_price")}
+                    value={orderRow?.total_currency_price ?? undefined}
                     isFilled={!!orderRow}
                 />
             </Box>
@@ -343,25 +348,25 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                 <NumberFieldControlled<IOrderRowForm>
                     name="currency_exchange"
                     label={t("orders.row.currency_exchange")}
-                    precision={3}
+                    precision={4}
                     deactivated={isEuro(watchedCurrencyId as number)}
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0}}
+                        sx={{pr: 0, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
                         isEnable={!isEuro(watchedCurrencyId as number)}
                         disableLabel
                     />
                 </Box>
                 <TextFieldValue
-                    label={t("orders.row.currency_price")}
-                    value={orderRow?.currency_price ?? undefined}
+                    label={t("orders.row.price")}
+                    value={orderRow?.price ?? undefined}
                     isFilled={!!orderRow}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_currency_price")}
-                    value={orderRow?.total_currency_price ?? undefined}
+                    label={t("orders.row.total_price")}
+                    value={orderRow?.total_price ?? undefined}
                     isFilled={!!orderRow}
                 />
             </Box>

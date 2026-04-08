@@ -5,7 +5,6 @@ import {selectionApi} from "@features/panels/products/selection/api/selectionApi
 import GenericForm from "@features/panels/shared/GenericForm";
 import type {ISelection} from "@features/panels/products/selection/api/ISelection";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
@@ -35,17 +34,17 @@ const SelectionForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<ISelectionForm, ISelection, ISelectionStoreState>
-            resource="prodotti - scelte"
+            resource="articoli - scelte"
             onSuccess={handlePanelSuccess}
             selectedId={selectedSelectionId}
             entity={selection}
             emptyValues={{
                 name: initialName ?? '',
-                value: 1
+                // value: 1
             }}
             mapEntityToForm={(s) => ({
                 name: s.name,
-                value: s.value
+                // value: s.value
             })}
             create={(payload) => createSelection(payload)}
             update={(id, payload) => updateSelection({id, payload})}
@@ -61,10 +60,10 @@ const SelectionForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                         label={t("products.articles.selection.name")}
                         required
                     />
-                    <NumberFieldControlled<ISelectionForm>
-                        name={"value"}
-                        label={t("products.articles.selection.value")}
-                    />
+                    {/*<NumberFieldControlled<ISelectionForm>*/}
+                    {/*    name={"value"}*/}
+                    {/*    label={t("products.articles.selection.value")}*/}
+                    {/*/>*/}
                 </>
             )}
         />

@@ -7,6 +7,7 @@ export const getMrtTableBodyCellProps = (): MUITableCellProps => {
             paddingLeft: 1.5,
             paddingTop: 0.5,
             paddingBottom: 0.5,
+            textTransform: "uppercase",
         }
     };
 }

@@ -137,7 +137,7 @@
       "name": "Specie"
     },
     "thickness": {
-      "name": "Nome spessore",
+      "name": "Spessore",
       "mm": "Sps in MM"
     },
     "type": {
@@ -321,11 +321,11 @@
       "delivery_date_request": "Data richiesta",
       "delivery_date_confirmed": "Data confermata",
       "currency": "Valuta",
-      "currency_price": "Prezzo valuta",
-      "currency_exchange": "Cambio",
-      "total_currency_price": "Totale valuta",
+      "currency_price": "Prezzo valuta estera",
+      "currency_exchange": "Cambio in €",
+      "total_currency_price": "Totale valuta estera",
       "price": "Prezzo",
-      "total_price": "Totale",
+      "total_price": "Totale in €",
       "agent_percentage_row": "Provv. riga %",
       "weight": "Peso",
       "shipment_schedule": "Settimana spedizione",
@@ -377,7 +377,7 @@
       "name": "Nome",
       "code": "Codice",
       "client": "Cliente",
-      "article_type": "Tipologia",
+      "article_type": "Articolo",
       "color": "Colore",
       "full_grain": "Pieno fiore",
       "article_variation": "Variazione",
@@ -387,7 +387,7 @@
       "leather_type": "Tipo pellame",
       "article_class": "Classe",
       "selection": {
-        "name": "Nome",
+        "name": "Scelta",
         "value": "Valore"
       }
     },
@@ -402,6 +402,12 @@
     "article_classes": {
       "name": "Nome classe",
       "description": "Descrizione"
+    },
+    "article_internal_colors": {
+      "name": "Colore interno"
+    },
+    "article_prints": {
+      "name": "Stampa"
     }
   },
   "shipping": {

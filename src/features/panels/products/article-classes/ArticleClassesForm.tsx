@@ -36,6 +36,7 @@ const ArticleClassesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => 
     return (
         <GenericForm<IArticleClassForm, IArticleClass, IArticleClassesStoreState>
             onSuccess={handlePanelSuccess}
+            resource="articoli - classi"
             selectedId={selectedArticleClassId}
             entity={articleClass}
             emptyValues={{

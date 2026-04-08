@@ -5,7 +5,7 @@ import GroupManagementList from "@features/panels/user-management/GroupManagemen
 import GroupManagementForm from "@features/panels/user-management/GroupManagementForm";
 import RoleManagementList from "@features/panels/user-management/RoleManagementList";
 import RoleManagementForm from "@features/panels/user-management/RoleManagementForm";
-import {Divider, Stack, Typography} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 
 export interface IOrganizationManagementStoreState extends IPanelUIState {
     selectedGroupId?: number | null;
@@ -15,7 +15,6 @@ export interface IOrganizationManagementStoreState extends IPanelUIState {
 const SectionTitle = ({title}: { title: string }) => (
     <>
         <Typography variant="h6">{title}</Typography>
-        <Divider sx={{mb: 1}}/>
     </>
 );
 
@@ -27,9 +26,16 @@ const OrganizationManagementPanel = () => {
             kind={"organization-management"}
             initialState={{uiState: initialUiState}}
         >
-            <Stack spacing={4} sx={{p: 2}}>
-                <Stack spacing={2}><SectionTitle title="Gruppi"/><GroupManagementList/><GroupManagementForm/></Stack>
-                <Stack spacing={2}><SectionTitle title="Ruoli"/><RoleManagementList/><RoleManagementForm/></Stack>
+            <Stack spacing={2}>
+                <Stack spacing={1}><SectionTitle title="Gruppi"/>
+                    <GroupManagementList/>
+                    <GroupManagementForm/>
+                </Stack>
+                <Stack spacing={1}>
+                    <SectionTitle title="Ruoli"/>
+                    <RoleManagementList/>
+                    <RoleManagementForm/>
+                </Stack>
             </Stack>
         </GenericPanel>
     )

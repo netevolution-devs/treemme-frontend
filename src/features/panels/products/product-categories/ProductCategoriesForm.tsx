@@ -26,7 +26,7 @@ const ProductCategoriesForm = () => {
 
     return (
         <GenericForm<IProductCategoryForm, IProductCategory, IProductCategoriesStoreState>
-            resource="prodotti - categorie"
+            resource="articoli - categorie"
             selectedId={selectedProductCategoryId}
             entity={productCategory}
             emptyValues={{
