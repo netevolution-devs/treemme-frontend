@@ -7,9 +7,9 @@ import {
 import useGetWhoAmI from "../api/useGetWhoAmI";
 import usePostLogout from "../api/usePostLogout";
 import {useNavigate} from "react-router";
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
-import {getDevFlags} from "@shared/dev-tools/DevTools.tsx";
-import {mockUser} from "@shared/dev-tools/mock/UserMock.ts";
+import type {IUser} from "@features/user/model/UserInterfaces";
+import {getDevFlags} from "@shared/dev-tools/DevTools";
+import {mockUser} from "@shared/dev-tools/mock/UserMock";
 
 type AuthContextType = {
     user: IUser | null;

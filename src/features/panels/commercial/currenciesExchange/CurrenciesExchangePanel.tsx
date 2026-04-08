@@ -1,9 +1,9 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import CurrenciesList from "@features/panels/commercial/currenciesExchange/CurrenciesList.tsx";
-import CurrenciesForm from "@features/panels/commercial/currenciesExchange/CurrenciesForm.tsx";
-import CurrenciesExchangeList from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeList.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import CurrenciesList from "@features/panels/commercial/currenciesExchange/CurrenciesList";
+import CurrenciesForm from "@features/panels/commercial/currenciesExchange/CurrenciesForm";
+import CurrenciesExchangeList from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeList";
 import {Box} from "@mui/material";
 
 export interface ICurrenciesExchangeStoreState extends IPanelUIState {

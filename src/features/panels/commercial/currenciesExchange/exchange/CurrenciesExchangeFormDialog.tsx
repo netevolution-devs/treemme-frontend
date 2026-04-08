@@ -1,17 +1,17 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICurrenciesExchangeStoreState} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
-import {currencyChangeApi} from "@features/panels/commercial/currenciesExchange/api/currencyChangeApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICurrenciesExchangeStoreState} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel";
+import {currencyChangeApi} from "@features/panels/commercial/currenciesExchange/api/currencyChangeApi";
 import {Stack, Typography} from "@mui/material";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import CustomButton from "@features/panels/shared/CustomButton";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 
 type Props = { currencyId?: number, currencyValue?: number | null };
 

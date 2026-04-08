@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import {Box, Fab, Drawer, Typography, Paper, Divider} from '@mui/material';
 import {Build as BuildIcon} from '@mui/icons-material';
-import DevToolsSwitch from "@shared/dev-tools/DevToolsSwitch.tsx";
-import UiControls from "@ui/UiControls.tsx";
+import DevToolsSwitch from "@shared/dev-tools/DevToolsSwitch";
+import UiControls from "@ui/UiControls";
 
 interface FeatureFlags {
     skipOtp: boolean;

@@ -1,6 +1,6 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
-import type {IPaymentForm} from "@features/panels/commercial/payment-types/PaymentTypeForm.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment";
+import type {IPaymentForm} from "@features/panels/commercial/payment-types/PaymentTypeForm";
 
 export type IPaymentPayload = IPaymentForm;
 

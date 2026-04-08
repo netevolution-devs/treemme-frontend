@@ -1,22 +1,22 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel";
+import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
+import GenericList from "@features/panels/shared/GenericList";
 import {MenuItem, Typography} from "@mui/material";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {NewButton} from "@features/panels/shared/CustomButton";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog.tsx";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog";
 import RefinementFormDialog
-    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog.tsx";
+    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog";
 
 const OrderRowsList = () => {
     const {t} = useTranslation(["form"]);

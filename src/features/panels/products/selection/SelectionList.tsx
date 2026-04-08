@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ISelectionStoreState} from "@features/panels/products/selection/SelectionPanel.tsx";
-import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {ISelectionStoreState} from "@features/panels/products/selection/SelectionPanel";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection";
+import GenericList from "@features/panels/shared/GenericList";
 
 const SelectionList = () => {
     const {t} = useTranslation(["form"]);

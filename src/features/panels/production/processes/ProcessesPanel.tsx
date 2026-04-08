@@ -1,7 +1,7 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import ProcessesList from "@features/panels/production/processes/ProcessesList.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import ProcessesList from "@features/panels/production/processes/ProcessesList";
 
 export interface IProcessesStoreState extends IPanelUIState {
     selectedProcessId?: number | null;

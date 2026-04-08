@@ -1,10 +1,10 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import ArticleClassesList from "@features/panels/products/article-classes/ArticleClassesList.tsx";
-import ArticleClassesForm from "@features/panels/products/article-classes/ArticleClassesForm.tsx";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
+import ArticleClassesList from "@features/panels/products/article-classes/ArticleClassesList";
+import ArticleClassesForm from "@features/panels/products/article-classes/ArticleClassesForm";
 
 export interface IArticleClassesStoreState extends IPanelUIState {
     selectedArticleClassId?: number | null;

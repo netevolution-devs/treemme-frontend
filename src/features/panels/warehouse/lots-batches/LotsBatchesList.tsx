@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ILotsBatchesStoreState} from "@features/panels/warehouse/lots-batches/LotsBatchesPanel.tsx";
-import {selectionStockAvailableApi} from "@features/panels/warehouse/lots-batches/api/selectionStockAvailableApi.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ILotsBatchesStoreState} from "@features/panels/warehouse/lots-batches/LotsBatchesPanel";
+import {selectionStockAvailableApi} from "@features/panels/warehouse/lots-batches/api/selectionStockAvailableApi";
+import GenericList from "@features/panels/shared/GenericList";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ISelectionStock} from "@features/panels/warehouse/lots-batches/api/ISelectionStock.ts";
+import type {ISelectionStock} from "@features/panels/warehouse/lots-batches/api/ISelectionStock";
 
 const LotsBatchesList = () => {
     const {t} = useTranslation(["form"]);

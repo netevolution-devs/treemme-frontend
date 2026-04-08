@@ -1,9 +1,9 @@
 import {Outlet, useLocation} from "react-router";
 import {Box, Stack} from "@mui/material";
-import MenuToolbar from "@ui/layout/menu/MenuToolbar.tsx";
-import PanelContainerPage from "@features/panels/PanelContainerPage.tsx";
+import MenuToolbar from "@ui/layout/menu/MenuToolbar";
+import PanelContainerPage from "@features/panels/PanelContainerPage";
 import {useEffect} from "react";
-import {useMenuStore} from "@ui/layout/default/layoutStore.ts";
+import {useMenuStore} from "@ui/layout/default/layoutStore";
 
 const Layout = () => {
     const location = useLocation();

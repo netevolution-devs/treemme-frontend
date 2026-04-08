@@ -1,4 +1,4 @@
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
 
 export interface IColor {
     id: number;

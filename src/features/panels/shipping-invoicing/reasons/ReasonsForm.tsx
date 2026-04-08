@@ -1,15 +1,15 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IReasonsStoreState} from "@features/panels/shipping-invoicing/reasons/ReasonsPanel.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IReasonsStoreState} from "@features/panels/shipping-invoicing/reasons/ReasonsPanel";
 import {
     deliveryReasonApi,
     type IDeliveryReasonPayload
-} from "@features/panels/shipping-invoicing/reasons/api/deliveryReasonApi.ts";
-import {warehouseMovementReasonApi} from "@features/panels/shared/api/warehouse-movement/warehouseMovementReasonApi.ts";
-import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+} from "@features/panels/shipping-invoicing/reasons/api/deliveryReasonApi";
+import {warehouseMovementReasonApi} from "@features/panels/shared/api/warehouse-movement/warehouseMovementReasonApi";
+import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason";
+import GenericForm from "@features/panels/shared/GenericForm";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 export type IDeliveryReasonForm = Omit<IDeliveryReason, "id" | "warehouse_movement_reason"> & {
     warehouse_movement_reason_id: number | null;
@@ -32,6 +32,7 @@ const ReasonsForm = () => {
 
     return (
         <GenericForm<IDeliveryReasonForm, IDeliveryReason, IReasonsStoreState>
+            resource="ddt & fatture - ragioni di trasporto"
             selectedId={selectedDeliveryReasonId}
             entity={deliveryReason}
             emptyValues={{

@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin";
 
 export interface IOriginPayload extends Omit<IOrigin, 'id' | 'area' | 'nation' | 'flay' | 'sea_shipment'> {
     area_id: number,

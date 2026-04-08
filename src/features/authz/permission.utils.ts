@@ -1,4 +1,4 @@
-import type {IAccessControl, IRoles} from "@features/user/model/RoleInterfaces.ts";
+import type {IAccessControl, IRoles} from "@features/user/model/RoleInterfaces";
 
 export type RoleCheckMode = "any" | "all";
 export type ResourceAction = "get" | "post" | "put" | "delete";
@@ -97,6 +97,9 @@ export type ResourceSystem = "sistema"
     | "sistema - strumenti"
     | "sistema - console di comando"
     | "sistema - permessi"
+    | "sistema - utenti"
+    | "sistema - organizzazione"
+    | "sistema - funzionalità"
 
 function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "all") {
     if (roles.length === 0) return mode === "all";
@@ -106,7 +109,7 @@ function checkRoles(set: Set<IRoles>, roles: IRoles[], mode: RoleCheckMode = "al
 }
 
 export interface IPermissionCheck {
-    resource?: ResourceName; //TODO strict type resources
+    resource?: ResourceName;
     action?: ResourceAction;
     requiredRoles?: IRoles[];
     deniedRoles?: IRoles[];
@@ -196,7 +199,7 @@ export function hasPermission(
 }
 
 export interface PermissionEngine {
-    can: (resource: string, action: ResourceAction) => boolean;
+    can: (resource: ResourceName, action: ResourceAction) => boolean;
     hasRole: (role: IRoles) => boolean;
     hasRequiredRoles: (
         roles: IRoles[],

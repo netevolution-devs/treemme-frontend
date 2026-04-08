@@ -3,7 +3,7 @@ import {FormProvider, type UseFormReturn} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import EmailField from "@ui/form/controlled/EmailField";
 import LockResetIcon from '@mui/icons-material/LockReset';
-import {appNs} from "../../../../../i18n.ts";
+import {appNs} from "../../../../../i18n";
 
 interface IEmailForm {
     email: string;

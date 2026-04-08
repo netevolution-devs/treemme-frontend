@@ -1,17 +1,17 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import type {IGroupManagement} from "@features/panels/user-management/api/IGroupManagement.ts";
+import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IGroupManagement} from "@features/panels/user-management/api/IGroupManagement";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
 
 const GroupManagementList = () => {
     const {t} = useTranslation(["form"]);
     const {data: groups = [], isLoading} = groupManagementApi.useGetList();
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IOrganizationManagementStoreState>();
     const selectedGroupId = useStore(state => state.uiState.selectedGroupId);
     const setUIState = useStore(state => state.setUIState);
 

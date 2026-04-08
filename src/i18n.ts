@@ -4,8 +4,8 @@ import HttpBackend from "i18next-http-backend";
 import dayjs from "dayjs";
 import "dayjs/locale/it";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import {detectLanguage} from "@helpers/languageDetection.ts";
-import type {ILanguageCode} from "@interfaces/ILanguageCode.ts";
+import {detectLanguage} from "@helpers/languageDetection";
+import type {ILanguageCode} from "@interfaces/ILanguageCode";
 
 export const DEFAULT_LANGUAGE_CODE: ILanguageCode = "it";
 

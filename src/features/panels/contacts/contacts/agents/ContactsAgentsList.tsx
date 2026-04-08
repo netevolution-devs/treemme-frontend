@@ -1,21 +1,21 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import ContactsAgentFormDialog from "@features/panels/contacts/contacts/agents/ContactsAgentFormDialog.tsx";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import CustomButton from "@features/panels/shared/CustomButton";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import ContactsAgentFormDialog from "@features/panels/contacts/contacts/agents/ContactsAgentFormDialog";
+import {openDialog} from "@ui/dialog/dialogHelper";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {MenuItem, Typography} from "@mui/material";
-import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog.tsx";
+import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
-import useRemoveAgentFromContact from "@features/panels/contacts/contacts/agents/api/useRemoveAgentFromContact.ts";
+import useRemoveAgentFromContact from "@features/panels/contacts/contacts/agents/api/useRemoveAgentFromContact";
 
 const ContactsAgentsList = () => {
     const {t} = useTranslation(["form"]);

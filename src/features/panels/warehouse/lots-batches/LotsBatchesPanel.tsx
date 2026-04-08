@@ -1,8 +1,8 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import LotsBatchesList from "@features/panels/warehouse/lots-batches/LotsBatchesList.tsx";
-import LotsBatchesDetailList from "@features/panels/warehouse/lots-batches/LotsBatchesDetailList.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import LotsBatchesList from "@features/panels/warehouse/lots-batches/LotsBatchesList";
+import LotsBatchesDetailList from "@features/panels/warehouse/lots-batches/LotsBatchesDetailList";
 
 export interface ILotsBatchesStoreState extends IPanelUIState {
     selectedSelectionStockId?: number | null;

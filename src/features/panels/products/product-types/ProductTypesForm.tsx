@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IProductTypesStoreState} from "@features/panels/products/product-types/ProductTypesPanel.tsx";
-import {productTypeApi} from "@features/panels/products/product-types/api/productTypeApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IProductType} from "@features/panels/products/product-types/api/IProductType.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IProductTypesStoreState} from "@features/panels/products/product-types/ProductTypesPanel";
+import {productTypeApi} from "@features/panels/products/product-types/api/productTypeApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IProductType} from "@features/panels/products/product-types/api/IProductType";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box} from "@mui/material";
 
 export type IProductTypeForm = Omit<IProductType, 'id'>;
@@ -24,6 +24,7 @@ const ProductTypesForm = () => {
 
     return (
         <GenericForm<IProductTypeForm, IProductType, IProductTypesStoreState>
+            resource="prodotti - tipologie prodotti"
             selectedId={selectedProductTypeId}
             entity={productType}
             emptyValues={{

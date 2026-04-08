@@ -1,6 +1,6 @@
 import {useMemo} from "react";
-import {permissionEngine, type PermissionEngine} from "@features/authz/permission.utils.ts";
-import {useAuth} from "@features/auth/model/AuthContext.tsx";
+import {permissionEngine, type PermissionEngine} from "@features/authz/permission.utils";
+import {useAuth} from "@features/auth/model/AuthContext";
 
 export const usePermissionEngine = (): PermissionEngine | null => {
     const {user} = useAuth();

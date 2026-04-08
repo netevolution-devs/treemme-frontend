@@ -1,6 +1,6 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
-import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather";
+import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm";
 
 type ILeatherPayload = ILeatherForm;
 

@@ -1,20 +1,20 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     ICustomerOrdersFilters,
     ICustomerOrdersStoreState
-} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
+} from "@features/panels/orders/customer-orders/CustomerOrdersPanel";
+import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
 import dayjs from "dayjs";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
 
 const CustomerOrdersList = () => {
     const {t} = useTranslation(["form"]);

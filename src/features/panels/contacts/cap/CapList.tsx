@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {capApi} from "@features/panels/contacts/cap/api/capApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import {capApi} from "@features/panels/contacts/cap/api/capApi";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ICapStoreState} from "@features/panels/contacts/cap/CapPanel.tsx";
-import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {ICapStoreState} from "@features/panels/contacts/cap/CapPanel";
+import type {ICap} from "@features/panels/contacts/cap/api/ICap";
+import GenericList from "@features/panels/shared/GenericList";
 
 const CapList = () => {
     const {t} = useTranslation(["form"]);

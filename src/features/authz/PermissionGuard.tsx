@@ -1,6 +1,6 @@
 import {type PropsWithChildren, type ReactNode} from "react";
-import {useHasPermission} from "@features/authz/useHasPermission.ts";
-import type {IPermissionCheck} from "@features/authz/permission.utils.ts";
+import {useHasPermission} from "@features/authz/useHasPermission";
+import type {IPermissionCheck} from "@features/authz/permission.utils";
 
 type Props = IPermissionCheck & PropsWithChildren & { FallbackElement: ReactNode };
 

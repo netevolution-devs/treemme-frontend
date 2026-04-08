@@ -1,9 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
-import usePostUserRole from "./usePostUserRole.ts";
-import useDeleteUserRole from "./useDeleteUserRole.ts";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
-import type {IUserProfile} from "@features/profile/model/IUserProfile.ts";
-import type {IRole} from "@features/user/model/RoleInterfaces.ts";
+import usePostUserRole from "./usePostUserRole";
+import useDeleteUserRole from "./useDeleteUserRole";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
+import type {IUserProfile} from "@features/profile/model/IUserProfile";
+import type {IRole} from "@features/user/model/RoleInterfaces";
 
 export const useUpdateUserRole = () => {
     const queryClient = useQueryClient();

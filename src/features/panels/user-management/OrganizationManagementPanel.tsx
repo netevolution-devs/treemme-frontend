@@ -1,10 +1,10 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import GroupManagementList from "@features/panels/user-management/GroupManagementList.tsx";
-import GroupManagementForm from "@features/panels/user-management/GroupManagementForm.tsx";
-import RoleManagementList from "@features/panels/user-management/RoleManagementList.tsx";
-import RoleManagementForm from "@features/panels/user-management/RoleManagementForm.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import GroupManagementList from "@features/panels/user-management/GroupManagementList";
+import GroupManagementForm from "@features/panels/user-management/GroupManagementForm";
+import RoleManagementList from "@features/panels/user-management/RoleManagementList";
+import RoleManagementForm from "@features/panels/user-management/RoleManagementForm";
 import {Divider, Stack, Typography} from "@mui/material";
 
 export interface IOrganizationManagementStoreState extends IPanelUIState {
@@ -28,8 +28,8 @@ const OrganizationManagementPanel = () => {
             initialState={{uiState: initialUiState}}
         >
             <Stack spacing={4} sx={{p: 2}}>
-                <div><SectionTitle title="Gruppi"/><GroupManagementList/><GroupManagementForm/></div>
-                <div><SectionTitle title="Ruoli"/><RoleManagementList/><RoleManagementForm/></div>
+                <Stack spacing={2}><SectionTitle title="Gruppi"/><GroupManagementList/><GroupManagementForm/></Stack>
+                <Stack spacing={2}><SectionTitle title="Ruoli"/><RoleManagementList/><RoleManagementForm/></Stack>
             </Stack>
         </GenericPanel>
     )

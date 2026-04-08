@@ -1,14 +1,14 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction";
+import GenericList from "@features/panels/shared/GenericList";
 import dayjs from "dayjs";
 import {Typography} from "@mui/material";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const BatchesProductionList = () => {
     const {t} = useTranslation(["form"]);

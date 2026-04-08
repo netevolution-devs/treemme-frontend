@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {machineApi} from "@features/panels/production/machinery/api/machineApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import {machineApi} from "@features/panels/production/machinery/api/machineApi";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IMachineryStoreState} from "@features/panels/production/machinery/MachineryPanel.tsx";
-import type {IMachine} from "@features/panels/production/machinery/api/IMachine.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IMachineryStoreState} from "@features/panels/production/machinery/MachineryPanel";
+import type {IMachine} from "@features/panels/production/machinery/api/IMachine";
+import GenericList from "@features/panels/shared/GenericList";
 
 const MachineryList = () => {
     const {t} = useTranslation(["form"]);

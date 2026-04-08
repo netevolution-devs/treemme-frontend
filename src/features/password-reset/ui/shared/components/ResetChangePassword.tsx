@@ -3,7 +3,7 @@ import {Button, CircularProgress, Stack, Typography} from "@mui/material";
 import PasswordField from "@ui/form/controlled/PasswordField";
 import {FormProvider, useForm} from "react-hook-form";
 import {useTranslation} from "react-i18next";
-import {appNs} from "../../../../../i18n.ts";
+import {appNs} from "../../../../../i18n";
 
 interface IResetPasswordForm {
     password: string;

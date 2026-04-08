@@ -1,13 +1,13 @@
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ILotsBatchesStoreState} from "@features/panels/warehouse/lots-batches/LotsBatchesPanel.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ILotsBatchesStoreState} from "@features/panels/warehouse/lots-batches/LotsBatchesPanel";
 import {
     selectionStockAvailableDetailApi
-} from "@features/panels/warehouse/lots-batches/api/selectionStockAvailableApi.ts";
-import BatchesList from "@features/panels/production/batches/BatchesList.tsx";
+} from "@features/panels/warehouse/lots-batches/api/selectionStockAvailableApi";
+import BatchesList from "@features/panels/production/batches/BatchesList";
 import {MenuItem, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 
 const LotsBatchesDetailList = () => {
     const {t} = useTranslation(["form"]);

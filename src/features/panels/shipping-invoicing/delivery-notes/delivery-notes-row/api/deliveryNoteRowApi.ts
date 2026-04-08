@@ -1,10 +1,10 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
 import type {
     IDeliveryNoteRow
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
 import type {
     IDeliveryNoteRowForm
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsForm.tsx";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsForm";
 
 type IDeliveryNoteRowPayload = IDeliveryNoteRowForm;
 

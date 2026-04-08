@@ -1,5 +1,5 @@
-import type {INation} from "@features/panels/contacts/nations/api/INation.ts";
-import type {ICap} from "@features/panels/contacts/cap/api/ICap.ts";
+import type {INation} from "@features/panels/contacts/nations/api/INation";
+import type {ICap} from "@features/panels/contacts/cap/api/ICap";
 
 export interface IContactAddress {
     id: number;

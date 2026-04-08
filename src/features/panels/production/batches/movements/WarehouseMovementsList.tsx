@@ -1,9 +1,9 @@
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import dayjs from "dayjs";

@@ -7,7 +7,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {appNs} from "../../../../i18n";
-import {useLayout} from "@ui/layout/default/LayoutContext.tsx";
+import {useLayout} from "@ui/layout/default/LayoutContext";
 
 const OtpPage = () => {
     const {t} = useTranslation([appNs("login"), "common"]);

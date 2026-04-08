@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { TextField, InputAdornment, Typography } from "@mui/material";
 import { Controller, type FieldValues, useFormContext, type Path, type PathValue, type RegisterOptions } from "react-hook-form";
-import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
+import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps";
 import React, {type ReactNode} from "react";
-import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText";
 
 interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     precision?: number;

@@ -3,8 +3,8 @@ import {Box, Button, Checkbox, CircularProgress, FormControlLabel, Link, Stack, 
 import PasswordField from "@shared/ui/form/controlled/PasswordField";
 import {Controller, FormProvider, useForm, useWatch} from "react-hook-form";
 import {useTranslation} from "react-i18next";
-import {appNs} from "../../../../i18n.ts";
-import ButtonLogout from "@features/auth/ui/ButtonLogout.tsx";
+import {appNs} from "../../../../i18n";
+import ButtonLogout from "@features/auth/ui/ButtonLogout";
 
 interface IPasswordForm {
     password: string;

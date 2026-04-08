@@ -1,17 +1,17 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreFilter, IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreFilter, IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef, MRT_TableOptions} from "material-react-table";
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
-import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
-import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
+import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
+import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi";
+import DateFieldFilter from "@ui/form/filters/DateFieldFilter";
 
 interface BatchesListProps {
     disableBorder?: boolean;

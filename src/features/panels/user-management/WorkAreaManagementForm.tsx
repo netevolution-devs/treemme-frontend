@@ -1,17 +1,19 @@
 import {useTranslation} from "react-i18next";
-import type {IWorkAreaManagement, IWorkAreaManagementPayload} from "@features/panels/user-management/api/IWorkAreaManagement.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {IWorkAreaManagement, IWorkAreaManagementPayload} from "@features/panels/user-management/api/IWorkAreaManagement";
+import {usePanel} from "@ui/panel/PanelContext";
+import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {
+    IFunctionalityManagementStoreState
+} from "@features/panels/user-management/FunctionalityManagementPanel";
 
 type IWorkAreaForm = IWorkAreaManagementPayload;
 
 const WorkAreaManagementForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IFunctionalityManagementStoreState>();
     const selectedWorkAreaId = useStore(state => state.uiState.selectedWorkAreaId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -22,7 +24,8 @@ const WorkAreaManagementForm = () => {
     const {mutateAsync: deleteWorkArea, isPending: isDeleting} = useDelete();
 
     return (
-        <GenericForm<IWorkAreaForm, IWorkAreaManagement, IUserManagementStoreState>
+        <GenericForm<IWorkAreaForm, IWorkAreaManagement, IFunctionalityManagementStoreState>
+            resource={"sistema - funzionalità"}
             selectedId={selectedWorkAreaId}
             entity={workArea}
             emptyValues={{name: "", description: ""}}

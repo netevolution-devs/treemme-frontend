@@ -1,12 +1,12 @@
-import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
-import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
-import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType.ts";
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
-import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
-import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
-import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
-import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction.ts";
-import type {IBatchCompositionResponse} from "@features/panels/production/batches/composition/api/IBatchComposition.ts";
+import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit";
+import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather";
+import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType";
+import type {IUser} from "@features/user/model/UserInterfaces";
+import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement";
+import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection";
+import type {IArticle} from "@features/panels/products/articles/api/IArticle";
+import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction";
+import type {IBatchCompositionResponse} from "@features/panels/production/batches/composition/api/IBatchComposition";
 
 export interface IFatherBatch {
     id: number;

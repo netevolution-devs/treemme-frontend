@@ -1,6 +1,6 @@
-import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
-import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
 
 export interface ISelectionStock {
     id: number;

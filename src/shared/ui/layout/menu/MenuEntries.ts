@@ -1,6 +1,6 @@
-import type {TPanelKind} from "@features/panels/PanelRegistry.tsx";
-import type {MenuIconKey} from "@ui/layout/menu/MenuIcons.tsx";
-import type {IPermissionCheck} from "@features/authz/permission.utils.ts";
+import type {TPanelKind} from "@features/panels/PanelRegistry";
+import type {MenuIconKey} from "@ui/layout/menu/MenuIcons";
+import type {IPermissionCheck} from "@features/authz/permission.utils";
 
 export interface IMenuEntry {
     i18nKey: string;
@@ -172,7 +172,8 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.system.info"},
             // {i18nKey: "menu.system.tools"},
             // {i18nKey: "menu.system.console"},
-            {i18nKey: "menu.system.access-management", component: "user-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
+            {i18nKey: "menu.system.user-management", component: "user-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
+            {i18nKey: "menu.system.access-management", component: "user-access-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
             {i18nKey: "menu.system.organization", component: "organization-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
             {i18nKey: "menu.system.functionality", component: "functionality-management", permissionCheck: {resource: "sistema - permessi", action: "get"}},
             // {i18nKey: "menu.system.logout"},

@@ -1,10 +1,10 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ISeaportsStoreState} from "@features/panels/contacts/seaports/SeaportsPanel.tsx";
-import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ISeaportsStoreState} from "@features/panels/contacts/seaports/SeaportsPanel";
+import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 export type ISeaPortForm = Omit<ISeaPort, 'id'>;
 
@@ -23,6 +23,7 @@ const SeaPortsForm = () => {
 
     return (
         <GenericForm<ISeaPortForm, ISeaPort, ISeaportsStoreState>
+            resource="contatti - porti marittimi"
             selectedId={selectedSeaPortId}
             entity={seaPort}
             emptyValues={{

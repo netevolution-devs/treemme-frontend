@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
+import useApi from "@api/useApi";
 
 interface IRemoveSubcontractorFromContactPayload {
     subcontractor_id: number;

@@ -1,7 +1,7 @@
 import {Stack} from "@mui/material";
-import LanguageSelector from "../../shared/ui/LanguageSelector.tsx";
-import {ThemeSwitch} from "@ui/ThemeSwitch.tsx";
-import ButtonLogout from "@features/auth/ui/ButtonLogout.tsx";
+import LanguageSelector from "../../shared/ui/LanguageSelector";
+import {ThemeSwitch} from "@ui/ThemeSwitch";
+import ButtonLogout from "@features/auth/ui/ButtonLogout";
 
 interface Props {
     direction?: "row" | "column"

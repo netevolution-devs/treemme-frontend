@@ -1,7 +1,7 @@
 import {Box, Button, Stack, Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {appNs} from "../../../../../i18n.ts";
+import {appNs} from "../../../../../i18n";
 
 interface ResetSuccessStepProps {
     onBackToLogin: () => void;

@@ -1,18 +1,18 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import {colorApi} from "@features/panels/products/article-colors/api/colorApi";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {
     IArticleColorsStoreFilter,
     IArticleColorsStoreState
-} from "@features/panels/products/article-colors/ArticleColorsPanel.tsx";
-import type {IColor} from "@features/panels/products/article-colors/api/IColor.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+} from "@features/panels/products/article-colors/ArticleColorsPanel";
+import type {IColor} from "@features/panels/products/article-colors/api/IColor";
+import GenericList from "@features/panels/shared/GenericList";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 
 const ArticleColorsList = () => {
     const {t} = useTranslation(["form"]);

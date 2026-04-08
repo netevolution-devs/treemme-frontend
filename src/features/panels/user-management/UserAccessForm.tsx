@@ -1,18 +1,18 @@
 import {useTranslation} from "react-i18next";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi.ts";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi.ts";
-import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi.ts";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {groupManagementApi} from "@features/panels/user-management/api/groupManagementApi";
+import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
+import {workAreaManagementApi} from "@features/panels/user-management/api/workAreaManagementApi";
 import {
     useAssignGroupAccess,
     useDeleteGroupAccess,
     useGetGroupAccessList,
     useUpdateGroupAccessForm,
     type IUserGroupAccess,
-} from "@features/panels/user-management/api/userManagementApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
+} from "@features/panels/user-management/api/userManagementApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IUserAccessStoreState} from "@features/panels/user-management/UserAccessPanel";
 
 interface IAccessForm {
     group_id: number;
@@ -25,7 +25,7 @@ const emptyValues: IAccessForm = {group_id: 0, role_id: 0, work_area_id: 0};
 const UserAccessForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IUserAccessStoreState>();
     const selectedAccessId = useStore(state => state.uiState.selectedAccessId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -48,7 +48,8 @@ const UserAccessForm = () => {
         Array.isArray(field) ? 0 : field.id;
 
     return (
-        <GenericForm<IAccessForm, IUserGroupAccess, IUserManagementStoreState>
+        <GenericForm<IAccessForm, IUserGroupAccess, IUserAccessStoreState>
+            resource="sistema - permessi"
             selectedId={selectedAccessId}
             entity={selectedAccess}
             emptyValues={emptyValues}

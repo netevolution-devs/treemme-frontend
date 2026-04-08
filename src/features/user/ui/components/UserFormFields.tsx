@@ -5,10 +5,10 @@ import PasswordField from "@shared/ui/form/controlled/PasswordField";
 import RoleSelect from "./RoleSelect";
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import { useFormContext } from "react-hook-form";
-import type {IUserForm} from "@features/user/model/IUserForm.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import usePasswordGenerator from "@ui/form/controlled/usePasswordGenerator.ts";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import type {IUserForm} from "@features/user/model/IUserForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import usePasswordGenerator from "@ui/form/controlled/usePasswordGenerator";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 
 interface Props {
     disablePassword?: boolean;

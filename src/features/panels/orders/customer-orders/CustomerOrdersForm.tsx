@@ -1,33 +1,33 @@
 import {useFormContext, useWatch} from "react-hook-form";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import {Box} from "@mui/material";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi";
 import {useEffect} from "react";
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel";
 import {
     customerOrderApi,
     type ICustomerOrderPayload
-} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
-import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+} from "@features/panels/orders/customer-orders/api/customerOrderApi";
+import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
+import GenericForm from "@features/panels/shared/GenericForm";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import dayjs from "dayjs";
 import type {
     IShipmentCondition
-} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
 import {
     shipmentConditionApi
-} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -289,6 +289,7 @@ const CustomerOrdersForm = () => {
 
     return (
         <GenericForm<ICustomerOrderForm, ICustomerOrder, ICustomerOrdersStoreState>
+            resource="ordini - ordini clienti"
             selectedId={selectedCustomerOrderId}
             entity={order}
             emptyValues={{

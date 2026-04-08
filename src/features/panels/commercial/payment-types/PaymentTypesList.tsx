@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     IPaymentTypesStoreState
-} from "@features/panels/commercial/payment-types/PaymentTypesPanel.tsx";
+} from "@features/panels/commercial/payment-types/PaymentTypesPanel";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
-import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
+import GenericList from "@features/panels/shared/GenericList";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment";
 
 const PaymentTypesList = () => {
     const {t} = useTranslation(["form"]);

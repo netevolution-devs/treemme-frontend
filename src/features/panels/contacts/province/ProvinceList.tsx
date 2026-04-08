@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {provinceApi} from "@features/panels/contacts/province/api/proviceApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import {provinceApi} from "@features/panels/contacts/province/api/proviceApi";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel.tsx";
-import type {IProvince} from "@features/panels/contacts/province/api/IProvince.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel";
+import type {IProvince} from "@features/panels/contacts/province/api/IProvince";
+import GenericList from "@features/panels/shared/GenericList";
 
 const ProvinceList = () => {
     const {t} = useTranslation(["form"]);

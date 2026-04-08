@@ -1,7 +1,7 @@
 import useGetUserList from "@features/user/api/useGetUserList";
 import BasePage from "@shared/ui/layout/BasePage";
 import UsersTable from "./UsersTable";
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
+import type {IUser} from "@features/user/model/UserInterfaces";
 
 const UsersPage = () => {
     const {data: users, isLoading, isFetching} = useGetUserList({type: 'backoffice'});

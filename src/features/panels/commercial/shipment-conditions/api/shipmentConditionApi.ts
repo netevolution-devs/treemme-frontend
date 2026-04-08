@@ -1,8 +1,8 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
 import type {
     IShipmentCondition
-} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
-import type {IShipmentConditionForm} from "@features/panels/commercial/shipment-conditions/ShipmentConditionForm.tsx";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
+import type {IShipmentConditionForm} from "@features/panels/commercial/shipment-conditions/ShipmentConditionForm";
 
 export type IShipmentConditionPayload = IShipmentConditionForm;
 

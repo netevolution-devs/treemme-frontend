@@ -2,14 +2,14 @@ import type {MRT_Localization, MRT_RowData, MRT_TableOptions} from "material-rea
 import {Box, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {MRT_Localization_IT} from "material-react-table/locales/it";
-import {getMrtContainerProps} from "@ui/table/props/getMrtContainerProps.ts";
-import {getMrtTableHeadCellProps} from "@ui/table/props/getMrtTableHeadCellProps.ts";
-import {getMrtTableBodyCellProps} from "@ui/table/props/getMrtTableBodyCellProps.ts";
-import {getMrtBottomToolbarProps} from "@ui/table/props/getMrtBottomToolbarProps.ts";
-import {getMrtTopToolbarProps} from "@ui/table/props/getMrtTopToolbarProps.ts";
-import {getMrtTablePaperProps} from "@ui/table/props/getMrtTablePaperProps.ts";
-import {getMrtTableBodyRowProps} from "@ui/table/props/getMrtTableBodyRowProps.ts";
-import {getMrtRowDialogProps} from "@ui/table/props/getMrtRowDialogProps.ts";
+import {getMrtContainerProps} from "@ui/table/props/getMrtContainerProps";
+import {getMrtTableHeadCellProps} from "@ui/table/props/getMrtTableHeadCellProps";
+import {getMrtTableBodyCellProps} from "@ui/table/props/getMrtTableBodyCellProps";
+import {getMrtBottomToolbarProps} from "@ui/table/props/getMrtBottomToolbarProps";
+import {getMrtTopToolbarProps} from "@ui/table/props/getMrtTopToolbarProps";
+import {getMrtTablePaperProps} from "@ui/table/props/getMrtTablePaperProps";
+import {getMrtTableBodyRowProps} from "@ui/table/props/getMrtTableBodyRowProps";
+import {getMrtRowDialogProps} from "@ui/table/props/getMrtRowDialogProps";
 import {MRT_Localization_EN} from "material-react-table/locales/en";
 
 const tableLocale: Record<string, MRT_Localization> = {

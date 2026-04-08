@@ -2,7 +2,7 @@ import type {ReactNode} from "react";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router";
 import type {ButtonProps as MuiButtonProps} from "@mui/material";
-import {useAuth} from "@features/auth/model/AuthContext.tsx";
+import {useAuth} from "@features/auth/model/AuthContext";
 import {Logout} from "@mui/icons-material";
 
 interface Props extends MuiButtonProps {

@@ -1,26 +1,26 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IArticlesStoreState, IArticleStoreParams} from "@features/panels/products/articles/ArticlesPanel.tsx";
-import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi.ts";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
-import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IArticlesStoreState, IArticleStoreParams} from "@features/panels/products/articles/ArticlesPanel";
+import {articleApi} from "@features/panels/products/articles/api/articleApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IArticle} from "@features/panels/products/articles/api/IArticle";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi";
+import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
+import {articlePrintApi} from "@features/panels/products/articles/api/article-print/articlePrintApi";
 import {useMemo} from "react";
 import {Box} from "@mui/material";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {useWatch} from "react-hook-form";
-import {colorApi} from "@features/panels/products/article-colors/api/colorApi.ts";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import {colorApi} from "@features/panels/products/article-colors/api/colorApi";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IArticleForm = {
     code: string;
@@ -78,6 +78,7 @@ const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IAr
     return (
         <GenericForm<IArticleForm, IArticle, IArticlesStoreState>
             onSuccess={handlePanelSuccess}
+            resource="prodotti - articoli"
             selectedId={selectedArticledId}
             entity={article}
             emptyValues={{

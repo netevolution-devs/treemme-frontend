@@ -1,16 +1,16 @@
 import {useTranslation} from "react-i18next";
 import type {
     IShipmentConditionsStoreState
-} from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi.ts";
-import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
+} from "@features/panels/commercial/shipment-conditions/ShipmentConditionsPanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
+import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 
 export type IShipmentConditionForm = Omit<IShipmentCondition, 'id'>;
 

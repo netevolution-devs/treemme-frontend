@@ -1,14 +1,14 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ISelectionStoreState} from "@features/panels/products/selection/SelectionPanel.tsx";
-import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ISelectionStoreState} from "@features/panels/products/selection/SelectionPanel";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type ISelectionForm = Omit<ISelection, 'id'>;
 
@@ -35,6 +35,7 @@ const SelectionForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<ISelectionForm, ISelection, ISelectionStoreState>
+            resource="prodotti - scelte"
             onSuccess={handlePanelSuccess}
             selectedId={selectedSelectionId}
             entity={selection}

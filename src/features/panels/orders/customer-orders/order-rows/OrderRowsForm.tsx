@@ -1,41 +1,41 @@
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import {useTranslation} from "react-i18next";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import {Box, Stack} from "@mui/material";
 import {useMemo, useRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
-import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
-import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
-import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
-import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
-import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
-import CustomButton, {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
+import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
+import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
+import {articleApi} from "@features/panels/products/articles/api/articleApi";
+import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher";
+import CustomButton, {NewButton} from "@features/panels/shared/CustomButton";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
-import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog.tsx";
+import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog";
 import RefinementFormDialog
-    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog.tsx";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
+    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog";
+import {openDialog} from "@ui/dialog/dialogHelper";
 import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
-import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
 import CurrenciesExchangeFormDialog
-    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
+    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
 import {useWatch} from "react-hook-form";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {
     IOrderRowsStoreParams,
     IOrderRowsStoreState
-} from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+} from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |

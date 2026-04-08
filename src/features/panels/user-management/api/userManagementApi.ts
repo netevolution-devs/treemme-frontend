@@ -1,7 +1,7 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
 import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/api/IUserManagement.ts";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
+import useApi from "@api/useApi";
 
 export interface IUserGroupAccess {
     id: number;

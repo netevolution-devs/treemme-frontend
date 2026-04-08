@@ -1,15 +1,15 @@
 import {useTranslation} from "react-i18next";
 import type {
     IPaymentTypesStoreState
-} from "@features/panels/commercial/payment-types/PaymentTypesPanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi.ts";
-import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+} from "@features/panels/commercial/payment-types/PaymentTypesPanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IPaymentForm = Omit<IPayment, 'id'>;
 

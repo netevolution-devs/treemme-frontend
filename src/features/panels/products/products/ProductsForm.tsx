@@ -1,19 +1,19 @@
 import {Box, Typography} from "@mui/material";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import {type IProductPayload, productsApi} from "@features/panels/products/products/api/productsApi.ts";
-import {productTypeApi} from "@features/panels/products/product-types/api/productTypeApi.ts";
-import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import type {IProduct} from "@features/panels/products/products/api/IProduct.ts";
-import type {IProductsStoreState} from "@features/panels/products/products/ProductsPanel.tsx";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import {productCategoryApi} from "@features/panels/products/product-categories/api/productCategoryApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import GenericForm from "@features/panels/shared/GenericForm";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
+import {type IProductPayload, productsApi} from "@features/panels/products/products/api/productsApi";
+import {productTypeApi} from "@features/panels/products/product-types/api/productTypeApi";
+import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import type {IProduct} from "@features/panels/products/products/api/IProduct";
+import type {IProductsStoreState} from "@features/panels/products/products/ProductsPanel";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import {productCategoryApi} from "@features/panels/products/product-categories/api/productCategoryApi";
 
 export type IProductForm = Omit<IProduct, "id"
     | "product_type"
@@ -57,6 +57,7 @@ const ProductsForm = () => {
 
     return (
         <GenericForm<IProductForm, IProduct, IProductsStoreState>
+            resource="prodotti - prodotti"
             selectedId={selectedProductId}
             entity={product}
             emptyValues={{

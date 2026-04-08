@@ -1,5 +1,5 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IRoleManagement, IRoleManagementPayload} from "@features/panels/user-management/api/IRoleManagement.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IRoleManagement, IRoleManagementPayload} from "@features/panels/user-management/api/IRoleManagement";
 
 export const roleManagementApi = createPanelApi<IRoleManagement, IRoleManagementPayload>({
     baseEndpoint: "/role",

@@ -17,7 +17,7 @@ import EmailField from "../../../shared/ui/form/controlled/EmailField";
 import PasswordField from "../../../shared/ui/form/controlled/PasswordField";
 import usePostLogin from "../api/usePostLogin";
 import {useAuth} from "../model/AuthContext";
-import {useMenuStore} from "@ui/layout/default/layoutStore.ts";
+import {useMenuStore} from "@ui/layout/default/layoutStore";
 
 const backgroundSrc = "";
 

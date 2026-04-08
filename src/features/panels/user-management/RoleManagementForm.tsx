@@ -1,17 +1,17 @@
 import {useTranslation} from "react-i18next";
-import type {IRoleManagement, IRoleManagementPayload} from "@features/panels/user-management/api/IRoleManagement.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
+import type {IRoleManagement, IRoleManagementPayload} from "@features/panels/user-management/api/IRoleManagement";
 
 type IRoleForm = IRoleManagementPayload;
 
 const RoleManagementForm = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IOrganizationManagementStoreState>();
     const selectedRoleId = useStore(state => state.uiState.selectedRoleId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -22,7 +22,8 @@ const RoleManagementForm = () => {
     const {mutateAsync: deleteRole, isPending: isDeleting} = useDelete();
 
     return (
-        <GenericForm<IRoleForm, IRoleManagement, IUserManagementStoreState>
+        <GenericForm<IRoleForm, IRoleManagement, IOrganizationManagementStoreState>
+            resource="sistema - organizzazione"
             selectedId={selectedRoleId}
             entity={role}
             emptyValues={{name: ''}}

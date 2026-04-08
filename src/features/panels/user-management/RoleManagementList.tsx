@@ -1,17 +1,17 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import type {IRoleManagement} from "@features/panels/user-management/api/IRoleManagement.ts";
+import {roleManagementApi} from "@features/panels/user-management/api/roleManagementApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IRoleManagement} from "@features/panels/user-management/api/IRoleManagement";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IOrganizationManagementStoreState} from "@features/panels/user-management/OrganizationManagementPanel";
 
 const RoleManagementList = () => {
     const {t} = useTranslation(["form"]);
     const {data: roles = [], isLoading} = roleManagementApi.useGetList();
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IOrganizationManagementStoreState>();
     const selectedRoleId = useStore(state => state.uiState.selectedRoleId);
     const setUIState = useStore(state => state.setUIState);
 

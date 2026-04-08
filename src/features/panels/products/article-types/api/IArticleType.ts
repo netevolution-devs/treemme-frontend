@@ -1,5 +1,5 @@
-import type {ILeatherType} from "@features/panels/leathers/types/api/ILeatherType.ts";
-import type {IArticleClass} from "@features/panels/products/article-classes/api/IArticleClass.ts";
+import type {ILeatherType} from "@features/panels/leathers/types/api/ILeatherType";
+import type {IArticleClass} from "@features/panels/products/article-classes/api/IArticleClass";
 
 export interface IArticleType {
     id: number;

@@ -1,6 +1,6 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IProduct} from "@features/panels/products/products/api/IProduct.ts";
-import type {IProductForm} from "@features/panels/products/products/ProductsForm.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IProduct} from "@features/panels/products/products/api/IProduct";
+import type {IProductForm} from "@features/panels/products/products/ProductsForm";
 
 export type IProductPayload = IProductForm;
 

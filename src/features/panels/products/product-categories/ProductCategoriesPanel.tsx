@@ -1,8 +1,8 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import ProductCategoriesList from "@features/panels/products/product-categories/ProductCategoriesList.tsx";
-import ProductCategoriesForm from "@features/panels/products/product-categories/ProductCategoriesForm.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import ProductCategoriesList from "@features/panels/products/product-categories/ProductCategoriesList";
+import ProductCategoriesForm from "@features/panels/products/product-categories/ProductCategoriesForm";
 
 export interface IProductCategoriesStoreState extends IPanelUIState {
     selectedProductCategoryId?: number | null;

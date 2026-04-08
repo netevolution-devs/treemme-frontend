@@ -1,4 +1,4 @@
-import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType.ts";
+import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType";
 
 export interface IMachine {
     id: number;

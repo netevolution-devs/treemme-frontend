@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import type {SvgIconComponent} from "@mui/icons-material";
-import useGetWhoAmI from "@features/auth/api/useGetWhoAmI.ts";import {Box, Card, CardContent, Grid, Stack, Typography,
+import useGetWhoAmI from "@features/auth/api/useGetWhoAmI";import {Box, Card, CardContent, Grid, Stack, Typography,
     // Chip, Divider,  Button
 } from "@mui/material";
 import {
@@ -10,9 +10,9 @@ import {
 // import dayjs from "dayjs";
 // import EditIcon from '@mui/icons-material/Edit';
 // import {useRef} from "react";
-// import UpdateUserDialog from "@features/user/ui/components/UpdateUserDialog.tsx";
-// import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-// import useGetProfile from "@features/profile/api/useGetProfile.ts";
+// import UpdateUserDialog from "@features/user/ui/components/UpdateUserDialog";
+// import type {IDialogActions} from "@ui/dialog/IDialogActions";
+// import useGetProfile from "@features/profile/api/useGetProfile";
 
 interface RowDisplayProps {
     icon: SvgIconComponent;

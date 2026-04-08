@@ -1,5 +1,5 @@
-import type {IUserProfile} from "@features/profile/model/IUserProfile.ts";
-import type {IRole} from "@features/user/model/RoleInterfaces.ts";
+import type {IUserProfile} from "@features/profile/model/IUserProfile";
+import type {IRole} from "@features/user/model/RoleInterfaces";
 
 export type IUserForm = 
   IUserProfile & 

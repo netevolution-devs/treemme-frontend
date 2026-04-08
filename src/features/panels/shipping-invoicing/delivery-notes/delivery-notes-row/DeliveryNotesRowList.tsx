@@ -1,17 +1,17 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
-import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel";
+import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IDeliveryNoteRow} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IDeliveryNoteRow} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
+import GenericList from "@features/panels/shared/GenericList";
 import {MenuItem, Typography} from "@mui/material";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {NewButton} from "@features/panels/shared/CustomButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
+import useCallablePanel from "@ui/panel/useCallablePanel";
 
 const DeliveryNotesRowList = () => {
     const {t} = useTranslation(["form"]);

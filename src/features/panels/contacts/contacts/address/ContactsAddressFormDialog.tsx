@@ -1,19 +1,19 @@
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
 import {useTranslation} from "react-i18next";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
-import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contacts-address/contactsAddressApi.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
-import {capApi} from "@features/panels/contacts/cap/api/capApi.ts";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
+import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contacts-address/contactsAddressApi";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi";
+import {capApi} from "@features/panels/contacts/cap/api/capApi";
 import {Box, Stack} from "@mui/material";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 
 type Props = unknown;
 
@@ -58,6 +58,7 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
             <GenericForm<IContactAddressForm, IContactAddress, IPanelUIState>
+                resource="contatti - contatti"
                 dialogMode
                 dialogRef={ref}
                 selectedId={selectedAddressId}

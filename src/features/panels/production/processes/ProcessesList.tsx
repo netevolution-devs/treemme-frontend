@@ -1,19 +1,19 @@
-import {processApi} from "@features/panels/production/processes/api/processApi.ts";
+import {processApi} from "@features/panels/production/processes/api/processApi";
 import {useTranslation} from "react-i18next";
 import type {MRT_ColumnDef} from "material-react-table";
 import {useEffect, useMemo} from "react";
-import type {IProcess} from "@features/panels/production/processes/api/IProcess.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IProcess} from "@features/panels/production/processes/api/IProcess";
+import GenericList from "@features/panels/shared/GenericList";
 import dayjs from "dayjs";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import DateFieldFilter from "@ui/form/filters/DateFieldFilter.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IProcessesStoreState, IProcessStoreFilter} from "@features/panels/production/processes/ProcessesPanel.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import DateFieldFilter from "@ui/form/filters/DateFieldFilter";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IProcessesStoreState, IProcessStoreFilter} from "@features/panels/production/processes/ProcessesPanel";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import {MenuItem} from "@mui/material";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import CustomButton from "@features/panels/shared/CustomButton";
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 
 const ProcessesList = () => {
     const {t} = useTranslation(["form", "menu"]);

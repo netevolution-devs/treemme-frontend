@@ -1,5 +1,5 @@
 import i18n, { DEFAULT_LANGUAGE_CODE } from "../../i18n";
-import {isLanguageCode} from "@interfaces/ILanguageCode.ts";
+import {isLanguageCode} from "@interfaces/ILanguageCode";
 
 // Safari-specific language detection
 export const detectSafariLanguage = (): string => {

@@ -1,14 +1,14 @@
 import {useTranslation} from "react-i18next";
-import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/api/IUserManagement.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel.tsx";
-import {userManagementApi} from "@features/panels/user-management/api/userManagementApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import UserGroupAssignment from "@features/panels/user-management/UserGroupAssignment.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import type {IUserManagement, IUserManagementPayload} from "@features/panels/user-management/api/IUserManagement";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IUserManagementStoreState} from "@features/panels/user-management/UserManagementPanel";
+import {userManagementApi} from "@features/panels/user-management/api/userManagementApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import UserGroupAssignment from "@features/panels/user-management/UserGroupAssignment";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Button, Tooltip} from "@mui/material";
-import EmailField from "@ui/form/controlled/EmailField.tsx";
-import PasswordField from "@ui/form/controlled/PasswordField.tsx";
+import EmailField from "@ui/form/controlled/EmailField";
+import PasswordField from "@ui/form/controlled/PasswordField";
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {useFormContext} from "react-hook-form";
 import dayjs from "dayjs";
@@ -72,6 +72,7 @@ const UserManagementForm = () => {
     return (
         <>
         <GenericForm<IUserForm, IUserManagement, IUserManagementStoreState>
+            resource="sistema - utenti"
             selectedId={selectedUserId}
             entity={user}
             emptyValues={{email: '', password: '', last_access: "", user_code: ""}}

@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ISpeciesStoreState} from "@features/panels/leathers/species/SpeciesPanel.tsx";
-import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ISpeciesStoreState} from "@features/panels/leathers/species/SpeciesPanel";
+import {speciesApi} from "@features/panels/leathers/species/api/speciesApi";
 import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
-import type {ISpecies} from "@features/panels/leathers/species/api/ISpecies.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {ISpecies} from "@features/panels/leathers/species/api/ISpecies";
+import GenericList from "@features/panels/shared/GenericList";
 
 const SpeciesList = () => {
     const {t} = useTranslation(["form"]);

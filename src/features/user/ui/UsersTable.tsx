@@ -1,12 +1,12 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
-import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions.tsx";
+import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions";
 import {
     MaterialReactTable,
     type MRT_ColumnDef,
     type MRT_TableOptions,
     useMaterialReactTable
 } from "material-react-table";
-import type {ITableUserRow} from "@features/user/model/ITableUserRow.ts";
+import type {ITableUserRow} from "@features/user/model/ITableUserRow";
 import {useTranslation} from "react-i18next";
 import {Box, Button, Chip, Stack, Divider, type SxProps} from "@mui/material";
 import type {IDialogActions} from "@shared/ui/dialog/IDialogActions";
@@ -14,8 +14,8 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import CreateUserDialog from "./components/CreateUserDialog";
 import {openDialog} from "@shared/ui/dialog/dialogHelper";
 import UpdateUserDialog from "./components/UpdateUserDialog";
-import {useSearchCombinedFilter} from "@features/search/useSearchFilter.ts";
-import SearchBar from "@features/search/SearchBar.tsx";
+import {useSearchCombinedFilter} from "@features/search/useSearchFilter";
+import SearchBar from "@features/search/SearchBar";
 
 interface Props {
     users: ITableUserRow[];

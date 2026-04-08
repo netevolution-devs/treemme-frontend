@@ -1,12 +1,12 @@
 import {Box, Stack} from "@mui/material";
-import ContactsAgentsList from "@features/panels/contacts/contacts/agents/ContactsAgentsList.tsx";
+import ContactsAgentsList from "@features/panels/contacts/contacts/agents/ContactsAgentsList";
 import ContactsSubcontractorsList
-    from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorsList.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList.tsx";
-import ContactsSupplierList from "@features/panels/contacts/contacts/subcontractors/ContactsSupplierList.tsx";
+    from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorsList";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList";
+import ContactsSupplierList from "@features/panels/contacts/contacts/subcontractors/ContactsSupplierList";
 
 const ContactsContent = () => {
     const {useStore} = usePanel<unknown, IContactsStoreState>();
