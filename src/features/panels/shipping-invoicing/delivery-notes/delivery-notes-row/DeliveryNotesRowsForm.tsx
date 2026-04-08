@@ -309,7 +309,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="currency_change"
                     label={t("orders.row.currency_exchange")}
-                    precision={3}
+                    precision={4}
                     deactivated={isEuro(watchedCurrencyId as number)}
                 />
                 <Box sx={{mb: 1}}>
