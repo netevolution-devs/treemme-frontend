@@ -36,6 +36,7 @@ import type {
     IDeliveryNotesRowsStoreParams,
     IDeliveryNotesRowsStoreState
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
+import type {IOrderRowForm} from "@features/panels/orders/customer-orders/order-rows/OrderRowsForm";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -46,7 +47,10 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'pieces' |
     'quantity' |
     'processing' |
-    'stock_pieces'
+    'stock_pieces' |
+    'currency_total_value' |
+    'price' |
+    'total_value'
 > & {
     batch_id: number | null;
     measurement_unit_id: number | null;
@@ -114,11 +118,11 @@ const DeliveryNotesRowsForm = ({
                     order_note: "",
                     pieces: null,
                     quantity: null,
-                    price: null,
-                    total_value: null,
+                    // price: null,
+                    // total_value: null,
                     currency_price: null,
                     currency_change: 1,
-                    currency_total_value: null,
+                    // currency_total_value: null,
                     kg_weight: null,
                     row_note: "",
                     whole_piece: null,
@@ -134,11 +138,11 @@ const DeliveryNotesRowsForm = ({
                     order_note: x.order_note,
                     pieces: x.pieces,
                     quantity: x.quantity,
-                    price: x.price,
-                    total_value: x.total_value,
+                    // price: x.price,
+                    // total_value: x.total_value,
                     currency_price: x.currency_price,
                     currency_change: x.currency_change,
-                    currency_total_value: x.currency_total_value,
+                    // currency_total_value: x.currency_total_value,
                     kg_weight: x.kg_weight,
                     row_note: x.row_note || "",
                     whole_piece: x.whole_piece,
@@ -294,13 +298,13 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     label={t("orders.row.currency")}
                     options={currencyOptions}
                 />
-                <NumberFieldControlled<IDeliveryNoteRowForm>
-                    name="price"
-                    label={t("orders.row.price")}
+                <NumberFieldControlled<IOrderRowForm>
+                    name="currency_price"
+                    label={t("orders.row.currency_price")}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_price")}
-                    value={deliveryNoteRow?.total_value ?? undefined}
+                    label={t("orders.row.total_currency_price")}
+                    value={deliveryNoteRow?.currency_total_value ?? undefined}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>
@@ -314,20 +318,20 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0}}
+                        sx={{pr: 0, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
                         isEnable={!isEuro(watchedCurrencyId as number)}
                         disableLabel
                     />
                 </Box>
                 <TextFieldValue
-                    label={t("orders.row.currency_price")}
-                    value={deliveryNoteRow?.currency_price ?? undefined}
+                    label={t("orders.row.price")}
+                    value={deliveryNoteRow?.price ?? undefined}
                     isFilled={!!deliveryNoteRow}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_currency_price")}
-                    value={deliveryNoteRow?.currency_total_value ?? undefined}
+                    label={t("orders.row.total_price")}
+                    value={deliveryNoteRow?.total_value ?? undefined}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>
