@@ -7,6 +7,7 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import type {
     IFunctionalityManagementStoreState
 } from "@features/panels/user-management/FunctionalityManagementPanel";
+import WorkAreaPermissionsSection from "@features/panels/user-management/WorkAreaPermissionsSection";
 
 type IWorkAreaForm = IWorkAreaManagementPayload;
 
@@ -24,37 +25,45 @@ const WorkAreaManagementForm = () => {
     const {mutateAsync: deleteWorkArea, isPending: isDeleting} = useDelete();
 
     return (
-        <GenericForm<IWorkAreaForm, IWorkAreaManagement, IFunctionalityManagementStoreState>
-            resource={"sistema - funzionalità"}
-            selectedId={selectedWorkAreaId}
-            entity={workArea}
-            emptyValues={{name: "", description: ""}}
-            mapEntityToForm={(w) => ({
-                name: w.name,
-                description: w.description,
-            })}
-            create={(payload) => createWorkArea(payload)}
-            update={(id, payload) => updateWorkArea({id, payload})}
-            remove={(id) => deleteWorkArea(id)}
-            isSaving={isPosting || isPutting}
-            isDeleting={isDeleting}
-            onClearSelection={() => setUIState({selectedWorkAreaId: null})}
-            validateBeforeSave={(v) => !!v.name}
-            renderFields={() => (
-                <>
-                    <TextFieldControlled<IWorkAreaForm>
-                        name="name"
-                        label={t("work_area_management.name")}
-                        required
-                    />
-                    <TextFieldControlled<IWorkAreaForm>
-                        name="description"
-                        label={t("work_area_management.description")}
-                        TextFieldProps={{multiline: true, rows: 2}}
-                    />
-                </>
+        <>
+            <GenericForm<IWorkAreaForm, IWorkAreaManagement, IFunctionalityManagementStoreState>
+                resource={"sistema - permessi"}
+                selectedId={selectedWorkAreaId}
+                entity={workArea}
+                emptyValues={{name: "", description: ""}}
+                mapEntityToForm={(w) => ({
+                    name: w.name,
+                    description: w.description,
+                })}
+                create={(payload) => createWorkArea(payload)}
+                update={(id, payload) => updateWorkArea({id, payload})}
+                remove={(id) => deleteWorkArea(id)}
+                isSaving={isPosting || isPutting}
+                isDeleting={isDeleting}
+                onClearSelection={() => setUIState({selectedWorkAreaId: null})}
+                validateBeforeSave={(v) => !!v.name}
+                renderFields={() => (
+                    <>
+                        <TextFieldControlled<IWorkAreaForm>
+                            name="name"
+                            label={t("work_area_management.name")}
+                            required
+                        />
+                        <TextFieldControlled<IWorkAreaForm>
+                            name="description"
+                            label={t("work_area_management.description")}
+                            TextFieldProps={{multiline: true, rows: 2}}
+                        />
+                    </>
+                )}
+            />
+            {selectedWorkAreaId && workArea && (
+                <WorkAreaPermissionsSection
+                    workAreaId={selectedWorkAreaId}
+                    groupRoleWorkAreas={workArea.group_role_work_areas ?? []}
+                />
             )}
-        />
+        </>
     );
 };
 
