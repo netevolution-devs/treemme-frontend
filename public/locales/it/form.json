@@ -377,7 +377,7 @@
       "name": "Nome",
       "code": "Codice",
       "client": "Cliente",
-      "article_type": "Tipologia",
+      "article_type": "Articolo",
       "color": "Colore",
       "full_grain": "Pieno fiore",
       "article_variation": "Variazione",
