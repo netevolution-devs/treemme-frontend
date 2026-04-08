@@ -24,10 +24,6 @@ const ArticleTypesList = () => {
             {
                 accessorKey: "leather_type.name",
                 header: t("products.categories.leather_type"),
-            },
-            {
-                accessorKey: "article_class.name",
-                header: t("products.categories.class"),
             }
         ],
         [t]
