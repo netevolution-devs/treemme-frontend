@@ -39,6 +39,7 @@ import UserManagementPanel from "@features/panels/user-management/UserManagement
 import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel";
 import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel";
 import UserAccessPanel from "@features/panels/user-management/UserAccessPanel";
+import ArticleInternalColorsPanel from "@features/panels/products/articleInternalColors/ArticleInternalColorsPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -80,6 +81,7 @@ export type TPanelKind =
     | 'lotsBatches'
     | 'paymentTypes'
     | 'shipmentConditions'
+    | 'articleInternalColors'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -133,5 +135,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     "user-access-management": () => <UserAccessPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
     "functionality-management": () => <FunctionalityManagementPanel />,
+    articleInternalColors: () => <ArticleInternalColorsPanel />,
     "not-implemented": () => <>To implement</>,
 }

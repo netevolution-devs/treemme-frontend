@@ -121,6 +121,11 @@ export const MenuEntries: IMenuEntry[] = [
                 permissionCheck: {resource: "articoli - colori", action: "get"}
             },
             {
+                i18nKey: "menu.products.article-internal-colors",
+                component: "articleInternalColors",
+                permissionCheck: {resource: "articoli - colori interni", action: "get"}
+            },
+            {
                 i18nKey: "menu.products.article-classes",
                 component: "articleClasses",
                 permissionCheck: {resource: "articoli - classi", action: "get"}

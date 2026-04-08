@@ -30,7 +30,8 @@
       "article-types": "Tipologie Articoli",
       "products-types": "Tipologie Prodotti",
       "article-colors": "Colori Articoli",
-      "article-classes": "Classi Articoli"
+      "article-classes": "Classi Articoli",
+      "article-internal-colors": "Colori Interni Articoli"
     },
     "orders": {
       "self": "Ordini",
