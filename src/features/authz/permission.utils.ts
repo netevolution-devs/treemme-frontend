@@ -83,6 +83,8 @@ export type ResourceCommercial = "commerciale"
     | "commerciale - listino prodotti"
     | "commerciale - rapportini di lavoro"
     | "commerciale - valute e cambi"
+    | "commerciale - tipi pagamento"
+    | "commerciale - condizioni resa"
 
 export type ResourceAnalysis = "analisi"
     | "analisi - analisi ordini"
