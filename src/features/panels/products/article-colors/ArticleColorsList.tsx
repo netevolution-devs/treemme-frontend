@@ -41,18 +41,18 @@ const ArticleColorsList = () => {
                 accessorKey: "color",
                 header: t("products.article_colors.color"),
             },
-            {
-                accessorKey: "shade",
-                header: t("products.article_colors.shade"),
-            },
-            {
-                accessorKey: "var_color",
-                header: t("products.article_colors.var_color"),
-            },
-            {
-                accessorKey: "client_color",
-                header: t("products.article_colors.client_color"),
-            },
+            // {
+            //     accessorKey: "shade",
+            //     header: t("products.article_colors.shade"),
+            // },
+            // {
+            //     accessorKey: "var_color",
+            //     header: t("products.article_colors.var_color"),
+            // },
+            // {
+            //     accessorKey: "client_color",
+            //     header: t("products.article_colors.client_color"),
+            // },
             {
                 accessorKey: "client.name",
                 header: t("products.article_colors.client"),

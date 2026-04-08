@@ -18,11 +18,11 @@ import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IColorForm = {
     color: string;
-    shade: string;
-    var_color: string;
     color_note: string;
-    client_color: string;
     client_id: number | null;
+    // shade: string;
+    // var_color: string;
+    // client_color: string;
 }
 
 const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IArticleColorsStoreParams>) => {
@@ -58,19 +58,19 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
             entity={colorEntity}
             emptyValues={{
                 color: initialName ?? '',
-                shade: '',
-                var_color: '',
                 color_note: '',
-                client_color: '',
                 client_id: extra?.client_id ?? null,
+                // shade: '',
+                // client_color: '',
+                // var_color: '',
             }}
             mapEntityToForm={(c) => ({
                 color: c.color,
-                shade: c.shade ?? '',
-                var_color: c.var_color ?? '',
                 color_note: c.color_note ?? '',
-                client_color: c.client_color,
                 client_id: c.client?.id ?? null,
+                // shade: c.shade ?? '',
+                // var_color: c.var_color ?? '',
+                // client_color: c.client_color,
             })}
             create={(payload) => createColor(payload)}
             update={(id, payload) => updateColor({id, payload})}
@@ -78,7 +78,7 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedColorId: null})}
-            validateBeforeSave={(v) => !!v.color && !!v.client_id && !!v.client_color}
+            validateBeforeSave={(v) => !!v.color && !!v.client_id}
             renderFields={() => <ArticleColorsFormFields
                 clientOptions={clientOptions}
             />}
@@ -103,21 +103,21 @@ const ArticleColorsFormFields = ({
                     label={t("products.article_colors.color")}
                     required
                 />
-                <TextFieldControlled<IColorForm>
-                    name="shade"
-                    label={t("products.article_colors.shade")}
-                />
+                {/*<TextFieldControlled<IColorForm>*/}
+                {/*    name="shade"*/}
+                {/*    label={t("products.article_colors.shade")}*/}
+                {/*/>*/}
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <TextFieldControlled<IColorForm>
-                    name="var_color"
-                    label={t("products.article_colors.var_color")}
-                />
-                <TextFieldControlled<IColorForm>
-                    name="client_color"
-                    label={t("products.article_colors.client_color")}
-                    required
-                />
+                {/*<TextFieldControlled<IColorForm>*/}
+                {/*    name="var_color"*/}
+                {/*    label={t("products.article_colors.var_color")}*/}
+                {/*/>*/}
+                {/*<TextFieldControlled<IColorForm>*/}
+                {/*    name="client_color"*/}
+                {/*    label={t("products.article_colors.client_color")}*/}
+                {/*    required*/}
+                {/*/>*/}
             </Box>
             <SelectFieldControlled<IColorForm>
                 name="client_id"
