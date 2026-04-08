@@ -137,7 +137,7 @@
       "name": "Specie"
     },
     "thickness": {
-      "name": "Nome spessore",
+      "name": "Spessore",
       "mm": "Sps in MM"
     },
     "type": {

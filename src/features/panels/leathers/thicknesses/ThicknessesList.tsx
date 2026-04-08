@@ -22,11 +22,11 @@ const ThicknessesList = () => {
             header: t("leathers.thickness.name"),
             size: 0
         },
-        {
-            accessorKey: "thickness_mm",
-            header: t("leathers.thickness.mm"),
-            Cell: ({row}) => row.original.thickness_mm.toFixed(2)
-        }
+        // {
+        //     accessorKey: "thickness_mm",
+        //     header: t("leathers.thickness.mm"),
+        //     Cell: ({row}) => row.original.thickness_mm.toFixed(2)
+        // }
     ], [t]);
 
     return (
