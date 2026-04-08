@@ -90,6 +90,51 @@ export const useUpdateGroupAccessForm = () => {
     });
 };
 
+export const useUpdateGroupAccessInWorkArea = (workAreaId: number) => {
+    const {put} = useApi();
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({id, field, value}: { id: number; field: string; value: boolean }) => {
+            const response = await put(`/group-role-work-area/${id}`, {[field]: value});
+            return response.data.data;
+        },
+        onSuccess: () => {
+            void queryClient.invalidateQueries({queryKey: [GROUP_ACCESS_QUERY_KEY, "LIST"]});
+            void queryClient.invalidateQueries({queryKey: ["WORK_AREA_MANAGEMENT", "DETAIL", workAreaId]});
+        },
+    });
+};
+
+export const useDeleteGroupAccessForWorkArea = (workAreaId: number) => {
+    const {DELETE} = useApi();
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async (id: number) => {
+            const response = await DELETE(`/api/user/remove-group/${id}`);
+            return response.data;
+        },
+        onSuccess: () => {
+            void queryClient.invalidateQueries({queryKey: [GROUP_ACCESS_QUERY_KEY, "LIST"]});
+            void queryClient.invalidateQueries({queryKey: ["WORK_AREA_MANAGEMENT", "DETAIL", workAreaId]});
+        },
+    });
+};
+
+export const useAssignGroupAccessForWorkArea = (workAreaId: number) => {
+    const {post} = useApi();
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: async ({group_id, role_id}: { group_id: number; role_id: number }) => {
+            const response = await post("/api/user/assign-group", {group_id, role_id, work_area_id: workAreaId});
+            return response.data.data;
+        },
+        onSuccess: () => {
+            void queryClient.invalidateQueries({queryKey: [GROUP_ACCESS_QUERY_KEY, "LIST"]});
+            void queryClient.invalidateQueries({queryKey: ["WORK_AREA_MANAGEMENT", "DETAIL", workAreaId]});
+        },
+    });
+};
+
 export const useAssignGroupAccess = () => {
     const {post} = useApi();
     const queryClient = useQueryClient();
