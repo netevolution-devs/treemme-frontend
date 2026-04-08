@@ -17,7 +17,7 @@ export interface IUserGroupAccess {
 
 const GROUP_ACCESS_QUERY_KEY = "USER_GROUP_ACCESS";
 
-export const userManagementApi = createPanelApi<IUserManagement, IUserManagementPayload>({
+export const usersApi = createPanelApi<IUserManagement, IUserManagementPayload>({
     baseEndpoint: "/api/user",
     queryKey: "USER_MANAGEMENT"
 });

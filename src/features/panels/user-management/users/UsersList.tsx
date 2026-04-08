@@ -1,18 +1,18 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {userManagementApi} from "@features/panels/user-management/users/api/userManagementApi";
+import {usersApi} from "@features/panels/user-management/users/api/usersApi";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {IUserManagementStoreState} from "@features/panels/user-management/users/UserManagementPanel";
+import type {IUsersStoreState} from "@features/panels/user-management/users/UsersPanel";
 import type {IUserManagement} from "@features/panels/user-management/users/api/IUserManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
 import dayjs from "dayjs";
 
-const UserManagementList = () => {
+const UsersList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: users = [], isLoading} = userManagementApi.useGetList();
+    const {data: users = [], isLoading} = usersApi.useGetList();
 
-    const {useStore} = usePanel<unknown, IUserManagementStoreState>();
+    const {useStore} = usePanel<unknown, IUsersStoreState>();
     const selectedUserId = useStore(state => state.uiState.selectedUserId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -46,4 +46,4 @@ const UserManagementList = () => {
     );
 };
 
-export default UserManagementList;
+export default UsersList;

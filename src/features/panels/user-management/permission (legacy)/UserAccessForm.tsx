@@ -9,7 +9,7 @@ import {
     useGetGroupAccessList,
     useUpdateGroupAccessForm,
     type IUserGroupAccess,
-} from "@features/panels/user-management/users/api/userManagementApi";
+} from "@features/panels/user-management/users/api/usersApi";
 import {usePanel} from "@ui/panel/PanelContext";
 import GenericForm from "@features/panels/shared/GenericForm";
 import type {IUserAccessStoreState} from "@features/panels/user-management/permission (legacy)/UserAccessPanel";

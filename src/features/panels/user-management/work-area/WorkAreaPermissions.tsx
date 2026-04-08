@@ -19,7 +19,7 @@ import {
     useAssignGroupAccessForWorkArea,
     useDeleteGroupAccessForWorkArea,
     useUpdateGroupAccessInWorkArea,
-} from "@features/panels/user-management/users/api/userManagementApi";
+} from "@features/panels/user-management/users/api/usersApi";
 import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
 import {roleManagementApi} from "@features/panels/user-management/organization/api/roleManagementApi";
 import type {IWorkAreaGroupRoleAccess} from "@features/panels/user-management/work-area/api/IWorkAreaManagement";
