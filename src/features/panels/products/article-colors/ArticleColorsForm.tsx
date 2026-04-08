@@ -53,6 +53,7 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
     return (
         <GenericForm<IColorForm, IColor, IArticleColorsStoreState>
             onSuccess={handlePanelSuccess}
+            resource="articoli - colori"
             selectedId={selectedColorId}
             entity={colorEntity}
             emptyValues={{

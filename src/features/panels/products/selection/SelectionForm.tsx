@@ -35,7 +35,7 @@ const SelectionForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<ISelectionForm, ISelection, ISelectionStoreState>
-            resource="prodotti - scelte"
+            resource="articoli - scelte"
             onSuccess={handlePanelSuccess}
             selectedId={selectedSelectionId}
             entity={selection}

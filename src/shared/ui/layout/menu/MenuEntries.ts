@@ -62,17 +62,17 @@ export const MenuEntries: IMenuEntry[] = [
     {
         i18nKey: "menu.products.self",
         icon: "PRODUCTS",
-        permissionCheck: {resource: "prodotti", action: "get"},
+        permissionCheck: {resource: "articoli", action: "get"},
         subMenu: [
             // {i18nKey: "menu.products.products", component: "products", permissionCheck: {resource: "prodotti - prodotti", action: "get"}},
-            {i18nKey: "menu.products.articles", component: "articles", permissionCheck: {resource: "prodotti - articoli", action: "get"}},
-            {i18nKey: "menu.products.selection", component: "selection", permissionCheck: {resource: "prodotti - scelte", action: "get"}},
+            {i18nKey: "menu.products.articles", component: "articles", permissionCheck: {resource: "articoli - articoli", action: "get"}},
+            {i18nKey: "menu.products.selection", component: "selection", permissionCheck: {resource: "articoli - scelte", action: "get"}},
             // {i18nKey: "menu.products.search"},
             // {i18nKey: "menu.products.categories", component: "productCategories", permissionCheck: {resource: "prodotti - categorie", action: "get"}},
             // {i18nKey: "menu.products.products-types", component: "productTypes", permissionCheck: {resource: "prodotti - tipologie prodotti", action: "get"}},
-            {i18nKey: "menu.products.article-types", component: "articleTypes", permissionCheck: {resource: "prodotti - tipologie articoli", action: "get"}},
-            {i18nKey: "menu.products.article-colors", component: "articleColors"},
-            {i18nKey: "menu.products.article-classes", component: "articleClasses"},
+            {i18nKey: "menu.products.article-types", component: "articleTypes", permissionCheck: {resource: "articoli - tipologie articoli", action: "get"}},
+            {i18nKey: "menu.products.article-colors", component: "articleColors", permissionCheck: {resource: "articoli - colori", action: "get"}},
+            {i18nKey: "menu.products.article-classes", component: "articleClasses", permissionCheck: {resource: "articoli - classi", action: "get"}},
         ]
     },
     {

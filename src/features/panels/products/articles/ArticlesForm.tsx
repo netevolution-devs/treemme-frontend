@@ -78,7 +78,7 @@ const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IAr
     return (
         <GenericForm<IArticleForm, IArticle, IArticlesStoreState>
             onSuccess={handlePanelSuccess}
-            resource="prodotti - articoli"
+            resource="articoli - articoli"
             selectedId={selectedArticledId}
             entity={article}
             emptyValues={{
