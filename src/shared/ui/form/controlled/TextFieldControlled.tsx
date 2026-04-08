@@ -30,10 +30,15 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                 maxLength: {value: maxLength, message: t("common:form.error.too-long")},
             }}
             render={({field, fieldState: {error}}) => {
-                const {onBlur, value, ...restField} = field;
+                const {onBlur, value, onChange, ...restField} = field;
                 const composedOnBlur = (e: React.FocusEvent) => {
                     TextFieldProps?.onBlur?.(e as never);
                     onBlur();
+                };
+
+                const composedOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                    const uppercaseValue = e.target.value.toUpperCase();
+                    onChange(uppercaseValue);
                 };
 
                 const isShrink = !!value || value === 0;
@@ -44,6 +49,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                         {...restField}
                         value={value ?? ""}
                         onBlur={composedOnBlur}
+                        onChange={composedOnChange}
                         label={formattedLabel}
                         fullWidth
                         size={"small"}
@@ -54,7 +60,10 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                 component: ({children}) =>
                                     <ErrorFormHelperText isError={!!error} children={children}/>
                             },
-                            htmlInput: {maxLength: maxLength},
+                            htmlInput: {
+                                maxLength: maxLength,
+                                sx: {textTransform: "uppercase"}
+                            },
                             inputLabel: {
                                 shrink: isShrink,
                                 ...TextFieldProps?.slotProps?.inputLabel
