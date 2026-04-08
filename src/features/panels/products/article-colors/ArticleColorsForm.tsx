@@ -4,7 +4,7 @@ import type {
     IArticleColorsStoreParams,
     IArticleColorsStoreState
 } from "@features/panels/products/article-colors/ArticleColorsPanel";
-import {colorApi} from "@features/panels/products/article-colors/api/colorApi";
+import {internalColorApi} from "@features/panels/products/article-internal-colors/api/internalColorApi";
 import GenericForm from "@features/panels/shared/GenericForm";
 import type {IColor} from "@features/panels/products/article-colors/api/IColor";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
@@ -15,11 +15,15 @@ import {Box} from "@mui/material";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import {colorApi} from "@features/panels/products/article-colors/api/colorApi";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IColorForm = {
     color: string;
     color_note: string;
     client_id: number | null;
+    internal_color_id: number | null;
     // shade: string;
     // var_color: string;
     // client_color: string;
@@ -45,10 +49,15 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
     const {mutateAsync: deleteColor, isPending: isDeleting} = useDelete();
 
     const {data: contacts = []} = contactsApi.useGetList();
+    const {data: internalColors = []} = internalColorApi.useGetList();
 
     const clientOptions = useMemo(() =>
             contacts.filter(c => c.client).map(c => ({value: c.id, label: c.name})),
         [contacts]);
+
+    const internalColorOptions = useMemo(() =>
+            internalColors.map(ic => ({value: ic.id, label: ic.name})),
+        [internalColors]);
 
     return (
         <GenericForm<IColorForm, IColor, IArticleColorsStoreState>
@@ -60,6 +69,7 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
                 color: initialName ?? '',
                 color_note: '',
                 client_id: extra?.client_id ?? null,
+                internal_color_id: null,
                 // shade: '',
                 // client_color: '',
                 // var_color: '',
@@ -68,6 +78,7 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
                 color: c.color,
                 color_note: c.color_note ?? '',
                 client_id: c.client?.id ?? null,
+                internal_color_id: c.internal_color?.id ?? null,
                 // shade: c.shade ?? '',
                 // var_color: c.var_color ?? '',
                 // client_color: c.client_color,
@@ -81,6 +92,7 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
             validateBeforeSave={(v) => !!v.color && !!v.client_id}
             renderFields={() => <ArticleColorsFormFields
                 clientOptions={clientOptions}
+                internalColorOptions={internalColorOptions}
             />}
         />
     );
@@ -88,12 +100,21 @@ const ArticleColorsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProp
 
 interface ArticleColorsFormFieldsProps {
     clientOptions: { value: number; label: string }[];
+    internalColorOptions: { value: number; label: string }[];
 }
 
 const ArticleColorsFormFields = ({
                                      clientOptions,
+                                     internalColorOptions,
                                  }: ArticleColorsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IColorForm>({
+        formKey: "internal_color_id",
+        dependencyKey: "articleInternalColors"
+    })
 
     return (
         <>
@@ -102,6 +123,20 @@ const ArticleColorsFormFields = ({
                     name="color"
                     label={t("products.article_colors.color")}
                     required
+                />
+                <SelectFieldControlled<IColorForm>
+                    name="internal_color_id"
+                    label={t("products.article_internal_colors.name")}
+                    options={internalColorOptions}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "articleInternalColors",
+                                i18nKey: "menu.products.article-internal-colors"
+                            }
+                        })
+                    }}
                 />
                 {/*<TextFieldControlled<IColorForm>*/}
                 {/*    name="shade"*/}

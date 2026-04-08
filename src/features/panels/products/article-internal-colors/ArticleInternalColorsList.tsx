@@ -6,15 +6,14 @@ import GenericList from "@features/panels/shared/GenericList";
 import {internalColorApi} from "@features/panels/products/article-internal-colors/api/internalColorApi";
 import type {IInternalColor} from "@features/panels/products/article-internal-colors/api/IInternalColor";
 import type {
-    IArticleInternalColorsStoreFilter,
     IArticleInternalColorsStoreState
 } from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 
 const ArticleInternalColorsList = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<IArticleInternalColorsStoreFilter, IArticleInternalColorsStoreState>();
-    const selectedId = useStore(state => state.uiState.selectedId);
+    const {useStore} = usePanel<unknown, IArticleInternalColorsStoreState>();
+    const selectedId = useStore(state => state.uiState.selectedInternalColorId);
     const setUIState = useStore(state => state.setUIState);
 
     const {data: colors = [], isLoading, isFetching} = internalColorApi.useGetList();
@@ -36,7 +35,7 @@ const ArticleInternalColorsList = () => {
             isFetching={isFetching}
             columns={columns}
             selectedId={selectedId}
-            onRowSelect={(id) => setUIState({selectedId: id})}
+            onRowSelect={(id) => setUIState({selectedInternalColorId: id})}
         />
     );
 };

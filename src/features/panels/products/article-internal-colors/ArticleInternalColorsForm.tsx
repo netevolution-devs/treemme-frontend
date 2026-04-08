@@ -1,7 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {
-    IArticleInternalColorsStoreParams,
     IArticleInternalColorsStoreState
 } from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 import {internalColorApi} from "@features/panels/products/article-internal-colors/api/internalColorApi";
@@ -16,9 +15,9 @@ export type IInternalColorForm = {
     name: string;
 }
 
-const ArticleInternalColorsForm = ({initialName, onSuccess}: ICustomPanelFormProps<IArticleInternalColorsStoreParams>) => {
+const ArticleInternalColorsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {useStore} = usePanel<unknown, IArticleInternalColorsStoreState>();
-    const selectedId = useStore(state => state.uiState.selectedId);
+    const selectedId = useStore(state => state.uiState.selectedInternalColorId);
     const setUIState = useStore(state => state.setUIState);
 
     const {setFormState} = usePanelFormButtons();
@@ -52,7 +51,7 @@ const ArticleInternalColorsForm = ({initialName, onSuccess}: ICustomPanelFormPro
             remove={(id) => deleteInternalColor(id)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
-            onClearSelection={() => setUIState({selectedId: null})}
+            onClearSelection={() => setUIState({selectedInternalColorId: null})}
             validateBeforeSave={(v) => !!v.name}
             renderFields={() => <ArticleInternalColorsFormFields />}
         />
