@@ -20,10 +20,6 @@ const SelectionList = () => {
             {
                 accessorKey: "name",
                 header: t("products.articles.selection.name"),
-            },
-            {
-                accessorKey: "value",
-                header: t("products.articles.selection.value"),
             }
         ],
         [t]
