@@ -39,7 +39,7 @@ import UserManagementPanel from "@features/panels/user-management/UserManagement
 import OrganizationManagementPanel from "@features/panels/user-management/OrganizationManagementPanel";
 import FunctionalityManagementPanel from "@features/panels/user-management/FunctionalityManagementPanel";
 import UserAccessPanel from "@features/panels/user-management/UserAccessPanel";
-import ArticleInternalColorsPanel from "@features/panels/products/articleInternalColors/ArticleInternalColorsPanel.tsx";
+import ArticleInternalColorsPanel from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 
 export type TPanelKind =
     | 'cap'

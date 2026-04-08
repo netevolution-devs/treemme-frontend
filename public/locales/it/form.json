@@ -402,6 +402,9 @@
     "article_classes": {
       "name": "Nome classe",
       "description": "Descrizione"
+    },
+    "article_internal_colors": {
+      "name": "Colore interno"
     }
   },
   "shipping": {
