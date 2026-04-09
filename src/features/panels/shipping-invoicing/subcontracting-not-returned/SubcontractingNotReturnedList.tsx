@@ -1,27 +1,27 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {
     IDeliveryNoteRow
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {openDialog} from "@ui/dialog/dialogHelper";
 import useGetDDTNotReturned
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned.ts";
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned";
 import type {
     ISubcontractingNotReturnedStoreState
-} from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
+} from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel";
 import {MenuItem} from "@mui/material";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
 import DDTReturnFormDialog
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/DDTReturnFormDialog.tsx";
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/DDTReturnFormDialog";
 import DDTTransferFormDialog
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/transfer/DDTTransferFormDialog.tsx";
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/transfer/DDTTransferFormDialog";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);

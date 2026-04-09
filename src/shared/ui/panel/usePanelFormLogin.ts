@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from "react";
-import { useDockviewStore } from "@ui/panel/store/DockviewStore.ts";
+import { useDockviewStore } from "@ui/panel/store/DockviewStore";
 
 interface PanelFormLogicProps {
     initialName: string | undefined;

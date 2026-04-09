@@ -1,6 +1,6 @@
-import type {IFlay} from "@features/panels/leathers/flaying/api/IFlay.ts";
-import type {INation} from "@features/panels/contacts/nations/api/INation.ts";
-import type {IOriginArea} from "@features/panels/leathers/origins/api/origin-area/IOriginArea.ts";
+import type {IFlay} from "@features/panels/leathers/flaying/api/IFlay";
+import type {INation} from "@features/panels/contacts/nations/api/INation";
+import type {IOriginArea} from "@features/panels/leathers/origins/api/origin-area/IOriginArea";
 
 export interface IOrigin {
     id: number;

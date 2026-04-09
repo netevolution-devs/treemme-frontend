@@ -4,7 +4,7 @@ import {Box, Button, Stack, Typography, CircularProgress} from "@mui/material";
 import {MuiOtpInput} from 'mui-one-time-password-input';
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {appNs} from "../../../../i18n.ts";
+import {appNs} from "../../../../i18n";
 
 interface Props {
     onVerifySuccess: () => void;

@@ -1,8 +1,8 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {ICurrencyChange} from "@features/panels/commercial/currenciesExchange/api/ICurrencyChange.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {ICurrencyChange} from "@features/panels/commercial/currenciesExchange/api/ICurrencyChange";
 import type {
     ICurrenciesExchangeForm
-} from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
+} from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
 
 export type ICurrencyChangePayload = ICurrenciesExchangeForm;
 

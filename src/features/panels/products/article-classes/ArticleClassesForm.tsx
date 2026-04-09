@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IArticleClassesStoreState} from "@features/panels/products/article-classes/ArticleClassesPanel.tsx";
-import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IArticleClass} from "@features/panels/products/article-classes/api/IArticleClass.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IArticleClassesStoreState} from "@features/panels/products/article-classes/ArticleClassesPanel";
+import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IArticleClass} from "@features/panels/products/article-classes/api/IArticleClass";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IArticleClassForm = {
     name: string;
@@ -36,6 +36,7 @@ const ArticleClassesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => 
     return (
         <GenericForm<IArticleClassForm, IArticleClass, IArticleClassesStoreState>
             onSuccess={handlePanelSuccess}
+            resource="articoli - classi"
             selectedId={selectedArticleClassId}
             entity={articleClass}
             emptyValues={{

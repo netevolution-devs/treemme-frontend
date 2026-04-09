@@ -1,18 +1,22 @@
 import {forwardRef, useMemo} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel.tsx";
-import usePostBatchDye from "@features/panels/orders/customer-orders/order-rows/dye/api/useBatchDye.ts";
-import {machineApi} from "@features/panels/production/machinery/api/machineApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ICustomerOrdersStoreState} from "@features/panels/orders/customer-orders/CustomerOrdersPanel";
+import usePostBatchDye from "@features/panels/orders/customer-orders/order-rows/dye/api/useBatchDye";
+import {machineApi} from "@features/panels/production/machinery/api/machineApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {Box, Typography} from "@mui/material";
-import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
+import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
 import dayjs from "dayjs";
+
+interface DyalogFormDialogProps {
+    order_row_id?: number;
+}
 
 export interface IDyeForm {
     quantity: number;
@@ -20,11 +24,11 @@ export interface IDyeForm {
     machine_id?: number | null;
 }
 
-const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
+const DyeFormDialog = forwardRef<IDialogActions, DyalogFormDialogProps>(({order_row_id} , ref) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
-    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
+    const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId) || order_row_id;
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
 
@@ -39,6 +43,7 @@ const DyeFormDialog = forwardRef<IDialogActions>((_, ref) => {
         <BaseDialog ref={ref} sx={{p: 2}}>
             <Typography variant={"h5"} sx={{mb: 2}}>{t("orders.row.dye")}</Typography>
             <GenericForm<IDyeForm, unknown, ICustomerOrdersStoreState>
+                resource="ordini - ordini clienti"
                 selectedId={null}
                 dialogMode
                 dialogRef={ref}

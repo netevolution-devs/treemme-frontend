@@ -1,12 +1,12 @@
 import {useTranslation} from "react-i18next";
 import type {
     ICurrenciesExchangeStoreState
-} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 export type ICurrenciesForm = Omit<ICurrency, 'id' | 'last_change'>;
 

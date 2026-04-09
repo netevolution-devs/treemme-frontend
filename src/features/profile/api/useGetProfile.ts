@@ -1,9 +1,9 @@
 import {useQuery, useQueryClient, type UseQueryResult} from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
-import {type IUserProfile, mergeUserAndProfile} from "@features/profile/model/IUserProfile.ts";
-import {type IApiProfile, ProfileAdapter} from "@features/profile/model/IProfile.ts";
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
+import useApi from "@api/useApi";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
+import {type IUserProfile, mergeUserAndProfile} from "@features/profile/model/IUserProfile";
+import {type IApiProfile, ProfileAdapter} from "@features/profile/model/IProfile";
+import type {IUser} from "@features/user/model/UserInterfaces";
 
 const useGetProfile = (userCode: string): UseQueryResult<IUserProfile> => {
     const {get} = useApi();

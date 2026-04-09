@@ -1,41 +1,42 @@
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import {useTranslation} from "react-i18next";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Stack, Typography} from "@mui/material";
 import {useMemo, useRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {
     IDeliveryNoteRow
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow.ts";
-import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
+import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
 import {
     deliveryNoteRowApi,
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/deliveryNoteRowApi.ts";
-import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
-import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue.tsx";
-import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
-import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
-import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
-import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/deliveryNoteRowApi";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import TextFieldValue from "@shared/ui/form/controlled/TextFieldValue";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
+import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList";
+import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher";
+import {workingApi} from "@features/panels/production/workings/api/workingApi";
 import {useWatch} from "react-hook-form";
 import CurrenciesExchangeFormDialog
-    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
+    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
+import {NewButton} from "@features/panels/shared/CustomButton";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi";
 import useGetBatchAvailability
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetBatchAvailability.ts";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetBatchAvailability";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 import type {
     IDeliveryNotesRowsStoreParams,
     IDeliveryNotesRowsStoreState
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel.tsx";
+} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
+import type {IOrderRowForm} from "@features/panels/orders/customer-orders/order-rows/OrderRowsForm";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -46,7 +47,10 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'pieces' |
     'quantity' |
     'processing' |
-    'stock_pieces'
+    'stock_pieces' |
+    'currency_total_value' |
+    'price' |
+    'total_value'
 > & {
     batch_id: number | null;
     measurement_unit_id: number | null;
@@ -114,11 +118,11 @@ const DeliveryNotesRowsForm = ({
                     order_note: "",
                     pieces: null,
                     quantity: null,
-                    price: null,
-                    total_value: null,
+                    // price: null,
+                    // total_value: null,
                     currency_price: null,
                     currency_change: 1,
-                    currency_total_value: null,
+                    // currency_total_value: null,
                     kg_weight: null,
                     row_note: "",
                     whole_piece: null,
@@ -134,11 +138,11 @@ const DeliveryNotesRowsForm = ({
                     order_note: x.order_note,
                     pieces: x.pieces,
                     quantity: x.quantity,
-                    price: x.price,
-                    total_value: x.total_value,
+                    // price: x.price,
+                    // total_value: x.total_value,
                     currency_price: x.currency_price,
                     currency_change: x.currency_change,
-                    currency_total_value: x.currency_total_value,
+                    // currency_total_value: x.currency_total_value,
                     kg_weight: x.kg_weight,
                     row_note: x.row_note || "",
                     whole_piece: x.whole_piece,
@@ -294,13 +298,13 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     label={t("orders.row.currency")}
                     options={currencyOptions}
                 />
-                <NumberFieldControlled<IDeliveryNoteRowForm>
-                    name="price"
-                    label={t("orders.row.price")}
+                <NumberFieldControlled<IOrderRowForm>
+                    name="currency_price"
+                    label={t("orders.row.currency_price")}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_price")}
-                    value={deliveryNoteRow?.total_value ?? undefined}
+                    label={t("orders.row.total_currency_price")}
+                    value={deliveryNoteRow?.currency_total_value ?? undefined}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>
@@ -309,25 +313,25 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="currency_change"
                     label={t("orders.row.currency_exchange")}
-                    precision={3}
+                    precision={4}
                     deactivated={isEuro(watchedCurrencyId as number)}
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0}}
+                        sx={{pr: 0, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
                         isEnable={!isEuro(watchedCurrencyId as number)}
                         disableLabel
                     />
                 </Box>
                 <TextFieldValue
-                    label={t("orders.row.currency_price")}
-                    value={deliveryNoteRow?.currency_price ?? undefined}
+                    label={t("orders.row.price")}
+                    value={deliveryNoteRow?.price ?? undefined}
                     isFilled={!!deliveryNoteRow}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_currency_price")}
-                    value={deliveryNoteRow?.currency_total_value ?? undefined}
+                    label={t("orders.row.total_price")}
+                    value={deliveryNoteRow?.total_value ?? undefined}
                     isFilled={!!deliveryNoteRow}
                 />
             </Box>

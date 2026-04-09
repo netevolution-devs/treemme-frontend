@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
 import useApi from "@shared/api/useApi";
-import {type IApiUser, type IUser, UserArrayAdapter} from "@features/user/model/UserInterfaces.ts";
+import {type IApiUser, type IUser, UserArrayAdapter} from "@features/user/model/UserInterfaces";
 
 type UserType = "backoffice" | "auditor" | "all";
 

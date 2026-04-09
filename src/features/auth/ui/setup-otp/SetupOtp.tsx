@@ -16,7 +16,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {useTranslation} from "react-i18next";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import HelpTooltip from "@shared/ui/tooltip/HelpTooltip";
-import {appNs} from "../../../../i18n.ts";
+import {appNs} from "../../../../i18n";
 
 interface SetupOtpProps {
     onSetupSuccess: () => void;

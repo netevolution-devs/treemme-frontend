@@ -1,23 +1,23 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import {Box, Stack, Typography} from "@mui/material";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import CustomButton from "@features/panels/shared/CustomButton";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import dayjs from "dayjs";
 import type {
     ISubcontractingNotReturnedStoreState
-} from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel.tsx";
+} from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel";
 import usePostSubcontractingReturn
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/api/usePostSubcontractingReturn.ts";
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/api/usePostSubcontractingReturn";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import useGetDDTNotReturned
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 type Props = unknown;
 

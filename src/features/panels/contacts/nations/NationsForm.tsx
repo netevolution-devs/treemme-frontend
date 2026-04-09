@@ -1,13 +1,13 @@
 import {useTranslation} from "react-i18next";
-import type {INation} from "@features/panels/contacts/nations/api/INation.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {INationsStoreState} from "@features/panels/contacts/nations/NationsPanel.tsx";
-import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import type {INation} from "@features/panels/contacts/nations/api/INation";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {INationsStoreState} from "@features/panels/contacts/nations/NationsPanel";
+import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type INationForm = Omit<INation, "id">;
 
@@ -34,6 +34,7 @@ const NationsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<INationForm, INation, INationsStoreState>
+            resource="contatti - nazioni"
             onSuccess={handlePanelSuccess}
             selectedId={selectedNationId}
             entity={nation}

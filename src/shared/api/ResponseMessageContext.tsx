@@ -2,7 +2,7 @@ import {createContext, type PropsWithChildren, useContext, useState} from 'react
 import type {QueryKey} from "@tanstack/react-query";
 import {enqueueSnackbar, SnackbarProvider as NOTISTACKProvider} from "notistack";
 import type {AlertColor as TMessageType} from "@mui/material";
-import CustomSnackbarAlert from "@ui/CustomSnackbarAlert.tsx";
+import CustomSnackbarAlert from "@ui/CustomSnackbarAlert";
 
 interface IMessage<D = unknown> {
     type: TMessageType;

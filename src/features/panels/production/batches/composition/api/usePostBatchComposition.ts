@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
+import useApi from "@api/useApi";
 import type {
     IBatchCompositionForm
-} from "@features/panels/production/batches/composition/BatchCompositionFormDialog.tsx";
+} from "@features/panels/production/batches/composition/BatchCompositionFormDialog";
 
 type ICompositionPayload = Omit<IBatchCompositionForm, 'father_batch_id'>;
 const usePostBatchComposition = (batchId: number) => {

@@ -1,41 +1,41 @@
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import {useTranslation} from "react-i18next";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import {Box, Stack} from "@mui/material";
 import {useMemo, useRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
-import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi.ts";
-import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi.ts";
-import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
-import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi.tsx";
-import {currencyApi} from "@features/panels/shared/api/currency/currencyApi.ts";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher.tsx";
-import CustomButton, {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
+import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
+import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
+import {articleApi} from "@features/panels/products/articles/api/articleApi";
+import {customerOrderApi} from "@features/panels/orders/customer-orders/api/customerOrderApi";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher";
+import CustomButton, {NewButton} from "@features/panels/shared/CustomButton";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
-import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog.tsx";
+import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog";
 import RefinementFormDialog
-    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog.tsx";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
+    from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog";
+import {openDialog} from "@ui/dialog/dialogHelper";
 import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
-import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
 import CurrenciesExchangeFormDialog
-    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog.tsx";
+    from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
 import {useWatch} from "react-hook-form";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {
     IOrderRowsStoreParams,
     IOrderRowsStoreState
-} from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel.tsx";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+} from "@features/panels/orders/customer-orders/order-rows/OrderRowsPanel";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -45,7 +45,12 @@ export type IOrderRowForm = Omit<IOrderRow,
     'client_order' |
     'available_quantity' |
     'quantity' |
-    'selection'
+    'selection' |
+    'price' |
+    'total_price' |
+    'total_currency_price' |
+    'tolerance_quantity_percentage' |
+    'delivery_date_request'
 > & {
     id?: number;
     article_id: number | null;
@@ -98,8 +103,8 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
 
     return (
         <Box sx={{p: 0}}>
-            <DyeFormDialog ref={dyeDialogRef}/>
-            <RefinementFormDialog ref={refinementDialogRef}/>
+            <DyeFormDialog ref={dyeDialogRef} order_row_id={selectedOrderRowId as number}/>
+            <RefinementFormDialog ref={refinementDialogRef} order_row_id={selectedOrderRowId as number}/>
 
             <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
                 onSuccess={handlePanelSuccess}
@@ -115,16 +120,16 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     cancelled: false,
                     weight: null,
                     quantity: null,
-                    price: null,
-                    total_price: null,
+                    // price: null,
+                    // total_price: null,
                     currency_price: null,
                     currency_exchange: 1,
-                    total_currency_price: null,
+                    // total_currency_price: null,
                     agent_percentage_row: null,
-                    tolerance_quantity_percentage: 40,
+                    // tolerance_quantity_percentage: 40,
                     shipment_schedule: null,
                     production_schedule: null,
-                    delivery_date_request: null,
+                    // delivery_date_request: null,
                     delivery_date_confirmed: null,
                     article_id: null,
                     client_order_id: clientOrderId ?? 0,
@@ -137,16 +142,16 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     cancelled: x.cancelled,
                     weight: x.weight,
                     quantity: x.quantity,
-                    price: x.price,
-                    total_price: x.total_price,
+                    // price: x.price,
+                    // total_price: x.total_price,
                     currency_price: x.currency_price,
                     currency_exchange: x.currency_exchange,
-                    total_currency_price: x.total_currency_price,
+                    // total_currency_price: x.total_currency_price,
                     agent_percentage_row: x.agent_percentage_row,
-                    tolerance_quantity_percentage: x.tolerance_quantity_percentage,
+                    // tolerance_quantity_percentage: x.tolerance_quantity_percentage,
                     shipment_schedule: x.shipment_schedule,
                     production_schedule: x.production_schedule,
-                    delivery_date_request: x.delivery_date_request,
+                    // delivery_date_request: x.delivery_date_request,
                     delivery_date_confirmed: x.delivery_date_confirmed,
                     article_id: x.article.id,
                     client_order_id: clientOrderId ?? 0,
@@ -329,12 +334,12 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     options={currencyOptions}
                 />
                 <NumberFieldControlled<IOrderRowForm>
-                    name="price"
-                    label={t("orders.row.price")}
+                    name="currency_price"
+                    label={t("orders.row.currency_price")}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_price")}
-                    value={orderRow?.total_price ?? undefined}
+                    label={t("orders.row.total_currency_price")}
+                    value={orderRow?.total_currency_price ?? undefined}
                     isFilled={!!orderRow}
                 />
             </Box>
@@ -343,25 +348,25 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                 <NumberFieldControlled<IOrderRowForm>
                     name="currency_exchange"
                     label={t("orders.row.currency_exchange")}
-                    precision={3}
+                    precision={4}
                     deactivated={isEuro(watchedCurrencyId as number)}
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0}}
+                        sx={{pr: 0, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
                         isEnable={!isEuro(watchedCurrencyId as number)}
                         disableLabel
                     />
                 </Box>
                 <TextFieldValue
-                    label={t("orders.row.currency_price")}
-                    value={orderRow?.currency_price ?? undefined}
+                    label={t("orders.row.price")}
+                    value={orderRow?.price ?? undefined}
                     isFilled={!!orderRow}
                 />
                 <TextFieldValue
-                    label={t("orders.row.total_currency_price")}
-                    value={orderRow?.total_currency_price ?? undefined}
+                    label={t("orders.row.total_price")}
+                    value={orderRow?.total_price ?? undefined}
                     isFilled={!!orderRow}
                 />
             </Box>

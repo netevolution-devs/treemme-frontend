@@ -1,10 +1,10 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import ArticlesForm from "@features/panels/products/articles/ArticlesForm.tsx";
-import ArticleList from "@features/panels/products/articles/ArticleList.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import ArticlesForm from "@features/panels/products/articles/ArticlesForm";
+import ArticleList from "@features/panels/products/articles/ArticleList";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface IArticlesStoreState extends IPanelUIState {
     selectedArticledId?: number | null;

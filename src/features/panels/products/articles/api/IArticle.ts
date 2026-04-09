@@ -1,9 +1,9 @@
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IArticleType} from "@features/panels/products/article-types/api/IArticleType.ts";
-import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
-import type {IArticlePrint} from "@features/panels/products/articles/api/article-print/IArticlePrint.ts";
-import type {IProduct} from "@features/panels/products/products/api/IProduct.ts";
-import type {IColor} from "@features/panels/products/article-colors/api/IColor.ts";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import type {IArticleType} from "@features/panels/products/article-types/api/IArticleType";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
+import type {IArticlePrint} from "@features/panels/products/article-prints/api/IArticlePrint";
+import type {IProduct} from "@features/panels/products/products/api/IProduct";
+import type {IColor} from "@features/panels/products/article-colors/api/IColor";
 
 export interface IArticle {
     id: number;

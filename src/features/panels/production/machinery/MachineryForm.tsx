@@ -1,12 +1,12 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IMachineryStoreState} from "@features/panels/production/machinery/MachineryPanel.tsx";
-import {machineApi} from "@features/panels/production/machinery/api/machineApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IMachine} from "@features/panels/production/machinery/api/IMachine.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IMachineryStoreState} from "@features/panels/production/machinery/MachineryPanel";
+import {machineApi} from "@features/panels/production/machinery/api/machineApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IMachine} from "@features/panels/production/machinery/api/IMachine";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi";
 import {useMemo} from "react";
 
 export interface IMachineryForm {
@@ -36,6 +36,7 @@ const MachineryForm = () => {
 
     return (
         <GenericForm<IMachineryForm, IMachine, IMachineryStoreState>
+            resource="produzione - macchinari"
             selectedId={selectedMachineryId}
             entity={machinery}
             emptyValues={{ name: '', prefix: '', batch_type_id: null }}

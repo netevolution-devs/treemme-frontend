@@ -1,5 +1,5 @@
 import {Navigate} from "react-router";
-import {useAuth} from "@features/auth/model/AuthContext.tsx";
+import {useAuth} from "@features/auth/model/AuthContext";
 import {useEffect} from "react";
 
 interface Props {

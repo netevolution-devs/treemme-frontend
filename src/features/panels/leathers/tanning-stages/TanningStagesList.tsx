@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import type {ITanningStagesStoreState} from "@features/panels/leathers/tanning-stages/TanningStagesPanel.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi.ts";
+import type {ITanningStagesStoreState} from "@features/panels/leathers/tanning-stages/TanningStagesPanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/ITanningStage.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/ITanningStage";
+import GenericList from "@features/panels/shared/GenericList";
 
 const TanningStagesList = () => {
     const {t} = useTranslation(["form"]);

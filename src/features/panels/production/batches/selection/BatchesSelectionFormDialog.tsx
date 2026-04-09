@@ -1,19 +1,19 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {Typography} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchSelectionApi} from "@features/panels/production/batches/selection/api/batchSelectionApi.ts";
-import {selectionApi} from "@features/panels/products/selection/api/selectionApi.ts";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchSelectionApi} from "@features/panels/production/batches/selection/api/batchSelectionApi";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
+import CustomButton from "@features/panels/shared/CustomButton";
+import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 
 type Props = unknown;
 
@@ -41,6 +41,7 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
             <Typography variant="h5" sx={{mb: 2}}>{t("production.batch.selection")}</Typography>
 
             <GenericForm<IBatchSelectionForm>
+                resource="produzione - lotti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

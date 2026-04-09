@@ -1,0 +1,7 @@
+import type {IWorkAreaManagement, IWorkAreaManagementPayload} from "@features/panels/user-management/work-area/api/IWorkAreaManagement.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+
+export const workAreaManagementApi = createPanelApi<IWorkAreaManagement, IWorkAreaManagementPayload>({
+    baseEndpoint: "/work/area",
+    queryKey: "WORK_AREA_MANAGEMENT"
+});

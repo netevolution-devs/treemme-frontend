@@ -1,12 +1,12 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import SpeciesList from "@features/panels/leathers/species/SpeciesList.tsx";
-import SpeciesForm from "@features/panels/leathers/species/SpeciesForm.tsx";
-import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import SpeciesContent from "@features/panels/leathers/species/SpeciesContent.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import SpeciesList from "@features/panels/leathers/species/SpeciesList";
+import SpeciesForm from "@features/panels/leathers/species/SpeciesForm";
+import type {ILeathersStoreState} from "@features/panels/leathers/leathers/LeathersPanel";
+import SpeciesContent from "@features/panels/leathers/species/SpeciesContent";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface ISpeciesStoreState extends IPanelUIState, ILeathersStoreState {
     selectedSpeciesId?: number | null;

@@ -1,5 +1,5 @@
-import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
-import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
 
 export interface IBatchSelection {
     id: number;

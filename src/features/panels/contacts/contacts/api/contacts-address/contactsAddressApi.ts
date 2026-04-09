@@ -1,6 +1,6 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
-import type {IContactAddressForm} from "@features/panels/contacts/contacts/address/ContactsAddressFormDialog.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
+import type {IContactAddressForm} from "@features/panels/contacts/contacts/address/ContactsAddressFormDialog";
 
 export type IContactsAddressPayload = IContactAddressForm;
 

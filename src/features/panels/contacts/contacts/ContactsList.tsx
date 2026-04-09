@@ -1,14 +1,14 @@
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
 import {useTranslation} from "react-i18next";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreFilter, IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreFilter, IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 
 const ContactsList = () => {
     const {t} = useTranslation(["form"]);

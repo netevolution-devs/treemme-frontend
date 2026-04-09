@@ -1,18 +1,18 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IThicknessesStoreState} from "@features/panels/leathers/thicknesses/ThicknessesPanel.tsx";
-import {type IThicknessPayload, thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
-import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IThicknessesStoreState} from "@features/panels/leathers/thicknesses/ThicknessesPanel";
+import {type IThicknessPayload, thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
-export type IThicknessForm = Omit<IThickness, "id" | "thickness_mm"> & {
-    thickness_mm: number | null;
-};
+export type IThicknessForm = Omit<IThickness, "id">
+//     & {
+//     // thickness_mm: number | null;
+// };
 
 const ThicknessesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
@@ -37,16 +37,17 @@ const ThicknessesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IThicknessForm, IThickness, IThicknessesStoreState>
+            resource="pellami - spessori"
             onSuccess={handlePanelSuccess}
             selectedId={selectedThicknessId}
             entity={thickness}
             emptyValues={{
                 name: initialName ?? '',
-                thickness_mm: null
+                // thickness_mm: null
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
-                thickness_mm: x.thickness_mm
+                // thickness_mm: x.thickness_mm
             })}
             create={(payload) => createThickness(payload as IThicknessPayload)}
             update={(id, payload) => updateThickness({id, payload: payload as IThicknessPayload})}
@@ -54,7 +55,7 @@ const ThicknessesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedThicknessId: null})}
-            validateBeforeSave={(v) => !!v.name && !!v.thickness_mm}
+            validateBeforeSave={(v) => !!v.name}
             renderFields={() => (
                 <>
                     <TextFieldControlled<IThicknessForm>
@@ -62,12 +63,12 @@ const ThicknessesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
                         label={t("leathers.thickness.name")}
                         required
                     />
-                    <NumberFieldControlled<IThicknessForm>
-                        name={"thickness_mm"}
-                        label={t("leathers.thickness.mm")}
-                        step={0.05}
-                        required
-                    />
+                    {/*<NumberFieldControlled<IThicknessForm>*/}
+                    {/*    name={"thickness_mm"}*/}
+                    {/*    label={t("leathers.thickness.mm")}*/}
+                    {/*    step={0.05}*/}
+                    {/*    required*/}
+                    {/*/>*/}
                 </>
             )}
         />

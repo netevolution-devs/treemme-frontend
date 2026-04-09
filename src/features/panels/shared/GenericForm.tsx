@@ -1,16 +1,19 @@
 import {Box, Stack} from "@mui/material";
-import FormButtons from "@features/panels/shared/FormButtons.tsx";
+import FormButtons from "@features/panels/shared/FormButtons";
 import {FormProvider, useForm, type DefaultValues, type SubmitHandler} from "react-hook-form";
 import React, {type ForwardedRef, type ReactNode, useEffect, useRef} from "react";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {usePanelFormButtons, type IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import type {IDialogActions} from "@shared/ui/dialog/IDialogActions.ts";
-import {closeDialog, openDialog} from "@shared/ui/dialog/dialogHelper.ts";
-import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog.tsx";
-import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import {usePanelFormButtons, type IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import type {IDialogActions} from "@shared/ui/dialog/IDialogActions";
+import {closeDialog, openDialog} from "@shared/ui/dialog/dialogHelper";
+import DeleteConfirmDialog from "@shared/ui/dialog/confirm/DeleteConfirmDialog";
+import SaveConfirmDialog from "@shared/ui/dialog/confirm/SaveConfirmDialog";
 import type {FieldValues} from "react-hook-form";
-import {useDockviewStore} from "@ui/panel/store/DockviewStore.ts";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import type {IDockviewPanel} from "dockview";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {permissionEngine, type ResourceName} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
 export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     selectedId: number | null | undefined;
@@ -45,6 +48,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     bypassConfirm?: boolean;
 
     onCreateSuccess?: (id: number) => void;
+    resource?: ResourceName;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -69,7 +73,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         bypassConfirm = false,
         onCreateSuccess,
         floatingPanelMode = false,
-        floatingPanelUUID
+        floatingPanelUUID,
+        resource,
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
@@ -77,6 +82,12 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     const {useStore} = usePanel<unknown, TUI>();
     const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
     const {setFormState} = usePanelFormButtons<unknown, TUI>();
+
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = !resource || engine.can(resource, 'post');
+    const canPut = !resource || engine.can(resource, 'put');
+    const canDelete = !resource || engine.can(resource, 'delete');
 
     const deleteRef = useRef<IDialogActions>(null);
     const saveRef = useRef<IDialogActions>(null);
@@ -241,10 +252,10 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             onDelete={handleDelete}
                             onCancel={handleCancel}
                             buttonState={buttonsState}
-                            hideNew={dialogMode}
-                            hideEdit={dialogMode}
-                            hideDelete={!selectedId && dialogMode || disabledBasicButtons}
-                            hideSave={disabledBasicButtons}
+                            hideNew={dialogMode || !canPost}
+                            hideEdit={dialogMode || !canPut}
+                            hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete}
+                            hideSave={disabledBasicButtons || (!canPost && !canPut)}
                             overrideButtonState={dialogMode}
                             isLoading={isSaving}
                         />

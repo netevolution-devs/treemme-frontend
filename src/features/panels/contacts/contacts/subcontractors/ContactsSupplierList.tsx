@@ -1,12 +1,12 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import GenericList from "@features/panels/shared/GenericList";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import {Typography} from "@mui/material";
 
 const ContactsSupplierList = () => {

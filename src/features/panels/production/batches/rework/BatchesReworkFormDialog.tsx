@@ -1,18 +1,18 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {Stack, Typography} from "@mui/material";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
 import {useTranslation} from "react-i18next";
-import useBatchRework from "@features/panels/production/batches/rework/api/useBatchRework.ts";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
+import useBatchRework from "@features/panels/production/batches/rework/api/useBatchRework";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
+import CustomButton from "@features/panels/shared/CustomButton";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import dayjs from "dayjs";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 
 type Props = unknown;
 
@@ -36,6 +36,7 @@ const BatchesReworkFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
             <Typography variant={"h5"} sx={{mb: 2}}>{t("production.batch.rework")}</Typography>
 
             <GenericForm<IReworkForm>
+                resource="produzione - lotti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

@@ -5,12 +5,12 @@ import BaseDialog from "@shared/ui/dialog/BaseDialog";
 import {Button, CircularProgress, DialogContent, DialogTitle, Stack, Typography, DialogActions} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {closeDialog} from "@shared/ui/dialog/dialogHelper";
-import type {IUserForm} from "../../model/IUserForm.ts";
-import usePostUser from "../../api/usePostUser.ts";
-import type {IApiUserPayload} from "../../model/UserInterfaces.ts";
+import type {IUserForm} from "../../model/IUserForm";
+import usePostUser from "../../api/usePostUser";
+import type {IApiUserPayload} from "../../model/UserInterfaces";
 import UserFormFields from "./UserFormFields";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import {useUpdateUserRole} from "../../api/useUpdateUserRole.ts";
+import {useUpdateUserRole} from "../../api/useUpdateUserRole";
 
 type Props = unknown;
 

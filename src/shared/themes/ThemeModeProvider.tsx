@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import {CssBaseline, ThemeProvider} from '@mui/material';
-import {type ThemeMode} from './defaultThemeGlobal.ts';
+import {type ThemeMode} from './defaultThemeGlobal';
 import {type Theme} from "@emotion/react";
 
 interface ThemeContextType {

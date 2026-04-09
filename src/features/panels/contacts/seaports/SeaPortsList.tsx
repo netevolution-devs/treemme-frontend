@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ISeaportsStoreState} from "@features/panels/contacts/seaports/SeaportsPanel.tsx";
-import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ISeaportsStoreState} from "@features/panels/contacts/seaports/SeaportsPanel";
+import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi";
 import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
-import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort";
+import GenericList from "@features/panels/shared/GenericList";
 
 const SeaPortsList = () => {
     const {t} = useTranslation(["form"]);

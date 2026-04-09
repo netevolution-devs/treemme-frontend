@@ -1,9 +1,9 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import DeliveryNotesRowsForm from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsForm.tsx";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
+import DeliveryNotesRowsForm from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsForm";
 
 export interface IDeliveryNotesRowsStoreState extends IPanelUIState {
     selectedDeliveryNoteRowId?: number | null;

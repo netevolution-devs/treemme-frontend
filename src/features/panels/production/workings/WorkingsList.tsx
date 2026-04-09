@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IWorkingsStoreState} from "@features/panels/production/workings/WorkingsPanel.tsx";
-import {workingApi} from "@features/panels/production/workings/api/workingApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IWorkingsStoreState} from "@features/panels/production/workings/WorkingsPanel";
+import {workingApi} from "@features/panels/production/workings/api/workingApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IWorking} from "@features/panels/production/workings/api/IWorking.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IWorking} from "@features/panels/production/workings/api/IWorking";
+import GenericList from "@features/panels/shared/GenericList";
 
 const WorkingsList = () => {
     const {t} = useTranslation(["form"]);

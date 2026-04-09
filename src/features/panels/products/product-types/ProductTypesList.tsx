@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IProductTypesStoreState} from "@features/panels/products/product-types/ProductTypesPanel.tsx";
-import {productTypeApi} from "@features/panels/products/product-types/api/productTypeApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IProductTypesStoreState} from "@features/panels/products/product-types/ProductTypesPanel";
+import {productTypeApi} from "@features/panels/products/product-types/api/productTypeApi";
 import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
-import type {IProductType} from "@features/panels/products/product-types/api/IProductType.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IProductType} from "@features/panels/products/product-types/api/IProductType";
+import GenericList from "@features/panels/shared/GenericList";
 
 const ProductTypesList = () => {
     const {t} = useTranslation(["form"]);

@@ -1,6 +1,6 @@
 import type {
     IContactDetailType
-} from "@features/panels/contacts/contacts/api/contacts-detail-type/IContactDetailTypes.tsx";
+} from "@features/panels/contacts/contacts/api/contacts-detail-type/IContactDetailTypes";
 
 export interface IContactDetail {
     id: number;

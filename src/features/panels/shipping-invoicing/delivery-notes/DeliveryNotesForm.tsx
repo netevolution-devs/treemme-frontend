@@ -1,20 +1,20 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
-import {deliveryNoteApi, type IDeliveryNotePayload} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import {deliveryReasonApi} from "@features/panels/shipping-invoicing/reasons/api/deliveryReasonApi.ts";
-import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IDeliveryNotesStoreState} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel";
+import {deliveryNoteApi, type IDeliveryNotePayload} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {deliveryReasonApi} from "@features/panels/shipping-invoicing/reasons/api/deliveryReasonApi";
+import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import {Box} from "@mui/material";
 import dayjs from "dayjs";
 import {useWatch} from "react-hook-form";
 
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason.ts";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason";
 
 export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'ddt_rows' | 'client'> & {
     subcontractor_id: number | null;
@@ -101,6 +101,7 @@ const DeliveryNotesForm = () => {
 
     return (
         <GenericForm<IDeliveryNoteForm, IDeliveryNote, IDeliveryNotesStoreState>
+            resource="ddt & fatture - documenti di trasporto"
             selectedId={selectedDeliveryNoteId}
             entity={deliveryNote}
             emptyValues={{

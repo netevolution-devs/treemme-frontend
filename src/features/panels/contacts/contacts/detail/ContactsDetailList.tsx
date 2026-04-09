@@ -1,16 +1,16 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {useMemo, useRef} from "react";
-import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail.tsx";
+import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailFormDialog.tsx";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import {NewButton} from "@features/panels/shared/CustomButton.tsx";
+import GenericList from "@features/panels/shared/GenericList";
+import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailFormDialog";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {NewButton} from "@features/panels/shared/CustomButton";
 import {Typography} from "@mui/material";
 
 const ContactsDetailList = () => {

@@ -1,10 +1,10 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import ArticleColorsList from "@features/panels/products/article-colors/ArticleColorsList.tsx";
-import ArticleColorsForm from "@features/panels/products/article-colors/ArticleColorsForm.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import ArticleColorsList from "@features/panels/products/article-colors/ArticleColorsList";
+import ArticleColorsForm from "@features/panels/products/article-colors/ArticleColorsForm";
 import type {IDockviewPanelProps} from "dockview";
-import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface IArticleColorsStoreState extends IPanelUIState {
     selectedColorId?: number | null;

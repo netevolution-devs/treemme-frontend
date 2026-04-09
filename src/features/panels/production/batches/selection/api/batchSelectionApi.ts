@@ -1,8 +1,8 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection.ts";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection";
 import type {
     IBatchSelectionForm,
-} from "@features/panels/production/batches/selection/BatchesSelectionFormDialog.tsx";
+} from "@features/panels/production/batches/selection/BatchesSelectionFormDialog";
 
 export type IBatchSelectionPayload = IBatchSelectionForm;
 

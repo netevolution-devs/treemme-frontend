@@ -1,6 +1,6 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory.ts";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
-import type {ICurrenciesForm} from "@features/panels/commercial/currenciesExchange/CurrenciesForm.tsx";
+import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
+import type {ICurrenciesForm} from "@features/panels/commercial/currenciesExchange/CurrenciesForm";
 
 export type ICurrencyPayload = ICurrenciesForm;
 

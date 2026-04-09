@@ -1,7 +1,7 @@
-import {useAuth} from "@features/auth/model/AuthContext.tsx";
+import {useAuth} from "@features/auth/model/AuthContext";
 import {useMemo} from "react";
-import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
-import {hasPermission, type IPermissionCheck} from "@features/authz/permission.utils.ts";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import {hasPermission, type IPermissionCheck} from "@features/authz/permission.utils";
 
 export const useHasPermission = (permissionCheck: IPermissionCheck = {}): boolean => {
     const {user} = useAuth();

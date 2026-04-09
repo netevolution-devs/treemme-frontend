@@ -1,18 +1,18 @@
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import {openDialog} from "@ui/dialog/dialogHelper.ts";
-import BatchCompositionFormDialog from "@features/panels/production/batches/composition/BatchCompositionFormDialog.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import CustomButton from "@features/panels/shared/CustomButton";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import BatchCompositionFormDialog from "@features/panels/production/batches/composition/BatchCompositionFormDialog";
 import {useMemo, useRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {
     IBatchCompositionResponse
-} from "@features/panels/production/batches/composition/api/IBatchComposition.ts";
+} from "@features/panels/production/batches/composition/api/IBatchComposition";
 import {Typography} from "@mui/material";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import dayjs from "dayjs";

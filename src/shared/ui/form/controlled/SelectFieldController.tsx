@@ -1,10 +1,10 @@
 import { Controller, type FieldValues, useFormContext } from "react-hook-form";
-import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps.ts";
+import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldProps";
 import { useTranslation } from "react-i18next";
 import { Autocomplete, TextField, Box } from "@mui/material";
-import ErrorFormHelperText from "@ui/form/ErrorFormHelperText.tsx";
+import ErrorFormHelperText from "@ui/form/ErrorFormHelperText";
 import { useEffect, useState } from "react";
-import { useDockviewStore } from "@ui/panel/store/DockviewStore.ts";
+import { useDockviewStore } from "@ui/panel/store/DockviewStore";
 
 interface SelectFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     options: { value: string | number; label: string }[];
@@ -59,7 +59,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         disabled={disabled || deactivated}
                         value={selectedOption}
                         noOptionsText={t("common:search.no-options")}
-                        getOptionLabel={(option) => option.label || ""}
+                        getOptionLabel={(option) => (option.label || "").toUpperCase()}
                         isOptionEqualToValue={(option, val) => option.value === val?.value}
                         onChange={(_, newValue) => {
                             onChange(newValue ? newValue.value : null);
@@ -102,6 +102,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                         },
                                         htmlInput: {
                                             ...inputProps,
+                                            sx: {textTransform: "uppercase"},
                                             ...(TextFieldProps?.slotProps?.htmlInput as object | undefined),
                                         },
                                         formHelperText: {
@@ -117,7 +118,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         renderOption={(props, option) => {
                             const { key, ...otherProps } = props;
                             return (
-                                <Box component="li" key={key} {...otherProps}>
+                                <Box component="li" key={key} {...otherProps} sx={{textTransform: "uppercase"}}>
                                     {option.label}
                                 </Box>
                             );

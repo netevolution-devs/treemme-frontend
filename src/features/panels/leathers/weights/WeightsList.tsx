@@ -1,11 +1,11 @@
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IWeightsStoreState} from "@features/panels/leathers/weights/WeightsPanel.tsx";
-import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IWeightsStoreState} from "@features/panels/leathers/weights/WeightsPanel";
+import {weightApi} from "@features/panels/leathers/weights/api/weightApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IWeight} from "@features/panels/leathers/weights/api/IWeight.ts";
+import type {IWeight} from "@features/panels/leathers/weights/api/IWeight";
 
 const WeightsList = () => {
     const {t} = useTranslation(["form"]);

@@ -1,14 +1,14 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ILeathersStoreState, ILeatherStoreFilter} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ILeathersStoreState, ILeatherStoreFilter} from "@features/panels/leathers/leathers/LeathersPanel";
+import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import TextFieldFilter from "@ui/form/filters/TextFieldFilter.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
+import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather";
+import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 
 interface LeatherListProps {
     enableFilters?: boolean;

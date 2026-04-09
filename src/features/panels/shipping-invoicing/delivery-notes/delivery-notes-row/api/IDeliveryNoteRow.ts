@@ -1,9 +1,9 @@
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
-import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit.ts";
-import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency.ts";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
+import type {IMeasurementUnit} from "@features/panels/shared/api/measurement-unit/IMeasurementUnit";
+import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
 
-import type {ISelection} from "@features/panels/products/selection/api/ISelection.ts";
-import type {IWorking} from "@features/panels/production/workings/api/IWorking.ts";
+import type {ISelection} from "@features/panels/products/selection/api/ISelection";
+import type {IWorking} from "@features/panels/production/workings/api/IWorking";
 
 export interface IDeliveryNoteRow {
     id: number;

@@ -30,7 +30,9 @@
       "article-types": "Tipologie Articoli",
       "products-types": "Tipologie Prodotti",
       "article-colors": "Colori Articoli",
-      "article-classes": "Classi Articoli"
+      "article-classes": "Classi Articoli",
+      "article-internal-colors": "Colori Interni Articoli",
+      "article-prints": "Stampe Articoli"
     },
     "orders": {
       "self": "Ordini",
@@ -82,7 +84,9 @@
       "price-list": "Listino Prodotti",
       "work-reports": "Rapportini di Lavoro",
       "currencies-exchange": "Valute e Cambi",
-      "currenciesExchange": "CurrenciesExchange"
+      "currenciesExchange": "CurrenciesExchange",
+      "payment-types": "Tipi pagamento",
+      "shipment-conditions": "Condizioni resa"
     },
     "analysis": {
       "self": "Analisi",
@@ -102,7 +106,10 @@
       "info": "Informazioni di Sistema",
       "tools": "Strumenti",
       "console": "Console di Comando",
-      "access-management": "Gestione Accessi",
+      "access-management": "Permessi",
+      "users": "Utenti",
+      "organization": "Organizzazione",
+      "functionality": "Permessi",
       "logout": "Fine Sessione"
     }
   },

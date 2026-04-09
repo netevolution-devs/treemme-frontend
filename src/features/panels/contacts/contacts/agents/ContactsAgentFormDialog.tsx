@@ -1,17 +1,17 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import useAddAgentToContact, {
     type IAddAgentToContactPayload
-} from "@features/panels/contacts/contacts/agents/api/useAddAgentToContact.ts";
+} from "@features/panels/contacts/contacts/agents/api/useAddAgentToContact";
 import {Typography} from "@mui/material";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
+import CustomButton from "@features/panels/shared/CustomButton";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 type Props = unknown;
@@ -41,6 +41,7 @@ const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
             <Typography variant={"h5"} sx={{mb: 2}}>{t("contacts.agents.add")}</Typography>
 
             <GenericForm<IContactAgentForm>
+                resource="contatti - contatti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

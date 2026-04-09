@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import {articleApi} from "@features/panels/products/articles/api/articleApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import {articleApi} from "@features/panels/products/articles/api/articleApi";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IArticlesStoreState} from "@features/panels/products/articles/ArticlesPanel.tsx";
-import type {IArticle} from "@features/panels/products/articles/api/IArticle.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {IArticlesStoreState} from "@features/panels/products/articles/ArticlesPanel";
+import type {IArticle} from "@features/panels/products/articles/api/IArticle";
+import GenericList from "@features/panels/shared/GenericList";
 
 const ArticleList = () => {
     const {t} = useTranslation(["form"]);

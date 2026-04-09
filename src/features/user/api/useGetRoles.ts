@@ -1,7 +1,7 @@
 import {useQuery, type UseQueryResult} from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
-import type {IRole} from "@features/user/model/RoleInterfaces.ts";
+import useApi from "@api/useApi";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
+import type {IRole} from "@features/user/model/RoleInterfaces";
 
 const useGetRoles = (): UseQueryResult<IRole[]> => {
     const {get} = useApi();

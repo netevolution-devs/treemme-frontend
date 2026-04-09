@@ -1,7 +1,7 @@
 import {Navigate} from "react-router";
-import SettingsPage from "@features/settings/ui/default/SettingsPage.tsx";
-import type {IRouteConfig} from "@features/routing/RouteConfig.ts";
-import ProfilePage from "@features/profile/ui/default/ProfilePage.tsx";
+import SettingsPage from "@features/settings/ui/default/SettingsPage";
+import type {IRouteConfig} from "@features/routing/RouteConfig";
+import ProfilePage from "@features/profile/ui/default/ProfilePage";
 
 export const defaultProtectedRoutes: IRouteConfig[] = [
     {

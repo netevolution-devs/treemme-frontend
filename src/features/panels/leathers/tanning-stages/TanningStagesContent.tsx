@@ -1,6 +1,6 @@
-import LeathersList from "@features/panels/leathers/leathers/LeathersList.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ITanningStagesStoreState} from "@features/panels/leathers/tanning-stages/TanningStagesPanel.tsx";
+import LeathersList from "@features/panels/leathers/leathers/LeathersList";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ITanningStagesStoreState} from "@features/panels/leathers/tanning-stages/TanningStagesPanel";
 
 const TanningStagesContent = () => {
     const {useStore} = usePanel<unknown, ITanningStagesStoreState>();

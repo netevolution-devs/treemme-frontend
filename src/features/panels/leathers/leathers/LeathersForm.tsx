@@ -1,23 +1,23 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ILeathersStoreState, ILeatherStoreParams} from "@features/panels/leathers/leathers/LeathersPanel.tsx";
-import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi.ts";
-import {speciesApi} from "@features/panels/leathers/species/api/speciesApi.ts";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi.ts";
-import {originApi} from "@features/panels/leathers/origins/api/originApi.ts";
-import {tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi.ts";
-import {flayApi} from "@features/panels/leathers/flaying/api/flayApi.ts";
-import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
-import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ILeathersStoreState, ILeatherStoreParams} from "@features/panels/leathers/leathers/LeathersPanel";
+import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi";
+import {speciesApi} from "@features/panels/leathers/species/api/speciesApi";
+import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
+import {originApi} from "@features/panels/leathers/origins/api/originApi";
+import {tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi";
+import {flayApi} from "@features/panels/leathers/flaying/api/flayApi";
+import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi";
+import type {ILeather} from "@features/panels/leathers/leathers/api/ILeather";
+import GenericForm from "@features/panels/shared/GenericForm";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {Box} from "@mui/material";
-import TextFieldValue from "@ui/form/controlled/TextFieldValue.tsx";
-import {weightApi} from "@features/panels/leathers/weights/api/weightApi.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
+import TextFieldValue from "@ui/form/controlled/TextFieldValue";
+import {weightApi} from "@features/panels/leathers/weights/api/weightApi";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import {useEffect} from "react";
 
 export type ILeatherForm = Omit<ILeather, "id"
@@ -78,6 +78,7 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
 
     return (
         <GenericForm<ILeatherForm, ILeather, ILeathersStoreState>
+            resource="pellami - pellami"
             selectedId={selectedLeatherId}
             entity={leather}
             emptyValues={{

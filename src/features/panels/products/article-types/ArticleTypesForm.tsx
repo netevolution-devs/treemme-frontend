@@ -1,19 +1,19 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IArticleTypesStoreState} from "@features/panels/products/article-types/ArticleTypesPanel.tsx";
-import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import type {IArticleType} from "@features/panels/products/article-types/api/IArticleType.ts";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
-import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IArticleTypesStoreState} from "@features/panels/products/article-types/ArticleTypesPanel";
+import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import type {IArticleType} from "@features/panels/products/article-types/api/IArticleType";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi";
+import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi";
 import {useMemo} from "react";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import useCallablePanel from "@ui/panel/useCallablePanel.ts";
-import useSubscribePanel from "@ui/panel/useSubscribePanel.ts";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IArticleTypeForm = Omit<IArticleType, 'id' | 'article_class' | 'leather_type'> & {
     leather_type_id?: number | null;
@@ -42,6 +42,7 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
 
     return (
         <GenericForm<IArticleTypeForm, IArticleType, IArticleTypesStoreState>
+            resource="articoli - tipologie articoli"
             selectedId={selectedArticleTypeId}
             entity={articleType}
             emptyValues={{

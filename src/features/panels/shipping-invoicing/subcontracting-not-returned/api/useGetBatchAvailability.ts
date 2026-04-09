@@ -1,6 +1,6 @@
 import {useQuery} from "@tanstack/react-query";
-import useApi from "@api/useApi.ts";
-import type {IBatch} from "@features/panels/production/batches/api/IBatch.ts";
+import useApi from "@api/useApi";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 
 const useGetBatchSplitAvailability = () => {
     const { get } = useApi();

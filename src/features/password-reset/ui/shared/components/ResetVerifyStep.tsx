@@ -2,7 +2,7 @@ import {Box, Button, CircularProgress, Stack, TextField, Typography, Alert} from
 import {FormProvider, type UseFormReturn} from "react-hook-form";
 import {useTranslation} from "react-i18next";
 import VerifiedIcon from '@mui/icons-material/Verified';
-import {appNs} from "../../../../../i18n.ts";
+import {appNs} from "../../../../../i18n";
 
 interface IVerifyForm {
     verificationCode: string;

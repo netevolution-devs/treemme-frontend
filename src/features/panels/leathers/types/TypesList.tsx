@@ -1,11 +1,11 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ITypesStoreState} from "@features/panels/leathers/types/TypesPanel.tsx";
-import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ITypesStoreState} from "@features/panels/leathers/types/TypesPanel";
+import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {ILeatherType} from "@features/panels/leathers/types/api/ILeatherType.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import type {ILeatherType} from "@features/panels/leathers/types/api/ILeatherType";
+import GenericList from "@features/panels/shared/GenericList";
 
 const TypesList = () => {
     const {t} = useTranslation(["form"]);

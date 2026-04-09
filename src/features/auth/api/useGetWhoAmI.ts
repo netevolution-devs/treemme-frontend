@@ -1,7 +1,7 @@
 import {useQuery, type UseQueryResult} from "@tanstack/react-query";
 import useApi from "../../../shared/api/useApi";
 import QUERY_KEY_STRINGS from "../../../shared/api/QueryKeyStrings";
-import {type IApiUser, type IUser, UserAdapter} from "@features/user/model/UserInterfaces.ts";
+import {type IApiUser, type IUser, UserAdapter} from "@features/user/model/UserInterfaces";
 
 const useGetWhoAmI = (): UseQueryResult<IUser> => {
     const {get} = useApi()

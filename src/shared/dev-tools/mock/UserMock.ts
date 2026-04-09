@@ -1,5 +1,5 @@
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
-import {EnumRoles} from "@features/user/model/RoleInterfaces.ts";
+import type {IUser} from "@features/user/model/UserInterfaces";
+import {EnumRoles} from "@features/user/model/RoleInterfaces";
 
 export const mockUser: IUser = {
   id: 999,

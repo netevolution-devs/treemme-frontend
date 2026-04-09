@@ -1,4 +1,4 @@
-import type {IWarehouseMovementReason} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement.ts";
+import type {IWarehouseMovementReason} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement";
 
 export interface IDeliveryReason {
     id: number;

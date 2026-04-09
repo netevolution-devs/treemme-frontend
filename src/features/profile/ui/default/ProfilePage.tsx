@@ -1,14 +1,14 @@
-import BasePage from "@ui/layout/BasePage.tsx";
+import BasePage from "@ui/layout/BasePage";
 import {useTranslation} from "react-i18next";
-import UserProfileCard from "./UserProfileCard.tsx";
-import ButtonLogout from "@features/auth/ui/ButtonLogout.tsx";
-import {SettingsSection} from "@features/settings/ui/default/SettingsPage.tsx";
-import BaseSettingsContainer from "@ui/container/BaseSettingsContainer.tsx";
+import UserProfileCard from "./UserProfileCard";
+import ButtonLogout from "@features/auth/ui/ButtonLogout";
+import {SettingsSection} from "@features/settings/ui/default/SettingsPage";
+import BaseSettingsContainer from "@ui/container/BaseSettingsContainer";
 import {Box, Stack, Typography} from "@mui/material";
-import ButtonStartOtpSetup from "@features/auth/ui/ButtonStartOtpSetup.tsx";
-// import useGetProfile from "@features/profile/api/useGetProfile.ts";
-// import {useAuth} from "@features/auth/model/AuthContext.tsx";
-// import UserProfileCardSkeleton from "@features/profile/ui/default/UserProfileCardSkeleton.tsx";
+import ButtonStartOtpSetup from "@features/auth/ui/ButtonStartOtpSetup";
+// import useGetProfile from "@features/profile/api/useGetProfile";
+// import {useAuth} from "@features/auth/model/AuthContext";
+// import UserProfileCardSkeleton from "@features/profile/ui/default/UserProfileCardSkeleton";
 import {version} from "../../../../../package.json";
 
 const ProfilePage = () => {

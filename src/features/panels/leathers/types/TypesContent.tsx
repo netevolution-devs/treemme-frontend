@@ -1,6 +1,6 @@
-import LeathersList from "@features/panels/leathers/leathers/LeathersList.tsx";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {ITypesStoreState} from "@features/panels/leathers/types/TypesPanel.tsx";
+import LeathersList from "@features/panels/leathers/leathers/LeathersList";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {ITypesStoreState} from "@features/panels/leathers/types/TypesPanel";
 
 const TypesContent = () => {
     const {useStore} = usePanel<unknown, ITypesStoreState>();

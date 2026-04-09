@@ -1,8 +1,8 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
-import SeaPortsList from "@features/panels/contacts/seaports/SeaPortsList.tsx";
-import SeaPortsForm from "@features/panels/contacts/seaports/SeaPortsForm.tsx";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel";
+import SeaPortsList from "@features/panels/contacts/seaports/SeaPortsList";
+import SeaPortsForm from "@features/panels/contacts/seaports/SeaPortsForm";
 
 export interface ISeaportsStoreState extends IPanelUIState {
     selectedSeaPortId?: number | null;

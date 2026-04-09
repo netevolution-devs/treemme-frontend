@@ -1,17 +1,17 @@
 import {forwardRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import BaseDialog from "@ui/dialog/BaseDialog.tsx";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel.tsx";
-import {batchApi} from "@features/panels/production/batches/api/batchApi.ts";
-import useBatchSplit from "@features/panels/production/batches/split/api/useBatchSplit.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
+import {batchApi} from "@features/panels/production/batches/api/batchApi";
+import useBatchSplit from "@features/panels/production/batches/split/api/useBatchSplit";
 import {Stack, Typography} from "@mui/material";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
+import GenericForm from "@features/panels/shared/GenericForm";
 import CallSplitIcon from "@mui/icons-material/CallSplit";
-import CustomButton from "@features/panels/shared/CustomButton.tsx";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import DateFieldControlled from "@ui/form/controlled/DateFieldControlled.tsx";
+import CustomButton from "@features/panels/shared/CustomButton";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import dayjs from "dayjs";
 
 type Props = unknown;
@@ -36,6 +36,7 @@ const BatchesSplitFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =
             <Typography variant="h5" sx={{mb: 2}}>{t("production.batch.split")}</Typography>
 
             <GenericForm<ISplitForm>
+                resource="produzione - lotti"
                 dialogMode
                 dialogRef={ref}
                 disabledBasicButtons

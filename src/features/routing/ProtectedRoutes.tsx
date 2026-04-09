@@ -1,10 +1,10 @@
 import {type ReactNode, useMemo} from "react";
 import {Route, Outlet} from "react-router";
-import {useAuth} from "@features/auth/model/AuthContext.tsx";
-import type {IRouteConfig} from "@features/routing/RouteConfig.ts";
-import LogoutAndRedirect from "@features/routing/LogoutAndRedirect.tsx";
-import type {IAccessControl} from "@features/user/model/RoleInterfaces.ts";
-import {hasPermission} from "@features/authz/permission.utils.ts";
+import {useAuth} from "@features/auth/model/AuthContext";
+import type {IRouteConfig} from "@features/routing/RouteConfig";
+import LogoutAndRedirect from "@features/routing/LogoutAndRedirect";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import {hasPermission} from "@features/authz/permission.utils";
 
 function renderRoutes(
     routes: IRouteConfig[],

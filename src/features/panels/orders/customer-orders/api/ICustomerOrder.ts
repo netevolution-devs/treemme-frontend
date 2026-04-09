@@ -1,11 +1,11 @@
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import type {IUser} from "@features/user/model/UserInterfaces.ts";
-import type {IPayment} from "@features/panels/shared/api/payment/IPayment.ts";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import type {IUser} from "@features/user/model/UserInterfaces";
+import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment";
 import type {
     IShipmentCondition
-} from "@features/panels/orders/customer-orders/api/shipment-condition/IShipmentCondition.ts";
-import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress.ts";
-import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow.ts";
+} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
+import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
 
 export interface ICustomerOrder {
     id: number;

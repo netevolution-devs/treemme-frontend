@@ -1,25 +1,27 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {IContactsStoreParams, IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel.tsx";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import GenericForm from "@features/panels/shared/GenericForm.tsx";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled.tsx";
-import type {IContact} from "@features/panels/contacts/contacts/api/IContact.ts";
-import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled.tsx";
-import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-type/contactsTypeApi.ts";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {IContactsStoreParams, IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import GenericForm from "@features/panels/shared/GenericForm";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import RadioFieldControlled from "@ui/form/controlled/RadioFieldControlled";
+import {contactsTypeApi} from "@features/panels/contacts/contacts/api/contacts-type/contactsTypeApi";
 import {Box, Typography} from "@mui/material";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled.tsx";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import {useWatch} from "react-hook-form";
-import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled.tsx";
-import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst.ts";
-import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin.ts";
-import SelectFieldControlled from "@ui/form/controlled/SelectFieldController.tsx";
-import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm.tsx";
-import {paymentApi} from "@features/panels/shared/api/payment/paymentApi.ts";
+import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
+import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm";
+import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi";
 import {
     shipmentConditionApi
-} from "@features/panels/orders/customer-orders/api/shipment-condition/shipmentConditionApi.ts";
+} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -65,6 +67,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
 
     return (
         <GenericForm<IContactForm, IContact, IContactsStoreState>
+            resource="contatti - contatti"
             onSuccess={handlePanelSuccess}
             selectedId={selectedContactId}
             entity={contact}
@@ -133,6 +136,17 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     const {data: payments = []} = paymentApi.useGetList();
     const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IContactForm>({
+        formKey: "payment_id",
+        dependencyKey: "paymentTypes"
+    })
+    useSubscribePanel<IContactForm>({
+        formKey: "shipment_condition_id",
+        dependencyKey: "shipmentConditions"
+    })
+
     return (
         <>
             {/* Contact typology selection */}
@@ -198,8 +212,8 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                 TextFieldProps={{multiline: true, rows: 2}}
             />
 
-            {isSupplier && (
-                <>
+            {(isSupplier && !isClient) && (
+                <Box sx={{mt: 1}}>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}
                         variant="subtitle1"
@@ -213,13 +227,22 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             label={t("orders.payment")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "paymentTypes",
+                                        i18nKey: "menu.commercial.payment-types"
+                                    }
+                                })
+                            }}
                         />
                     </Box>
-                </>
+                </Box>
             )}
 
             {isClient && (
-                <Box sx={{mt: 1, borderRadius: 1}}>
+                <Box sx={{mt: 1}}>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}
                         variant="subtitle1"
@@ -233,11 +256,29 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             label={t("orders.payment")}
                             options={payments.map(p => ({value: p.id, label: p.name}))}
                             required
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "paymentTypes",
+                                        i18nKey: "menu.commercial.payment-types"
+                                    }
+                                })
+                            }}
                         />
                         <SelectFieldControlled<ICustomerOrderForm>
                             name={"shipment_condition_id"}
                             label={t("orders.shipment-condition")}
                             options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "shipmentConditions",
+                                        i18nKey: "menu.commercial.shipment-conditions"
+                                    }
+                                })
+                            }}
                         />
                     </Box>
                     <Typography

@@ -1,6 +1,6 @@
 import {IconButton, useTheme, Box, Typography} from '@mui/material';
 import {Brightness4, Brightness7} from '@mui/icons-material';
-import {useThemeMode} from "@themes/ThemeModeProvider.tsx";
+import {useThemeMode} from "@themes/ThemeModeProvider";
 import {useTranslation} from 'react-i18next';
 
 interface Props {

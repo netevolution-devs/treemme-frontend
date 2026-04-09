@@ -5,16 +5,16 @@ import {Button, CircularProgress, DialogContent, DialogTitle, Stack, Typography,
 import {useTranslation} from "react-i18next";
 import {closeDialog} from "@shared/ui/dialog/dialogHelper";
 import UserFormFields from "./UserFormFields";
-import useGetUser from "../../api/useGetUser.ts";
-import usePutUser from "../../api/usePutUser.ts";
+import useGetUser from "../../api/useGetUser";
+import usePutUser from "../../api/usePutUser";
 import SaveIcon from '@mui/icons-material/Save';
-import {useUpdateUserRole} from "../../api/useUpdateUserRole.ts";
+import {useUpdateUserRole} from "../../api/useUpdateUserRole";
 import {useQueryClient} from "@tanstack/react-query";
-import QUERY_KEY_STRINGS from "@api/QueryKeyStrings.ts";
-import type {IDialogActions} from "@ui/dialog/IDialogActions.ts";
-import type {IUserForm} from "@features/user/model/IUserForm.ts";
-import type {IApiUserPayloadUpdate} from "@features/user/model/UserInterfaces.ts";
-import type {IUserProfile} from "@features/profile/model/IUserProfile.ts";
+import QUERY_KEY_STRINGS from "@api/QueryKeyStrings";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import type {IUserForm} from "@features/user/model/IUserForm";
+import type {IApiUserPayloadUpdate} from "@features/user/model/UserInterfaces";
+import type {IUserProfile} from "@features/profile/model/IUserProfile";
 
 interface Props {
     userCode: string;

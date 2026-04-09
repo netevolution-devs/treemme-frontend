@@ -1,19 +1,19 @@
 import {useTranslation} from "react-i18next";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
+import {usePanel} from "@ui/panel/PanelContext";
 import type {
     IDeliveryNotesStoreFilter,
     IDeliveryNotesStoreState
-} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel.tsx";
-import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi.ts";
+} from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesPanel";
+import {deliveryNoteApi} from "@features/panels/shipping-invoicing/delivery-notes/api/deliveryNoteApi";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote.ts";
-import GenericList from "@features/panels/shared/GenericList.tsx";
-import ListToolbar from "@features/panels/shared/ListToolbar.tsx";
-import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter.tsx";
-import {cleanFilters} from "@ui/form/filters/useCleanFilters.ts";
-import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi.ts";
-import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter.tsx";
+import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote";
+import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import dayjs from "dayjs";
 
 const DeliveryNotesList = () => {

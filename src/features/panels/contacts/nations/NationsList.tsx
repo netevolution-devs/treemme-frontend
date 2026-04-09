@@ -1,11 +1,11 @@
 import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
-import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi.ts";
-import {usePanel} from "@ui/panel/PanelContext.tsx";
-import type {INationsStoreState} from "@features/panels/contacts/nations/NationsPanel.tsx";
-import type {INation} from "@features/panels/contacts/nations/api/INation.ts";
+import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi";
+import {usePanel} from "@ui/panel/PanelContext";
+import type {INationsStoreState} from "@features/panels/contacts/nations/NationsPanel";
+import type {INation} from "@features/panels/contacts/nations/api/INation";
 import type {MRT_ColumnDef} from "material-react-table";
-import GenericList from "@features/panels/shared/GenericList.tsx";
+import GenericList from "@features/panels/shared/GenericList";
 
 const NationsList = () => {
     const {t} = useTranslation(["form"]);

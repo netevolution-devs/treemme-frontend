@@ -1,7 +1,7 @@
-import BatchesForm from "@features/panels/production/batches/BatchesForm.tsx";
+import BatchesForm from "@features/panels/production/batches/BatchesForm";
 import {Box} from "@mui/material";
-import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList.tsx";
-import BatchesProductionList from "@features/panels/production/batches/production/BatchesProductionList.tsx";
+import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList";
+import BatchesProductionList from "@features/panels/production/batches/production/BatchesProductionList";
 
 const BatchesContent = () => {
     return (
