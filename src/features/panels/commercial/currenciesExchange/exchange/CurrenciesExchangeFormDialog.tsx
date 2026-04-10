@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, useEffect} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
@@ -12,8 +12,13 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
+import {useWatch} from "react-hook-form";
 
-type Props = { currencyId?: number, currencyValue?: number | null };
+type Props = {
+    currencyId?: number,
+    currencyValue?: number | null,
+    onChangeValue: (value: number) => void;
+};
 
 export type ICurrenciesExchangeForm = {
     date: string;
@@ -21,7 +26,7 @@ export type ICurrenciesExchangeForm = {
     currency_id: number | null;
 }
 
-const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId, currencyValue = null}, ref) => {
+const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId, currencyValue = null, onChangeValue}, ref) => {
     const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, ICurrenciesExchangeStoreState>();
@@ -70,23 +75,41 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                 ]}
                 isSaving={isPending}
                 renderFields={() => (
-                    <Stack gap={2}>
-                        <DateFieldControlled<ICurrenciesExchangeForm>
-                            name={"date"}
-                            label={t("currencies.date")}
-                            required
-                        />
-                        <NumberFieldControlled<ICurrenciesExchangeForm>
-                            name={"change_value"}
-                            label={t("currencies.change_value")}
-                            required
-                            precision={3}
-                        />
-                    </Stack>
+                    <CurrenciesExchangeFormFields onChangeValue={onChangeValue}/>
                 )}
             />
         </BaseDialog>
     )
 });
+
+const CurrenciesExchangeFormFields = ({onChangeValue}: {onChangeValue: (value: number) => void}) => {
+    const {t} = useTranslation(["form", "common"]);
+
+    const currentCurrencyValue = useWatch<ICurrenciesExchangeForm>(
+        {name: "change_value"}
+    );
+
+    useEffect(() => {
+        if (currentCurrencyValue !== null) {
+            onChangeValue(currentCurrencyValue as number);
+        }
+    }, [currentCurrencyValue, onChangeValue])
+
+    return (
+        <Stack gap={2}>
+            <DateFieldControlled<ICurrenciesExchangeForm>
+                name={"date"}
+                label={t("currencies.date")}
+                required
+            />
+            <NumberFieldControlled<ICurrenciesExchangeForm>
+                name={"change_value"}
+                label={t("currencies.change_value")}
+                required
+                precision={3}
+            />
+        </Stack>
+    )
+}
 
 export default CurrenciesExchangeFormDialog;
