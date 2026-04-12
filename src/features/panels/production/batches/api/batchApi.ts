@@ -25,8 +25,11 @@ export const batchApi = {
     }),
     useGetPdf: () => {
         const {get} = useApi();
-        return async (id: number) => {
-            const response = await get<Blob>(`/batch/${id}/pdf`, {
+        return async (id: number, batchCode: string) => {
+            const endpoint = batchCode.startsWith("TF")
+                ? `/batch/${id}/subcontractor-pdf`
+                : `/batch/${id}/pdf`;
+            const response = await get<Blob>(endpoint, {
                 responseType: "blob",
             });
             const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});

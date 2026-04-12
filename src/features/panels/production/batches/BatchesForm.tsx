@@ -124,7 +124,9 @@ const BatchesForm = () => {
                     pieces: x.pieces,
                 })}
                 create={(payload) => createBatch(payload as IBatchesPayload)}
-                onCreateSuccess={(id) => {setUIState({selectedBatchId: id})}}
+                onCreateSuccess={(id) => {
+                    setUIState({selectedBatchId: id})
+                }}
                 update={(id, payload) => updateBatch({id, payload: payload as IBatchesPayload})}
                 remove={(id) => deleteBatch(id)}
                 isSaving={isPosting || isPutting}
@@ -142,7 +144,9 @@ const BatchesForm = () => {
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
                         isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" && batchItem.stock_items > 0}
-                        onClick={() => {openDialog(reworkDialogRef)}}
+                        onClick={() => {
+                            openDialog(reworkDialogRef)
+                        }}
                     />,
                     <CustomButton
                         label={t("production.batch.split")}
@@ -156,8 +160,8 @@ const BatchesForm = () => {
                         minWidth={0}
                         color={"primary"}
                         icon={<PrintRounded fontSize={"small"}/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto"}
-                        onClick={() => selectedBatchId && getBatchPdf(selectedBatchId)}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Tintura")}
+                        onClick={() => selectedBatchId && getBatchPdf(selectedBatchId, batchItem?.batch_code ?? "")}
                     />
                 ]}
                 renderFields={() => (
