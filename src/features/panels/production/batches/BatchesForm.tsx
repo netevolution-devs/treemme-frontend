@@ -28,6 +28,7 @@ import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
 import useCallablePanel from "@ui/panel/useCallablePanel";
+import {PrintRounded} from "@mui/icons-material";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -65,8 +66,9 @@ const BatchesForm = () => {
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {useGetDetail, usePost, usePut, useDelete} = batchApi;
+    const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
+    const getBatchPdf = useGetPdf();
     const {mutateAsync: createBatch, isPending: isPosting} = usePost();
     const {mutateAsync: updateBatch, isPending: isPutting} = usePut();
     const {mutateAsync: deleteBatch, isPending: isDeleting} = useDelete();
@@ -148,6 +150,14 @@ const BatchesForm = () => {
                         icon={<CallSplitIcon/>}
                         isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
+                    />,
+                    <CustomButton
+                        label={""}
+                        minWidth={0}
+                        color={"primary"}
+                        icon={<PrintRounded fontSize={"small"}/>}
+                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto"}
+                        onClick={() => selectedBatchId && getBatchPdf(selectedBatchId)}
                     />
                 ]}
                 renderFields={() => (
