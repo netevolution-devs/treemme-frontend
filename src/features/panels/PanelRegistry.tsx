@@ -41,7 +41,8 @@ import UserAccessPanel from "@features/panels/user-management/permission (legacy
 import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
 import ArticleInternalColorsPanel from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
-import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel.tsx";
+import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
+import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
 
 export type TPanelKind =
     | 'cap'
@@ -86,6 +87,7 @@ export type TPanelKind =
     | 'articleInternalColors'
     | 'articlePrints'
     | 'pallets'
+    | 'batchData'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -121,12 +123,14 @@ export const PANEL_REGISTRY: DockviewComponents = {
     customerOrders: () => <CustomerOrdersPanel/>,
     orderRows:      (props) => <OrderRowsPanel {...props}/>,
     // warehouse
-    lotsBatches: () => <LotsBatchesPanel />,
+    lotsBatches:    () => <LotsBatchesPanel />,
+    pallets:        () => <PalletsPanel />,
     // production
     batches:    (props) => <BatchesPanel {...props}/>,
     machinery:  () => <MachineryPanel/>,
     processes:  () => <ProcessesPanel />,
     workings:   () => <WorkingsPanel />,
+    batchData:  () => <BatchDataPanel />,
     // ddt
     deliveryNotes:              () => <DeliveryNotesPanel />,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
@@ -141,6 +145,5 @@ export const PANEL_REGISTRY: DockviewComponents = {
     "user-access-management": () => <UserAccessPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
     "functionality-management": () => <WorkAreaPanel />,
-    pallets: () => <PalletsPanel />,
     "not-implemented": () => <>To implement</>,
 }

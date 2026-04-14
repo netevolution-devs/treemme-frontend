@@ -63,7 +63,8 @@
       "bom": "Distinta Base",
       "batch-selection": "Scelta Partite",
       "pirovano-monitor": "Monitor Pirovano",
-      "pirovano-recipes": "Ricettario Pirovano"
+      "pirovano-recipes": "Ricettario Pirovano",
+      "batch-data": "Dati lotto"
     },
     "shipping-invoicing": {
       "self": "DDT & Fatture",

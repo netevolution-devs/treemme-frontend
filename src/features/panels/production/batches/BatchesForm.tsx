@@ -83,6 +83,8 @@ const BatchesForm = () => {
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
 
+    const {add: addSelectPanel} = useCallablePanel();
+
     return (
         <>
             <BatchesReworkFormDialog ref={reworkDialogRef}/>
@@ -145,7 +147,18 @@ const BatchesForm = () => {
                         color={"primary"}
                         icon={<TextSnippetIcon/>}
                         isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto")}
-                        onClick={() => {}}
+                        onClick={() => {
+                            addSelectPanel({
+                                initialValue: '',
+                                extra: {
+                                },
+                                menu: {
+                                    component: "batchData",
+                                    i18nKey: "menu.production.batch-data"
+                                },
+                                customId: "updateDeliveryNotesRows:" + selectedBatchId
+                            });
+                        }}
                     />,
                     <CustomButton
                         label={t("production.batch.rework")}

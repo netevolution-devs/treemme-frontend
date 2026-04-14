@@ -204,7 +204,8 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.production.bom"},
             // {i18nKey: "menu.production.batch-selection"},
             // {i18nKey: "menu.production.pirovano-monitor"},
-            // {i18nKey: "menu.production.pirovano-recipes"}
+            // {i18nKey: "menu.production.pirovano-recipes"},
+            // { i18nKey: "menu.production.batchData", component: "batchData" }
         ]
     },
     {
