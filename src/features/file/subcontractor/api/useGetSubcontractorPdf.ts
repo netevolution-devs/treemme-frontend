@@ -7,8 +7,8 @@ const useGetSubcontractorPdf = (id: string) => {
     return useQuery({
         queryKey: ['BATCH', 'SUBCONTRACTOR-PDF', id],
         queryFn: async () => {
-            const response = await get(`/batch/${id}/subcontractor-pdf?full=1`);
-            return response.data.data;
+            const response = await get(`/batch/${id}/subcontractor-pdf?full=1`, {responseType: 'blob'});
+            return response.data as unknown as Blob;
         },
         enabled: !!id,
         staleTime: 0,
