@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import {PrintRounded} from "@mui/icons-material";
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -49,6 +50,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_compositions'
     | 'quantity'
     | 'pieces'
+    | 'batch_data'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
@@ -81,6 +83,8 @@ const BatchesForm = () => {
 
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
+
+    const {add: addSelectPanel} = useCallablePanel();
 
     return (
         <>
@@ -139,6 +143,26 @@ const BatchesForm = () => {
                     !!v.batch_date
                 }
                 extraButtons={[
+                    <CustomButton
+                        label={t("production.batch.data")}
+                        color={"primary"}
+                        icon={<TextSnippetIcon/>}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto")}
+                        onClick={() => {
+                            addSelectPanel({
+                                initialValue: '',
+                                extra: {
+                                    batchId: selectedBatchId,
+                                    batchDataId: batchItem?.batch_data[0]?.id,
+                                },
+                                menu: {
+                                    component: "batchData",
+                                    i18nKey: "menu.production.batch-data"
+                                },
+                                customId: "updateDeliveryNotesRows:" + selectedBatchId
+                            });
+                        }}
+                    />,
                     <CustomButton
                         label={t("production.batch.rework")}
                         color={"success"}

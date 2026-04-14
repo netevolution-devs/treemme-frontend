@@ -49,7 +49,8 @@
       "pallet-types": "Tipologie Pallets",
       "lots-batches": "Magazzino Lotti",
       "search-lots-batches": "Ricerca Lotti/Partite",
-      "subcontracting-lots": "Lotti in Conto Lavorazione"
+      "subcontracting-lots": "Lotti in Conto Lavorazione",
+      "pallets": "Pallets"
     },
     "production": {
       "self": "Produzione",
@@ -62,7 +63,8 @@
       "bom": "Distinta Base",
       "batch-selection": "Scelta Partite",
       "pirovano-monitor": "Monitor Pirovano",
-      "pirovano-recipes": "Ricettario Pirovano"
+      "pirovano-recipes": "Ricettario Pirovano",
+      "batch-data": "Dati lotto"
     },
     "shipping-invoicing": {
       "self": "DDT & Fatture",
