@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import {PrintRounded} from "@mui/icons-material";
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -139,6 +140,13 @@ const BatchesForm = () => {
                     !!v.batch_date
                 }
                 extraButtons={[
+                    <CustomButton
+                        label={t("production.batch.data")}
+                        color={"primary"}
+                        icon={<TextSnippetIcon/>}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto")}
+                        onClick={() => {}}
+                    />,
                     <CustomButton
                         label={t("production.batch.rework")}
                         color={"success"}

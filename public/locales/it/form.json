@@ -208,6 +208,7 @@
     "date": "Data",
     "title": "Produzione",
     "batch": {
+      "data": "Dati lotto",
       "workings": "Lavorazione",
       "note": "Note composizione",
       "article": "Articolo",
