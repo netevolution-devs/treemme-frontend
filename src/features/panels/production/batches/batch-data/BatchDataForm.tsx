@@ -16,10 +16,10 @@ import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi";
 import {palletApi} from "@features/panels/warehouse/pallets/api/palletApi";
 import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
 
 export interface IBatchDataForm {
     delivery_date: string | null;
-    amount: number;
     currency_exchange: number | null;
     payment_date: string | null;
     sea_port_date: string | null;
@@ -37,6 +37,8 @@ export interface IBatchDataForm {
     sea_port_id: number | null;
     shipment_condition_id: number | null;
     shipment_subcontractor_id: number | null;
+    amount: number | null;
+    currency_id: number | null;
 }
 
 const BatchDataFields = ({batchData}: {
@@ -48,6 +50,7 @@ const BatchDataFields = ({batchData}: {
     const {data: pallets = []} = palletApi.useGetList();
     const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
     const {data: contacts = []} = contactsApi.useGetList();
+    const {data: currencies = []} = currencyApi.useGetList();
 
     return (
         <Stack spacing={2}>
@@ -70,9 +73,22 @@ const BatchDataFields = ({batchData}: {
             </Stack>
 
             <Stack direction="row" spacing={2}>
-                <NumberFieldControlled<IBatchDataForm>
-                    name="amount"
+                <TextFieldValue
                     label={t("production.batch.batch-data.amount")}
+                    value={batchData?.batch?.pieces}
+                />
+                <TextFieldValue
+                    label={t("production.batch.batch-data.quantity")}
+                    value={batchData?.batch?.quantity}
+                    startAdornment={batchData?.batch?.measurement_unit.prefix}
+                />
+            </Stack>
+
+            <Stack direction="row" spacing={2}>
+                <NumberFieldControlled<IBatchDataForm>
+                    name="pallet_number"
+                    label={t("production.batch.batch-data.pallet_number")}
+                    precision={0}
                 />
                 <SelectFieldControlled<IBatchDataForm>
                     name="pallet_id"
@@ -80,26 +96,25 @@ const BatchDataFields = ({batchData}: {
                     options={pallets.map(p => ({value: p.id, label: p.name}))}
                 />
                 <NumberFieldControlled<IBatchDataForm>
-                    name="declared_average_weight"
-                    label={t("production.batch.batch-data.average_weight")}
-                    deactivated
-                />
-                <NumberFieldControlled<IBatchDataForm>
-                    name="declared_gross_weight"
-                    label={t("production.batch.batch-data.gross_weight")}
+                    name="pallet_weight"
+                    label={t("production.batch.batch-data.pallet_weight")}
                     deactivated
                 />
             </Stack>
 
             <Stack direction="row" spacing={2}>
                 <NumberFieldControlled<IBatchDataForm>
-                    name="pallet_weight"
-                    label={t("production.batch.batch-data.pallet_weight")}
+                    name="declared_gross_weight"
+                    label={t("production.batch.batch-data.gross_weight")}
+                />
+                <NumberFieldControlled<IBatchDataForm>
+                    name="declared_net_weight"
+                    label={t("production.batch.batch-data.net_weight")}
                     deactivated
                 />
                 <NumberFieldControlled<IBatchDataForm>
-                    name="founded_net_weight"
-                    label={t("production.batch.batch-data.net_weight")}
+                    name="declared_average_weight"
+                    label={t("production.batch.batch-data.average_weight")}
                     deactivated
                 />
             </Stack>
@@ -125,21 +140,27 @@ const BatchDataFields = ({batchData}: {
                     label={t("production.batch.batch-data.payment_date")}
                 />
                 <NumberFieldControlled<IBatchDataForm>
-                    name="shipping_cost"
-                    label={t("production.batch.batch-data.shipping_cost")}
+                    name={"amount"}
+                    label={t("production.batch.batch-data.amount-currency")}
                 />
+                <SelectFieldControlled<IBatchDataForm>
+                    name={"currency_id"}
+                    label={t("production.batch.batch-data.currency")}
+                    options={currencies.map(c => ({value: c.id, label: `${c.abbreviation} (${c.name})`}))}
+                />
+                <NumberFieldControlled<IBatchDataForm>
+                    name="currency_exchange"
+                    label={t("production.batch.batch-data.exchange_rate")}
+                    precision={4}
+                />
+            </Stack>
+
+            <Stack direction="row" spacing={2}>
                 <SelectFieldControlled<IBatchDataForm>
                     name="shipment_subcontractor_id"
                     label={t("production.batch.batch-data.carrier")}
                     options={contacts.map(c => ({value: c.id, label: c.name}))}
                 />
-                <NumberFieldControlled<IBatchDataForm>
-                    name="currency_exchange"
-                    label={t("production.batch.batch-data.exchange_rate")}
-                />
-            </Stack>
-
-            <Stack direction="row" spacing={2}>
                 <SelectFieldControlled<IBatchDataForm>
                     name="shipment_condition_id"
                     label={t("production.batch.batch-data.shipment_condition")}
@@ -163,6 +184,10 @@ const BatchDataFields = ({batchData}: {
                     name="sea_port_id"
                     label={t("production.batch.batch-data.sea_port")}
                     options={seaPorts.map(s => ({value: s.id, label: s.name}))}
+                />
+                <NumberFieldControlled<IBatchDataForm>
+                    name="shipping_cost"
+                    label={t("production.batch.batch-data.shipping_cost")}
                 />
             </Stack>
         </Stack>
@@ -189,8 +214,8 @@ const BatchDataForm = ({
             bypassConfirm
             disableDeleteButton
             emptyValues={{
+                amount: null,
                 delivery_date: null,
-                amount: 0,
                 currency_exchange: null,
                 payment_date: null,
                 sea_port_date: null,
@@ -208,10 +233,11 @@ const BatchDataForm = ({
                 sea_port_id: null,
                 shipment_condition_id: null,
                 shipment_subcontractor_id: null,
+                currency_id: null,
             }}
             mapEntityToForm={(entity: IBatchData): IBatchDataForm => ({
-                delivery_date: entity.delivery_date,
                 amount: entity.amount,
+                delivery_date: entity.delivery_date,
                 currency_exchange: entity.currency_exchange,
                 payment_date: entity.payment_date,
                 sea_port_date: entity.sea_port_date,
@@ -229,6 +255,7 @@ const BatchDataForm = ({
                 sea_port_id: entity.sea_port?.id ?? null,
                 shipment_condition_id: entity.shipment_condition?.id ?? null,
                 shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
+                currency_id: entity.currency?.id ?? null,
             })}
             create={create}
             update={(id, payload) => update({id, payload})}
