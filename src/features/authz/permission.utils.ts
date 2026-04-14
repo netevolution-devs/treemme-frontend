@@ -57,6 +57,7 @@ export type ResourceWarehouse = "magazzino"
     | "magazzino - lotti e partite"
     | "magazzino - ricerca lotti/partite"
     | "magazzino - lotti in conto lavorazione"
+    | "magazzino - pallets"
 
 export type ResourceProduction = "produzione"
     | "produzione - lotti"

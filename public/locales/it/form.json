@@ -434,6 +434,13 @@
       "return": "Rientra lotto"
     }
   },
+  "warehouse": {
+    "pallets": {
+      "name": "Nome",
+      "weight": "Peso",
+      "measurement_unit": "Unità di misura"
+    }
+  },
   "user_management": {
     "user_code": "Codice Utente",
     "email": "Email",

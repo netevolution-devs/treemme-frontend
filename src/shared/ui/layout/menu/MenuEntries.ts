@@ -159,14 +159,19 @@ export const MenuEntries: IMenuEntry[] = [
         permissionCheck: {resource: "magazzino", action: "get"},
         subMenu: [
             // {i18nKey: "menu.warehouse.movements"},
-            // {i18nKey: "menu.warehouse.pallet-types"},
+            // {i18nKey: "menu.warehouse.api-types"},
             {
                 i18nKey: "menu.warehouse.lots-batches",
                 component: "lotsBatches",
                 permissionCheck: {resource: "magazzino - lotti e partite", action: "get"}
             },
             // {i18nKey: "menu.warehouse.search-lots-batches"},
-            // {i18nKey: "menu.warehouse.subcontracting-lots"}
+            // {i18nKey: "menu.warehouse.subcontracting-lots"},
+            {
+                i18nKey: "menu.warehouse.pallets",
+                component: "pallets",
+                permissionCheck: {resource: "magazzino - pallets", action: "get"}
+            }
         ]
     },
     {

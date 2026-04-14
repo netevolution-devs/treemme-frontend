@@ -2,7 +2,7 @@ import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
-import type {IPallet} from "@features/panels/production/batches/batch-data/api/pallet/IPallet";
+import type {IPallet} from "@features/panels/warehouse/pallets/api/IPallet";
 
 export interface IBatchData {
     id: number;

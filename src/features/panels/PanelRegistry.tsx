@@ -41,6 +41,7 @@ import UserAccessPanel from "@features/panels/user-management/permission (legacy
 import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
 import ArticleInternalColorsPanel from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
+import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel.tsx";
 
 export type TPanelKind =
     | 'cap'
@@ -84,6 +85,7 @@ export type TPanelKind =
     | 'shipmentConditions'
     | 'articleInternalColors'
     | 'articlePrints'
+    | 'pallets'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -139,5 +141,6 @@ export const PANEL_REGISTRY: DockviewComponents = {
     "user-access-management": () => <UserAccessPanel />,
     "organization-management": () => <OrganizationManagementPanel />,
     "functionality-management": () => <WorkAreaPanel />,
+    pallets: () => <PalletsPanel />,
     "not-implemented": () => <>To implement</>,
 }
