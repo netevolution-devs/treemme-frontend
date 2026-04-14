@@ -11,6 +11,7 @@ import PermissionGuard from "@features/authz/PermissionGuard";
 import LogoutAndRedirect from "@features/routing/LogoutAndRedirect";
 import ResetPasswordPage from "@features/password-reset/ui/shared/ResetPasswordPage";
 import {EnumRoles} from "@features/user/model/RoleInterfaces";
+import SubcontractorFilePage from "@features/file/subcontractor/ui/SubcontractorFilePage";
 
 const RoutingDefault = () => {
     useAxiosInstance();
@@ -27,6 +28,20 @@ const RoutingDefault = () => {
             <Route path="/reset-password" element={<ResetPasswordPage/>}/>
 
             <Route element={<AuthUserGuard/>}>
+                {/* File routes: auth required, no Admin/Staff gate, no app Layout */}
+                <Route
+                    path="/file/subcontractor/:id"
+                    element={
+                        <PermissionGuard
+                            // TODO: add resource and requiredRoles once the role is known
+                            action="get"
+                            FallbackElement={<LogoutAndRedirect to="/login"/>}
+                        >
+                            <SubcontractorFilePage/>
+                        </PermissionGuard>
+                    }
+                />
+
                 <Route element={
                     <PermissionGuard
                         requiredRoles={[EnumRoles.Admin, EnumRoles.Staff]}
