@@ -8,7 +8,7 @@ import {
     CircularProgress,
     useTheme, Grid
 } from "@mui/material";
-import {Link as RouterLink, useNavigate} from "react-router";
+import {Link as RouterLink, useLocation, useNavigate} from "react-router";
 import {Trans, useTranslation} from "react-i18next";
 import {appNs} from "../../../i18n";
 import Splash from "./Splash";
@@ -24,11 +24,13 @@ const backgroundSrc = "";
 const LoginPage = () => {
     const {t} = useTranslation([appNs("login")]);
     const navigate = useNavigate();
+    const location = useLocation();
     const theme = useTheme();
     const {mutateAsync: loginMutation, isPending: loginIsPending} = usePostLogin();
     const {showMenu} = useMenuStore();
 
     const {setUserCode} = useAuth();
+    const from = (location.state as {from?: {pathname: string; search: string}})?.from;
 
     const methods = useForm<{ email: string; password: string }>({
         defaultValues: {email: "", password: ""},
@@ -39,10 +41,11 @@ const LoginPage = () => {
         const response = await loginMutation({email, password});
         if (response.error === "totp_required") {
             setUserCode(response.user_code as string);
-            navigate("/login/otp", {replace: true});
+            navigate("/login/otp", {replace: true, state: {from}});
             return;
         }
-        navigate("/", {replace: true});
+        const destination = from ? `${from.pathname}${from.search ?? ""}` : "/";
+        navigate(destination, {replace: true});
 
         showMenu() //Make sure the menu is visible after login
     });
