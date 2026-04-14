@@ -23,7 +23,7 @@ const BatchesContent = () => {
                 <Box sx={{
                     display: 'flex',
                     flexDirection: "column",
-                    flex: '1 1 350px',
+                    flex: '1 1 280px',
                     gap: 1,
                     overflow: 'hidden',
                     minWidth: '300px',
