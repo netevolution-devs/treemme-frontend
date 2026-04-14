@@ -47,7 +47,8 @@
       "unsaved_changes": "Ci sono modifiche non salvate",
       "pending_save": "Salvataggio in corso...",
       "min": "Inserire un valore maggiore o uguale a ",
-      "max": "Inserire un valore minore o uguale a "
+      "max": "Inserire un valore minore o uguale a ",
+      "not-zero": "Il valore non può essere 0"
     }
   },
   "search": {

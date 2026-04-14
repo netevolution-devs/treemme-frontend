@@ -45,7 +45,8 @@
       "at-least-one-select-required": "Select at least one",
       "only-numbers": "Only numbers allowed",
       "unsaved_changes": "There are unsaved changes",
-      "pending_save": "Saving in progress..."
+      "pending_save": "Saving in progress...",
+      "not-zero": "Value cannot be 0"
     }
   },
   "search": {

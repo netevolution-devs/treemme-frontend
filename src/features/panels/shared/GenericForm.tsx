@@ -50,6 +50,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
 
     onCreateSuccess?: (id: number) => void;
     resource?: ResourceName;
+    closePanelOnSave?: boolean;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -77,6 +78,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         floatingPanelMode = false,
         floatingPanelUUID,
         resource,
+        closePanelOnSave = true,
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
@@ -188,7 +190,9 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 }
             }
         } finally {
-            handleCloseDialog();
+            if (closePanelOnSave) {
+                handleCloseDialog();
+            }
             closeDialog(saveRef);
         }
     };

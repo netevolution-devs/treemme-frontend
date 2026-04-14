@@ -142,6 +142,10 @@ const BatchDataFields = ({batchData}: {
                 <NumberFieldControlled<IBatchDataForm>
                     name={"amount"}
                     label={t("production.batch.batch-data.amount-currency")}
+                    required
+                    rules={{
+                        validate: (value) => value !== 0 || t("common:form.error.not-zero")
+                    }}
                 />
                 <SelectFieldControlled<IBatchDataForm>
                     name={"currency_id"}
@@ -197,22 +201,21 @@ const BatchDataFields = ({batchData}: {
 const BatchDataForm = ({
                            extra
                        }: ICustomPanelFormProps<IBatchDataStoreParams>) => {
-    const {useGetDetail, usePost, usePut, useDelete} = batchDataApi;
+    const {useGetDetail, usePut} = batchDataApi;
     const {data: batchData} = useGetDetail(extra?.batchDataId);
 
-    const {mutateAsync: create} = usePost();
-    const {mutateAsync: update} = usePut();
-    const {mutateAsync: remove} = useDelete();
+    const {mutateAsync: update, isPending: isUpdating} = usePut();
 
     return (
         <GenericForm<IBatchDataForm, IBatchData>
             dialogMode
             floatingPanelMode
-            floatingPanelUUID={"test"}
+            floatingPanelUUID={"batch-data-form"}
             selectedId={extra?.batchDataId}
             entity={batchData}
-            bypassConfirm
             disableDeleteButton
+            closePanelOnSave={false}
+            isSaving={isUpdating}
             emptyValues={{
                 amount: null,
                 delivery_date: null,
@@ -257,9 +260,7 @@ const BatchDataForm = ({
                 shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
                 currency_id: entity.currency?.id ?? null,
             })}
-            create={create}
             update={(id, payload) => update({id, payload})}
-            remove={remove}
             renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
         />
     );
