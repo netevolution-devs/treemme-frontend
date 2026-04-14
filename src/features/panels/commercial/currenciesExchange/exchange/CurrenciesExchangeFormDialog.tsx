@@ -3,7 +3,9 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {ICurrenciesExchangeStoreState} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel";
+import type {
+    ICurrenciesExchangeStoreState
+} from "@features/panels/commercial/currenciesExchange/CurrenciesExchangePanel";
 import {currencyChangeApi} from "@features/panels/commercial/currenciesExchange/api/currencyChangeApi";
 import {Stack, Typography} from "@mui/material";
 import GenericForm from "@features/panels/shared/GenericForm";
@@ -17,7 +19,7 @@ import {useWatch} from "react-hook-form";
 type Props = {
     currencyId?: number,
     currencyValue?: number | null,
-    onChangeValue: (value: number) => void;
+    onChangeValue?: (value: number) => void;
 };
 
 export type ICurrenciesExchangeForm = {
@@ -26,13 +28,20 @@ export type ICurrenciesExchangeForm = {
     currency_id: number | null;
 }
 
-const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currencyId, currencyValue = null, onChangeValue}, ref) => {
+const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({
+                                                                            currencyId,
+                                                                            currencyValue = null,
+                                                                            onChangeValue
+                                                                        }, ref) => {
     const {t} = useTranslation(["form", "common"]);
 
     const {useStore} = usePanel<unknown, ICurrenciesExchangeStoreState>();
     const selectedCurrencyId = useStore((state) => state.uiState.selectedCurrencyId);
 
-    const {mutateAsync: createExchange, isPending} = currencyChangeApi.usePost({invalidateQueries: ['CURRENCY', 'LIST']});
+    const {
+        mutateAsync: createExchange,
+        isPending
+    } = currencyChangeApi.usePost({invalidateQueries: ['CURRENCY', 'LIST']});
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -75,14 +84,14 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({currenc
                 ]}
                 isSaving={isPending}
                 renderFields={() => (
-                    <CurrenciesExchangeFormFields onChangeValue={onChangeValue}/>
+                    onChangeValue && <CurrenciesExchangeFormFields onChangeValue={onChangeValue}/>
                 )}
             />
         </BaseDialog>
     )
 });
 
-const CurrenciesExchangeFormFields = ({onChangeValue}: {onChangeValue: (value: number) => void}) => {
+const CurrenciesExchangeFormFields = ({onChangeValue}: { onChangeValue: (value: number) => void }) => {
     const {t} = useTranslation(["form", "common"]);
 
     const currentCurrencyValue = useWatch<ICurrenciesExchangeForm>(
