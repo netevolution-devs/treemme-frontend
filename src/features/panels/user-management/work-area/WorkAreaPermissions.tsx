@@ -1,6 +1,6 @@
 import {useMemo, useState} from "react";
 import {useTranslation} from "react-i18next";
-import type {MRT_ColumnDef} from "material-react-table";
+import type {MRT_ColumnDef, MRT_Row} from "material-react-table";
 import {
     Button,
     Checkbox,
@@ -100,31 +100,31 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
             accessorKey: "can_get",
             header: t("form:access_management.can_get"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}) => <AccessCheckbox row={row.original} field="can_get" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_get" workAreaId={workAreaId}/>,
         },
         {
             accessorKey: "can_post",
             header: t("form:access_management.can_post"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}) => <AccessCheckbox row={row.original} field="can_post" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_post" workAreaId={workAreaId}/>,
         },
         {
             accessorKey: "can_put",
             header: t("form:access_management.can_put"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}) => <AccessCheckbox row={row.original} field="can_put" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_put" workAreaId={workAreaId}/>,
         },
         {
             accessorKey: "can_delete",
             header: t("form:access_management.can_delete"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}) => <AccessCheckbox row={row.original} field="can_delete" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_delete" workAreaId={workAreaId}/>,
         },
         ...(showCheckOrder ? [{
             accessorKey: "check_order",
             header: t("form:access_management.check_order"),
             size: 80, minSize: 80, maxSize: 80,
-            Cell: ({row}) => <AccessCheckbox row={row.original} field="check_order" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="check_order" workAreaId={workAreaId}/>,
         }] : []),
     ], [t, workAreaId, showCheckOrder]);
 
