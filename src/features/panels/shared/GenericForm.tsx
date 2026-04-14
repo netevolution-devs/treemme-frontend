@@ -46,6 +46,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     extraButtons?: ReactNode[];
     disabledBasicButtons?: boolean;
     bypassConfirm?: boolean;
+    disableDeleteButton?: boolean;
 
     onCreateSuccess?: (id: number) => void;
     resource?: ResourceName;
@@ -70,6 +71,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         dialogRef,
         extraButtons,
         disabledBasicButtons = false,
+        disableDeleteButton = false,
         bypassConfirm = false,
         onCreateSuccess,
         floatingPanelMode = false,
@@ -168,7 +170,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         ) as TForm;
 
         try {
-            if (selectedId && !bypassConfirm) {
+            if (selectedId) {
                 const res = await update?.(selectedId, cleanData);
                 if (res) {
                     onSuccess?.(res as TEntity);
@@ -196,10 +198,10 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             methods.reset(mapEntityToForm(entity));
             if (dialogMode) return;
             setFormState('selected');
-        } else if (selectedId === null) {
+        } else if (!selectedId) {
             methods.reset(emptyValues);
             if (dialogMode) return;
-            setFormState('cancel');
+            setFormState('init');
         }
     }, [selectedId, entity]);
 
@@ -254,7 +256,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             buttonState={buttonsState}
                             hideNew={dialogMode || !canPost}
                             hideEdit={dialogMode || !canPut}
-                            hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete}
+                            hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
                             hideSave={disabledBasicButtons || (!canPost && !canPut)}
                             overrideButtonState={dialogMode}
                             isLoading={isSaving}

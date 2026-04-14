@@ -251,7 +251,29 @@
       "father_batch_selection": "Scelta lotto",
       "machine": "Macchinario",
       "scheduled_date": "Data programmazione",
-      "production_note": "Note produzione"
+      "production_note": "Note produzione",
+      "batch-data": {
+        "batch_code": "Codice lotto",
+        "leather": "Pellame",
+        "delivery_date": "Data consegna",
+        "amount": "Quantità",
+        "pallet": "Pallet",
+        "average_weight": "Peso medio",
+        "gross_weight": "Peso lordo",
+        "pallet_weight": "Peso pallet",
+        "net_weight": "Peso netto",
+        "founded_gross_weight": "Peso lordo trovato",
+        "founded_net_weight": "Peso netto trovato",
+        "founded_average_weight": "Peso medio trovato",
+        "payment_date": "Data pagamento",
+        "shipping_cost": "Costo spedizione",
+        "carrier": "Vettore",
+        "exchange_rate": "Tasso di cambio",
+        "shipment_condition": "Condizione di spedizione",
+        "sea_port_date": "Data porto mare",
+        "container_code": "Codice container",
+        "sea_port": "Porto mare"
+      }
     },
     "machinery": {
       "name": "Nome macchinario",

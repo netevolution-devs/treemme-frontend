@@ -50,6 +50,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_compositions'
     | 'quantity'
     | 'pieces'
+    | 'batch_data'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
@@ -151,6 +152,8 @@ const BatchesForm = () => {
                             addSelectPanel({
                                 initialValue: '',
                                 extra: {
+                                    batchId: selectedBatchId,
+                                    batchDataId: batchItem?.batch_data[0]?.id,
                                 },
                                 menu: {
                                     component: "batchData",

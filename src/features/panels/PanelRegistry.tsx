@@ -130,7 +130,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     machinery:  () => <MachineryPanel/>,
     processes:  () => <ProcessesPanel />,
     workings:   () => <WorkingsPanel />,
-    batchData:  () => <BatchDataPanel />,
+    batchData:  (props) => <BatchDataPanel {...props}/>,
     // ddt
     deliveryNotes:              () => <DeliveryNotesPanel />,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
