@@ -26,7 +26,7 @@ import SettingsInputHdmiIcon from "@mui/icons-material/SettingsInputHdmi";
 import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
 import CurrenciesExchangeFormDialog
     from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
-import {useWatch} from "react-hook-form";
+import {useFormContext, useWatch} from "react-hook-form";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {
     IOrderRowsStoreParams,
@@ -245,6 +245,8 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
         dependencyKey: "selection"
     })
 
+    const {setValue} = useFormContext<IOrderRowForm>();
+
     return (
         <Stack gap={1}>
             <CurrencyWatcher
@@ -258,6 +260,7 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     ? watchedCurrencyValue as number
                     : null
                 }
+                onChangeValue={(value) => {setValue('currency_exchange', value)}}
             />
 
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
@@ -349,7 +352,7 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     name="currency_exchange"
                     label={t("orders.row.currency_exchange")}
                     precision={4}
-                    deactivated={isEuro(watchedCurrencyId as number)}
+                    deactivated
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton

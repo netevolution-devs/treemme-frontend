@@ -4,7 +4,7 @@ import {Box, Button, Stack, Typography, CircularProgress} from "@mui/material";
 import BasePage from "@shared/ui/layout/BasePage";
 import {MuiOtpInput} from 'mui-one-time-password-input';
 import {useState} from "react";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {useTranslation} from "react-i18next";
 import {appNs} from "../../../../i18n";
 import {useLayout} from "@ui/layout/default/LayoutContext";
@@ -12,10 +12,12 @@ import {useLayout} from "@ui/layout/default/LayoutContext";
 const OtpPage = () => {
     const {t} = useTranslation([appNs("login"), "common"]);
     const navigate = useNavigate();
+    const location = useLocation();
     const {setShowTopBar} = useLayout()
 
     const {userCode} = useAuth();
     const [otp, setOtp] = useState('');
+    const from = (location.state as {from?: {pathname: string; search: string}})?.from;
 
     const {mutateAsync: verifyOtp, isPending} = usePostVerifyOTP();
 
@@ -28,7 +30,8 @@ const OtpPage = () => {
                 })
             }
             setShowTopBar(true)
-            navigate("/", {replace: true});
+            const destination = from ? `${from.pathname}${from.search ?? ""}` : "/";
+            navigate(destination, {replace: true});
         } catch (err) {
             void err
             setOtp("");

@@ -14,6 +14,7 @@ import {MenuItem} from "@mui/material";
 import CustomButton from "@features/panels/shared/CustomButton";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {useDockviewStore} from "@ui/panel/store/DockviewStore";
+import {PrintRounded} from "@mui/icons-material";
 
 const ProcessesList = () => {
     const {t} = useTranslation(["form", "menu"]);
@@ -40,6 +41,9 @@ const ProcessesList = () => {
     );
 
     const {data: processes = [], isLoading, isFetching} = processApi.useGetList({queryParams});
+    const getDailyPrint = processApi.useGetDailyPrint();
+
+    const canPrint = filterScheduledDate !== undefined && processes.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IProcess>[]>(() => [
         {
@@ -116,6 +120,13 @@ const ProcessesList = () => {
                                 color={"primary"}
                                 icon={""}
                                 onClick={() => setTodayDate()}
+                            />,
+                            <CustomButton
+                                label={t("processes.print")}
+                                color={"primary"}
+                                icon={<PrintRounded/>}
+                                isEnable={canPrint}
+                                onClick={() => getDailyPrint(filterScheduledDate ?? "")}
                             />
                         ]}
                     />

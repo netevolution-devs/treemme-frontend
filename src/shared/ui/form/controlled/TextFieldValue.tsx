@@ -7,9 +7,11 @@ interface TextFieldValueProps {
     value: string | number | undefined;
     isFilled?: boolean;
     precision?: number;
+    startAdornment?: React.ReactNode;
+    endAdornment?: React.ReactNode;
 }
 
-const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps) => {
+const TextFieldValue = ({label, value, isFilled, precision, startAdornment, endAdornment}: TextFieldValueProps) => {
     const displayValue = useMemo(() => {
         if (value === undefined || value === null) return "";
         if (typeof value === "number" && precision !== undefined) {
@@ -30,8 +32,11 @@ const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps
                     shrink: shouldShrink
                 },
                 input: {
+                    startAdornment,
+                    endAdornment,
                     sx: {
                         backgroundColor: theme => alpha(theme.palette.primary.main, 0.1),
+                        gap: 0.5
                     }
                 }
             }}
@@ -40,4 +45,4 @@ const TextFieldValue = ({label, value, isFilled, precision}: TextFieldValueProps
     )
 }
 
-export default TextFieldValue
+export default TextFieldValue;

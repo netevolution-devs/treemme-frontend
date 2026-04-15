@@ -10,43 +10,69 @@ interface ICurrencyWatcherProps {
 const CurrencyWatcher = ({ currencies, exchangeFieldName }: ICurrencyWatcherProps) => {
     const { setValue, setError, clearErrors, getValues } = useFormContext();
     const currencyId = useWatch({ name: 'currency_id' });
-    const isFirstRun = useRef(true);
+
+    const prevCurrencyIdRef = useRef(null);
+    const isFirstLoad = useRef(true);
 
     useEffect(() => {
-        if (currencyId) {
-            const currency = currencies.find(c => c.id === currencyId);
+        if (!currencyId || !currencies) return;
 
-            if (currency) {
-                if (currency.last_change) {
-                    const newRate = currency.last_change.change_value ?? 0;
+        const currency = currencies.find(c => c.id === currencyId);
+        if (!currency) return;
 
-                    setValue(exchangeFieldName, newRate);
-                    clearErrors(exchangeFieldName);
-                } else {
-                    const currentValue = getValues(exchangeFieldName);
+        const abbreviation = currency.abbreviation?.toUpperCase();
+        const isEur = abbreviation === "EUR";
+        const lastChangeValue = currency.last_change?.change_value;
 
-                    const isEur = currency.abbreviation.toUpperCase() === "EUR";
-                    const hasValue = currentValue !== undefined && currentValue !== null && currentValue !== 0;
+        const actualFieldValue = getValues(exchangeFieldName);
+        const hasValue = actualFieldValue !== undefined && actualFieldValue !== null && actualFieldValue !== 0;
 
-                    if (isEur && hasValue) {
-                        clearErrors(exchangeFieldName);
-                    } else if (!hasValue || !isFirstRun.current) {
-                        setError(exchangeFieldName, {
-                            type: "manual",
-                            message: "Ultimo cambio valuta non trovato. Inserirlo nella apposita scheda",
-                        });
-                        if (currency.abbreviation.toUpperCase() === "EUR") {
-                            setValue(exchangeFieldName, 1);
-                            clearErrors(exchangeFieldName);
-                        } else {
-                            setValue(exchangeFieldName, 0);
-                        }
-                    }
-                }
+        if (isEur) {
+            setValue(exchangeFieldName, 1);
+            clearErrors(exchangeFieldName);
+        }
+
+        else if (isFirstLoad.current) {
+            if (hasValue) {
+                // Se c'è già un prezzo (modifica record), non tocchiamo nulla
+                clearErrors(exchangeFieldName);
+            } else if (lastChangeValue) {
+                // Se il campo è vuoto, carichiamo il default dal DB
+                setValue(exchangeFieldName, lastChangeValue);
+                clearErrors(exchangeFieldName);
+            } else {
+                // Se è tutto vuoto, diamo errore
+                setError(exchangeFieldName, {
+                    type: "manual",
+                    message: "Ultimo cambio valuta non trovato.",
+                });
+            }
+            isFirstLoad.current = false;
+        }
+
+        else if (prevCurrencyIdRef.current !== null && prevCurrencyIdRef.current !== currencyId) {
+            if (lastChangeValue) {
+                setValue(exchangeFieldName, lastChangeValue);
+                clearErrors(exchangeFieldName);
+            } else {
+                setValue(exchangeFieldName, 0);
+                setError(exchangeFieldName, {
+                    type: "manual",
+                    message: "Ultimo cambio valuta non trovato.",
+                });
             }
         }
-        isFirstRun.current = false;
-    }, [currencyId, currencies, setValue, exchangeFieldName, setError, clearErrors, getValues]);
+
+        prevCurrencyIdRef.current = currencyId;
+
+    }, [currencyId, currencies, exchangeFieldName, setValue, setError, clearErrors, getValues]);
+
+    useEffect(() => {
+        return () => {
+            isFirstLoad.current = true;
+            prevCurrencyIdRef.current = null;
+        };
+    }, []);
 
     return null;
 };

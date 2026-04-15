@@ -28,6 +28,8 @@ import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
 import useCallablePanel from "@ui/panel/useCallablePanel";
+import {PrintRounded} from "@mui/icons-material";
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -48,6 +50,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_compositions'
     | 'quantity'
     | 'pieces'
+    | 'batch_data'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
@@ -65,8 +68,9 @@ const BatchesForm = () => {
     const selectedBatchId = useStore((state) => state.uiState.selectedBatchId);
     const setUIState = useStore((state) => state.setUIState);
 
-    const {useGetDetail, usePost, usePut, useDelete} = batchApi;
+    const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
+    const getBatchPdf = useGetPdf();
     const {mutateAsync: createBatch, isPending: isPosting} = usePost();
     const {mutateAsync: updateBatch, isPending: isPutting} = usePut();
     const {mutateAsync: deleteBatch, isPending: isDeleting} = useDelete();
@@ -79,6 +83,8 @@ const BatchesForm = () => {
 
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
+
+    const {add: addSelectPanel} = useCallablePanel();
 
     return (
         <>
@@ -122,7 +128,9 @@ const BatchesForm = () => {
                     pieces: x.pieces,
                 })}
                 create={(payload) => createBatch(payload as IBatchesPayload)}
-                onCreateSuccess={(id) => {setUIState({selectedBatchId: id})}}
+                onCreateSuccess={(id) => {
+                    setUIState({selectedBatchId: id})
+                }}
                 update={(id, payload) => updateBatch({id, payload: payload as IBatchesPayload})}
                 remove={(id) => deleteBatch(id)}
                 isSaving={isPosting || isPutting}
@@ -136,11 +144,33 @@ const BatchesForm = () => {
                 }
                 extraButtons={[
                     <CustomButton
+                        label={t("production.batch.data")}
+                        color={"primary"}
+                        icon={<TextSnippetIcon/>}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto")}
+                        onClick={() => {
+                            addSelectPanel({
+                                initialValue: '',
+                                extra: {
+                                    batchId: selectedBatchId,
+                                    batchDataId: batchItem?.batch_data[0]?.id,
+                                },
+                                menu: {
+                                    component: "batchData",
+                                    i18nKey: "menu.production.batch-data"
+                                },
+                                customId: "updateDeliveryNotesRows:" + selectedBatchId
+                            });
+                        }}
+                    />,
+                    <CustomButton
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
                         isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" && batchItem.stock_items > 0}
-                        onClick={() => {openDialog(reworkDialogRef)}}
+                        onClick={() => {
+                            openDialog(reworkDialogRef)
+                        }}
                     />,
                     <CustomButton
                         label={t("production.batch.split")}
@@ -148,6 +178,14 @@ const BatchesForm = () => {
                         icon={<CallSplitIcon/>}
                         isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
+                    />,
+                    <CustomButton
+                        label={""}
+                        minWidth={0}
+                        color={"primary"}
+                        icon={<PrintRounded fontSize={"small"}/>}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Tintura")}
+                        onClick={() => selectedBatchId && getBatchPdf(selectedBatchId, batchItem?.batch_code ?? "")}
                     />
                 ]}
                 renderFields={() => (

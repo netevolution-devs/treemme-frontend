@@ -20,7 +20,7 @@ import {selectionApi} from "@features/panels/products/selection/api/selectionApi
 import BatchesCompositionList from "@features/panels/production/batches/composition/BatchesCompositionList";
 import CurrencyWatcher from "@features/panels/shared/hooks/CurrencyWatcher";
 import {workingApi} from "@features/panels/production/workings/api/workingApi";
-import {useWatch} from "react-hook-form";
+import {useFormContext, useWatch} from "react-hook-form";
 import CurrenciesExchangeFormDialog
     from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeFormDialog";
 import {NewButton} from "@features/panels/shared/CustomButton";
@@ -213,6 +213,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
     const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
 
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
+    const {setValue} = useFormContext<IOrderRowForm>();
 
     return (
         <Stack gap={1}>
@@ -227,6 +228,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     ? watchedCurrencyValue as number
                     : null
                 }
+                onChangeValue={(value) => {setValue('currency_exchange', value)}}
             />
 
             <Box sx={{display: 'flex', gap: 1}}>
@@ -240,9 +242,9 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     name="pieces"
                     label={t("production.batch.selections.pieces")}
                     required
-                    deactivated={!watchedBatchId}
-                    max={batch?.stock_items as number}
+                    max={batch?.stock_items as number || deliveryNoteRow?.pieces as number}
                     precision={0}
+                    deactivated={!watchedBatchId || !!deliveryNoteRow?.pieces}
                 />
             </Box>
 
@@ -314,7 +316,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     name="currency_change"
                     label={t("orders.row.currency_exchange")}
                     precision={4}
-                    deactivated={isEuro(watchedCurrencyId as number)}
+                    deactivated
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton

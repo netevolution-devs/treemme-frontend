@@ -27,6 +27,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      max,
                                                                      startAdornment,
                                                                      deactivated = false,
+                                                                     rules: propRules,
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -63,6 +64,7 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
     const rules: RegisterOptions<TFieldValues, Path<TFieldValues>> = {
         required: { value: required, message: t("common:form.error.required") },
         min: { value: min, message: `${t("common:form.error.min")} ${min}` },
+        ...propRules,
     };
 
     if (max !== undefined) {

@@ -25,7 +25,7 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             onClick={onClick}
             color={color}
             size="small"
-            startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : icon}
+            startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : (label && icon)}
             sx={{
                 height: "100%",
                 minWidth: minWidth,
@@ -36,7 +36,7 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             type={isSubmit ? "submit" : "button"}
             disabled={!isEnable || isLoading}
         >
-            {t(label)}
+            {label ? t(label) : icon}
         </Button>
     );
 };
