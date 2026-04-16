@@ -276,7 +276,15 @@
         "sea_port_date": "Data arrivo porto",
         "container_code": "Codice container",
         "sea_port": "Porto",
-        "currency": "Valuta"
+        "currency": "Valuta",
+        "weights": "Pesi",
+        "payment_and_delivery": "Pagamento e consegna",
+        "port": "Porto",
+        "costs": "Costi",
+        "type": "Tipo",
+        "date": "Data",
+        "cost": "Costo",
+        "note": "Note"
       }
     },
     "machinery": {

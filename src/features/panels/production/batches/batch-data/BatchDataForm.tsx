@@ -8,6 +8,7 @@ import TextFieldValue from "@ui/form/controlled/TextFieldValue";
 import {Divider, Stack, Typography} from "@mui/material";
 import type {IBatchData} from "@features/panels/production/batches/batch-data/api/IBatchData";
 import {batchDataApi} from "@features/panels/production/batches/batch-data/api/batchDataApi";
+import BatchDataCostsList from "@features/panels/production/batches/batch-data/BatchDataCostsList";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {
     IBatchDataStoreParams,
@@ -100,7 +101,7 @@ const BatchDataFields = ({batchData}: {
             </Stack>
 
             <Divider />
-            <Typography variant="h6" sx={{pt: 0, mt: 0}}>Pesi</Typography>
+            <Typography variant="h6" sx={{pt: 0, mt: 0}}>{t("production.batch.batch-data.weights")}</Typography>
 
             <Stack direction="row" spacing={2}>
                 <NumberFieldControlled<IBatchDataForm>
@@ -135,7 +136,7 @@ const BatchDataFields = ({batchData}: {
             </Stack>
 
             <Divider />
-            <Typography variant="h6">Pagamento e consegna</Typography>
+            <Typography variant="h6">{t("production.batch.batch-data.payment_and_delivery")}</Typography>
 
             <Stack direction="row" spacing={2}>
                 <DateFieldControlled<IBatchDataForm>
@@ -176,7 +177,7 @@ const BatchDataFields = ({batchData}: {
             </Stack>
 
             <Divider />
-            <Typography variant="h6">Porto</Typography>
+            <Typography variant="h6">{t("production.batch.batch-data.port")}</Typography>
 
             <Stack direction="row" spacing={2}>
                 <DateFieldControlled<IBatchDataForm>
@@ -200,6 +201,10 @@ const BatchDataFields = ({batchData}: {
                     label={t("production.batch.batch-data.shipping_cost")}
                 />
             </Stack>
+
+            <Divider />
+            <Typography variant="h6">{t("production.batch.batch-data.costs")}</Typography>
+            <BatchDataCostsList batchId={batchData?.batch?.id} />
         </Stack>
     );
 };

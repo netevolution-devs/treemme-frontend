@@ -2,6 +2,9 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import useApi from "@api/useApi";
 
+import {useQuery} from "@tanstack/react-query";
+import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
+
 export interface IBatchesPayload extends Omit<IBatch, 'id'
     | 'leather'
     | 'batch_type'
@@ -36,5 +39,17 @@ export const batchApi = {
             const url = window.URL.createObjectURL(blob);
             window.open(url, "_blank");
         };
+    },
+    useGetBatchCosts: (id?: number | null) => {
+        const {get} = useApi();
+        return useQuery({
+            queryKey: ["BATCH", "COSTS", id],
+            queryFn: async () => {
+                const response = await get<IBatchCost[]>(`/batch/${id}/cost`);
+                return response.data.data;
+            },
+            enabled: !!id,
+            staleTime: 0,
+        });
     },
 };
