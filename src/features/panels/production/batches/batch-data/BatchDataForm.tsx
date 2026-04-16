@@ -5,7 +5,7 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue";
-import {Stack} from "@mui/material";
+import {Divider, Stack, Typography} from "@mui/material";
 import type {IBatchData} from "@features/panels/production/batches/batch-data/api/IBatchData";
 import {batchDataApi} from "@features/panels/production/batches/batch-data/api/batchDataApi";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
@@ -53,7 +53,7 @@ const BatchDataFields = ({batchData}: {
     const {data: currencies = []} = currencyApi.useGetList();
 
     return (
-        <Stack spacing={2}>
+        <Stack spacing={1.5}>
             <Stack direction="row" spacing={2}>
                 <TextFieldValue
                     label={t("production.batch.batch-data.batch_code")}
@@ -66,13 +66,6 @@ const BatchDataFields = ({batchData}: {
             </Stack>
 
             <Stack direction="row" spacing={2}>
-                <DateFieldControlled<IBatchDataForm>
-                    name="delivery_date"
-                    label={t("production.batch.batch-data.delivery_date")}
-                />
-            </Stack>
-
-            <Stack direction="row" spacing={2}>
                 <TextFieldValue
                     label={t("production.batch.batch-data.amount")}
                     value={batchData?.batch?.pieces}
@@ -81,6 +74,10 @@ const BatchDataFields = ({batchData}: {
                     label={t("production.batch.batch-data.quantity")}
                     value={batchData?.batch?.quantity}
                     startAdornment={batchData?.batch?.measurement_unit.prefix}
+                />
+                <DateFieldControlled<IBatchDataForm>
+                    name="delivery_date"
+                    label={t("production.batch.batch-data.delivery_date")}
                 />
             </Stack>
 
@@ -101,6 +98,9 @@ const BatchDataFields = ({batchData}: {
                     deactivated
                 />
             </Stack>
+
+            <Divider />
+            <Typography variant="h6" sx={{pt: 0, mt: 0}}>Pesi</Typography>
 
             <Stack direction="row" spacing={2}>
                 <NumberFieldControlled<IBatchDataForm>
@@ -133,6 +133,9 @@ const BatchDataFields = ({batchData}: {
                     label={t("production.batch.batch-data.founded_average_weight")}
                 />
             </Stack>
+
+            <Divider />
+            <Typography variant="h6">Pagamento e consegna</Typography>
 
             <Stack direction="row" spacing={2}>
                 <DateFieldControlled<IBatchDataForm>
@@ -171,6 +174,9 @@ const BatchDataFields = ({batchData}: {
                     options={shipmentConditions.map(s => ({value: s.id, label: s.name}))}
                 />
             </Stack>
+
+            <Divider />
+            <Typography variant="h6">Porto</Typography>
 
             <Stack direction="row" spacing={2}>
                 <DateFieldControlled<IBatchDataForm>
