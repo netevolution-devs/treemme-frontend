@@ -174,6 +174,19 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"agent_id"}
                     label={t("orders.agent")}
                     options={agentOptions}
+                    onNoOptionsMatch={() => {
+                        addSelectPanel({
+                            extra: {
+                                client: true,
+                                selectedContactId: clientId,
+                            },
+                            initialValue: '',
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.agent_order_number")}
@@ -214,6 +227,19 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     value: p.id,
                     label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.town.name} - ${p.nation.name}`
                 }))}
+                onNoOptionsMatch={() => {
+                    addSelectPanel({
+                        extra: {
+                            client: true,
+                            selectedContactId: clientId,
+                        },
+                        initialValue: '',
+                        menu: {
+                            component: "contacts",
+                            i18nKey: "menu.contacts.contacts"
+                        }
+                    })
+                }}
             />
 
             {/*

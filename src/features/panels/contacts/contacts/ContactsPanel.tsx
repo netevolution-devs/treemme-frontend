@@ -27,6 +27,7 @@ export interface IContactsStoreFilter {
 export interface IContactsStoreParams {
     supplier?: boolean;
     client?: boolean;
+    selectedContactId?: number;
 }
 
 const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsStoreParams>>) => {
