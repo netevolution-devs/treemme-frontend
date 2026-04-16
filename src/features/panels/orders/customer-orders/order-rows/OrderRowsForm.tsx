@@ -36,6 +36,9 @@ import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormBut
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -101,12 +104,17 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
     const dyeDialogRef = useRef<IDialogActions | null>(null);
     const refinementDialogRef = useRef<IDialogActions | null>(null);
 
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = engine.can("ordini - ordini clienti", 'post');
+
     return (
         <Box sx={{p: 0}}>
             <DyeFormDialog ref={dyeDialogRef} order_row_id={selectedOrderRowId as number}/>
             <RefinementFormDialog ref={refinementDialogRef} order_row_id={selectedOrderRowId as number}/>
 
             <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
+                resource="ordini - ordini clienti"
                 onSuccess={handlePanelSuccess}
                 dialogMode
                 floatingPanelMode
@@ -184,7 +192,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"primary"}
                         icon={<ColorLensIcon/>}
                         onClick={() => openDialog(dyeDialogRef)}
-                        isEnable={!!selectedOrderRowId}
+                        isEnable={!!selectedOrderRowId && canPost}
                     />,
                     <CustomButton
                         key="refinement"
@@ -192,7 +200,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"success"}
                         icon={<SettingsInputHdmiIcon/>}
                         onClick={() => openDialog(refinementDialogRef)}
-                        isEnable={!!selectedOrderRowId}
+                        isEnable={!!selectedOrderRowId && canPost}
                     />,
                 ]}
                 renderFields={() => (

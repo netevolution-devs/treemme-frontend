@@ -104,6 +104,7 @@ const DeliveryNotesRowsForm = ({
     return (
         <Box sx={{p: 0}}>
             <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
+                resource={"ddt & fatture - documenti di trasporto"}
                 onSuccess={handlePanelSuccess}
                 dialogMode
                 floatingPanelMode
