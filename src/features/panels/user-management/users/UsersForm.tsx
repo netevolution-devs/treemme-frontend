@@ -5,15 +5,13 @@ import type {IUsersStoreState} from "@features/panels/user-management/users/User
 import {usersApi} from "@features/panels/user-management/users/api/usersApi";
 import GenericForm from "@features/panels/shared/GenericForm";
 import UserGroupAssignment from "@features/panels/user-management/permission (legacy)/UserGroupAssignment";
-import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Button, Tooltip} from "@mui/material";
 import EmailField from "@ui/form/controlled/EmailField";
 import PasswordField from "@ui/form/controlled/PasswordField";
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {useFormContext} from "react-hook-form";
-import dayjs from "dayjs";
 
-export type IUserForm = Omit<IUserManagement, "id" | "group_users"> & IUserManagementPayload;
+export type IUserForm = Omit<IUserManagement, "id" | "group_users" | "user_code" | "last_access"> & IUserManagementPayload;
 
 const PasswordGenerator = () => {
     const {t} = useTranslation(["form"]);
@@ -75,12 +73,10 @@ const UsersForm = () => {
             resource="sistema - utenti"
             selectedId={selectedUserId}
             entity={user}
-            emptyValues={{email: '', password: '', last_access: "", user_code: ""}}
+            emptyValues={{email: '', password: ''}}
             mapEntityToForm={(u) => ({
                 email: u.email,
                 password: '',
-                user_code: u.user_code,
-                last_access: u.last_access ? dayjs(u.last_access).format("DD/MM/YYYY HH:mm") : ""
             })}
             create={(payload) => createUser(payload)}
             update={(id, payload) => updateUser({id, payload})}
@@ -91,24 +87,6 @@ const UsersForm = () => {
             validateBeforeSave={(v) => !!v.email && !!v.password}
             renderFields={() => (
                 <>
-                    {user && (
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 2}}>
-                            <TextFieldControlled<IUserForm>
-                                name="user_code"
-                                label={t("user_management.user_code")}
-                                TextFieldProps={{
-                                    disabled: true
-                                }}
-                            />
-                            <TextFieldControlled<IUserForm>
-                                name="last_access"
-                                label={t("user_management.last_access")}
-                                TextFieldProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Box>
-                    )}
                     <EmailField<IUserForm>
                         name="email"
                         label={t("user_management.email")}
