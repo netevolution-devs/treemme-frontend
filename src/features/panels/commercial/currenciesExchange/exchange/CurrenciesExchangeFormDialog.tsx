@@ -52,7 +52,7 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedCurrencyId}
+                selectedId={null}
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
                     change_value: currencyValue ?? null,
@@ -84,14 +84,20 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({
                 ]}
                 isSaving={isPending}
                 renderFields={() => (
-                    onChangeValue && <CurrenciesExchangeFormFields onChangeValue={onChangeValue}/>
+                    <>
+                        {onChangeValue ? (
+                            <CurrenciesExchangeFormFields onChangeValue={onChangeValue}/>
+                        ) : (
+                            <CurrenciesExchangeFormFields/>
+                        )}
+                    </>
                 )}
             />
         </BaseDialog>
     )
 });
 
-const CurrenciesExchangeFormFields = ({onChangeValue}: { onChangeValue: (value: number) => void }) => {
+const CurrenciesExchangeFormFields = ({onChangeValue}: { onChangeValue?: (value: number) => void }) => {
     const {t} = useTranslation(["form", "common"]);
 
     const currentCurrencyValue = useWatch<ICurrenciesExchangeForm>(
@@ -100,7 +106,7 @@ const CurrenciesExchangeFormFields = ({onChangeValue}: { onChangeValue: (value: 
 
     useEffect(() => {
         if (currentCurrencyValue !== null) {
-            onChangeValue(currentCurrencyValue as number);
+            onChangeValue?.(currentCurrencyValue as number);
         }
     }, [currentCurrencyValue, onChangeValue])
 
