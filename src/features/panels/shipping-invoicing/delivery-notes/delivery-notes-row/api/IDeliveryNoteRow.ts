@@ -17,7 +17,7 @@ export interface IDeliveryNoteRow {
     price: number | null;
     total_value: number | null;
     currency_price: number | null;
-    currency_change: number | null;
+    currency_exchange: number | null;
     currency_total_value: number | null;
     kg_weight: number | null;
     row_note: string | null;

@@ -13,6 +13,7 @@ export const usePermissionEngine = (): PermissionEngine | null => {
             hasRole: permission.hasRole,
             hasRequiredRoles: permission.hasRequiredRoles,
             hasDeniedRoles: permission.hasDeniedRoles,
+            canCheckOrder: permission.canCheckOrder,
         };
     }, [permission]);
 };

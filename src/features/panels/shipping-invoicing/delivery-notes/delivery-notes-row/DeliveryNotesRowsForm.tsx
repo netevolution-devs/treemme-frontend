@@ -36,7 +36,6 @@ import type {
     IDeliveryNotesRowsStoreParams,
     IDeliveryNotesRowsStoreState
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
-import type {IOrderRowForm} from "@features/panels/orders/customer-orders/order-rows/OrderRowsForm";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -122,7 +121,7 @@ const DeliveryNotesRowsForm = ({
                     // price: null,
                     // total_value: null,
                     currency_price: null,
-                    currency_change: 1,
+                    currency_exchange: 1,
                     // currency_total_value: null,
                     kg_weight: null,
                     row_note: "",
@@ -142,7 +141,7 @@ const DeliveryNotesRowsForm = ({
                     // price: x.price,
                     // total_value: x.total_value,
                     currency_price: x.currency_price,
-                    currency_change: x.currency_change,
+                    currency_exchange: x.currency_exchange,
                     // currency_total_value: x.currency_total_value,
                     kg_weight: x.kg_weight,
                     row_note: x.row_note || "",
@@ -209,18 +208,18 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
 
     const watchedBatchId = useWatch<IDeliveryNoteRowForm>({name: "batch_id"});
     const watchedCurrencyId = useWatch<IDeliveryNoteRowForm>({name: "currency_id"});
-    const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_change"});
+    const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_exchange"});
 
     const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
 
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
-    const {setValue} = useFormContext<IOrderRowForm>();
+    const {setValue} = useFormContext<IDeliveryNoteRowForm>();
 
     return (
         <Stack gap={1}>
             <CurrencyWatcher
                 currencies={currencies}
-                exchangeFieldName={"currency_change"}
+                exchangeFieldName={"currency_exchange"}
             />
             <CurrenciesExchangeFormDialog
                 ref={addExchangeDialogRef}
@@ -301,7 +300,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     label={t("orders.row.currency")}
                     options={currencyOptions}
                 />
-                <NumberFieldControlled<IOrderRowForm>
+                <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="currency_price"
                     label={t("orders.row.currency_price")}
                 />
@@ -314,7 +313,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
 
             <Box sx={{display: 'flex', gap: 1}}>
                 <NumberFieldControlled<IDeliveryNoteRowForm>
-                    name="currency_change"
+                    name="currency_exchange"
                     label={t("orders.row.currency_exchange")}
                     precision={4}
                     deactivated
