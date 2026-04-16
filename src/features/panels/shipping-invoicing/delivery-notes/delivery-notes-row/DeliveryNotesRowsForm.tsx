@@ -321,7 +321,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0, maxHeight: 32}}
+                        sx={{px: 0.5, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
                         isEnable={!isEuro(watchedCurrencyId as number)}
                         disableLabel
