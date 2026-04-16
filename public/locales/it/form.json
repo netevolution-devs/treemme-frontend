@@ -495,7 +495,8 @@
   },
   "work_area_management": {
     "name": "Nome",
-    "description": "Descrizione"
+    "description": "Descrizione",
+    "filter": "Filtra"
   },
   "processes": {
     "scheduled_date": "Data programmazione",

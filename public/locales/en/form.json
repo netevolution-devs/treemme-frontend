@@ -98,7 +98,8 @@
   },
   "work_area_management": {
     "name": "Name",
-    "description": "Description"
+    "description": "Description",
+    "filter": "Filter"
   },
   "currencies": {
     "name": "Name",
