@@ -46,7 +46,7 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedBatchId}
+                selectedId={null}
                 entity={{
                     batch_id: batch?.id as number,
                     selection_id: null,
