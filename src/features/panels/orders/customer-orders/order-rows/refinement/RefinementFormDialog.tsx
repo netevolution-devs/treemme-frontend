@@ -11,6 +11,7 @@ import {Box, Typography} from "@mui/material";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
 import useBatchRefinement from "@features/panels/orders/customer-orders/order-rows/refinement/api/useBatchRefinement";
 import dayjs from "dayjs";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 
 interface RefinementFormDialogProps {
     order_row_id?: number;
@@ -24,6 +25,7 @@ export interface IRefinementForm {
 const RefinementFormDialog = forwardRef<IDialogActions, RefinementFormDialogProps>(({order_row_id}, ref) => {
     const {t} = useTranslation(["form"]);
 
+    const addPanel = useDockviewStore(state => state.addPanel);
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId) || order_row_id;
 
@@ -48,11 +50,22 @@ const RefinementFormDialog = forwardRef<IDialogActions, RefinementFormDialogProp
                     quantity: 0,
                     scheduled_date: dayjs().format('YYYY-MM-DD'),
                 })}
-                create={(data) => {
+                create={async (data) => {
                     if (!selectedOrderRowId) return;
-                    return createBatchRefinement({
+                    const newBatch = await createBatchRefinement({
                         ...data,
                         client_order_row_id: selectedOrderRowId
+                    });
+                    addPanel({
+                        id: `batches:${crypto.randomUUID()}`,
+                        title: t("menu:menu.production.batches"),
+                        component: 'batches',
+                        params: {
+                            extra: {
+                                id: newBatch?.id as number,
+                                batch_code: newBatch?.batch_code as string
+                            }
+                        }
                     });
                 }}
                 isSaving={isPending}

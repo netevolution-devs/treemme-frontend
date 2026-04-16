@@ -16,7 +16,7 @@ const usePostBatchDye = (clientOrderRowId: number) => {
     return useMutation({
         mutationKey: ['BATCH-DYE'],
         mutationFn: async (payload: IDyePayload) => {
-            const response = await post<IDyePayload>(`/batch/dye`, payload as never);
+            const response = await post<{id: number, batch_code: string}>(`/batch/dye`, payload as never);
             return response.data.data;
         },
         onSuccess: () => {

@@ -13,6 +13,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {Box, Typography} from "@mui/material";
 import {orderRowApi} from "@features/panels/orders/customer-orders/order-rows/api/orderRowApi";
 import dayjs from "dayjs";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 
 interface DyalogFormDialogProps {
     order_row_id?: number;
@@ -27,6 +28,7 @@ export interface IDyeForm {
 const DyeFormDialog = forwardRef<IDialogActions, DyalogFormDialogProps>(({order_row_id} , ref) => {
     const {t} = useTranslation(["form"]);
 
+    const addPanel = useDockviewStore(state => state.addPanel);
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId) || order_row_id;
 
@@ -58,12 +60,23 @@ const DyeFormDialog = forwardRef<IDialogActions, DyalogFormDialogProps>(({order_
                     scheduled_date: dayjs().format('YYYY-MM-DD'),
                     machine_id: null
                 })}
-                create={(data) => {
+                create={async (data) => {
                     if (!selectedOrderRowId && !data.machine_id) return;
-                    return createBatchDye({
+                    const newBatch = await createBatchDye({
                         ...data,
                         machine_id: data.machine_id as number,
                         client_order_row_id: selectedOrderRowId as number
+                    });
+                    addPanel({
+                        id: `batches:${crypto.randomUUID()}`,
+                        title: t("menu:menu.production.batches"),
+                        component: 'batches',
+                        params: {
+                            extra: {
+                                id: newBatch?.id as number,
+                                batch_code: newBatch?.batch_code as string
+                            }
+                        }
                     });
                 }}
                 isSaving={isPending}
