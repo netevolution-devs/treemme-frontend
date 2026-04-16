@@ -214,6 +214,7 @@ const BatchDataForm = ({
 
     return (
         <GenericForm<IBatchDataForm, IBatchData>
+            resource="produzione - lotti"
             dialogMode
             floatingPanelMode
             floatingPanelUUID={"batch-data-form"}

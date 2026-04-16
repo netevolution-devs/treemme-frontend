@@ -30,6 +30,9 @@ import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import {PrintRounded} from "@mui/icons-material";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import {useAuth} from "@features/auth/model/AuthContext";
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -85,6 +88,19 @@ const BatchesForm = () => {
     const splitDialogRef = useRef<IDialogActions | null>(null);
 
     const {add: addSelectPanel} = useCallablePanel();
+
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = engine.can("produzione - lotti", 'post');
+
+    const isBatchBaseType = batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita";
+    const isRework = batchItem?.batch_type.name === "Rinverdimento";
+    const isTF = batchItem?.batch_type.name === "Tintura";
+    const hasStock = (batchItem?.stock_items ?? 0) > 0;
+
+    const canRework = !!selectedBatchId && isBatchBaseType && hasStock && canPost;
+    const canSplit = !!selectedBatchId && (isBatchBaseType || isRework) && canPost;
+    const canPrint = !!selectedBatchId && (isBatchBaseType || isTF);
 
     return (
         <>
@@ -167,7 +183,7 @@ const BatchesForm = () => {
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto"|| batchItem?.batch_type.name === "Partita") && batchItem.stock_items > 0}
+                        isEnable={canRework}
                         onClick={() => {
                             openDialog(reworkDialogRef)
                         }}
@@ -176,7 +192,7 @@ const BatchesForm = () => {
                         label={t("production.batch.split")}
                         color={"primary"}
                         icon={<CallSplitIcon/>}
-                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto"|| batchItem?.batch_type.name === "Partita") || batchItem?.batch_type.name === "Rinverdimento"}
+                        isEnable={canSplit}
                         onClick={() => openDialog(splitDialogRef)}
                     />,
                     <CustomButton
@@ -184,7 +200,7 @@ const BatchesForm = () => {
                         minWidth={0}
                         color={"primary"}
                         icon={<PrintRounded fontSize={"small"}/>}
-                        isEnable={!!selectedBatchId && ((batchItem?.batch_type.name === "Lotto"|| batchItem?.batch_type.name === "Partita") || batchItem?.batch_type.name === "Tintura")}
+                        isEnable={canPrint}
                         onClick={() => selectedBatchId && getBatchPdf(selectedBatchId, batchItem?.batch_code ?? "")}
                     />
                 ]}
