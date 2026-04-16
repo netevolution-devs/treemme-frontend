@@ -28,6 +28,7 @@ import {
 } from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {useCanCheckOrder} from "@features/authz/useHasPermission";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -97,6 +98,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     };
 
     const {add: addSelectPanel} = useCallablePanel();
+    const canCheckOrder = useCanCheckOrder();
 
     useSubscribePanel<ICustomerOrderForm>({
         formKey: "client_id",
@@ -133,7 +135,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                         name={"checked"}
                         label={t("orders.checked")}
                         width={110}
-                        disabled
+                        disabled={!canCheckOrder}
                     />
                 </Box>
             </Box>

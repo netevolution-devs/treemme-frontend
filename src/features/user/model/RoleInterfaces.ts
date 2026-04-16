@@ -13,6 +13,7 @@ export interface IAccessControl {
     canPost: boolean;
     canPut: boolean;
     canDelete: boolean;
+    checkOrder: boolean;
 }
 
 export interface IApiAccessControl {
@@ -23,6 +24,7 @@ export interface IApiAccessControl {
     can_post: boolean;
     can_put: boolean;
     can_delete: boolean;
+    check_order: boolean;
 }
 
 export interface IUserRole {
@@ -72,6 +74,7 @@ export function AccessControlAdapter(apiAccessControl: IApiAccessControl): IAcce
         canPost: apiAccessControl.can_post,
         canPut: apiAccessControl.can_put,
         canDelete: apiAccessControl.can_delete,
+        checkOrder: apiAccessControl.check_order,
     }
 }
 

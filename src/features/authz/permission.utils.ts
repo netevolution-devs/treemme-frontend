@@ -204,6 +204,10 @@ export function hasPermission(
     return true;
 }
 
+export function canCheckOrder(accessControl: IAccessControl[]): boolean {
+    return accessControl.some(ac => ac.checkOrder);
+}
+
 export interface PermissionEngine {
     can: (resource: ResourceName, action: ResourceAction) => boolean;
     hasRole: (role: IRoles) => boolean;
@@ -215,6 +219,7 @@ export interface PermissionEngine {
         roles: IRoles[],
         mode?: RoleCheckMode
     ) => boolean;
+    canCheckOrder: () => boolean;
 }
 
 export function permissionEngine(accessControl: IAccessControl[]): PermissionEngine {
@@ -236,6 +241,10 @@ export function permissionEngine(accessControl: IAccessControl[]): PermissionEng
 
         hasDeniedRoles(roles, mode = "any") {
             return checkRoles(roleSet, roles, mode);
+        },
+
+        canCheckOrder() {
+            return accessControl.some(ac => ac.checkOrder);
         },
     };
 }
