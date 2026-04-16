@@ -41,7 +41,7 @@ const BatchesSplitFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedBatchId}
+                selectedId={null}
                 entity={{
                     pieces: 0,
                     date: dayjs().format("YYYY-MM-DD"),

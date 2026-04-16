@@ -147,7 +147,7 @@ const BatchesForm = () => {
                         label={t("production.batch.data")}
                         color={"primary"}
                         icon={<TextSnippetIcon/>}
-                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto")}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita")}
                         onClick={() => {
                             addSelectPanel({
                                 initialValue: '',
@@ -167,7 +167,7 @@ const BatchesForm = () => {
                         label={t("production.batch.rework")}
                         color={"success"}
                         icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" && batchItem.stock_items > 0}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto"|| batchItem?.batch_type.name === "Partita") && batchItem.stock_items > 0}
                         onClick={() => {
                             openDialog(reworkDialogRef)
                         }}
@@ -176,7 +176,7 @@ const BatchesForm = () => {
                         label={t("production.batch.split")}
                         color={"primary"}
                         icon={<CallSplitIcon/>}
-                        isEnable={!!selectedBatchId && batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Rinverdimento"}
+                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto"|| batchItem?.batch_type.name === "Partita") || batchItem?.batch_type.name === "Rinverdimento"}
                         onClick={() => openDialog(splitDialogRef)}
                     />,
                     <CustomButton
@@ -184,7 +184,7 @@ const BatchesForm = () => {
                         minWidth={0}
                         color={"primary"}
                         icon={<PrintRounded fontSize={"small"}/>}
-                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Tintura")}
+                        isEnable={!!selectedBatchId && ((batchItem?.batch_type.name === "Lotto"|| batchItem?.batch_type.name === "Partita") || batchItem?.batch_type.name === "Tintura")}
                         onClick={() => selectedBatchId && getBatchPdf(selectedBatchId, batchItem?.batch_code ?? "")}
                     />
                 ]}

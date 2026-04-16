@@ -46,7 +46,7 @@ const ContactsAgentFormDialog = forwardRef<IDialogActions, Props>((_props, ref) 
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedContactId}
+                selectedId={null}
                 entity={{
                     agent_id: null,
                 }}

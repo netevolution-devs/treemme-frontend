@@ -44,7 +44,7 @@ const ContactsSubcontractorFormDialog = forwardRef<IDialogActions, Props>((_prop
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedContactId}
+                selectedId={null}
                 entity={{
                     subcontractor_id: 0,
                 }}
