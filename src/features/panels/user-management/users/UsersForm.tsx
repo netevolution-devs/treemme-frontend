@@ -43,7 +43,7 @@ const PasswordGenerator = () => {
             }}
         >
             <Button
-                sx={{p: 0.5, minWidth: 50}}
+                sx={{minWidth: 50}}
                 size={"small"}
                 variant="outlined"
                 onClick={() => handleGeneratePassword()}
