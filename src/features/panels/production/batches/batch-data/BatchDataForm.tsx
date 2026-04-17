@@ -82,7 +82,10 @@ const BatchDataFields = ({batchData}: {
                 />
             </Stack>
 
-            <Stack direction="row" spacing={2}>
+            <Divider />
+            <Typography variant="h6" sx={{pt: 0, mt: 0}}>{t("production.batch.batch-data.weights")}</Typography>
+
+            <Stack direction="row" spacing={2} sx={{pb: -10}}>
                 <NumberFieldControlled<IBatchDataForm>
                     name="pallet_number"
                     label={t("production.batch.batch-data.pallet_number")}
@@ -92,6 +95,7 @@ const BatchDataFields = ({batchData}: {
                     name="pallet_id"
                     label={t("production.batch.batch-data.pallet")}
                     options={pallets.map(p => ({value: p.id, label: p.name}))}
+                    showRequired={false}
                 />
                 <NumberFieldControlled<IBatchDataForm>
                     name="pallet_weight"
@@ -99,9 +103,6 @@ const BatchDataFields = ({batchData}: {
                     deactivated
                 />
             </Stack>
-
-            <Divider />
-            <Typography variant="h6" sx={{pt: 0, mt: 0}}>{t("production.batch.batch-data.weights")}</Typography>
 
             <Stack direction="row" spacing={2}>
                 <NumberFieldControlled<IBatchDataForm>
