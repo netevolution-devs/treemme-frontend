@@ -11,7 +11,7 @@ import {batchDataApi} from "@features/panels/production/batches/batch-data/api/b
 import BatchDataCostsList from "@features/panels/production/batches/batch-data/BatchDataCostsList";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {
-    IBatchDataStoreParams,
+    IBatchDataStoreParams, IBatchDataStoreState,
 } from "@features/panels/production/batches/batch-data/BatchDataPanel";
 import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi";
 import {palletApi} from "@features/panels/warehouse/pallets/api/palletApi";
@@ -20,6 +20,8 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {useEffect} from "react";
 
 export interface IBatchDataForm {
     delivery_date: string | null;
@@ -91,7 +93,7 @@ const BatchDataFields = ({batchData}: {
                 />
             </Stack>
 
-            <Divider />
+            <Divider/>
             <Typography variant="h6" sx={{pt: 0, mt: 0}}>{t("production.batch.batch-data.weights")}</Typography>
 
             <Stack direction="row" spacing={2} sx={{pb: -10}}>
@@ -147,7 +149,7 @@ const BatchDataFields = ({batchData}: {
                 />
             </Stack>
 
-            <Divider />
+            <Divider/>
             <Typography variant="h6">{t("production.batch.batch-data.payment_and_delivery")}</Typography>
 
             <Stack direction="row" spacing={2}>
@@ -200,7 +202,7 @@ const BatchDataFields = ({batchData}: {
                 />
             </Stack>
 
-            <Divider />
+            <Divider/>
             <Typography variant="h6">{t("production.batch.batch-data.port")}</Typography>
 
             <Stack direction="row" spacing={2}>
@@ -226,9 +228,9 @@ const BatchDataFields = ({batchData}: {
                 />
             </Stack>
 
-            <Divider />
+            <Divider/>
             <Typography variant="h6">{t("production.batch.batch-data.costs")}</Typography>
-            <BatchDataCostsList batchId={batchData?.batch?.id} />
+            <BatchDataCostsList batchId={batchData?.batch?.id}/>
         </Stack>
     );
 };
@@ -241,64 +243,78 @@ const BatchDataForm = ({
 
     const {mutateAsync: update, isPending: isUpdating} = usePut();
 
+    const {useStore} = usePanel<unknown, IBatchDataStoreState>();
+    const selectedBatchDataId = useStore(state => state.uiState.selectedBatchDataId);
+    const setUIState = useStore(state => state.setUIState);
+
+    useEffect(() => {
+        if (extra?.batchDataId) {
+            setUIState({selectedBatchDataId: extra.batchDataId});
+        }
+    }, [extra]);
+
     return (
-        <GenericForm<IBatchDataForm, IBatchData>
-            resource="produzione - lotti"
-            dialogMode
-            floatingPanelMode
-            floatingPanelUUID={"batch-data-form"}
-            selectedId={extra?.batchDataId}
-            entity={batchData}
-            disableDeleteButton
-            closePanelOnSave={false}
-            isSaving={isUpdating}
-            emptyValues={{
-                amount: null,
-                delivery_date: null,
-                currency_exchange: null,
-                payment_date: null,
-                sea_port_date: null,
-                declared_gross_weight: null,
-                declared_net_weight: null,
-                declared_average_weight: null,
-                founded_gross_weight: null,
-                founded_net_weight: null,
-                founded_average_weight: null,
-                container_code: null,
-                shipping_cost: null,
-                pallet_number: null,
-                pallet_weight: null,
-                pallet_id: null,
-                sea_port_id: null,
-                shipment_condition_id: null,
-                shipment_subcontractor_id: null,
-                currency_id: null,
-            }}
-            mapEntityToForm={(entity: IBatchData): IBatchDataForm => ({
-                amount: entity.amount,
-                delivery_date: entity.delivery_date,
-                currency_exchange: entity.currency_exchange,
-                payment_date: entity.payment_date,
-                sea_port_date: entity.sea_port_date,
-                declared_gross_weight: entity.declared_gross_weight,
-                declared_net_weight: entity.declared_net_weight,
-                declared_average_weight: entity.declared_average_weight,
-                founded_gross_weight: entity.founded_gross_weight,
-                founded_net_weight: entity.founded_net_weight,
-                founded_average_weight: entity.founded_average_weight,
-                container_code: entity.container_code,
-                shipping_cost: entity.shipping_cost,
-                pallet_number: entity.pallet_number,
-                pallet_weight: entity.pallet_weight,
-                pallet_id: entity.pallet?.id ?? null,
-                sea_port_id: entity.sea_port?.id ?? null,
-                shipment_condition_id: entity.shipment_condition?.id ?? null,
-                shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
-                currency_id: entity.currency?.id ?? null,
-            })}
-            update={(id, payload) => update({id, payload})}
-            renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
-        />
+        <>
+            <pre>{JSON.stringify(extra, null, 2)}</pre>
+            <GenericForm<IBatchDataForm, IBatchData>
+                resource="produzione - lotti"
+                disableCreateButton
+                floatingPanelMode
+                floatingPanelUUID={extra?.panelId as string}
+                selectedId={selectedBatchDataId}
+                entity={batchData}
+                disableDeleteButton
+                isSaving={isUpdating}
+                emptyValues={{
+                    amount: null,
+                    delivery_date: null,
+                    currency_exchange: null,
+                    payment_date: null,
+                    sea_port_date: null,
+                    declared_gross_weight: null,
+                    declared_net_weight: null,
+                    declared_average_weight: null,
+                    founded_gross_weight: null,
+                    founded_net_weight: null,
+                    founded_average_weight: null,
+                    container_code: null,
+                    shipping_cost: null,
+                    pallet_number: null,
+                    pallet_weight: null,
+                    pallet_id: null,
+                    sea_port_id: null,
+                    shipment_condition_id: null,
+                    shipment_subcontractor_id: null,
+                    currency_id: null,
+                }}
+                mapEntityToForm={(entity: IBatchData): IBatchDataForm => ({
+                    amount: entity.amount,
+                    delivery_date: entity.delivery_date,
+                    currency_exchange: entity.currency_exchange,
+                    payment_date: entity.payment_date,
+                    sea_port_date: entity.sea_port_date,
+                    declared_gross_weight: entity.declared_gross_weight,
+                    declared_net_weight: entity.declared_net_weight,
+                    declared_average_weight: entity.declared_average_weight,
+                    founded_gross_weight: entity.founded_gross_weight,
+                    founded_net_weight: entity.founded_net_weight,
+                    founded_average_weight: entity.founded_average_weight,
+                    container_code: entity.container_code,
+                    shipping_cost: entity.shipping_cost,
+                    pallet_number: entity.pallet_number,
+                    pallet_weight: entity.pallet_weight,
+                    pallet_id: entity.pallet?.id ?? null,
+                    sea_port_id: entity.sea_port?.id ?? null,
+                    shipment_condition_id: entity.shipment_condition?.id ?? null,
+                    shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
+                    currency_id: entity.currency?.id ?? null,
+                })}
+                onClearSelection={() => setUIState({selectedBatchDataId: null})}
+                update={(id, payload) => update({id, payload})}
+                renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
+            />
+        </>
+
     );
 };
 

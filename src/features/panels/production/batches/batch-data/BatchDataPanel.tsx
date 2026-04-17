@@ -13,6 +13,7 @@ export interface IBatchDataStoreState extends IPanelUIState {
 export interface IBatchDataStoreParams {
     batchId: number;
     batchDataId: number;
+    panelId: string;
 }
 
 const BatchDataPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchDataStoreParams>>) => {

@@ -47,10 +47,12 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     disabledBasicButtons?: boolean;
     bypassConfirm?: boolean;
     disableDeleteButton?: boolean;
+    disableCreateButton?: boolean;
 
     onCreateSuccess?: (id: number) => void;
     resource?: ResourceName;
     closePanelOnSave?: boolean;
+    closePanelOnCancel?: boolean;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -79,6 +81,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         floatingPanelUUID,
         resource,
         closePanelOnSave = true,
+        disableCreateButton = false
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
@@ -107,10 +110,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             closeDialog(dialogRef)
         }
         if (floatingPanelMode) {
-            console.log("Removing floating panel");
-            console.log("Floating panel UUID", floatingPanelUUID);
             const panel = dockviewApi?.getPanel(floatingPanelUUID as string) as IDockviewPanel;
-            console.log("Panel", panel);
             dockviewApi?.removePanel(panel);
         }
     }, [dialogRef]);
@@ -258,7 +258,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             onDelete={handleDelete}
                             onCancel={handleCancel}
                             buttonState={buttonsState}
-                            hideNew={dialogMode || !canPost}
+                            hideNew={dialogMode || !canPost || disableCreateButton}
                             hideEdit={dialogMode || !canPut}
                             hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
                             hideSave={disabledBasicButtons || (!canPost && !canPut)}

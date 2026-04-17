@@ -116,7 +116,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
             <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
                 resource="ordini - ordini clienti"
                 onSuccess={handlePanelSuccess}
-                dialogMode
+                disableCreateButton
                 floatingPanelMode
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedOrderRowId}

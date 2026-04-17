@@ -170,12 +170,13 @@ const BatchesForm = () => {
                                 extra: {
                                     batchId: selectedBatchId,
                                     batchDataId: batchItem?.batch_data[0]?.id,
+                                    panelId: "batchDataFormPanel:" + selectedBatchId
                                 },
                                 menu: {
                                     component: "batchData",
                                     i18nKey: "menu.production.batch-data"
                                 },
-                                customId: "updateDeliveryNotesRows:" + selectedBatchId
+                                customId: "batchDataFormPanel:" + selectedBatchId
                             });
                         }}
                     />,
