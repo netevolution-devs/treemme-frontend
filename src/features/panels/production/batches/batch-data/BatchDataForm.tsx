@@ -128,10 +128,12 @@ const BatchDataFields = ({batchData}: {
                 <NumberFieldControlled<IBatchDataForm>
                     name="founded_net_weight"
                     label={t("production.batch.batch-data.founded_net_weight")}
+                    deactivated
                 />
                 <NumberFieldControlled<IBatchDataForm>
                     name="founded_average_weight"
                     label={t("production.batch.batch-data.founded_average_weight")}
+                    deactivated
                 />
             </Stack>
 
