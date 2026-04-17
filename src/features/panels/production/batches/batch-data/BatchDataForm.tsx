@@ -18,6 +18,8 @@ import {palletApi} from "@features/panels/warehouse/pallets/api/palletApi";
 import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export interface IBatchDataForm {
     delivery_date: string | null;
@@ -50,8 +52,15 @@ const BatchDataFields = ({batchData}: {
     const {data: seaPorts = []} = seaPortApi.useGetList();
     const {data: pallets = []} = palletApi.useGetList();
     const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
-    const {data: contacts = []} = contactsApi.useGetList();
+    const {data: contacts = []} = contactsApi.useGetList({queryParams: {type: "supplier"}});
     const {data: currencies = []} = currencyApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IBatchDataForm>({
+        formKey: "shipment_subcontractor_id",
+        dependencyKey: "contacts"
+    })
 
     return (
         <Stack spacing={1.5}>
@@ -171,6 +180,18 @@ const BatchDataFields = ({batchData}: {
                     name="shipment_subcontractor_id"
                     label={t("production.batch.batch-data.carrier")}
                     options={contacts.map(c => ({value: c.id, label: c.name}))}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                supplier: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <SelectFieldControlled<IBatchDataForm>
                     name="shipment_condition_id"
