@@ -14,6 +14,7 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
 import CustomButton from "@features/panels/shared/CustomButton";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 type Props = unknown;
 
@@ -22,6 +23,7 @@ export type IBatchSelectionForm = {
     selection_id: number | null;
     thickness_id: number | null;
     pieces: number | null;
+    note: string | null;
 }
 
 const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -51,19 +53,22 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                     batch_id: batch?.id as number,
                     selection_id: null,
                     thickness_id: null,
-                    pieces: null
+                    pieces: null,
+                    note: null
                 }}
                 emptyValues={{
                     batch_id: batch?.id as number,
                     selection_id: null,
                     thickness_id: null,
-                    pieces: null
+                    pieces: null,
+                    note: null
                 }}
                 mapEntityToForm={(x) => ({
                     batch_id: x.batch_id,
                     selection_id: x.selection_id,
                     thickness_id: x.thickness_id,
-                    pieces: x.pieces
+                    pieces: x.pieces,
+                    note: x.note
                 })}
                 create={(payload) => createBatchSelection(payload)}
                 isSaving={isPending}
@@ -97,6 +102,11 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                             max={batch?.batch_selections_count as number}
                             precision={0}
                             required
+                        />
+                        <TextFieldControlled<IBatchSelectionForm>
+                            name={"note"}
+                            label={t("production.batch.selections.note")}
+                            TextFieldProps={{multiline: true, rows: 2}}
                         />
                     </>
                 )}
