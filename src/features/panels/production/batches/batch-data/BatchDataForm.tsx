@@ -254,67 +254,63 @@ const BatchDataForm = ({
     }, [extra]);
 
     return (
-        <>
-            <pre>{JSON.stringify(extra, null, 2)}</pre>
-            <GenericForm<IBatchDataForm, IBatchData>
-                resource="produzione - lotti"
-                disableCreateButton
-                floatingPanelMode
-                floatingPanelUUID={extra?.panelId as string}
-                selectedId={selectedBatchDataId}
-                entity={batchData}
-                disableDeleteButton
-                isSaving={isUpdating}
-                emptyValues={{
-                    amount: null,
-                    delivery_date: null,
-                    currency_exchange: null,
-                    payment_date: null,
-                    sea_port_date: null,
-                    declared_gross_weight: null,
-                    declared_net_weight: null,
-                    declared_average_weight: null,
-                    founded_gross_weight: null,
-                    founded_net_weight: null,
-                    founded_average_weight: null,
-                    container_code: null,
-                    shipping_cost: null,
-                    pallet_number: null,
-                    pallet_weight: null,
-                    pallet_id: null,
-                    sea_port_id: null,
-                    shipment_condition_id: null,
-                    shipment_subcontractor_id: null,
-                    currency_id: null,
-                }}
-                mapEntityToForm={(entity: IBatchData): IBatchDataForm => ({
-                    amount: entity.amount,
-                    delivery_date: entity.delivery_date,
-                    currency_exchange: entity.currency_exchange,
-                    payment_date: entity.payment_date,
-                    sea_port_date: entity.sea_port_date,
-                    declared_gross_weight: entity.declared_gross_weight,
-                    declared_net_weight: entity.declared_net_weight,
-                    declared_average_weight: entity.declared_average_weight,
-                    founded_gross_weight: entity.founded_gross_weight,
-                    founded_net_weight: entity.founded_net_weight,
-                    founded_average_weight: entity.founded_average_weight,
-                    container_code: entity.container_code,
-                    shipping_cost: entity.shipping_cost,
-                    pallet_number: entity.pallet_number,
-                    pallet_weight: entity.pallet_weight,
-                    pallet_id: entity.pallet?.id ?? null,
-                    sea_port_id: entity.sea_port?.id ?? null,
-                    shipment_condition_id: entity.shipment_condition?.id ?? null,
-                    shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
-                    currency_id: entity.currency?.id ?? null,
-                })}
-                onClearSelection={() => setUIState({selectedBatchDataId: null})}
-                update={(id, payload) => update({id, payload})}
-                renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
-            />
-        </>
-
+        <GenericForm<IBatchDataForm, IBatchData>
+            resource="produzione - lotti"
+            disableCreateButton
+            floatingPanelMode
+            floatingPanelUUID={extra?.panelId as string}
+            selectedId={selectedBatchDataId}
+            entity={batchData}
+            disableDeleteButton
+            isSaving={isUpdating}
+            emptyValues={{
+                amount: null,
+                delivery_date: null,
+                currency_exchange: null,
+                payment_date: null,
+                sea_port_date: null,
+                declared_gross_weight: null,
+                declared_net_weight: null,
+                declared_average_weight: null,
+                founded_gross_weight: null,
+                founded_net_weight: null,
+                founded_average_weight: null,
+                container_code: null,
+                shipping_cost: null,
+                pallet_number: null,
+                pallet_weight: null,
+                pallet_id: null,
+                sea_port_id: null,
+                shipment_condition_id: null,
+                shipment_subcontractor_id: null,
+                currency_id: null,
+            }}
+            mapEntityToForm={(entity: IBatchData): IBatchDataForm => ({
+                amount: entity.amount,
+                delivery_date: entity.delivery_date,
+                currency_exchange: entity.currency_exchange,
+                payment_date: entity.payment_date,
+                sea_port_date: entity.sea_port_date,
+                declared_gross_weight: entity.declared_gross_weight,
+                declared_net_weight: entity.declared_net_weight,
+                declared_average_weight: entity.declared_average_weight,
+                founded_gross_weight: entity.founded_gross_weight,
+                founded_net_weight: entity.founded_net_weight,
+                founded_average_weight: entity.founded_average_weight,
+                container_code: entity.container_code,
+                shipping_cost: entity.shipping_cost,
+                pallet_number: entity.pallet_number,
+                pallet_weight: entity.pallet_weight,
+                pallet_id: entity.pallet?.id ?? null,
+                sea_port_id: entity.sea_port?.id ?? null,
+                shipment_condition_id: entity.shipment_condition?.id ?? null,
+                shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
+                currency_id: entity.currency?.id ?? null,
+            })}
+            onClearSelection={() => setUIState({selectedBatchDataId: null})}
+            update={(id, payload) => update({id, payload})}
+            renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
+        />
     );
 };
 
