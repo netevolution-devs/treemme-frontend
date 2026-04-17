@@ -370,18 +370,26 @@ const BatchesSelectLeather = ({batchItem, isEdit = false}: IBatchSelectLeatherPr
     const {t} = useTranslation(["form"]);
 
     const {data: leathers = []} = leatherApi.useGetList();
-
     const {add: addSelectPanel} = useCallablePanel();
+
+    const isBatchBaseType = batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita";
 
     return (
         <>
-            <SelectFieldControlled<IBatchesForm>
-                name="leather_id"
-                label={t("production.batch.leather")}
-                options={leathers.map(x => ({label: x.name, value: x.id}))}
-                deactivated={!!batchItem}
-                required
-            />
+            {(!batchItem?.leather?.name || isBatchBaseType) ? (
+                <SelectFieldControlled<IBatchesForm>
+                    name="leather_id"
+                    label={t("production.batch.leather")}
+                    options={leathers.map(x => ({label: x.name, value: x.id}))}
+                    deactivated={!!batchItem}
+                    required
+                />
+            ) : (
+                <TextFieldValue
+                    label={t("production.batch.leather")}
+                    value={batchItem?.leather?.name}
+                />
+            )}
             <Box sx={{mb: 1}}>
                 <CustomButton
                     isEnable={isEdit}
