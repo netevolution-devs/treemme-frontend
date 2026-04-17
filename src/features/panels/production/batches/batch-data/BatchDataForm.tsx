@@ -63,6 +63,10 @@ const BatchDataFields = ({batchData}: {
         formKey: "shipment_subcontractor_id",
         dependencyKey: "contacts"
     })
+    useSubscribePanel<IBatchDataForm>({
+        formKey: "shipment_condition_id",
+        dependencyKey: "shipmentConditions"
+    })
 
     return (
         <Stack spacing={1.5}>
@@ -199,6 +203,15 @@ const BatchDataFields = ({batchData}: {
                     name="shipment_condition_id"
                     label={t("production.batch.batch-data.shipment_condition")}
                     options={shipmentConditions.map(s => ({value: s.id, label: s.name}))}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "shipmentConditions",
+                                i18nKey: "menu.commercial.shipment-conditions"
+                            }
+                        })
+                    }}
                 />
             </Stack>
 
