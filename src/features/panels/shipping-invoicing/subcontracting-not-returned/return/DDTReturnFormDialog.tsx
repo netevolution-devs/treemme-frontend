@@ -47,7 +47,7 @@ const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedId}
+                selectedId={null}
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
                     pieces: null,
