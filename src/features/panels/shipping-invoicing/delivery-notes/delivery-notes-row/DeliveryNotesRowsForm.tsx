@@ -104,7 +104,7 @@ const DeliveryNotesRowsForm = ({
         if (floatingPanelUUID.includes("create")) {
             setFormState("new");
         }
-    }, [floatingPanelUUID]);
+    }, [floatingPanelUUID, selectedDeliveryNoteRowId]);
 
     return (
         <Box sx={{p: 0}}>
@@ -348,6 +348,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <TextFieldControlled<IDeliveryNoteRowForm>
                     name="row_note"
                     label={t("shipping.ddt_rows.row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
                 />
             </Box>
         </Stack>

@@ -176,6 +176,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 const res = await update?.(selectedId, cleanData);
                 if (res) {
                     onSuccess?.(res as TEntity);
+                    if (dialogMode) return;
                     setFormState('selected');
                 }
             } else {
@@ -185,8 +186,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                     onCreateSuccess?.(res.id);
                     if (!dialogMode) {
                         methods.reset(emptyValues);
+                        setFormState('init');
                     }
-                    setFormState('init');
                 }
             }
         } finally {
@@ -204,7 +205,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             setFormState('selected');
         } else if (!selectedId) {
             methods.reset(emptyValues);
-            if (dialogMode) return;
+            if (dialogMode || floatingPanelMode) return;
             setFormState('init');
         }
     }, [selectedId, entity]);
