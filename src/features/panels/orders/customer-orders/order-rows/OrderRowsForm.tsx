@@ -6,7 +6,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import {Box, Stack} from "@mui/material";
-import {useMemo, useRef} from "react";
+import {useEffect, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
@@ -107,6 +107,12 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
     const {user} = useAuth();
     const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
     const canPost = engine.can("ordini - ordini clienti", 'post');
+
+    useEffect(() => {
+        if (floatingPanelUUID.includes("create")) {
+            setFormState("new");
+        }
+    }, [floatingPanelUUID]);
 
     return (
         <Box sx={{p: 0}}>
