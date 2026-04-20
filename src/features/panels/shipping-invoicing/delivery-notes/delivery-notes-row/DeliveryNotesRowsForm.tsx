@@ -5,7 +5,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Stack, Typography} from "@mui/material";
-import {useMemo, useRef} from "react";
+import {useEffect, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {
     IDeliveryNoteRow
@@ -100,12 +100,18 @@ const DeliveryNotesRowsForm = ({
 
     const {data: currencies = []} = currencyApi.useGetList();
 
+    useEffect(() => {
+        if (floatingPanelUUID.includes("create")) {
+            setFormState("new");
+        }
+    }, [floatingPanelUUID, selectedDeliveryNoteRowId]);
+
     return (
         <Box sx={{p: 0}}>
             <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
                 resource={"ddt & fatture - documenti di trasporto"}
                 onSuccess={handlePanelSuccess}
-                dialogMode
+                disableCreateButton
                 floatingPanelMode
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedDeliveryNoteRowId}
@@ -342,6 +348,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <TextFieldControlled<IDeliveryNoteRowForm>
                     name="row_note"
                     label={t("shipping.ddt_rows.row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
                 />
             </Box>
         </Stack>
