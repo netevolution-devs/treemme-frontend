@@ -10,6 +10,7 @@ export interface IContactAddress {
     address_2: string;
     address_3: string;
     address_4: string;
+    zip_code: string;
     // contact_id?: number;
     // weight?: number;
 }

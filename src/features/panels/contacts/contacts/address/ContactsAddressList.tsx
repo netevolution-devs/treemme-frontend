@@ -41,13 +41,13 @@ const ContactsAddressList = () => {
             )
         },
         {
-            accessorKey: "town.cap",
+            accessorKey: "zip_code",
             header: t("cap.code")
         },
-        {
-            accessorKey: "town.name",
-            header: t("cap.name")
-        },
+        // {
+        //     accessorKey: "town.name",
+        //     header: t("cap.name")
+        // },
         {
             accessorKey: "nation.name",
             header: t("nations.name")
