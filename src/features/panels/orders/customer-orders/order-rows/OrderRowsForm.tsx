@@ -228,6 +228,9 @@ interface OrderRowFormFieldsProps {
 const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
 
+    const {useStore} = usePanel<unknown, IOrderRowsStoreState>();
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
     const {data: currencies = []} = currencyApi.useGetList();
@@ -264,8 +267,11 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
     return (
         <Stack gap={1}>
             <CurrencyWatcher
+                key={selectedOrderRowId ?? 'create'}
                 currencies={currencies}
                 exchangeFieldName={"currency_exchange"}
+                isEditMode={!!selectedOrderRowId}
+                entityCurrencyId={orderRow?.currency?.id ?? null}
             />
             <CurrenciesExchangeFormDialog
                 ref={addExchangeDialogRef}
@@ -274,7 +280,9 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     ? watchedCurrencyValue as number
                     : null
                 }
-                onChangeValue={(value) => {setValue('currency_exchange', value)}}
+                onChangeValue={(value) => {
+                    setValue('currency_exchange', value)
+                }}
             />
 
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
@@ -372,7 +380,7 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     <NewButton
                         sx={{px: 0.5, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
-                        isEnable={!isEuro(watchedCurrencyId as number)}
+                        isEnable={!isEuro(watchedCurrencyId as number) && !isFormDisabled}
                         disableLabel
                     />
                 </Box>

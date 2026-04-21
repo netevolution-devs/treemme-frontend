@@ -85,6 +85,7 @@ const DeliveryNotesRowsForm = ({
         setFormState
     });
 
+
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteRowApi;
     const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
 
@@ -184,6 +185,9 @@ const DeliveryNotesRowsForm = ({
 const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId: number }) => {
     const {t} = useTranslation(["form"]);
 
+    const {useStore} = usePanel<unknown, IDeliveryNotesRowsStoreState>();
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+
     const {data: deliveryNote} = deliveryNoteApi.useGetDetail(ddtId);
     const {data: deliveryNoteRow} = deliveryNoteRowApi.useGetDetail(ddtRowId);
 
@@ -224,8 +228,11 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
     return (
         <Stack gap={1}>
             <CurrencyWatcher
+                key={ddtRowId || 'create'}
                 currencies={currencies}
                 exchangeFieldName={"currency_exchange"}
+                isEditMode={!!ddtRowId}
+                entityCurrencyId={deliveryNoteRow?.currency?.id ?? null}
             />
             <CurrenciesExchangeFormDialog
                 ref={addExchangeDialogRef}
@@ -328,7 +335,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     <NewButton
                         sx={{px: 0.5, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
-                        isEnable={!isEuro(watchedCurrencyId as number)}
+                        isEnable={!isEuro(watchedCurrencyId as number) && !isFormDisabled}
                         disableLabel
                     />
                 </Box>
