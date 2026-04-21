@@ -15,7 +15,7 @@ const CurrencyWatcher = ({ currencies, exchangeFieldName }: ICurrencyWatcherProp
     const isFirstLoad = useRef(true);
 
     useEffect(() => {
-        if (!currencyId || !currencies) return;
+        if (!currencyId || !currencies.length) return;
 
         const currency = currencies.find(c => c.id === currencyId);
         if (!currency) return;
@@ -30,6 +30,9 @@ const CurrencyWatcher = ({ currencies, exchangeFieldName }: ICurrencyWatcherProp
         if (isEur) {
             setValue(exchangeFieldName, 1);
             clearErrors(exchangeFieldName);
+            if (isFirstLoad.current) {
+                isFirstLoad.current = false;
+            }
         }
 
         else if (isFirstLoad.current) {
@@ -50,8 +53,7 @@ const CurrencyWatcher = ({ currencies, exchangeFieldName }: ICurrencyWatcherProp
             isFirstLoad.current = false;
         }
 
-        else if (prevCurrencyIdRef.current !== null && prevCurrencyIdRef.current !== currencyId) {
-            if (lastChangeValue) {
+        else if (prevCurrencyIdRef.current !== null && prevCurrencyIdRef.current !== currencyId) {            if (lastChangeValue) {
                 setValue(exchangeFieldName, lastChangeValue);
                 clearErrors(exchangeFieldName);
             } else {
