@@ -97,7 +97,7 @@ const CurrenciesExchangeFormFields = () => {
     return (
         <Stack gap={2}>
             <DateFieldControlled<ICurrenciesExchangeForm> name={"date"} label={t("currencies.date")} required />
-            <NumberFieldControlled<ICurrenciesExchangeForm> name={"change_value"} label={t("currencies.change_value")} required precision={3} />
+            <NumberFieldControlled<ICurrenciesExchangeForm> name={"change_value"} label={t("currencies.change_value")} required precision={4} />
         </Stack>
     )
 }
