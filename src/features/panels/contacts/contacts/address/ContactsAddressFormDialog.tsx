@@ -50,7 +50,7 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
     const {
         mutateAsync: deleteAddress,
         isPending: isDeleting
-    } = useDelete({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
+    } = useDelete({invalidateQueries: ['CONTACT', 'LIST']});
 
     const {data: nations} = nationsApi.useGetList();
     // const {data: caps} = capApi.useGetList();
