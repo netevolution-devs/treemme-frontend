@@ -225,7 +225,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 label={t("orders.destination")}
                 options={clientAddresses.map(p => ({
                     value: p.id,
-                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.town.name} - ${p.nation.name}`
+                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.zip_code} - ${p.nation.name}`
                 }))}
                 onNoOptionsMatch={() => {
                     addSelectPanel({
