@@ -146,8 +146,8 @@ export const DevTools = () => {
                         <DevToolsSwitch
                             value={flags.useBlueTheme}
                             onChange={() => handleToggle('useBlueTheme')}
-                            title="Use Blue Theme"
-                            description="switches primary color to blue (requires page reload)"
+                            title="Use Dark Blue Theme"
+                            description="switches primary color to dark blue (requires page reload)"
                         />
                     </Paper>
 

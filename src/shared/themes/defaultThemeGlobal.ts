@@ -3,9 +3,9 @@ import {createTheme, type Theme, type ThemeOptions} from '@mui/material/styles';
 
 const getPrimaryColors = () => {
     return {
-        main: '#2b98ea',
-        dark: '#41689b',
-        light: '#5590c3',
+        main: '#2c5282',
+        dark: '#1a365d',
+        light: '#4299e1',
     };
 };
 
@@ -322,7 +322,7 @@ const lightTheme: Theme = createTheme({
         info: {
             main: '#0288d1',
             light: '#03a9f4',
-            dark: '#01579b',
+            dark: '#1a3a5f',
             contrastText: '#ffffff',
         },
         background: {

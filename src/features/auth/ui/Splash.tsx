@@ -1,9 +1,6 @@
-import {Box, useTheme} from "@mui/material";
+import {Box} from "@mui/material";
 
 const Splash = () => {
-    const theme = useTheme();
-    const isSmallScreen = theme.breakpoints.down('sm');
-
     return (
         <Box
             sx={{
@@ -12,7 +9,7 @@ const Splash = () => {
             }}
         >
             <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', pb: 4}}>
-                <img src={"/imgs/watermark.png"} alt={"logo"} style={{ maxWidth: isSmallScreen ? 400 : "auto", height: "auto", scale: "125%" }}/>
+                {/* <img src={"/imgs/watermark.png"} alt={"logo"} style={{ maxWidth: 400, height: "auto", scale: "125%" }}/> */}
             </Box>
         </Box>
     )

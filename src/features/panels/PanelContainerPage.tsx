@@ -36,7 +36,7 @@ const PanelContainerPage = () => {
                     floatingGroupBounds="boundedWithinViewport"
                     watermarkComponent={() => (
                         <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: 'calc(100vh - 48px)', width: '100%'}}>
-                            <img src={"imgs/watermark.png"} alt="Watermark" width={600} />
+                            {/* <img src={"imgs/watermark.png"} alt="Watermark" width={600} /> */}
                         </Box>
                     )}
                     theme={isLightTheme
