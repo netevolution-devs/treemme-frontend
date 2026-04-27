@@ -62,6 +62,8 @@
     "name": "Nazione"
   },
   "contacts": {
+    "details-add-btn": "Nuovo recapito",
+    "addresses-add-btn": "Nuovo indirizzo",
     "payment": "Pagamento predefinito",
     "select": "Tipologia",
     "client": "Cliente",

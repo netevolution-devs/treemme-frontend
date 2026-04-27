@@ -10,8 +10,9 @@ import ContactsAddressFormDialog from "@features/panels/contacts/contacts/addres
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {openDialog} from "@ui/dialog/dialogHelper";
 import ListToolbar from "@features/panels/shared/ListToolbar";
-import {NewButton} from "@features/panels/shared/CustomButton";
+import CustomButton from "@features/panels/shared/CustomButton";
 import {Box, Typography} from "@mui/material";
+import DomainAddIcon from '@mui/icons-material/DomainAdd';
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -80,8 +81,11 @@ const ContactsAddressList = () => {
                         <ListToolbar
                             label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
                             buttons={[
-                                <NewButton
+                                <CustomButton
                                     isEnable={!!selectedContactId}
+                                    label={t("contacts.addresses-add-btn")}
+                                    color={"primary"}
+                                    icon={<DomainAddIcon/>}
                                     onClick={() => handleOpenCreateDialog()}
                                 />
                             ]}
