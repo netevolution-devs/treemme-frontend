@@ -8,14 +8,15 @@ import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
-import type {IDialogActions} from "@ui/dialog/IDialogActions";
-import ContactsAgentFormDialog from "@features/panels/contacts/contacts/agents/ContactsAgentFormDialog";
-import {openDialog} from "@ui/dialog/dialogHelper";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import {MenuItem, Typography} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useRemoveAgentFromContact from "@features/panels/contacts/contacts/agents/api/useRemoveAgentFromContact";
+
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {openDialog} from "@ui/dialog/dialogHelper";
 
 const ContactsAgentsList = () => {
     const {t} = useTranslation(["form"]);
@@ -24,6 +25,8 @@ const ContactsAgentsList = () => {
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const selectedAgentId = useStore(state => state.uiState.selectedAgentId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {add: addSelectPanel} = useCallablePanel();
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
     const agents = contact?.contact_agents.map((x) => x.agent) || [];
@@ -43,12 +46,10 @@ const ContactsAgentsList = () => {
         await deleteAgent({agent_id: selectedAgentId as number});
     }
 
-    const addAgentDialogRef = useRef<IDialogActions | null>(null);
     const deleteConfirmDialogRef = useRef<IDialogActions | null>(null);
 
     return (
         <>
-            <ContactsAgentFormDialog ref={addAgentDialogRef}/>
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
@@ -73,7 +74,18 @@ const ContactsAgentsList = () => {
                                     color={"primary"}
                                     icon={<PersonAddIcon/>}
                                     onClick={() => {
-                                        openDialog(addAgentDialogRef)
+                                        addSelectPanel({
+                                            initialValue: `createContactsAgents:${selectedContactId}`,
+                                            extra: {
+                                                selectedContactId,
+                                                panelId: `createContactsAgents:${selectedContactId}`
+                                            },
+                                            menu: {
+                                                component: "contactsAgents",
+                                                i18nKey: "menu.contacts.add-agent"
+                                            },
+                                            customId: `createContactsAgents:${selectedContactId}`
+                                        });
                                     }}
                                 />
                             ]}

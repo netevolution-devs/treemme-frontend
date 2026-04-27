@@ -27,6 +27,8 @@ export interface IContactsStoreFilter {
 export interface IContactsStoreParams {
     supplier?: boolean;
     client?: boolean;
+    agent?: boolean;
+    subcontractor?: boolean;
     selectedContactId?: number;
 }
 

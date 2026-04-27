@@ -12,7 +12,7 @@ import {openDialog} from "@ui/dialog/dialogHelper";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
 import {Box, Typography} from "@mui/material";
-import DomainAddIcon from '@mui/icons-material/DomainAdd';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -85,7 +85,7 @@ const ContactsAddressList = () => {
                                     isEnable={!!selectedContactId}
                                     label={t("contacts.addresses-add-btn")}
                                     color={"primary"}
-                                    icon={<DomainAddIcon/>}
+                                    icon={<PostAddIcon/>}
                                     onClick={() => handleOpenCreateDialog()}
                                 />
                             ]}

@@ -25,10 +25,11 @@ export const usePanelFormLogic = ({
     const handlePanelSuccess = useCallback((entity: { id: number }) => {
         onSuccess?.(entity.id);
 
-        if (initialName && api) {
+        if (api) {
             const panels = api.panels;
             const currentPanel = Object.values(panels).find(
-                p => p.params?.initialName === initialName
+                p => (initialName && p.params?.initialName === initialName) || 
+                     (p.params?.extra?.panelId && p.params?.extra?.panelId === p.id && (p.api.isFocused || p.id === initialName))
             );
 
             if (currentPanel) {
