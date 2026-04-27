@@ -35,6 +35,9 @@ const ContactsDetailList = () => {
         {
             accessorKey: "name",
             header: t("form:contacts.details.value"),
+            Cell: ({row}) => (
+                <Typography sx={{textTransform: "lowercase"}}>{row.original.detail_type.name}</Typography>
+            )
         },
         {
             accessorKey: "note",
