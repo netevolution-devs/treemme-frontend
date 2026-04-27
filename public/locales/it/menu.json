@@ -7,7 +7,8 @@
       "provinces": "Province",
       "contacts": "Contatti",
       "seaports": "Porti Marittimi",
-      "add-agent": "Aggiungi Agente"
+      "add-agent": "Aggiungi Agente",
+      "add-subcontractor": "Aggiungi Terzista"
     },
     "leathers": {
       "self": "Pellami",

@@ -5,17 +5,18 @@ import GenericList from "@features/panels/shared/GenericList";
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {useMemo, useRef} from "react";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {openDialog} from "@ui/dialog/dialogHelper";
 import type {MRT_ColumnDef} from "material-react-table";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
-import type {IDialogActions} from "@ui/dialog/IDialogActions";
-import ContactsSubcontractorFormDialog from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorFormDialog";
-import {openDialog} from "@ui/dialog/dialogHelper";
 import {MenuItem, Typography} from "@mui/material";
 import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useRemoveSubcontractorFromContact from "@features/panels/contacts/contacts/subcontractors/api/useRemoveSubcontractorFromContact";
 import DomainAddIcon from '@mui/icons-material/DomainAdd';
+
+import useCallablePanel from "@ui/panel/useCallablePanel";
 
 const ContactsSubcontractorsList = () => {
     const {t} = useTranslation(["form", "common"]);
@@ -24,6 +25,8 @@ const ContactsSubcontractorsList = () => {
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const selectedSubcontractorId = useStore(state => state.uiState.selectedSubcontractorId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {add: addSelectPanel} = useCallablePanel();
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
     const subcontractors = contact?.contact_subcontractors?.map((x) => x.subcontractor).filter(Boolean) || [];
@@ -42,12 +45,10 @@ const ContactsSubcontractorsList = () => {
         await deleteSubcontractor({subcontractor_id: selectedSubcontractorId as number});
     }
 
-    const addSubcontractorDialogRef = useRef<IDialogActions | null>(null);
     const deleteConfirmDialogRef = useRef<IDialogActions | null>(null);
 
     return (
         <>
-            <ContactsSubcontractorFormDialog ref={addSubcontractorDialogRef}/>
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
 
             <GenericList<IContact>
@@ -72,7 +73,18 @@ const ContactsSubcontractorsList = () => {
                                     color={"primary"}
                                     icon={<DomainAddIcon/>}
                                     onClick={() => {
-                                        openDialog(addSubcontractorDialogRef)
+                                        addSelectPanel({
+                                            initialValue: `createContactsSubcontractors:${selectedContactId}`,
+                                            extra: {
+                                                selectedContactId,
+                                                panelId: `createContactsSubcontractors:${selectedContactId}`
+                                            },
+                                            menu: {
+                                                component: "contactsSubcontractors",
+                                                i18nKey: "contacts.subcontractors.add"
+                                            },
+                                            customId: `createContactsSubcontractors:${selectedContactId}`
+                                        });
                                     }}
                                 />
                             ]}
