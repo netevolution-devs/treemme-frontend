@@ -6,7 +6,7 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import {Box, Stack} from "@mui/material";
-import {useMemo, useRef} from "react";
+import {useEffect, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
 import {measurementUnitApi} from "@features/panels/shared/api/measurement-unit/measurementUnitApi";
@@ -36,6 +36,9 @@ import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormBut
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -101,14 +104,25 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
     const dyeDialogRef = useRef<IDialogActions | null>(null);
     const refinementDialogRef = useRef<IDialogActions | null>(null);
 
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = engine.can("ordini - ordini clienti", 'post');
+
+    useEffect(() => {
+        if (floatingPanelUUID.includes("create")) {
+            setFormState("new");
+        }
+    }, [floatingPanelUUID]);
+
     return (
         <Box sx={{p: 0}}>
             <DyeFormDialog ref={dyeDialogRef} order_row_id={selectedOrderRowId as number}/>
             <RefinementFormDialog ref={refinementDialogRef} order_row_id={selectedOrderRowId as number}/>
 
             <GenericForm<IOrderRowForm, IOrderRow, IOrderRowsStoreState>
+                resource="ordini - ordini clienti"
                 onSuccess={handlePanelSuccess}
-                dialogMode
+                disableCreateButton
                 floatingPanelMode
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedOrderRowId}
@@ -184,7 +198,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"primary"}
                         icon={<ColorLensIcon/>}
                         onClick={() => openDialog(dyeDialogRef)}
-                        isEnable={!!selectedOrderRowId}
+                        isEnable={!!selectedOrderRowId && canPost}
                     />,
                     <CustomButton
                         key="refinement"
@@ -192,7 +206,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"success"}
                         icon={<SettingsInputHdmiIcon/>}
                         onClick={() => openDialog(refinementDialogRef)}
-                        isEnable={!!selectedOrderRowId}
+                        isEnable={!!selectedOrderRowId && canPost}
                     />,
                 ]}
                 renderFields={() => (
@@ -213,6 +227,9 @@ interface OrderRowFormFieldsProps {
 
 const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
+
+    const {useStore} = usePanel<unknown, IOrderRowsStoreState>();
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
 
     const {data: orderRow} = orderRowApi.useGetDetail(selectedOrderRowId);
     const {data: measurementUnits = []} = measurementUnitApi.useGetList();
@@ -250,8 +267,11 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
     return (
         <Stack gap={1}>
             <CurrencyWatcher
+                key={selectedOrderRowId ?? 'create'}
                 currencies={currencies}
                 exchangeFieldName={"currency_exchange"}
+                isEditMode={!!selectedOrderRowId}
+                entityCurrencyId={orderRow?.currency?.id ?? null}
             />
             <CurrenciesExchangeFormDialog
                 ref={addExchangeDialogRef}
@@ -260,7 +280,9 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     ? watchedCurrencyValue as number
                     : null
                 }
-                onChangeValue={(value) => {setValue('currency_exchange', value)}}
+                onChangeValue={(value) => {
+                    setValue('currency_exchange', value)
+                }}
             />
 
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
@@ -356,9 +378,9 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0, maxHeight: 32}}
+                        sx={{px: 0.5, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
-                        isEnable={!isEuro(watchedCurrencyId as number)}
+                        isEnable={!isEuro(watchedCurrencyId as number) && !isFormDisabled}
                         disableLabel
                     />
                 </Box>

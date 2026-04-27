@@ -5,18 +5,23 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import TextFieldValue from "@ui/form/controlled/TextFieldValue";
-import {Stack} from "@mui/material";
+import {Divider, Stack, Typography} from "@mui/material";
 import type {IBatchData} from "@features/panels/production/batches/batch-data/api/IBatchData";
 import {batchDataApi} from "@features/panels/production/batches/batch-data/api/batchDataApi";
+import BatchDataCostsList from "@features/panels/production/batches/batch-data/BatchDataCostsList";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import type {
-    IBatchDataStoreParams,
+    IBatchDataStoreParams, IBatchDataStoreState,
 } from "@features/panels/production/batches/batch-data/BatchDataPanel";
 import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi";
 import {palletApi} from "@features/panels/warehouse/pallets/api/palletApi";
 import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {usePanel} from "@ui/panel/PanelContext";
+import {useEffect} from "react";
 
 export interface IBatchDataForm {
     delivery_date: string | null;
@@ -49,11 +54,22 @@ const BatchDataFields = ({batchData}: {
     const {data: seaPorts = []} = seaPortApi.useGetList();
     const {data: pallets = []} = palletApi.useGetList();
     const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
-    const {data: contacts = []} = contactsApi.useGetList();
+    const {data: contacts = []} = contactsApi.useGetList({queryParams: {type: "supplier"}});
     const {data: currencies = []} = currencyApi.useGetList();
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IBatchDataForm>({
+        formKey: "shipment_subcontractor_id",
+        dependencyKey: "contacts"
+    })
+    useSubscribePanel<IBatchDataForm>({
+        formKey: "shipment_condition_id",
+        dependencyKey: "shipmentConditions"
+    })
+
     return (
-        <Stack spacing={2}>
+        <Stack spacing={1.5}>
             <Stack direction="row" spacing={2}>
                 <TextFieldValue
                     label={t("production.batch.batch-data.batch_code")}
@@ -62,13 +78,6 @@ const BatchDataFields = ({batchData}: {
                 <TextFieldValue
                     label={t("production.batch.batch-data.leather")}
                     value={batchData?.batch?.leather?.name}
-                />
-            </Stack>
-
-            <Stack direction="row" spacing={2}>
-                <DateFieldControlled<IBatchDataForm>
-                    name="delivery_date"
-                    label={t("production.batch.batch-data.delivery_date")}
                 />
             </Stack>
 
@@ -82,9 +91,16 @@ const BatchDataFields = ({batchData}: {
                     value={batchData?.batch?.quantity}
                     startAdornment={batchData?.batch?.measurement_unit.prefix}
                 />
+                <DateFieldControlled<IBatchDataForm>
+                    name="delivery_date"
+                    label={t("production.batch.batch-data.delivery_date")}
+                />
             </Stack>
 
-            <Stack direction="row" spacing={2}>
+            <Divider/>
+            <Typography variant="h6" sx={{pt: 0, mt: 0}}>{t("production.batch.batch-data.weights")}</Typography>
+
+            <Stack direction="row" spacing={2} sx={{pb: -10}}>
                 <NumberFieldControlled<IBatchDataForm>
                     name="pallet_number"
                     label={t("production.batch.batch-data.pallet_number")}
@@ -94,6 +110,7 @@ const BatchDataFields = ({batchData}: {
                     name="pallet_id"
                     label={t("production.batch.batch-data.pallet")}
                     options={pallets.map(p => ({value: p.id, label: p.name}))}
+                    showRequired={false}
                 />
                 <NumberFieldControlled<IBatchDataForm>
                     name="pallet_weight"
@@ -127,12 +144,17 @@ const BatchDataFields = ({batchData}: {
                 <NumberFieldControlled<IBatchDataForm>
                     name="founded_net_weight"
                     label={t("production.batch.batch-data.founded_net_weight")}
+                    deactivated
                 />
                 <NumberFieldControlled<IBatchDataForm>
                     name="founded_average_weight"
                     label={t("production.batch.batch-data.founded_average_weight")}
+                    deactivated
                 />
             </Stack>
+
+            <Divider/>
+            <Typography variant="h6">{t("production.batch.batch-data.payment_and_delivery")}</Typography>
 
             <Stack direction="row" spacing={2}>
                 <DateFieldControlled<IBatchDataForm>
@@ -164,13 +186,37 @@ const BatchDataFields = ({batchData}: {
                     name="shipment_subcontractor_id"
                     label={t("production.batch.batch-data.carrier")}
                     options={contacts.map(c => ({value: c.id, label: c.name}))}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                supplier: true
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <SelectFieldControlled<IBatchDataForm>
                     name="shipment_condition_id"
                     label={t("production.batch.batch-data.shipment_condition")}
                     options={shipmentConditions.map(s => ({value: s.id, label: s.name}))}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "shipmentConditions",
+                                i18nKey: "menu.commercial.shipment-conditions"
+                            }
+                        })
+                    }}
                 />
             </Stack>
+
+            <Divider/>
+            <Typography variant="h6">{t("production.batch.batch-data.port")}</Typography>
 
             <Stack direction="row" spacing={2}>
                 <DateFieldControlled<IBatchDataForm>
@@ -194,6 +240,10 @@ const BatchDataFields = ({batchData}: {
                     label={t("production.batch.batch-data.shipping_cost")}
                 />
             </Stack>
+
+            <Divider/>
+            <Typography variant="h6">{t("production.batch.batch-data.costs")}</Typography>
+            <BatchDataCostsList batchId={batchData?.batch?.id}/>
         </Stack>
     );
 };
@@ -206,15 +256,25 @@ const BatchDataForm = ({
 
     const {mutateAsync: update, isPending: isUpdating} = usePut();
 
+    const {useStore} = usePanel<unknown, IBatchDataStoreState>();
+    const selectedBatchDataId = useStore(state => state.uiState.selectedBatchDataId);
+    const setUIState = useStore(state => state.setUIState);
+
+    useEffect(() => {
+        if (extra?.batchDataId) {
+            setUIState({selectedBatchDataId: extra.batchDataId});
+        }
+    }, [extra]);
+
     return (
         <GenericForm<IBatchDataForm, IBatchData>
-            dialogMode
+            resource="produzione - lotti"
+            disableCreateButton
             floatingPanelMode
-            floatingPanelUUID={"batch-data-form"}
-            selectedId={extra?.batchDataId}
+            floatingPanelUUID={extra?.panelId as string}
+            selectedId={selectedBatchDataId}
             entity={batchData}
             disableDeleteButton
-            closePanelOnSave={false}
             isSaving={isUpdating}
             emptyValues={{
                 amount: null,
@@ -260,6 +320,7 @@ const BatchDataForm = ({
                 shipment_subcontractor_id: entity.shipment_subcontractor?.id ?? null,
                 currency_id: entity.currency?.id ?? null,
             })}
+            onClearSelection={() => setUIState({selectedBatchDataId: null})}
             update={(id, payload) => update({id, payload})}
             renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
         />

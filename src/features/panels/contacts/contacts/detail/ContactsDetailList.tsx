@@ -10,8 +10,9 @@ import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {openDialog} from "@ui/dialog/dialogHelper";
 import ListToolbar from "@features/panels/shared/ListToolbar";
-import {NewButton} from "@features/panels/shared/CustomButton";
+import CustomButton from "@features/panels/shared/CustomButton";
 import {Typography} from "@mui/material";
+import AddIcCallIcon from '@mui/icons-material/AddIcCall';
 
 const ContactsDetailList = () => {
     const {t} = useTranslation(["form"]);
@@ -35,6 +36,9 @@ const ContactsDetailList = () => {
         {
             accessorKey: "name",
             header: t("form:contacts.details.value"),
+            Cell: ({row}) => (
+                <Typography sx={{textTransform: "lowercase"}}>{row.original.detail_type.name}</Typography>
+            )
         },
         {
             accessorKey: "note",
@@ -68,8 +72,11 @@ const ContactsDetailList = () => {
                         <ListToolbar
                             label={<Typography variant="h6">{t("contacts.details.list")}</Typography>}
                             buttons={[
-                                <NewButton
+                                <CustomButton
                                     isEnable={!!selectedContactId}
+                                    label={t("contacts.details-add-btn")}
+                                    color={"primary"}
+                                    icon={<AddIcCallIcon/>}
                                     onClick={() => handleOpenCreateDialog()}
                                 />
                             ]}

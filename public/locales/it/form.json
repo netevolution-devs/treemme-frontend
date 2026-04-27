@@ -62,6 +62,8 @@
     "name": "Nazione"
   },
   "contacts": {
+    "details-add-btn": "Nuovo recapito",
+    "addresses-add-btn": "Nuovo indirizzo",
     "payment": "Pagamento predefinito",
     "select": "Tipologia",
     "client": "Cliente",
@@ -96,7 +98,7 @@
       "list": "Lista indirizzi",
       "name": "Tipologia indirizzo",
       "address": "Indirizzo",
-      "cap": "Cap e provincia",
+      "cap": "CAP",
       "address-1": "Riga 1",
       "address-2": "Riga 2",
       "address-3": "Riga 3",
@@ -261,13 +263,13 @@
         "amount-currency": "Importo",
         "quantity": "Quantità",
         "pallet": "Pallet",
-        "average_weight": "Peso medio KG",
-        "gross_weight": "Peso lordo KG",
-        "pallet_weight": "Tara KG peso pallet",
-        "net_weight": "Peso netto KG",
-        "founded_gross_weight": "Peso lordo KG atteso",
-        "founded_net_weight": "Peso netto KG atteso",
-        "founded_average_weight": "Peso medio KG atteso",
+        "average_weight": "Peso medio KG atteso",
+        "gross_weight": "Peso lordo KG atteso",
+        "pallet_weight": "Tara KG peso pallet ",
+        "net_weight": "Peso netto KG atteso",
+        "founded_gross_weight": "Peso lordo KG verificato",
+        "founded_net_weight": "Peso netto KG verificato",
+        "founded_average_weight": "Peso medio KG verificato",
         "payment_date": "Data pagamento",
         "shipping_cost": "Spese di trasporto",
         "carrier": "Vettore",
@@ -276,7 +278,15 @@
         "sea_port_date": "Data arrivo porto",
         "container_code": "Codice container",
         "sea_port": "Porto",
-        "currency": "Valuta"
+        "currency": "Valuta",
+        "weights": "Pesi",
+        "payment_and_delivery": "Pagamento e consegna",
+        "port": "Porto",
+        "costs": "Costi",
+        "type": "Tipo",
+        "date": "Data",
+        "cost": "Costo",
+        "note": "Note"
       }
     },
     "machinery": {
@@ -495,7 +505,8 @@
   },
   "work_area_management": {
     "name": "Nome",
-    "description": "Descrizione"
+    "description": "Descrizione",
+    "filter": "Filtra"
   },
   "processes": {
     "scheduled_date": "Data programmazione",

@@ -12,7 +12,8 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                                                    TextFieldProps,
                                                                    showHelperRow = false,
                                                                    maxLength = 255,
-                                                               }: ControlledFieldProps<TFieldValues>) => {
+                                                                   showUpperCase = true,
+                                                               }: ControlledFieldProps<TFieldValues> & {showUpperCase?: boolean}) => {
     const {t} = useTranslation(["common"])
     const {
         control,
@@ -62,7 +63,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                             },
                             htmlInput: {
                                 maxLength: maxLength,
-                                sx: {textTransform: "uppercase"}
+                                sx: {textTransform: showUpperCase ? "uppercase" : "lowercase"}
                             },
                             inputLabel: {
                                 shrink: isShrink,

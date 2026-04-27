@@ -1,4 +1,4 @@
-import {forwardRef, useEffect} from "react";
+import {forwardRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import BaseDialog from "@ui/dialog/BaseDialog";
 import {useTranslation} from "react-i18next";
@@ -14,7 +14,6 @@ import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import AddIcon from '@mui/icons-material/Add';
 import dayjs from "dayjs";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
-import {useWatch} from "react-hook-form";
 
 type Props = {
     currencyId?: number,
@@ -52,7 +51,7 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedCurrencyId}
+                selectedId={null}
                 entity={{
                     date: dayjs().format("YYYY-MM-DD"),
                     change_value: currencyValue ?? null,
@@ -68,11 +67,15 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({
                     change_value: x.change_value,
                     currency_id: currencyId ?? null,
                 })}
-                create={(payload) => createExchange({
-                    date: payload.date,
-                    change_value: payload.change_value,
-                    currency_id: selectedCurrencyId as number ?? currencyId
-                })}
+                create={async (payload) => {
+                    const result = await createExchange({
+                        date: payload.date,
+                        change_value: payload.change_value,
+                        currency_id: currencyId ?? selectedCurrencyId as number
+                    });
+                    onChangeValue?.(payload.change_value as number);  // only fires after successful POST
+                    return result;
+                }}
                 validateBeforeSave={(v) => !!v.date && !!v.change_value}
                 extraButtons={[
                     <CustomButton
@@ -83,40 +86,18 @@ const CurrenciesExchangeFormDialog = forwardRef<IDialogActions, Props>(({
                     />
                 ]}
                 isSaving={isPending}
-                renderFields={() => (
-                    onChangeValue && <CurrenciesExchangeFormFields onChangeValue={onChangeValue}/>
-                )}
+                renderFields={() => <CurrenciesExchangeFormFields/>}
             />
         </BaseDialog>
     )
 });
 
-const CurrenciesExchangeFormFields = ({onChangeValue}: { onChangeValue: (value: number) => void }) => {
+const CurrenciesExchangeFormFields = () => {
     const {t} = useTranslation(["form", "common"]);
-
-    const currentCurrencyValue = useWatch<ICurrenciesExchangeForm>(
-        {name: "change_value"}
-    );
-
-    useEffect(() => {
-        if (currentCurrencyValue !== null) {
-            onChangeValue(currentCurrencyValue as number);
-        }
-    }, [currentCurrencyValue, onChangeValue])
-
     return (
         <Stack gap={2}>
-            <DateFieldControlled<ICurrenciesExchangeForm>
-                name={"date"}
-                label={t("currencies.date")}
-                required
-            />
-            <NumberFieldControlled<ICurrenciesExchangeForm>
-                name={"change_value"}
-                label={t("currencies.change_value")}
-                required
-                precision={3}
-            />
+            <DateFieldControlled<ICurrenciesExchangeForm> name={"date"} label={t("currencies.date")} required />
+            <NumberFieldControlled<ICurrenciesExchangeForm> name={"change_value"} label={t("currencies.change_value")} required precision={4} />
         </Stack>
     )
 }

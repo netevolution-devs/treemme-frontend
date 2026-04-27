@@ -5,7 +5,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Stack, Typography} from "@mui/material";
-import {useMemo, useRef} from "react";
+import {useEffect, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {
     IDeliveryNoteRow
@@ -36,7 +36,6 @@ import type {
     IDeliveryNotesRowsStoreParams,
     IDeliveryNotesRowsStoreState
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
-import type {IOrderRowForm} from "@features/panels/orders/customer-orders/order-rows/OrderRowsForm";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -86,6 +85,7 @@ const DeliveryNotesRowsForm = ({
         setFormState
     });
 
+
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteRowApi;
     const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
 
@@ -101,11 +101,18 @@ const DeliveryNotesRowsForm = ({
 
     const {data: currencies = []} = currencyApi.useGetList();
 
+    useEffect(() => {
+        if (floatingPanelUUID.includes("create")) {
+            setFormState("new");
+        }
+    }, [floatingPanelUUID, selectedDeliveryNoteRowId]);
+
     return (
         <Box sx={{p: 0}}>
             <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
+                resource={"ddt & fatture - documenti di trasporto"}
                 onSuccess={handlePanelSuccess}
-                dialogMode
+                disableCreateButton
                 floatingPanelMode
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedDeliveryNoteRowId}
@@ -121,7 +128,7 @@ const DeliveryNotesRowsForm = ({
                     // price: null,
                     // total_value: null,
                     currency_price: null,
-                    currency_change: 1,
+                    currency_exchange: 1,
                     // currency_total_value: null,
                     kg_weight: null,
                     row_note: "",
@@ -141,7 +148,7 @@ const DeliveryNotesRowsForm = ({
                     // price: x.price,
                     // total_value: x.total_value,
                     currency_price: x.currency_price,
-                    currency_change: x.currency_change,
+                    currency_exchange: x.currency_exchange,
                     // currency_total_value: x.currency_total_value,
                     kg_weight: x.kg_weight,
                     row_note: x.row_note || "",
@@ -178,6 +185,9 @@ const DeliveryNotesRowsForm = ({
 const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId: number }) => {
     const {t} = useTranslation(["form"]);
 
+    const {useStore} = usePanel<unknown, IDeliveryNotesRowsStoreState>();
+    const isFormDisabled = useStore(state => state.uiState.isFormDisabled);
+
     const {data: deliveryNote} = deliveryNoteApi.useGetDetail(ddtId);
     const {data: deliveryNoteRow} = deliveryNoteRowApi.useGetDetail(ddtRowId);
 
@@ -208,18 +218,21 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
 
     const watchedBatchId = useWatch<IDeliveryNoteRowForm>({name: "batch_id"});
     const watchedCurrencyId = useWatch<IDeliveryNoteRowForm>({name: "currency_id"});
-    const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_change"});
+    const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_exchange"});
 
     const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
 
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
-    const {setValue} = useFormContext<IOrderRowForm>();
+    const {setValue} = useFormContext<IDeliveryNoteRowForm>();
 
     return (
         <Stack gap={1}>
             <CurrencyWatcher
+                key={ddtRowId || 'create'}
                 currencies={currencies}
-                exchangeFieldName={"currency_change"}
+                exchangeFieldName={"currency_exchange"}
+                isEditMode={!!ddtRowId}
+                entityCurrencyId={deliveryNoteRow?.currency?.id ?? null}
             />
             <CurrenciesExchangeFormDialog
                 ref={addExchangeDialogRef}
@@ -300,7 +313,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     label={t("orders.row.currency")}
                     options={currencyOptions}
                 />
-                <NumberFieldControlled<IOrderRowForm>
+                <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="currency_price"
                     label={t("orders.row.currency_price")}
                 />
@@ -313,16 +326,16 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
 
             <Box sx={{display: 'flex', gap: 1}}>
                 <NumberFieldControlled<IDeliveryNoteRowForm>
-                    name="currency_change"
+                    name="currency_exchange"
                     label={t("orders.row.currency_exchange")}
                     precision={4}
                     deactivated
                 />
                 <Box sx={{mb: 1}}>
                     <NewButton
-                        sx={{pr: 0, maxHeight: 32}}
+                        sx={{px: 0.5, maxHeight: 32}}
                         onClick={() => openDialog(addExchangeDialogRef)}
-                        isEnable={!isEuro(watchedCurrencyId as number)}
+                        isEnable={!isEuro(watchedCurrencyId as number) && !isFormDisabled}
                         disableLabel
                     />
                 </Box>
@@ -342,6 +355,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <TextFieldControlled<IDeliveryNoteRowForm>
                     name="row_note"
                     label={t("shipping.ddt_rows.row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
                 />
             </Box>
         </Stack>

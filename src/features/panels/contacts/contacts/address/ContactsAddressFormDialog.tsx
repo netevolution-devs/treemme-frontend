@@ -8,7 +8,7 @@ import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contact
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi";
-import {capApi} from "@features/panels/contacts/cap/api/capApi";
+// import {capApi} from "@features/panels/contacts/cap/api/capApi";
 import {Box, Stack} from "@mui/material";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {forwardRef} from "react";
@@ -23,8 +23,8 @@ export type IContactAddressForm = Omit<IContactAddress,
     'town'
 > & {
     nation_id: number | null;
-    town_id: number | null;
     contact_id: number | null;
+    zip_code: string;
 };
 
 const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -50,10 +50,10 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
     const {
         mutateAsync: deleteAddress,
         isPending: isDeleting
-    } = useDelete({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', String(contact?.id)]});
+    } = useDelete({invalidateQueries: ['CONTACT', 'LIST']});
 
     const {data: nations} = nationsApi.useGetList();
-    const {data: caps} = capApi.useGetList();
+    // const {data: caps} = capApi.useGetList();
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -70,8 +70,9 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                     address_4: '',
                     address_name: '',
                     nation_id: null,
-                    town_id: null,
+                    // town_id: null,
                     contact_id: null,
+                    zip_code: '',
                 }}
                 mapEntityToForm={(x) => ({
                     address: x.address,
@@ -80,8 +81,9 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                     address_4: x.address_4,
                     address_name: x.address_name,
                     nation_id: x.nation.id,
-                    town_id: x.town.id,
-                    contact_id: selectedContactId as number
+                    // town_id: x.town.id,
+                    contact_id: selectedContactId as number,
+                    zip_code: x.zip_code,
                 })}
                 create={(payload) => createAddress({...payload, contact_id: selectedContactId as number})}
                 update={(id, payload) => updateAddress({
@@ -92,7 +94,7 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedAddressId: null})}
-                validateBeforeSave={(v) => !!v.address_name && !!v.address && !!v.nation_id && !!v.town_id}
+                validateBeforeSave={(v) => !!v.address_name && !!v.address && !!v.nation_id && !!v.zip_code}
                 renderFields={() => (
                     <>
                         <Stack gap={1} sx={{mb: 1}}>
@@ -120,14 +122,19 @@ const ContactsAddressFormDialog = forwardRef<IDialogActions, Props>((_props, ref
                             />
                         </Stack>
                         <Box sx={{display: 'flex', gap: 1}}>
-                            <SelectFieldControlled<IContactAddressForm>
-                                name={"town_id"}
+                            {/*<SelectFieldControlled<IContactAddressForm>*/}
+                            {/*    name={"town_id"}*/}
+                            {/*    label={t("contacts.address.cap")}*/}
+                            {/*    options={caps?.map((x) => ({*/}
+                            {/*        value: x.id,*/}
+                            {/*        label: `${x.cap} - ${x.name} - ${x.province.name}`*/}
+                            {/*    })) || []}*/}
+                            {/*    minWidth={400}*/}
+                            {/*    required*/}
+                            {/*/>*/}
+                            <TextFieldControlled<IContactAddressForm>
+                                name={"zip_code"}
                                 label={t("contacts.address.cap")}
-                                options={caps?.map((x) => ({
-                                    value: x.id,
-                                    label: `${x.cap} - ${x.name} - ${x.province.name}`
-                                })) || []}
-                                minWidth={400}
                                 required
                             />
                             <SelectFieldControlled<IContactAddressForm>

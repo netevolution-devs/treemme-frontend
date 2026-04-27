@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useApi from "@api/useApi";
 
-interface IAddSubcontractorToContactPayload {
+export interface IAddSubcontractorToContactPayload {
     subcontractor_id: number;
 }
 

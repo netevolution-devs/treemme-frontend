@@ -12,8 +12,11 @@ import {NewButton} from "@features/panels/shared/CustomButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import useCallablePanel from "@ui/panel/useCallablePanel";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
-const DeliveryNotesRowList = () => {
+const DeliveryNotesRowsList = () => {
     const {t} = useTranslation(["form"]);
     const addPanel = useDockviewStore(state => state.addPanel);
 
@@ -61,6 +64,10 @@ const DeliveryNotesRowList = () => {
             customId: "createDeliveryNotesRows"
         });
     }
+
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = engine.can("ddt & fatture - documenti di trasporto", 'post');
 
     return (
         <GenericList<IDeliveryNoteRow>
@@ -113,7 +120,7 @@ const DeliveryNotesRowList = () => {
                     <ListToolbar
                         buttons={[
                             <NewButton
-                                isEnable={!!selectedDeliveryNoteId}
+                                isEnable={!!selectedDeliveryNoteId && canPost}
                                 onClick={() => handleOpenCreateRowDialog()}
                             />
                         ]}
@@ -126,4 +133,4 @@ const DeliveryNotesRowList = () => {
     );
 };
 
-export default DeliveryNotesRowList;
+export default DeliveryNotesRowsList;

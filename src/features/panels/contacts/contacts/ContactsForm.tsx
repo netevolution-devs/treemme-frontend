@@ -22,6 +22,7 @@ import {
 } from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {useEffect} from "react";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -46,8 +47,12 @@ export type IContactForm = Omit<IContact, 'id'
 
 const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IContactsStoreParams>) => {
     const {useStore} = usePanel<unknown, IContactsStoreState>();
-    const selectedContactId = useStore(state => state.uiState.selectedContactId);
+
     const setUIState = useStore(state => state.setUIState);
+
+    const fromParamsContactId = extra?.selectedContactId;
+    const fromStateContactId = useStore(state => state.uiState.selectedContactId);
+    const selectedContactId = fromParamsContactId ?? fromStateContactId;
 
     const {setFormState} = usePanelFormButtons();
     const {handlePanelSuccess} = usePanelFormLogic({
@@ -65,6 +70,12 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
     const {mutateAsync: updateContact, isPending: isPutting} = usePut();
     const {mutateAsync: deleteContact, isPending: isDeleting} = useDelete();
 
+    useEffect(() => {
+        if (selectedContactId) {
+            setUIState({selectedContactId});
+        }
+    }, [setUIState, fromParamsContactId, fromStateContactId])
+
     return (
         <GenericForm<IContactForm, IContact, IContactsStoreState>
             resource="contatti - contatti"
@@ -78,8 +89,8 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 contact_type_id: null,
                 client: extra?.client ?? false,
                 supplier: extra?.supplier ?? false,
-                agent: false,
-                subcontractor: false,
+                agent: extra?.agent ?? false,
+                subcontractor: extra?.subcontractor ?? false,
                 client_note: '',
                 client_shipment_note: '',
                 agent_percentage: null,

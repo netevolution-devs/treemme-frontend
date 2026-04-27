@@ -49,7 +49,7 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                 dialogRef={ref}
                 disabledBasicButtons
                 bypassConfirm
-                selectedId={selectedId}
+                selectedId={null}
                 entity={{
                     subcontractor_id: 0,
                     date: dayjs().format("YYYY-MM-DD"),

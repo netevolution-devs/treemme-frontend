@@ -17,6 +17,9 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog";
 import RefinementFormDialog
     from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
 const OrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -65,6 +68,10 @@ const OrderRowsList = () => {
     const dyeDialogRef = useRef<IDialogActions | null>(null);
     const refinementDialogRef = useRef<IDialogActions | null>(null);
 
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = engine.can("ordini - ordini clienti", 'post');
+
     return (
         <>
             <DyeFormDialog ref={dyeDialogRef}/>
@@ -95,7 +102,7 @@ const OrderRowsList = () => {
                     });
                 }}
                 additionalOptions={{
-                    enableRowActions: true,
+                    enableRowActions: canPost,
                     renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key="dye" onClick={() => {
                             openDialog(dyeDialogRef)
@@ -119,7 +126,7 @@ const OrderRowsList = () => {
                         <ListToolbar
                             buttons={[
                                 <NewButton
-                                    isEnable={!!selectedCustomerOrderId}
+                                    isEnable={!!selectedCustomerOrderId && canPost}
                                     onClick={() => handleOpenCreateRowDialog()}
                                 />
                             ]}

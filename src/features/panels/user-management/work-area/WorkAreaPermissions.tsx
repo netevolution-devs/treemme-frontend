@@ -4,7 +4,6 @@ import type {MRT_ColumnDef, MRT_Row} from "material-react-table";
 import {
     Button,
     Checkbox,
-    Divider,
     FormControl,
     IconButton,
     InputLabel,
@@ -130,8 +129,7 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
 
     return (
         <Stack gap={1.5} sx={{mt: 1}}>
-            <Divider/>
-            <Typography sx={{mb: 1, fontSize: 16, mt: 2}}>
+            <Typography sx={{fontSize: 16, mt: 2}} variant={"h6"}>
                 Permessi
             </Typography>
 
@@ -174,6 +172,7 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
                     </Button>
                 </Stack>
                 <GenericList<IWorkAreaGroupRoleAccess>
+                    disableBorder
                     data={groupRoleWorkAreas}
                     isLoading={false}
                     columns={columns}

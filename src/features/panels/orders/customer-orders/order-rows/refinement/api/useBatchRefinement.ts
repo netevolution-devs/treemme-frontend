@@ -14,7 +14,7 @@ const useBatchRefinement = (clientOrderRowId: number) => {
     return useMutation({
         mutationKey: ['BATCH-REFINEMENT'],
         mutationFn: async (payload: IRefinementPayload) => {
-            const response = await post<IRefinementPayload>(`/batch/refinement`, payload as never);
+            const response = await post<{id: number, batch_code: string}>(`/batch/refinement`, payload as never);
             return response.data.data;
         },
         onSuccess: () => {

@@ -84,6 +84,7 @@ const ContactsDetailFormDialog = forwardRef<IDialogActions, Props>((_props, ref)
                         <TextFieldControlled<IContactDetailForm>
                             name={"name"}
                             label={t("contacts.details.value")}
+                            showUpperCase={false}
                             required
                         />
                         <TextFieldControlled<IContactDetailForm>

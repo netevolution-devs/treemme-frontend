@@ -30,7 +30,7 @@ const RoutingDefault = () => {
             <Route element={<AuthUserGuard/>}>
                 {/* File routes: auth required, no Admin/Staff gate, no app Layout */}
                 <Route
-                    path="/file/subcontractor/:id"
+                    path="/file/batch/:id"
                     element={
                         <PermissionGuard
                             // TODO: add resource and requiredRoles once the role is known

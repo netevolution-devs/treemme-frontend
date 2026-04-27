@@ -39,12 +39,16 @@ import UsersPanel from "@features/panels/user-management/users/UsersPanel";
 import OrganizationManagementPanel from "@features/panels/user-management/organization/OrganizationManagementPanel";
 import UserAccessPanel from "@features/panels/user-management/permission (legacy)/UserAccessPanel";
 import WorkAreaPanel from "@features/panels/user-management/work-area/WorkAreaPanel";
+import ContactsAgentsPanel from "@features/panels/contacts/contacts/agents/ContactsAgentsPanel";
+import ContactsSubcontractorsPanel from "@features/panels/contacts/contacts/subcontractors/ContactsSubcontractorsPanel";
 import ArticleInternalColorsPanel from "@features/panels/products/article-internal-colors/ArticleInternalColorsPanel";
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
 import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
 import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
 
 export type TPanelKind =
+    | 'contactsAgents'
+    | 'contactsSubcontractors'
     | 'cap'
     | 'province'
     | 'nations'
@@ -95,6 +99,8 @@ export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewP
 export const PANEL_REGISTRY: DockviewComponents = {
     // contacts
     contacts:   (props) => <ContactsPanel {...props}/>,
+    contactsAgents: (props) => <ContactsAgentsPanel {...props}/>,
+    contactsSubcontractors: (props) => <ContactsSubcontractorsPanel {...props}/>,
     cap:        () => <CapPanel/>,
     province:   (props) => <ProvincePanel {...props}/>,
     nations:    (props) => <NationsPanel {...props}/>,

@@ -21,11 +21,11 @@ export const MenuEntries: IMenuEntry[] = [
                 component: "contacts",
                 permissionCheck: {resource: "contatti - contatti", action: "get"}
             },
-            {
-                i18nKey: "menu.contacts.cap",
-                component: "cap",
-                permissionCheck: {resource: "contatti - cap", action: "get"}
-            },
+            // {
+            //     i18nKey: "menu.contacts.cap",
+            //     component: "cap",
+            //     permissionCheck: {resource: "contatti - cap", action: "get"}
+            // },
             {
                 i18nKey: "menu.contacts.nations",
                 component: "nations",

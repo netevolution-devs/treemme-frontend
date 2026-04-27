@@ -28,6 +28,7 @@ import {
 } from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {useCanCheckOrder} from "@features/authz/useHasPermission";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -97,6 +98,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     };
 
     const {add: addSelectPanel} = useCallablePanel();
+    const canCheckOrder = useCanCheckOrder();
 
     useSubscribePanel<ICustomerOrderForm>({
         formKey: "client_id",
@@ -133,7 +135,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                         name={"checked"}
                         label={t("orders.checked")}
                         width={110}
-                        disabled
+                        disabled={!canCheckOrder}
                     />
                 </Box>
             </Box>
@@ -172,6 +174,19 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"agent_id"}
                     label={t("orders.agent")}
                     options={agentOptions}
+                    onNoOptionsMatch={() => {
+                        addSelectPanel({
+                            extra: {
+                                client: true,
+                                selectedContactId: clientId,
+                            },
+                            initialValue: '',
+                            menu: {
+                                component: "contacts",
+                                i18nKey: "menu.contacts.contacts"
+                            }
+                        })
+                    }}
                 />
                 <TextFieldControlled<ICustomerOrderForm>
                     label={t("orders.agent_order_number")}
@@ -210,8 +225,21 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 label={t("orders.destination")}
                 options={clientAddresses.map(p => ({
                     value: p.id,
-                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.town.name} - ${p.nation.name}`
+                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.zip_code} - ${p.nation.name}`
                 }))}
+                onNoOptionsMatch={() => {
+                    addSelectPanel({
+                        extra: {
+                            client: true,
+                            selectedContactId: clientId,
+                        },
+                        initialValue: '',
+                        menu: {
+                            component: "contacts",
+                            i18nKey: "menu.contacts.contacts"
+                        }
+                    })
+                }}
             />
 
             {/*

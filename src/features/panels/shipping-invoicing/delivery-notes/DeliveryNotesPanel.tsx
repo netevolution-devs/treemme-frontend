@@ -4,8 +4,8 @@ import GenericPanel from "@features/panels/shared/GenericPanel";
 import DeliveryNotesList from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesList";
 import DeliveryNotesForm from "@features/panels/shipping-invoicing/delivery-notes/DeliveryNotesForm";
 import {Box} from "@mui/material";
-import DeliveryNotesRowList
-    from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowList";
+import DeliveryNotesRowsList
+    from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsList";
 
 export interface IDeliveryNotesStoreState extends IPanelUIState {
     selectedDeliveryNoteId?: number | null;
@@ -38,7 +38,7 @@ const DeliveryNotesPanel = () => {
                     <DeliveryNotesForm/>
                 </Box>
                 <Box sx={{flex: '1 1 600px', minWidth: 0}}>
-                    <DeliveryNotesRowList/>
+                    <DeliveryNotesRowsList/>
                 </Box>
             </Box>
         </GenericPanel>

@@ -8,13 +8,14 @@ import type {IArticle} from "@features/panels/products/articles/api/IArticle";
 import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction";
 import type {IBatchCompositionResponse} from "@features/panels/production/batches/composition/api/IBatchComposition";
 
-export interface IFatherBatch {
-    id: number;
-    batch: IBatch;
-    father_batch_piece: number;
-    father_batch_quantity: number;
-    composition_note: string;
+export interface IFatcherBatchDetails {
+    father_batch_pieces: number;
     date: string;
+}
+
+export interface IFatherBatch {
+    batch: IBatch;
+    details: IFatcherBatchDetails[];
 }
 
 export interface IBatch {
