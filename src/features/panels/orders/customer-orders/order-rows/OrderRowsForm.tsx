@@ -127,6 +127,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedOrderRowId}
                 entity={orderRow}
+                selectedIdKey={"selectedOrderRowId"}
                 emptyValues={{
                     measurement_unit_id: measurementUnits.find(x => x.name === "Metri quadrati")?.id || null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,

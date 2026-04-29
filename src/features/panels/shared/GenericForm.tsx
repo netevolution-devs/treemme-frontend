@@ -54,6 +54,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     resource?: ResourceName;
     closePanelOnSave?: boolean;
     closePanelOnCancel?: boolean;
+    selectedIdKey?: string;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -83,13 +84,15 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         floatingPanelUUID,
         resource,
         closePanelOnSave = true,
-        disableCreateButton = false
+        disableCreateButton = false,
+        selectedIdKey
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
 
     const {useStore} = usePanel<unknown, TUI>();
     const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
+    const setUIState = useStore(state => state.setUIState);
     const {setFormState} = usePanelFormButtons<unknown, TUI>();
 
     const {user} = useAuth();
@@ -163,10 +166,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
     };
 
-    const onSubmit = (data: TForm) => {
-        if (validateBeforeSave && !validateBeforeSave(data)) return;
+    const onSubmit = async (data: TForm) => {
+        if (validateBeforeSave && !validateBeforeSave(data)) {
+            setIsUpdateClick(false);
+            return;
+        }
         if (bypassConfirm) {
-            onConfirmSave();
+            await onConfirmSave();
             return;
         }
         openDialog(saveRef);
@@ -192,7 +198,14 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 if (res) {
                     onSuccess?.(res as TEntity);
                     onCreateSuccess?.(res.id);
-                    if (!dialogMode) {
+
+                    if (selectedIdKey) {
+                        setUIState({[selectedIdKey]: res.id} as Partial<TUI>);
+                    }
+
+                    if (isUpdateClick) {
+                        setFormState('selected');
+                    } else if (!dialogMode) {
                         methods.reset(emptyValues);
                         setFormState('init');
                     }
@@ -214,7 +227,10 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             setFormState('selected');
         } else if (!selectedId) {
             methods.reset(emptyValues);
-            if (dialogMode || floatingPanelMode) return;
+            if (dialogMode || floatingPanelMode) {
+                setFormState('new');
+                return;
+            }
             setFormState('init');
         }
     }, [selectedId, entity]);
