@@ -68,6 +68,7 @@
     }
   },
   "button": {
+    "update": "Aggiorna",
     "new": "Nuovo",
     "next": "Avanti",
     "back": "Indietro",

@@ -22,7 +22,8 @@ export const usePanelFormButtons = <F, U extends IPanelUIState>() => {
                         edit: false,
                         delete: false,
                         cancel: false,
-                        save: false
+                        save: false,
+                        update: false
                     }
                 } as Partial<U>);
                 break;
@@ -34,7 +35,8 @@ export const usePanelFormButtons = <F, U extends IPanelUIState>() => {
                         edit: false,
                         delete: false,
                         cancel: true,
-                        save: true
+                        save: true,
+                        update: true
                     }
                 } as Partial<U>);
                 break;
@@ -46,7 +48,8 @@ export const usePanelFormButtons = <F, U extends IPanelUIState>() => {
                         edit: false,
                         delete: false,
                         cancel: true,
-                        save: true
+                        save: true,
+                        update: true
                     }
                 } as Partial<U>);
                 break;
@@ -58,7 +61,8 @@ export const usePanelFormButtons = <F, U extends IPanelUIState>() => {
                         edit: true,
                         delete: true,
                         cancel: true,
-                        save: false
+                        save: false,
+                        update: false
                     }
                 } as Partial<U>);
                 break;
@@ -71,7 +75,8 @@ export const usePanelFormButtons = <F, U extends IPanelUIState>() => {
                         edit: false,
                         delete: false,
                         cancel: false,
-                        save: false
+                        save: false,
+                        update: false
                     }
                 } as Partial<U>);
                 break;

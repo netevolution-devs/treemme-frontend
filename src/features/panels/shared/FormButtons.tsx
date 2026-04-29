@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
 import CloseIcon from '@mui/icons-material/Close';
 import CustomButton from "@features/panels/shared/CustomButton";
+import SaveAsIcon from '@mui/icons-material/SaveAs';
 
 export interface IButtonState {
     new: boolean;
@@ -12,6 +13,7 @@ export interface IButtonState {
     delete: boolean;
     save: boolean;
     cancel: boolean;
+    update: boolean;
 }
 
 export const BaseButtonState: IButtonState = {
@@ -19,7 +21,8 @@ export const BaseButtonState: IButtonState = {
     edit: false,
     delete: false,
     save: false,
-    cancel: false
+    cancel: false,
+    update: false
 };
 
 interface FormButtonsProps {
@@ -36,6 +39,8 @@ interface FormButtonsProps {
     hideSave?: boolean;
     overrideButtonState?: boolean;
     isLoading?: boolean;
+    onUpdate?: () => void;
+    hideUpdate?: boolean;
 }
 
 const FormButtons = ({
@@ -52,6 +57,8 @@ const FormButtons = ({
                          hideSave = false,
                          overrideButtonState = false,
                          isLoading = false,
+                         onUpdate,
+                         hideUpdate = false,
                      }: FormButtonsProps) => {
     return (
         <Box sx={{
@@ -95,6 +102,16 @@ const FormButtons = ({
                     color={"inherit"}
                     icon={<CloseIcon/>}
                     isEnable={buttonState.cancel || overrideButtonState}
+                />
+            )}
+            {!hideUpdate && (
+                <CustomButton
+                    onClick={() => onUpdate?.()}
+                    label={"button.update"}
+                    color={"primary"}
+                    icon={<SaveAsIcon/>}
+                    isEnable={buttonState.update || overrideButtonState}
+                    isLoading={isLoading}
                 />
             )}
             {!hideSave && (
