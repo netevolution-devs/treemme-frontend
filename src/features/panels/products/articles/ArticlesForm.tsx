@@ -147,7 +147,7 @@ const ArticlesFormFields = ({
     const {data: colors = []} = colorApi.useGetList({queryParams: {client: clientId as number}});
 
     const colorOptions = useMemo(() =>
-            colors.map(c => ({value: c.id, label: `${c.color}`})),
+            colors.map(c => ({value: c.id, label: `${c.color} ${c.internal_color ? " - " + c.internal_color?.name : ""}`})),
         [colors]);
 
     const {add: addSelectPanel} = useCallablePanel();
