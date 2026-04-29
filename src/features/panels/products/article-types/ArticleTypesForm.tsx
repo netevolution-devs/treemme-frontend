@@ -7,7 +7,7 @@ import type {IArticleType} from "@features/panels/products/article-types/api/IAr
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import {leatherTypeApi} from "@features/panels/leathers/types/api/leatherTypeApi";
-import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi";
+// import {articleClassApi} from "@features/panels/products/article-classes/api/articleClassApi";
 import {useMemo} from "react";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
@@ -62,7 +62,10 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedArticleTypeId: null})}
             onSuccess={handlePanelSuccess}
-            validateBeforeSave={(v) => !!v.name && !!v.leather_type_id && !!v.article_class_id}
+            validateBeforeSave={(v) => !!v.name
+                && !!v.leather_type_id
+                // && !!v.article_class_id
+            }
             renderFields={() => (
                 <ArticleTypesFields/>
             )}
@@ -74,15 +77,15 @@ const ArticleTypesFields = () => {
     const {t} = useTranslation(["form"]);
 
     const {data: leatherTypes = []} = leatherTypeApi.useGetList();
-    const {data: articleClasses = []} = articleClassApi.useGetList();
+    // const {data: articleClasses = []} = articleClassApi.useGetList();
 
     const leatherTypeOptions = useMemo(() =>
             leatherTypes.map(lt => ({value: lt.id, label: lt.name})),
         [leatherTypes]);
 
-    const articleClassOptions = useMemo(() =>
-            articleClasses.map(ac => ({value: ac.id, label: ac.name})),
-        [articleClasses]);
+    // const articleClassOptions = useMemo(() =>
+    //         articleClasses.map(ac => ({value: ac.id, label: ac.name})),
+    //     [articleClasses]);
 
     const {add: addSelectPanel} = useCallablePanel();
 
@@ -118,21 +121,21 @@ const ArticleTypesFields = () => {
                     })
                 }}
             />
-            <SelectFieldControlled<IArticleTypeForm>
-                name="article_class_id"
-                label={t("products.articles.article_class")}
-                options={articleClassOptions}
-                required
-                onNoOptionsMatch={(input) => {
-                    addSelectPanel({
-                        initialValue: input,
-                        menu: {
-                            component: "articleClasses",
-                            i18nKey: "menu.products.article-classes"
-                        }
-                    })
-                }}
-            />
+            {/*<SelectFieldControlled<IArticleTypeForm>*/}
+            {/*    name="article_class_id"*/}
+            {/*    label={t("products.articles.article_class")}*/}
+            {/*    options={articleClassOptions}*/}
+            {/*    required*/}
+            {/*    onNoOptionsMatch={(input) => {*/}
+            {/*        addSelectPanel({*/}
+            {/*            initialValue: input,*/}
+            {/*            menu: {*/}
+            {/*                component: "articleClasses",*/}
+            {/*                i18nKey: "menu.products.article-classes"*/}
+            {/*            }*/}
+            {/*        })*/}
+            {/*    }}*/}
+            {/*/>*/}
         </>
     )
 }
