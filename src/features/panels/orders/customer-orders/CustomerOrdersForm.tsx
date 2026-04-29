@@ -135,7 +135,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                         name={"checked"}
                         label={t("orders.checked")}
                         width={110}
-                        disabled={!canCheckOrder}
+                        disabled={!canCheckOrder || order?.checked as boolean}
                     />
                 </Box>
             </Box>
