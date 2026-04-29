@@ -15,6 +15,8 @@ import {
     customerOrderApi,
     type ICustomerOrderPayload
 } from "@features/panels/orders/customer-orders/api/customerOrderApi";
+import CustomButton from "@features/panels/shared/CustomButton";
+import {PrintRounded} from "@mui/icons-material";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
 import GenericForm from "@features/panels/shared/GenericForm";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
@@ -305,8 +307,9 @@ const CustomerOrdersForm = () => {
     const selectedCustomerOrderId = useStore(state => state.uiState.selectedCustomerOrderId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {useGetDetail, usePost, usePut, useDelete} = customerOrderApi;
+    const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = customerOrderApi;
     const {data: order} = useGetDetail(selectedCustomerOrderId);
+    const getOrderPdf = useGetPdf();
     const {mutateAsync: createOrder, isPending: isPosting} = usePost();
     const {mutateAsync: updateOrder, isPending: isPutting} = usePut();
     const {mutateAsync: deleteOrder, isPending: isDeleting} = useDelete();
@@ -376,6 +379,16 @@ const CustomerOrdersForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
             validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
+            extraButtons={[
+                <CustomButton
+                    label={""}
+                    minWidth={0}
+                    color={"primary"}
+                    icon={<PrintRounded fontSize={"small"}/>}
+                    isEnable={!!selectedCustomerOrderId}
+                    onClick={() => selectedCustomerOrderId && getOrderPdf(selectedCustomerOrderId)}
+                />
+            ]}
             renderFields={() => (
                 <FormFields
                     clients={clients}
