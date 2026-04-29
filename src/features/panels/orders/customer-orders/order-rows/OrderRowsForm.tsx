@@ -88,6 +88,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
 
     const {useGetDetail, usePost, usePut, useDelete} = orderRowApi;
     const {data: orderRow} = useGetDetail(selectedOrderRowId);
+    const {data: order} = customerOrderApi.useGetDetail(clientOrderId);
 
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
         invalidateQueries: ['CLIENT-ORDER', String(clientOrderId)]
@@ -124,6 +125,8 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                 resource="ordini - ordini clienti"
                 onSuccess={handlePanelSuccess}
                 disableCreateButton
+                disableEditButton={order?.checked as boolean}
+                disableDeleteButton={order?.checked as boolean}
                 floatingPanelMode
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedOrderRowId}
@@ -204,7 +207,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"primary"}
                         icon={<ColorLensIcon/>}
                         onClick={() => openDialog(dyeDialogRef)}
-                        isEnable={!!selectedOrderRowId && canPost}
+                        isEnable={!!selectedOrderRowId && canPost && !order?.checked as boolean}
                     />,
                     <CustomButton
                         key="refinement"
@@ -212,7 +215,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"success"}
                         icon={<SettingsInputHdmiIcon/>}
                         onClick={() => openDialog(refinementDialogRef)}
-                        isEnable={!!selectedOrderRowId && canPost}
+                        isEnable={!!selectedOrderRowId && canPost && !order?.checked as boolean}
                     />,
                 ]}
                 renderFields={() => (

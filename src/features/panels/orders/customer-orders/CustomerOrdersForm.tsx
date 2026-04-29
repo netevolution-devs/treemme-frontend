@@ -323,6 +323,8 @@ const CustomerOrdersForm = () => {
             resource="ordini - ordini clienti"
             selectedId={selectedCustomerOrderId}
             entity={order}
+            disableEditButton={order?.checked as boolean}
+            disableDeleteButton={order?.checked as boolean}
             emptyValues={{
                 client_id: null,
                 agent_id: null,
