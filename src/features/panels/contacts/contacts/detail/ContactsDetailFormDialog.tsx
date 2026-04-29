@@ -41,7 +41,7 @@ const ContactsDetailFormDialog = forwardRef<IDialogActions, Props>((_props, ref)
     const {
         mutateAsync: deleteDetail,
         isPending: isDeleting
-    } = useDelete({invalidateQueries: ['CONTACT', 'CONTACT_DETAIL', String(selectedContactId)]});
+    } = useDelete({invalidateQueries: ['CONTACT']});
 
     const {data: detailTypes} = contactsDetailTypeApi.useGetList();
 

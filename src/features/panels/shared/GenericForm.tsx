@@ -271,7 +271,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             hideEdit={dialogMode || !canPut || disableEditButton}
                             hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
                             hideSave={disabledBasicButtons || (!canPost && !canPut)}
-                            hideUpdate={(!dialogMode && !floatingPanelMode) || !canPut}
+                            hideUpdate={(!floatingPanelMode) || !canPut}
                             onUpdate={handleUpdate}
                             overrideButtonState={dialogMode}
                             isLoading={isSaving}
