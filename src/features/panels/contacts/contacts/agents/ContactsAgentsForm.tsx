@@ -56,6 +56,7 @@ const ContactsAgentsForm = ({
             disabledBasicButtons
             disableCreateButton
             disableEditButton
+            disableUpdateButton
             bypassConfirm
             selectedId={null}
             entity={{

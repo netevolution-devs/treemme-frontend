@@ -54,6 +54,7 @@ const ContactsSubcontractorsForm = ({
             disabledBasicButtons
             disableCreateButton
             disableEditButton
+            disableUpdateButton
             bypassConfirm
             selectedId={null}
             entity={{

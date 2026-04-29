@@ -49,6 +49,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     disableDeleteButton?: boolean;
     disableCreateButton?: boolean;
     disableEditButton?: boolean;
+    disableUpdateButton?: boolean;
 
     onCreateSuccess?: (id: number) => void;
     resource?: ResourceName;
@@ -78,6 +79,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         disabledBasicButtons = false,
         disableDeleteButton = false,
         disableEditButton = false,
+        disableUpdateButton = false,
         bypassConfirm = false,
         onCreateSuccess,
         floatingPanelMode = false,
@@ -290,7 +292,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             hideEdit={dialogMode || !canPut || disableEditButton}
                             hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
                             hideSave={disabledBasicButtons || (!canPost && !canPut)}
-                            hideUpdate={(!floatingPanelMode) || !canPut}
+                            hideUpdate={disableUpdateButton || !floatingPanelMode || !canPut}
                             onUpdate={handleUpdate}
                             overrideButtonState={dialogMode}
                             isLoading={isSaving}
