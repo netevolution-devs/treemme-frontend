@@ -20,6 +20,7 @@ import RefinementFormDialog
 import {useAuth} from "@features/auth/model/AuthContext";
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import dayjs from "dayjs";
 
 const OrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -47,6 +48,7 @@ const OrderRowsList = () => {
         {
             accessorKey: "delivery_date_confirmed",
             header: t("orders.row.delivery_date_confirmed"),
+            Cell: ({row}) => row.original.delivery_date_confirmed ? dayjs(row.original.delivery_date_confirmed).format("DD/MM/YYYY") : "-",
         },
         {
             accessorKey: "article.name",
