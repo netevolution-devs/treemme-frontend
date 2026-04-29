@@ -368,6 +368,7 @@
       "shipment_schedule": "Settimana spedizione",
       "production_schedule": "Settimana produzione",
       "production_row_note": "Note riga produzione",
+      "administration_row_note": "Note riga amministrazione",
       "processed": "Evasa",
       "cancelled": "Annullata",
       "refinement": "Rifinitura",

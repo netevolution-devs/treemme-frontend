@@ -39,6 +39,7 @@ import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {useAuth} from "@features/auth/model/AuthContext";
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -149,6 +150,8 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     article_id: null,
                     client_order_id: clientOrderId ?? 0,
                     selection_id: null,
+                    production_row_note: null,
+                    administration_row_note: null,
                 }}
                 mapEntityToForm={(x) => ({
                     measurement_unit_id: x.measurement_unit.id,
@@ -171,6 +174,8 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     article_id: x.article.id,
                     client_order_id: clientOrderId ?? 0,
                     selection_id: x.selection?.id ?? null,
+                    production_row_note: x.production_row_note,
+                    administration_row_note: x.administration_row_note,
                 })}
                 create={(payload) => createRow({
                     ...payload,
@@ -394,6 +399,18 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     label={t("orders.row.total_price")}
                     value={orderRow?.total_price ?? undefined}
                     isFilled={!!orderRow}
+                />
+            </Box>
+            <Box sx={{display: "flex", gap: 1}}>
+                <TextFieldControlled<IOrderRowForm>
+                    name={"production_row_note"}
+                    label={t("orders.row.production_row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
+                />
+                <TextFieldControlled<IOrderRowForm>
+                    name={"administration_row_note"}
+                    label={t("orders.row.administration_row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
                 />
             </Box>
         </Stack>

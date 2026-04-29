@@ -22,6 +22,7 @@ export interface IOrderRow {
     shipment_schedule: number | null;
     production_schedule: number | null;
     production_row_note: string | null;
+    administration_row_note: string | null;
     delivery_date_request: string | null;
     delivery_date_confirmed: string | null;
     article: IArticle;
