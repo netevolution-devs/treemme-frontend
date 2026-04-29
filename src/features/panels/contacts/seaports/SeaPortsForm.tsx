@@ -5,15 +5,26 @@ import {seaPortApi} from "@features/panels/contacts/seaports/api/seaPortApi";
 import GenericForm from "@features/panels/shared/GenericForm";
 import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type ISeaPortForm = Omit<ISeaPort, 'id'>;
 
-const SeaPortsForm = () => {
+const SeaPortsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, ISeaportsStoreState>();
     const selectedSeaPortId = useStore(state => state.uiState.selectedSeaPortId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedSeaPortId,
+        onSuccess,
+        setFormState
+    })
 
     const {useGetDetail, usePost, usePut, useDelete} = seaPortApi;
     const {data: seaPort} = useGetDetail(selectedSeaPortId);
@@ -24,10 +35,11 @@ const SeaPortsForm = () => {
     return (
         <GenericForm<ISeaPortForm, ISeaPort, ISeaportsStoreState>
             resource="contatti - porti marittimi"
+            onSuccess={handlePanelSuccess}
             selectedId={selectedSeaPortId}
             entity={seaPort}
             emptyValues={{
-                name: '',
+                name: initialName ?? '',
                 note: '',
                 // ductible_day: null,
                 // parking_day_cost: null,

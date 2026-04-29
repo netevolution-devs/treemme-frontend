@@ -3,12 +3,14 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel";
 import SeaPortsList from "@features/panels/contacts/seaports/SeaPortsList";
 import SeaPortsForm from "@features/panels/contacts/seaports/SeaPortsForm";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
+import type {IDockviewPanelProps} from "dockview";
 
 export interface ISeaportsStoreState extends IPanelUIState {
     selectedSeaPortId?: number | null;
 }
 
-const SeaportsPanel = () => {
+const SeaportsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: ISeaportsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
@@ -19,7 +21,7 @@ const SeaportsPanel = () => {
                 <SeaPortsList/>
             }
         >
-            <SeaPortsForm/>
+            <SeaPortsForm {...props.params}/>
         </GenericPanel>
     )
 }
