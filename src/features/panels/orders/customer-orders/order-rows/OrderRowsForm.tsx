@@ -289,7 +289,7 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                 <SelectFieldControlled<IOrderRowForm>
                     name="article_id"
                     label={t("orders.row.article")}
-                    options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
+                    options={articles?.map(p => ({value: p.id, label: `${p.name}`})) || []}
                     required
                     onNoOptionsMatch={(input) => {
                         addSelectPanel({
