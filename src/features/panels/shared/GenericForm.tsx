@@ -221,6 +221,14 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "F10") {
+                event.preventDefault();
+                if (!isFormDisabled) {
+                    methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
+                }
+                return;
+            }
+
             const target = event.target as HTMLElement;
             if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
                 return;
@@ -236,11 +244,6 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
             if (event.key === "Enter" && isFormDisabled && !!selectedId) {
                 handleEdit();
-            }
-
-            if (event.ctrlKey && event.key === "F10" && !isFormDisabled && (dialogMode || floatingPanelMode)) {
-                event.preventDefault();
-                handleUpdate();
             }
         };
 
