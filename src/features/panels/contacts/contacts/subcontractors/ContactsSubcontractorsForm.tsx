@@ -50,6 +50,7 @@ const ContactsSubcontractorsForm = ({
         <GenericForm<IContactSubcontractorForm, IContactSubcontractorForm, IContactsSubcontractorsStoreState>
             resource="contatti - contatti"
             floatingPanelMode
+            floatingPanelUUID={extra?.panelId as string}
             disabledBasicButtons
             disableCreateButton
             disableEditButton
