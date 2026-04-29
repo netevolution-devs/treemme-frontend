@@ -54,6 +54,8 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         sx={{ minWidth, width: "100%" }}
                         options={options}
                         open={open}
+                        autoHighlight={true}
+                        autoSelect={true}
                         onOpen={() => setOpen(true)}
                         onClose={() => setOpen(false)}
                         disabled={disabled || deactivated}
