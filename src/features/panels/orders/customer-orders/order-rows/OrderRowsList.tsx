@@ -36,17 +36,34 @@ const OrderRowsList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IOrderRow>[]>(() => [
         {
-            accessorKey: "article.name",
-            header: t("orders.row.article"),
+            accessorKey: "measurement_unit.name",
+            header: t("orders.row.measurement_unit"),
         },
+
         {
             accessorKey: "quantity",
             header: t("orders.row.quantity"),
         },
         {
-            accessorKey: "measurement_unit.name",
-            header: t("orders.row.measurement_unit"),
-        }
+            accessorKey: "delivery_date_confirmed",
+            header: t("orders.row.delivery_date_confirmed"),
+        },
+        {
+            accessorKey: "article.name",
+            header: t("orders.row.article"),
+        },
+        {
+            accessorKey: "currency.sign",
+            header: t("orders.row.currency"),
+        },
+        {
+            accessorKey: "currency_price",
+            header: t("orders.row.currency_price"),
+        },
+        {
+            accessorKey: "production_row_note",
+            header: t("orders.row.production_row_note"),
+        },
     ], [t]);
 
     const handleOpenCreateRowDialog = () => {
