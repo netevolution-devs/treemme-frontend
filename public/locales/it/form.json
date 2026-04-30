@@ -539,5 +539,13 @@
   "shipment_conditions": {
     "name": "Condizione di spedizione",
     "borne_by_customer": "A carico del cliente"
+  },
+  "order-search": {
+    "client": "Cliente",
+    "order": "Ordine",
+    "r": "R",
+    "date": "Data",
+    "client-order": "Numero ordine cliente",
+    "client-date": "Data ordine cliente"
   }
 }
