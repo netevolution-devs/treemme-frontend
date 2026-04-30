@@ -546,6 +546,16 @@
     "r": "R",
     "date": "Data",
     "client-order": "Numero ordine cliente",
-    "client-date": "Data ordine cliente"
+    "client-date": "Data ordine cliente",
+    "shipping-status": "Stato spedizione",
+    "to-ship": "Da spedire",
+    "shipped": "Spedito",
+    "production-status": "Stato produzione",
+    "to-produce": "Da produrre",
+    "produced": "Prodotto",
+    "print-status": "Stato stampa",
+    "to-print": "Da stampare",
+    "printed": "Stampato",
+    "all": "Tutti"
   }
 }

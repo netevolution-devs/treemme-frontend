@@ -8,12 +8,12 @@ export interface ISearchOrderRowsStoreState extends IPanelUIState {
 }
 
 export interface ISearchOrderRowsFilters {
-    filterStartDate?: string;
-    filterEndDate?: string;
-    filterShippingStatus?: "to_ship" | "shipped";
-    filterProductionStatus?: "to_produce" | "produced";
-    filterPrintStatus?: "to_print" | "printed";
-    filterClientId?: number;
+    filterStartDate?: string | undefined;
+    filterEndDate?: string | undefined;
+    filterShippingStatus?: "to_ship" | "shipped" | undefined;
+    filterProductionStatus?: "to_produce" | "produced" | undefined;
+    filterPrintStatus?: "to_print" | "printed" | undefined;
+    filterClientId?: number | undefined;
 }
 
 const SearchOrderRowsPanel = () => {
