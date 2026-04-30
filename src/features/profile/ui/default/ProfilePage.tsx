@@ -29,9 +29,12 @@ const ProfilePage = () => {
                         <ButtonStartOtpSetup/>
                         <ButtonLogout/>
                     </Stack>
-                    <Box sx={{width: "100%", mt: 2, mb: 2, textAlign: "center"}}>
-                        <Typography variant="caption" color="text.secondary" textAlign={"center"}>
+                    <Box sx={{width: "100%", mt: 2, mb: 2, textAlign: "center", flexDirection: "column", display: "flex", gap: 0.5}}>
+                        <Typography variant="caption" color="text.secondary" textAlign={"center"} sx={{fontSize: 13}}>
                             Versione di sviluppo {version}
+                        </Typography>
+                        <Typography variant="caption" color="text.disabled" textAlign={"center"} sx={{fontSize: 12}}>
+                            Developed by netEvolution
                         </Typography>
                     </Box>
                 </SettingsSection>

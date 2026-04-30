@@ -1,6 +1,8 @@
 import {useTranslation} from "react-i18next";
 import type {SvgIconComponent} from "@mui/icons-material";
-import useGetWhoAmI from "@features/auth/api/useGetWhoAmI";import {Box, Card, CardContent, Grid, Stack, Typography,
+import useGetWhoAmI from "@features/auth/api/useGetWhoAmI";
+import {
+    Box, Card, CardContent, Chip, Grid, Stack, Typography,
     // Chip, Divider,  Button
 } from "@mui/material";
 import {
@@ -13,6 +15,9 @@ import {
 // import UpdateUserDialog from "@features/user/ui/components/UpdateUserDialog";
 // import type {IDialogActions} from "@ui/dialog/IDialogActions";
 // import useGetProfile from "@features/profile/api/useGetProfile";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import {useMemo} from "react";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
 interface RowDisplayProps {
     icon: SvgIconComponent;
@@ -45,10 +50,38 @@ const UserProfileCard = (
 
     // const updateUserDialogRef = useRef<IDialogActions>(null);
 
+    interface GroupRole {
+        group: string;
+        role: string;
+    }
+
+    const groupRoles = useMemo<GroupRole[]>(() => {
+        const accessControl = user?.accessControl;
+
+        if (!accessControl) return [];
+
+        // Usiamo un Set per tenere traccia delle combinazioni già viste
+        const seen = new Set<string>();
+
+        return accessControl.reduce<GroupRole[]>((acc, x) => {
+            // Creiamo una chiave unica per la coppia gruppo-ruolo
+            const key = `${x.group}|${x.role}`;
+
+            if (!seen.has(key)) {
+                seen.add(key);
+                acc.push({
+                    group: x.group,
+                    role: x.role
+                });
+            }
+
+            return acc;
+        }, []);
+    }, [user?.accessControl]);
+
     return (
         <Card variant={"outlined"}>
             {/*<UpdateUserDialog ref={updateUserDialogRef} userCode={user?.userCode as string} isProfile/>*/}
-
             <CardContent>
                 <Stack spacing={2}>
                     {/* Header */}
@@ -105,12 +138,31 @@ const UserProfileCard = (
                         {/*    <RowDisplay icon={BadgeIcon} text={user?.fiscalCode}/>*/}
                         {/*</Grid>*/}
 
-                        {/*<Grid size={{xs: 12, md: 6}}>*/}
-                        {/*    <Typography variant="caption" api="text.secondary">*/}
-                        {/*        {t("settings:profile.card.user-code")}*/}
-                        {/*    </Typography>*/}
-                        {/*    <RowDisplay icon={AccountIcon} text={user?.userCode}/>*/}
-                        {/*</Grid>*/}
+                        <Grid size={{xs: 12, md: 6}}>
+                            <Typography variant="caption" color="text.secondary">
+                                {t("settings:profile.card.user-code")}
+                            </Typography>
+                            <RowDisplay icon={AccountBoxIcon} text={user?.userCode}/>
+                        </Grid>
+
+                        <Grid size={{xs: 12, md: 6}}>
+                            <Box>
+                                <Typography variant="caption" color="text.secondary">
+                                    {t("settings:profile.card.access-control")}
+                                </Typography>
+                            </Box>
+                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.2, mt: 0.5}}>
+                                <AdminPanelSettingsIcon/>
+                                <Box sx={{display: 'flex', gap: 0.6, flexWrap: 'wrap'}}>
+                                    {groupRoles.map((role) => (
+                                        <Chip
+                                            label={`${role.group} - ${role.role}`}
+                                            size={"small"}
+                                        />
+                                    ))}
+                                </Box>
+                            </Box>
+                        </Grid>
 
                         {/*<Grid size={12}>*/}
                         {/*    <Typography variant="caption" api="text.secondary">*/}
