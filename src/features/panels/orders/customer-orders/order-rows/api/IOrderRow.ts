@@ -3,6 +3,7 @@ import type {IArticle} from "@features/panels/products/articles/api/IArticle";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
 import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
 import type {ISelection} from "@features/panels/products/selection/api/ISelection";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
 
 export interface IOrderRow {
     id: number;
@@ -29,4 +30,5 @@ export interface IOrderRow {
     client_order: ICustomerOrder;
     available_quantity: number;
     selection: ISelection;
+    address: IContactAddress;
 }

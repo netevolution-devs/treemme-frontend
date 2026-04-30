@@ -31,6 +31,7 @@ import {
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {useCanCheckOrder} from "@features/authz/useHasPermission";
+import {useFilteringAddress} from "@features/panels/shared/hooks/useFilteringAddress";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -54,13 +55,22 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     selectedCustomerOrderId: number | null | undefined
 }) => {
     const {t} = useTranslation(["form"]);
-    
+
+    const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
+    const setUIState = useStore(state => state.setUIState);
+
     const {setValue, control} = useFormContext<ICustomerOrderForm>();
 
     const clientId = useWatch({
         control,
         name: 'client_id'
     });
+
+    useEffect(() => {
+        if (clientId && selectedCustomerOrderId) {
+            setUIState({ selectedClientId: clientId});
+        }
+    }, [clientId, selectedCustomerOrderId]);
 
     const selectedClient = clients.find(c => c.id === clientId);
 
@@ -93,11 +103,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         }
     }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 
-    const filterAddressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
-        return addressLabels
-            .filter((label): label is string => !!label && label.trim().length > 0)
-            .join(', ');
-    };
+    const {filterAddressString} = useFilteringAddress();
 
     const {add: addSelectPanel} = useCallablePanel();
     const canCheckOrder = useCanCheckOrder();

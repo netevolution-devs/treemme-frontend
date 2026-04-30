@@ -40,6 +40,9 @@ import {useAuth} from "@features/auth/model/AuthContext";
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {useFilteringAddress} from "@features/panels/shared/hooks/useFilteringAddress";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -54,7 +57,8 @@ export type IOrderRowForm = Omit<IOrderRow,
     'total_price' |
     'total_currency_price' |
     'tolerance_quantity_percentage' |
-    'delivery_date_request'
+    'delivery_date_request' |
+    'address'
 > & {
     id?: number;
     article_id: number | null;
@@ -63,11 +67,13 @@ export type IOrderRowForm = Omit<IOrderRow,
     client_order_id: number;
     quantity: number | null;
     selection_id: number | null;
+    address_id: number | null;
 };
 
 const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IOrderRowsStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
+    const clientId = extra?.clientId;
     const clientOrderId = extra?.client_order_id;
     const orderRowId = extra?.order_row_id;
 
@@ -155,6 +161,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     selection_id: null,
                     production_row_note: null,
                     administration_row_note: null,
+                    address_id: null,
                 }}
                 mapEntityToForm={(x) => ({
                     measurement_unit_id: x.measurement_unit.id,
@@ -179,6 +186,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     selection_id: x.selection?.id ?? null,
                     production_row_note: x.production_row_note,
                     administration_row_note: x.administration_row_note,
+                    address_id: x.address?.id ?? null,
                 })}
                 create={(payload) => createRow({
                     ...payload,
@@ -220,6 +228,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                 ]}
                 renderFields={() => (
                     <OrderRowFormFields
+                        clientId={clientId as number}
                         clientOrderId={clientOrderId as number}
                         selectedOrderRowId={selectedOrderRowId as number}
                     />
@@ -230,11 +239,12 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
 };
 
 interface OrderRowFormFieldsProps {
+    clientId?: number;
     clientOrderId?: number;
     selectedOrderRowId?: number;
 }
 
-const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
+const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IOrderRowsStoreState>();
@@ -271,7 +281,12 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
         dependencyKey: "selection"
     })
 
+    const {filterAddressString} = useFilteringAddress();
+
     const {setValue} = useFormContext<IOrderRowForm>();
+
+    const {data: clientDetail} = contactsApi.useGetDetail(clientId);
+    const clientAddresses = clientDetail?.contact_addresses || [];
 
     return (
         <Stack gap={1}>
@@ -404,6 +419,27 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     isFilled={!!orderRow}
                 />
             </Box>
+            <SelectFieldControlled<ICustomerOrderForm>
+                name={"address_id"}
+                label={t("orders.destination")}
+                options={clientAddresses.map(p => ({
+                    value: p.id,
+                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.zip_code} - ${p.nation.name}`
+                }))}
+                onNoOptionsMatch={() => {
+                    addSelectPanel({
+                        extra: {
+                            client: true,
+                            selectedContactId: clientId,
+                        },
+                        initialValue: '',
+                        menu: {
+                            component: "contacts",
+                            i18nKey: "menu.contacts.contacts"
+                        }
+                    })
+                }}
+            />
             <Box sx={{display: "flex", gap: 1}}>
                 <TextFieldControlled<IOrderRowForm>
                     name={"production_row_note"}

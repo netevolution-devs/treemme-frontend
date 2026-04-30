@@ -28,6 +28,7 @@ const OrderRowsList = () => {
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedCustomerOrderId = useStore((state) => state.uiState.selectedCustomerOrderId);
     const selectedOrderRowId = useStore((state) => state.uiState.selectedOrderRowId);
+    const selectedClientId = useStore((state) => state.uiState.selectedClientId);
     const setUIState = useStore((state) => state.setUIState);
 
     const {add: addSelectPanel} = useCallablePanel();
@@ -109,6 +110,7 @@ const OrderRowsList = () => {
                     addSelectPanel({
                         initialValue: '',
                         extra: {
+                            clientId: selectedClientId,
                             client_order_id: selectedCustomerOrderId,
                             order_row_id: selectedOrderRowId,
                             panelId: "updateOrderRows:" + selectedOrderRowId
