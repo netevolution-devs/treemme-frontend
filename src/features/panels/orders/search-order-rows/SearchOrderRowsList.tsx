@@ -98,26 +98,20 @@ const SearchOrderRowsList = () => {
         {
             accessorKey: "measurement_unit.prefix",
             header: t("order-search.um"),
-            size: 50,
+            size: 30,
         },
         {
             accessorKey: "quantity",
             header: t("order-search.qta"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
         },
         {
             accessorKey: "currency.sign",
             header: t("order-search.v"),
-            size: 50,
+            size: 30,
         },
         {
             accessorKey: "price",
             header: t("order-search.price"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
             Cell: ({cell}) => cell.getValue<number>()?.toFixed(4)
         },
         {
@@ -129,16 +123,10 @@ const SearchOrderRowsList = () => {
             id: "qta_pro",
             header: t("order-search.qta-pro"),
             accessorFn: (row) => row.batch_orders?.batch?.quantity ?? 0,
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
         },
         {
             accessorKey: "production_schedule",
             header: t("order-search.scd-pro"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
         },
         {
             id: "qta_spe",
@@ -147,16 +135,10 @@ const SearchOrderRowsList = () => {
                 const ddtRows = row.batch_orders?.batch?.ddt_rows ?? [];
                 return ddtRows.reduce((acc, ddt) => acc + ddt.quantity, 0);
             },
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
         },
         {
             accessorKey: "shipment_schedule",
             header: t("order-search.scd-spe"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
         }
     ], [t]);
 
