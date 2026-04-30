@@ -19,6 +19,11 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {useMemo} from "react";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
+interface GroupRole {
+    group: string;
+    role: string;
+}
+
 interface RowDisplayProps {
     icon: SvgIconComponent;
     text: string | null | undefined;
@@ -50,21 +55,14 @@ const UserProfileCard = (
 
     // const updateUserDialogRef = useRef<IDialogActions>(null);
 
-    interface GroupRole {
-        group: string;
-        role: string;
-    }
-
     const groupRoles = useMemo<GroupRole[]>(() => {
         const accessControl = user?.accessControl;
 
         if (!accessControl) return [];
 
-        // Usiamo un Set per tenere traccia delle combinazioni già viste
         const seen = new Set<string>();
 
         return accessControl.reduce<GroupRole[]>((acc, x) => {
-            // Creiamo una chiave unica per la coppia gruppo-ruolo
             const key = `${x.group}|${x.role}`;
 
             if (!seen.has(key)) {
