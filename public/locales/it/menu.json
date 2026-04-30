@@ -43,7 +43,8 @@
       "search-customer-orders": "Ricerca Ordini Clienti",
       "supplier-schedule": "Scadenziario Fornitori",
       "search-supplier-orders": "Ricerca Ordini Fornitori",
-      "rows": "Riga Ordine"
+      "rows": "Riga Ordine",
+      "search-order-rows": "Ricerca righe ordini"
     },
     "warehouse": {
       "self": "Magazzino",
