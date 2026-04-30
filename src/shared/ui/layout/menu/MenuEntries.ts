@@ -150,7 +150,12 @@ export const MenuEntries: IMenuEntry[] = [
             // {i18nKey: "menu.orders.supplier-orders"},
             // {i18nKey: "menu.orders.search-customer-orders"},
             // {i18nKey: "menu.orders.supplier-schedule"},
-            // {i18nKey: "menu.orders.search-supplier-orders"}
+            // {i18nKey: "menu.orders.search-supplier-orders"},
+            {
+                i18nKey: "menu.orders.search-order-rows",
+                component: "searchOrderRows",
+                permissionCheck: {resource: "ordini - ricerca ordini clienti", action: "get"}
+            }
         ]
     },
     {
