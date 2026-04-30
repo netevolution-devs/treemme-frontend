@@ -14,6 +14,8 @@ import ListToolbar from "@features/panels/shared/ListToolbar";
 import dayjs from "dayjs";
 import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import RadioGroupFieldFilter from "@ui/form/filters/RadioGroupFieldFilter";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -42,6 +44,7 @@ const SearchOrderRowsList = () => {
     ), [filterStartDate, filterEndDate, filterShippingStatus, filterProductionStatus, filterPrintStatus, filterClientId])
 
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
+    const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
     const columns = useMemo<MRT_ColumnDef<IOrderRowsSearch>[]>(() => [
         {
@@ -88,6 +91,13 @@ const SearchOrderRowsList = () => {
                                     onEndFilterChange={(value) => setFilters({filterEndDate: value as string})}
                                     startLabel={t("shipping.date_start")}
                                     endLabel={t("shipping.date_end")}
+                                />,
+                                <SelectFieldFilter
+                                    key={"f-client"}
+                                    label={t("orders.client")}
+                                    value={filterClientId}
+                                    options={clients.map(s => ({value: s.id, label: s.name}))}
+                                    onFilterChange={(value) => setFilters({filterClientId: value as number})}
                                 />,
                                 <RadioGroupFieldFilter
                                     key={"f-shipping-status"}
