@@ -58,18 +58,110 @@ const SearchOrderRowsList = () => {
         // {
         //     accessorKey: "id",
         //     header: t("order-search.r"),
+        //     size: 50,
         // },
         {
             accessorKey: "client_order.order_date",
             header: t("order-search.date"),
-            Cell: ({row}) =>
-                dayjs(row.original.client_order.order_date).format("DD/MM/YYYY")
+            Cell: ({row}) => row.original.client_order.order_date ? dayjs(row.original.client_order.order_date).format("DD/MM/YYYY") : ""
+        },
+        {
+            accessorKey: "client_order.client_order_number",
+            header: t("order-search.client-order"),
+        },
+        {
+            accessorKey: "client_order.client_order_date",
+            header: t("order-search.client-date"),
+            Cell: ({row}) => row.original.client_order.client_order_date ? dayjs(row.original.client_order.client_order_date).format("DD/MM/YYYY") : ""
+        },
+        {
+            accessorKey: "client_order.agent_order_number",
+            header: t("order-search.agent-order"),
+        },
+        {
+            accessorKey: "client_order.agent_order_date",
+            header: t("order-search.agent-date"),
+            Cell: ({row}) => row.original.client_order.agent_order_date ? dayjs(row.original.client_order.agent_order_date).format("DD/MM/YYYY") : ""
+        },
+        {
+            accessorKey: "article.code",
+            header: t("order-search.code"),
+        },
+        {
+            accessorKey: "article.name",
+            header: t("order-search.product"),
+        },
+        {
+            accessorKey: "article.color.color",
+            header: t("order-search.client-color"),
+        },
+        {
+            accessorKey: "measurement_unit.prefix",
+            header: t("order-search.um"),
+            size: 50,
+        },
+        {
+            accessorKey: "quantity",
+            header: t("order-search.qta"),
+            muiTableBodyCellProps: {
+                align: 'right',
+            },
+        },
+        {
+            accessorKey: "currency.sign",
+            header: t("order-search.v"),
+            size: 50,
+        },
+        {
+            accessorKey: "price",
+            header: t("order-search.price"),
+            muiTableBodyCellProps: {
+                align: 'right',
+            },
+            Cell: ({cell}) => cell.getValue<number>()?.toFixed(4)
+        },
+        {
+            accessorKey: "delivery_date_confirmed",
+            header: t("order-search.delivery-date"),
+            Cell: ({row}) => row.original.delivery_date_confirmed ? dayjs(row.original.delivery_date_confirmed).format("DD/MM/YYYY") : ""
+        },
+        {
+            id: "qta_pro",
+            header: t("order-search.qta-pro"),
+            accessorFn: (row) => row.batch_orders?.batch?.quantity ?? 0,
+            muiTableBodyCellProps: {
+                align: 'right',
+            },
+        },
+        {
+            accessorKey: "production_schedule",
+            header: t("order-search.scd-pro"),
+            muiTableBodyCellProps: {
+                align: 'right',
+            },
+        },
+        {
+            id: "qta_spe",
+            header: t("order-search.qta-spe"),
+            accessorFn: (row) => {
+                const ddtRows = row.batch_orders?.batch?.ddt_rows ?? [];
+                return ddtRows.reduce((acc, ddt) => acc + ddt.quantity, 0);
+            },
+            muiTableBodyCellProps: {
+                align: 'right',
+            },
+        },
+        {
+            accessorKey: "shipment_schedule",
+            header: t("order-search.scd-spe"),
+            muiTableBodyCellProps: {
+                align: 'right',
+            },
         }
     ], [t]);
 
     return (
         <>
-            {/*<pre>{JSON.stringify(orderRows, null, 2)}</pre>*/}
             <GenericList<IOrderRowsSearch>
                 data={orderRows}
                 minHeight={"780px"}
