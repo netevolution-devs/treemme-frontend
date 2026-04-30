@@ -24,7 +24,7 @@ function useThemeMode() {
 
 const CustomThemeProvider: React.FC<CustomThemeProviderProps> = ({children, themes}) => {
     const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
-        return (localStorage.getItem('themeMode') as ThemeMode) || 'dark';
+        return (localStorage.getItem('themeMode') as ThemeMode) || 'light';
     });
 
     useEffect(() => {
