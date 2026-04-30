@@ -15,6 +15,8 @@ import {
     customerOrderApi,
     type ICustomerOrderPayload
 } from "@features/panels/orders/customer-orders/api/customerOrderApi";
+import CustomButton from "@features/panels/shared/CustomButton";
+import {PrintRounded} from "@mui/icons-material";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
 import GenericForm from "@features/panels/shared/GenericForm";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
@@ -29,6 +31,7 @@ import {
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {useCanCheckOrder} from "@features/authz/useHasPermission";
+import {useFilteringAddress} from "@features/panels/shared/hooks/useFilteringAddress";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -52,13 +55,22 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     selectedCustomerOrderId: number | null | undefined
 }) => {
     const {t} = useTranslation(["form"]);
-    
+
+    const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
+    const setUIState = useStore(state => state.setUIState);
+
     const {setValue, control} = useFormContext<ICustomerOrderForm>();
 
     const clientId = useWatch({
         control,
         name: 'client_id'
     });
+
+    useEffect(() => {
+        if (clientId && selectedCustomerOrderId) {
+            setUIState({ selectedClientId: clientId});
+        }
+    }, [clientId, selectedCustomerOrderId]);
 
     const selectedClient = clients.find(c => c.id === clientId);
 
@@ -91,11 +103,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         }
     }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 
-    const filterAddressString = ({addressLabels}: { addressLabels: (string | null | undefined)[] }) => {
-        return addressLabels
-            .filter((label): label is string => !!label && label.trim().length > 0)
-            .join(', ');
-    };
+    const {filterAddressString} = useFilteringAddress();
 
     const {add: addSelectPanel} = useCallablePanel();
     const canCheckOrder = useCanCheckOrder();
@@ -135,7 +143,7 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                         name={"checked"}
                         label={t("orders.checked")}
                         width={110}
-                        disabled={!canCheckOrder}
+                        disabled={!canCheckOrder || order?.checked as boolean}
                     />
                 </Box>
             </Box>
@@ -305,8 +313,9 @@ const CustomerOrdersForm = () => {
     const selectedCustomerOrderId = useStore(state => state.uiState.selectedCustomerOrderId);
     const setUIState = useStore(state => state.setUIState);
 
-    const {useGetDetail, usePost, usePut, useDelete} = customerOrderApi;
+    const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = customerOrderApi;
     const {data: order} = useGetDetail(selectedCustomerOrderId);
+    const getOrderPdf = useGetPdf();
     const {mutateAsync: createOrder, isPending: isPosting} = usePost();
     const {mutateAsync: updateOrder, isPending: isPutting} = usePut();
     const {mutateAsync: deleteOrder, isPending: isDeleting} = useDelete();
@@ -320,6 +329,8 @@ const CustomerOrdersForm = () => {
             resource="ordini - ordini clienti"
             selectedId={selectedCustomerOrderId}
             entity={order}
+            disableEditButton={order?.checked as boolean}
+            disableDeleteButton={order?.checked as boolean}
             emptyValues={{
                 client_id: null,
                 agent_id: null,
@@ -376,6 +387,16 @@ const CustomerOrdersForm = () => {
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
             validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
+            extraButtons={[
+                <CustomButton
+                    label={""}
+                    minWidth={0}
+                    color={"primary"}
+                    icon={<PrintRounded fontSize={"small"}/>}
+                    isEnable={!!selectedCustomerOrderId}
+                    onClick={() => selectedCustomerOrderId && getOrderPdf(selectedCustomerOrderId)}
+                />
+            ]}
             renderFields={() => (
                 <FormFields
                     clients={clients}

@@ -20,6 +20,7 @@ import RefinementFormDialog
 import {useAuth} from "@features/auth/model/AuthContext";
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import dayjs from "dayjs";
 
 const OrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -27,6 +28,7 @@ const OrderRowsList = () => {
     const {useStore} = usePanel<unknown, ICustomerOrdersStoreState>();
     const selectedCustomerOrderId = useStore((state) => state.uiState.selectedCustomerOrderId);
     const selectedOrderRowId = useStore((state) => state.uiState.selectedOrderRowId);
+    const selectedClientId = useStore((state) => state.uiState.selectedClientId);
     const setUIState = useStore((state) => state.setUIState);
 
     const {add: addSelectPanel} = useCallablePanel();
@@ -36,17 +38,35 @@ const OrderRowsList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IOrderRow>[]>(() => [
         {
-            accessorKey: "article.name",
-            header: t("orders.row.article"),
+            accessorKey: "measurement_unit.name",
+            header: t("orders.row.measurement_unit"),
         },
+
         {
             accessorKey: "quantity",
             header: t("orders.row.quantity"),
         },
         {
-            accessorKey: "measurement_unit.name",
-            header: t("orders.row.measurement_unit"),
-        }
+            accessorKey: "delivery_date_confirmed",
+            header: t("orders.row.delivery_date_confirmed"),
+            Cell: ({row}) => row.original.delivery_date_confirmed ? dayjs(row.original.delivery_date_confirmed).format("DD/MM/YYYY") : "-",
+        },
+        {
+            accessorKey: "article.name",
+            header: t("orders.row.article"),
+        },
+        {
+            accessorKey: "currency.sign",
+            header: t("orders.row.currency"),
+        },
+        {
+            accessorKey: "currency_price",
+            header: t("orders.row.currency_price"),
+        },
+        {
+            accessorKey: "production_row_note",
+            header: t("orders.row.production_row_note"),
+        },
     ], [t]);
 
     const handleOpenCreateRowDialog = () => {
@@ -90,6 +110,7 @@ const OrderRowsList = () => {
                     addSelectPanel({
                         initialValue: '',
                         extra: {
+                            clientId: selectedClientId,
                             client_order_id: selectedCustomerOrderId,
                             order_row_id: selectedOrderRowId,
                             panelId: "updateOrderRows:" + selectedOrderRowId

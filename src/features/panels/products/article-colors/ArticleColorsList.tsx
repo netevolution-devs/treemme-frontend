@@ -40,6 +40,9 @@ const ArticleColorsList = () => {
             {
                 accessorKey: "color",
                 header: t("products.article_colors.color"),
+                Cell: ({row}) => (
+                    <>{row.original.color} {row.original.internal_color ? " - " + row.original.internal_color?.name : ""}</>
+                )
             },
             // {
             //     accessorKey: "shade",

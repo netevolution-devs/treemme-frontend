@@ -39,6 +39,10 @@ import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {useAuth} from "@features/auth/model/AuthContext";
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
+import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {useFilteringAddress} from "@features/panels/shared/hooks/useFilteringAddress";
 
 export type IOrderRowForm = Omit<IOrderRow,
     'id' |
@@ -53,7 +57,8 @@ export type IOrderRowForm = Omit<IOrderRow,
     'total_price' |
     'total_currency_price' |
     'tolerance_quantity_percentage' |
-    'delivery_date_request'
+    'delivery_date_request' |
+    'address'
 > & {
     id?: number;
     article_id: number | null;
@@ -62,11 +67,13 @@ export type IOrderRowForm = Omit<IOrderRow,
     client_order_id: number;
     quantity: number | null;
     selection_id: number | null;
+    address_id: number | null;
 };
 
 const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IOrderRowsStoreParams>) => {
     const {t} = useTranslation(["form"]);
 
+    const clientId = extra?.clientId;
     const clientOrderId = extra?.client_order_id;
     const orderRowId = extra?.order_row_id;
 
@@ -87,6 +94,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
 
     const {useGetDetail, usePost, usePut, useDelete} = orderRowApi;
     const {data: orderRow} = useGetDetail(selectedOrderRowId);
+    const {data: order} = customerOrderApi.useGetDetail(clientOrderId);
 
     const {mutateAsync: createRow, isPending: isPosting} = usePost({
         invalidateQueries: ['CLIENT-ORDER', String(clientOrderId)]
@@ -123,10 +131,13 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                 resource="ordini - ordini clienti"
                 onSuccess={handlePanelSuccess}
                 disableCreateButton
+                disableEditButton={order?.checked as boolean}
+                disableDeleteButton={order?.checked as boolean}
                 floatingPanelMode
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedOrderRowId}
                 entity={orderRow}
+                selectedIdKey={"selectedOrderRowId"}
                 emptyValues={{
                     measurement_unit_id: measurementUnits.find(x => x.name === "Metri quadrati")?.id || null,
                     currency_id: currencies.find((x) => x.abbreviation === 'EUR')?.id ?? null,
@@ -148,6 +159,9 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     article_id: null,
                     client_order_id: clientOrderId ?? 0,
                     selection_id: null,
+                    production_row_note: null,
+                    administration_row_note: null,
+                    address_id: null,
                 }}
                 mapEntityToForm={(x) => ({
                     measurement_unit_id: x.measurement_unit.id,
@@ -170,6 +184,9 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                     article_id: x.article.id,
                     client_order_id: clientOrderId ?? 0,
                     selection_id: x.selection?.id ?? null,
+                    production_row_note: x.production_row_note,
+                    administration_row_note: x.administration_row_note,
+                    address_id: x.address?.id ?? null,
                 })}
                 create={(payload) => createRow({
                     ...payload,
@@ -198,7 +215,7 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"primary"}
                         icon={<ColorLensIcon/>}
                         onClick={() => openDialog(dyeDialogRef)}
-                        isEnable={!!selectedOrderRowId && canPost}
+                        isEnable={!!selectedOrderRowId && canPost && !order?.checked as boolean}
                     />,
                     <CustomButton
                         key="refinement"
@@ -206,11 +223,12 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
                         color={"success"}
                         icon={<SettingsInputHdmiIcon/>}
                         onClick={() => openDialog(refinementDialogRef)}
-                        isEnable={!!selectedOrderRowId && canPost}
+                        isEnable={!!selectedOrderRowId && canPost && !order?.checked as boolean}
                     />,
                 ]}
                 renderFields={() => (
                     <OrderRowFormFields
+                        clientId={clientId as number}
                         clientOrderId={clientOrderId as number}
                         selectedOrderRowId={selectedOrderRowId as number}
                     />
@@ -221,11 +239,12 @@ const OrderRowsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IO
 };
 
 interface OrderRowFormFieldsProps {
+    clientId?: number;
     clientOrderId?: number;
     selectedOrderRowId?: number;
 }
 
-const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
+const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: OrderRowFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IOrderRowsStoreState>();
@@ -262,7 +281,12 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
         dependencyKey: "selection"
     })
 
+    const {filterAddressString} = useFilteringAddress();
+
     const {setValue} = useFormContext<IOrderRowForm>();
+
+    const {data: clientDetail} = contactsApi.useGetDetail(clientId);
+    const clientAddresses = clientDetail?.contact_addresses || [];
 
     return (
         <Stack gap={1}>
@@ -286,24 +310,6 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
             />
 
             <Box sx={{display: 'flex', gap: 1, alignItems: 'center'}}>
-                <SelectFieldControlled<IOrderRowForm>
-                    name="article_id"
-                    label={t("orders.row.article")}
-                    options={articles?.map(p => ({value: p.id, label: `${p.code} - ${p.name}`})) || []}
-                    required
-                    onNoOptionsMatch={(input) => {
-                        addSelectPanel({
-                            extra: {
-                                clientId: order?.client.id as number,
-                            },
-                            initialValue: input,
-                            menu: {
-                                component: "articles",
-                                i18nKey: "menu.products.articles"
-                            }
-                        })
-                    }}
-                />
                 <FlagCheckBoxFieldControlled<IOrderRowForm>
                     name="processed"
                     label={t("orders.row.processed")}
@@ -315,21 +321,6 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     disabled
                 />
             </Box>
-
-            <SelectFieldControlled<IOrderRowForm>
-                name={"selection_id"}
-                label={t("orders.row.selection")}
-                options={selections?.map(s => ({value: s.id, label: s.name})) || []}
-                onNoOptionsMatch={(input) => {
-                    addSelectPanel({
-                        initialValue: input,
-                        menu: {
-                            component: "selection",
-                            i18nKey: "menu.products.selection"
-                        }
-                    })
-                }}
-            />
 
             <Box sx={{display: 'flex', gap: 1}}>
                 <SelectFieldControlled<IOrderRowForm>
@@ -351,6 +342,40 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     label={t("orders.row.delivery_date_confirmed")}
                 />
             </Box>
+
+            <SelectFieldControlled<IOrderRowForm>
+                name="article_id"
+                label={t("orders.row.article")}
+                options={articles?.map(p => ({value: p.id, label: `${p.name}`})) || []}
+                required
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        extra: {
+                            clientId: order?.client.id as number,
+                        },
+                        initialValue: input,
+                        menu: {
+                            component: "articles",
+                            i18nKey: "menu.products.articles"
+                        }
+                    })
+                }}
+            />
+
+            <SelectFieldControlled<IOrderRowForm>
+                name={"selection_id"}
+                label={t("orders.row.selection")}
+                options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "selection",
+                            i18nKey: "menu.products.selection"
+                        }
+                    })
+                }}
+            />
 
             <Box sx={{display: 'flex', gap: 1}}>
                 <SelectFieldControlled<IOrderRowForm>
@@ -393,6 +418,39 @@ const OrderRowFormFields = ({clientOrderId, selectedOrderRowId}: OrderRowFormFie
                     label={t("orders.row.total_price")}
                     value={orderRow?.total_price ?? undefined}
                     isFilled={!!orderRow}
+                />
+            </Box>
+            <SelectFieldControlled<ICustomerOrderForm>
+                name={"address_id"}
+                label={t("orders.destination")}
+                options={clientAddresses.map(p => ({
+                    value: p.id,
+                    label: `${p.address_name} - ${filterAddressString({addressLabels: [p.address, p.address_2, p.address_3, p.address_4]})} - ${p.zip_code} - ${p.nation.name}`
+                }))}
+                onNoOptionsMatch={() => {
+                    addSelectPanel({
+                        extra: {
+                            client: true,
+                            selectedContactId: clientId,
+                        },
+                        initialValue: '',
+                        menu: {
+                            component: "contacts",
+                            i18nKey: "menu.contacts.contacts"
+                        }
+                    })
+                }}
+            />
+            <Box sx={{display: "flex", gap: 1}}>
+                <TextFieldControlled<IOrderRowForm>
+                    name={"production_row_note"}
+                    label={t("orders.row.production_row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
+                />
+                <TextFieldControlled<IOrderRowForm>
+                    name={"administration_row_note"}
+                    label={t("orders.row.administration_row_note")}
+                    TextFieldProps={{multiline: true, rows: 2}}
                 />
             </Box>
         </Stack>

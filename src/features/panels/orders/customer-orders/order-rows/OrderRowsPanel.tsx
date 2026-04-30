@@ -10,6 +10,7 @@ export interface IOrderRowsStoreState extends IPanelUIState {
 }
 
 export interface IOrderRowsStoreParams {
+    clientId?: number;
     client_order_id?: number;
     order_row_id?: number;
     panelId?: string;

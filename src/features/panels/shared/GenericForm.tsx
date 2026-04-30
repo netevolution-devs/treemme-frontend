@@ -49,11 +49,13 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     disableDeleteButton?: boolean;
     disableCreateButton?: boolean;
     disableEditButton?: boolean;
+    disableUpdateButton?: boolean;
 
     onCreateSuccess?: (id: number) => void;
     resource?: ResourceName;
     closePanelOnSave?: boolean;
     closePanelOnCancel?: boolean;
+    selectedIdKey?: string;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -77,19 +79,22 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         disabledBasicButtons = false,
         disableDeleteButton = false,
         disableEditButton = false,
+        disableUpdateButton = false,
         bypassConfirm = false,
         onCreateSuccess,
         floatingPanelMode = false,
         floatingPanelUUID,
         resource,
         closePanelOnSave = true,
-        disableCreateButton = false
+        disableCreateButton = false,
+        selectedIdKey
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
 
     const {useStore} = usePanel<unknown, TUI>();
     const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
+    const setUIState = useStore(state => state.setUIState);
     const {setFormState} = usePanelFormButtons<unknown, TUI>();
 
     const {user} = useAuth();
@@ -100,6 +105,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     const deleteRef = useRef<IDialogActions>(null);
     const saveRef = useRef<IDialogActions>(null);
+    const [isUpdateClick, setIsUpdateClick] = React.useState(false);
 
     const methods = useForm<TForm>({
         disabled: (!dialogMode && isFormDisabled) || isSaving,
@@ -157,10 +163,18 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         }
     }, [selectedId, isFormDisabled, entity, methods, mapEntityToForm, dialogMode, setFormState, onClearSelection, emptyValues, handleCloseDialog]);
 
-    const onSubmit = (data: TForm) => {
-        if (validateBeforeSave && !validateBeforeSave(data)) return;
+    const handleUpdate = () => {
+        setIsUpdateClick(true);
+        methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
+    };
+
+    const onSubmit = async (data: TForm) => {
+        if (validateBeforeSave && !validateBeforeSave(data)) {
+            setIsUpdateClick(false);
+            return;
+        }
         if (bypassConfirm) {
-            onConfirmSave();
+            await onConfirmSave();
             return;
         }
         openDialog(saveRef);
@@ -186,17 +200,25 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 if (res) {
                     onSuccess?.(res as TEntity);
                     onCreateSuccess?.(res.id);
-                    if (!dialogMode) {
+
+                    if (selectedIdKey) {
+                        setUIState({[selectedIdKey]: res.id} as Partial<TUI>);
+                    }
+
+                    if (isUpdateClick) {
+                        setFormState('selected');
+                    } else if (!dialogMode) {
                         methods.reset(emptyValues);
                         setFormState('init');
                     }
                 }
             }
         } finally {
-            if (closePanelOnSave) {
+            if (closePanelOnSave && !isUpdateClick) {
                 handleCloseDialog();
             }
             closeDialog(saveRef);
+            setIsUpdateClick(false);
         }
     };
 
@@ -207,13 +229,24 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             setFormState('selected');
         } else if (!selectedId) {
             methods.reset(emptyValues);
-            if (dialogMode || floatingPanelMode) return;
+            if (dialogMode || floatingPanelMode) {
+                setFormState('new');
+                return;
+            }
             setFormState('init');
         }
     }, [selectedId, entity]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === "F10") {
+                event.preventDefault();
+                if (!isFormDisabled) {
+                    methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
+                }
+                return;
+            }
+
             const target = event.target as HTMLElement;
             if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
                 return;
@@ -230,17 +263,11 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             if (event.key === "Enter" && isFormDisabled && !!selectedId) {
                 handleEdit();
             }
-
-            if (event.ctrlKey && event.key === "F10" && !isFormDisabled) {
-                event.preventDefault();
-                methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
-                handleCloseDialog();
-            }
         };
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId, methods, onSubmit, handleCloseDialog]);
+    }, [handleCancel, handleNew, handleEdit, isFormDisabled, selectedId, methods, onSubmit, handleCloseDialog, handleUpdate]);
 
     return (
        <Box sx={{width: '100%', height: '100%'}}>
@@ -265,6 +292,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             hideEdit={dialogMode || !canPut || disableEditButton}
                             hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
                             hideSave={disabledBasicButtons || (!canPost && !canPut)}
+                            hideUpdate={disableUpdateButton || !floatingPanelMode || !canPut}
+                            onUpdate={handleUpdate}
                             overrideButtonState={dialogMode}
                             isLoading={isSaving}
                         />

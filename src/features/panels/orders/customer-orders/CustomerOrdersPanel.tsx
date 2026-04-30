@@ -8,6 +8,7 @@ import CustomerOrdersForm from "@features/panels/orders/customer-orders/Customer
 import OrderRowsList from "@features/panels/orders/customer-orders/order-rows/OrderRowsList";
 
 export interface ICustomerOrdersStoreState extends IPanelUIState {
+    selectedClientId?: number | null;
     selectedCustomerOrderId?: number | null;
     selectedOrderRowId?: number | null;
 }

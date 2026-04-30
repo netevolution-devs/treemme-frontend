@@ -18,7 +18,7 @@ const SaveConfirmDialog = (
         onConfirm,
         title,
         description,
-        isPending = false
+        isPending = false,
     }: SaveConfirmDialogProps,
     ref: ForwardedRef<IDialogActions>
 ) => {
@@ -57,7 +57,9 @@ const SaveConfirmDialog = (
                     {t("common:button.cancel")}
                 </Button>
                 <Button
-                    onClick={handleConfirm}
+                    onClick={async () => {
+                        await handleConfirm();
+                    }}
                     variant="contained"
                     color="success"
                     disabled={isPending}

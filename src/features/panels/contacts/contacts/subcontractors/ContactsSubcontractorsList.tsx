@@ -81,7 +81,7 @@ const ContactsSubcontractorsList = () => {
                                             },
                                             menu: {
                                                 component: "contactsSubcontractors",
-                                                i18nKey: "contacts.subcontractors.add"
+                                                i18nKey: "menu.contacts.add-subcontractor"
                                             },
                                             customId: `createContactsSubcontractors:${selectedContactId}`
                                         });

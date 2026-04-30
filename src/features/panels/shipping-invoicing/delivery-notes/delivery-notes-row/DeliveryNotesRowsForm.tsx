@@ -117,6 +117,7 @@ const DeliveryNotesRowsForm = ({
                 floatingPanelUUID={floatingPanelUUID}
                 selectedId={selectedDeliveryNoteRowId}
                 entity={deliveryNoteRow}
+                selectedIdKey={"selectedDeliveryNoteRowId"}
                 emptyValues={{
                     batch_id: null,
                     measurement_unit_id: null,
