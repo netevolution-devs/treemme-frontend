@@ -15,8 +15,7 @@ import {
     customerOrderApi,
     type ICustomerOrderPayload
 } from "@features/panels/orders/customer-orders/api/customerOrderApi";
-import CustomButton from "@features/panels/shared/CustomButton";
-import {PrintRounded} from "@mui/icons-material";
+import {PrintButton} from "@features/panels/shared/CustomButton";
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
 import GenericForm from "@features/panels/shared/GenericForm";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
@@ -315,7 +314,7 @@ const CustomerOrdersForm = () => {
 
     const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = customerOrderApi;
     const {data: order} = useGetDetail(selectedCustomerOrderId);
-    const getOrderPdf = useGetPdf();
+    const {mutateAsync: getOrderPdf, isPending: isPrinting} = useGetPdf();
     const {mutateAsync: createOrder, isPending: isPosting} = usePost();
     const {mutateAsync: updateOrder, isPending: isPutting} = usePut();
     const {mutateAsync: deleteOrder, isPending: isDeleting} = useDelete();
@@ -388,12 +387,17 @@ const CustomerOrdersForm = () => {
             onClearSelection={() => setUIState({selectedCustomerOrderId: null})}
             validateBeforeSave={(v) => !!v.client_id && !!v.payment_id && !!v.order_date}
             extraButtons={[
-                <CustomButton
-                    label={""}
-                    minWidth={0}
-                    color={"primary"}
-                    icon={<PrintRounded fontSize={"small"}/>}
-                    isEnable={!!selectedCustomerOrderId}
+                // <CustomButton
+                //     label={""}
+                //     minWidth={0}
+                //     color={"primary"}
+                //     icon={<PrintRounded fontSize={"small"}/>}
+                //     isEnable={}
+                //     onClick={}
+                // />
+                <PrintButton
+                    canPrint={!!selectedCustomerOrderId}
+                    isPending={isPrinting}
                     onClick={() => selectedCustomerOrderId && getOrderPdf(selectedCustomerOrderId)}
                 />
             ]}

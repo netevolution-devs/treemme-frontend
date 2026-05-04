@@ -2,6 +2,7 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {ICustomerOrder} from "@features/panels/orders/customer-orders/api/ICustomerOrder";
 import type {ICustomerOrderForm} from "@features/panels/orders/customer-orders/CustomerOrdersForm";
 import useApi from "@api/useApi";
+import {useMutation} from "@tanstack/react-query";
 
 export type ICustomerOrderPayload = ICustomerOrderForm;
 
@@ -12,13 +13,16 @@ export const customerOrderApi = {
     }),
     useGetPdf: () => {
         const {get} = useApi();
-        return async (id: number) => {
-            const response = await get<Blob>(`/client-order/${id}/pdf`, {
-                responseType: "blob",
-            });
-            const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
-            const url = window.URL.createObjectURL(blob);
-            window.open(url, "_blank");
-        };
+        return useMutation({
+            mutationFn: async (id: number) => {
+                const response = await get<Blob>(`/client-order/${id}/pdf`, {
+                    responseType: "blob",
+                });
+                const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
+                const url = window.URL.createObjectURL(blob);
+                window.open(url, "_blank");
+            },
+            mutationKey: ['CLIENT-ORDER-PDF'],
+        });
     },
 };
