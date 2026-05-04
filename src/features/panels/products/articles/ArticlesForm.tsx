@@ -147,7 +147,10 @@ const ArticlesFormFields = ({
     const {data: colors = []} = colorApi.useGetList({queryParams: {client: clientId as number}});
 
     const colorOptions = useMemo(() =>
-            colors.map(c => ({value: c.id, label: `${c.color} ${c.internal_color ? " - " + c.internal_color?.name : ""}`})),
+            colors.map(c => ({
+                value: c.id,
+                label: c.internal_color?.name || c.color
+            })),
         [colors]);
 
     const {add: addSelectPanel} = useCallablePanel();
@@ -215,9 +218,10 @@ const ArticlesFormFields = ({
                         })
                     }}
                 />
-                <TextFieldControlled<IArticleForm>
-                    name="client_code"
+                <TextFieldValue
                     label={t("products.articles.client_code")}
+                    value={article?.client_code as string}
+                    isFilled={!!selectedArticledId}
                 />
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
