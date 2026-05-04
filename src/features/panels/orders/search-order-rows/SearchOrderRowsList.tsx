@@ -33,6 +33,7 @@ const SearchOrderRowsList = () => {
     const filterProductionStatus = useStore(state => state.filters.filterProductionStatus);
     const filterPrintStatus = useStore(state => state.filters.filterPrintStatus);
     const filterClientId = useStore(state => state.filters.filterClientId);
+    const filterAll = useStore(state => state.filters.filterAll);
     const setFilters = useStore(state => state.setFilters);
 
     const queryParams = useMemo(() => cleanFilters(
@@ -181,20 +182,24 @@ const SearchOrderRowsList = () => {
                                 />,
                                 <RadioGroupFieldFilter
                                     key={"f-shipping-status-all"}
-                                    value={filterShippingStatus ?? ""}
+                                    value={filterAll ?? ""}
                                     onFilterChange={() => setFilters({
                                         filterShippingStatus: undefined,
                                         filterProductionStatus: undefined,
                                         filterPrintStatus: undefined,
+                                        filterAll: "all"
                                     })}
                                     options={[
-                                        {label: t("order-search.all"), value: ""},
+                                        {label: t("order-search.all"), value: "all"},
                                     ]}
                                 />,
                                 <RadioGroupFieldFilter
                                     key={"f-shipping-status"}
                                     value={filterShippingStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({filterShippingStatus: (value === "" ? undefined : value) as "to_ship" | "shipped"})}
+                                    onFilterChange={(value) => setFilters({
+                                        filterShippingStatus: (value === "" ? undefined : value) as "to_ship" | "shipped",
+                                        filterAll: undefined
+                                    })}
                                     options={[
                                         {label: t("order-search.to-ship"), value: "to_ship"},
                                         {label: t("order-search.shipped"), value: "shipped"},
@@ -203,7 +208,10 @@ const SearchOrderRowsList = () => {
                                 <RadioGroupFieldFilter
                                     key={"f-production-status"}
                                     value={filterProductionStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({filterProductionStatus: (value === "" ? undefined : value) as "to_produce" | "produced"})}
+                                    onFilterChange={(value) => setFilters({
+                                        filterProductionStatus: (value === "" ? undefined : value) as "to_produce" | "produced",
+                                        filterAll: undefined
+                                    })}
                                     options={[
                                         {label: t("order-search.to-produce"), value: "to_produce"},
                                         {label: t("order-search.produced"), value: "produced"},
@@ -212,7 +220,10 @@ const SearchOrderRowsList = () => {
                                 <RadioGroupFieldFilter
                                     key={"f-print-status"}
                                     value={filterPrintStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({filterPrintStatus: (value === "" ? undefined : value) as "to_print" | "printed"})}
+                                    onFilterChange={(value) => setFilters({
+                                        filterPrintStatus: (value === "" ? undefined : value) as "to_print" | "printed",
+                                        filterAll: undefined
+                                    })}
                                     options={[
                                         {label: t("order-search.to-print"), value: "to_print"},
                                         {label: t("order-search.printed"), value: "printed"},

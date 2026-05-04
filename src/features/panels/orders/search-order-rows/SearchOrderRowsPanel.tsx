@@ -14,6 +14,7 @@ export interface ISearchOrderRowsFilters {
     filterProductionStatus?: "to_produce" | "produced" | undefined;
     filterPrintStatus?: "to_print" | "printed" | undefined;
     filterClientId?: number | undefined;
+    filterAll?: "all" | undefined;
 }
 
 const SearchOrderRowsPanel = () => {
