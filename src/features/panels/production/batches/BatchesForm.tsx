@@ -74,6 +74,7 @@ const BatchesForm = () => {
     const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
     const getBatchPdf = useGetPdf();
+
     const {mutateAsync: createBatch, isPending: isPosting} = usePost();
     const {mutateAsync: updateBatch, isPending: isPutting} = usePut();
     const {mutateAsync: deleteBatch, isPending: isDeleting} = useDelete();
