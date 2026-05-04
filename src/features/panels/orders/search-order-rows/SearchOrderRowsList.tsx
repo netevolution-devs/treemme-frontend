@@ -174,7 +174,7 @@ const SearchOrderRowsList = () => {
                                     onFilterChange={(value) => setFilters({filterClientId: value as number})}
                                 />,
                                 <RadioGroupFieldFilter
-                                    key={"f-shipping-status"}
+                                    key={"f-shipping-status-all"}
                                     value={filterShippingStatus ?? ""}
                                     onFilterChange={() => setFilters({
                                         filterShippingStatus: undefined,
