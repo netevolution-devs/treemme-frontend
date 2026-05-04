@@ -2,7 +2,7 @@ import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactor
 import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import useApi from "@api/useApi";
 
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
 
 export interface IBatchesPayload extends Omit<IBatch, 'id'
@@ -21,6 +21,11 @@ export interface IBatchesPayload extends Omit<IBatch, 'id'
     measurement_unit_id: number;
 }
 
+interface IMutateParamsGetPdf {
+    id: number;
+    batchCode: string;
+}
+
 export const batchApi = {
     ...createPanelApi<IBatch, IBatchesPayload>({
         baseEndpoint: "/batch",
@@ -28,17 +33,21 @@ export const batchApi = {
     }),
     useGetPdf: () => {
         const {get} = useApi();
-        return async (id: number, batchCode: string) => {
-            const endpoint = batchCode.startsWith("TF")
-                ? `/batch/${id}/subcontractor-pdf`
-                : `/batch/${id}/pdf`;
-            const response = await get<Blob>(endpoint, {
-                responseType: "blob",
-            });
-            const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
-            const url = window.URL.createObjectURL(blob);
-            window.open(url, "_blank");
-        };
+        return useMutation({
+            mutationFn: async ({id, batchCode}: IMutateParamsGetPdf) => {
+                const endpoint = batchCode.startsWith("TF")
+                    ? `/batch/${id}/subcontractor-pdf`
+                    : `/batch/${id}/pdf`;
+                const response = await get<Blob>(endpoint, {
+                    responseType: "blob",
+                });
+                const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
+                const url = window.URL.createObjectURL(blob);
+                window.open(url, "_blank");
+                return url;
+            },
+            mutationKey: ["BATCH-PDF-PRINT"],
+        });
     },
     useGetBatchCosts: (id?: number | null) => {
         const {get} = useApi();

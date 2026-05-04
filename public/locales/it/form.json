@@ -412,6 +412,7 @@
       "name": "Nome"
     },
     "articles": {
+      "client-code-refer-note": "Note riferimento codice cliente",
       "client_code": "Riferimento codice cliente",
       "name": "Nome",
       "code": "Codice",

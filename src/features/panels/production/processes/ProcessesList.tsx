@@ -41,7 +41,7 @@ const ProcessesList = () => {
     );
 
     const {data: processes = [], isLoading, isFetching} = processApi.useGetList({queryParams});
-    const getDailyPrint = processApi.useGetDailyPrint();
+    const {mutate: getDailyPrint, isPending: isPrinting} = processApi.useGetDailyPrint();
 
     const canPrint = filterScheduledDate !== undefined && processes.length > 0;
 
@@ -126,6 +126,7 @@ const ProcessesList = () => {
                                 color={"primary"}
                                 icon={<PrintRounded/>}
                                 isEnable={canPrint}
+                                isLoading={isPrinting}
                                 onClick={() => getDailyPrint(filterScheduledDate ?? "")}
                             />
                         ]}

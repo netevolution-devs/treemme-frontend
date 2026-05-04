@@ -16,8 +16,7 @@ import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import RadioGroupFieldFilter from "@ui/form/filters/RadioGroupFieldFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
-import {PrintRounded} from "@mui/icons-material";
-import CustomButton from "@features/panels/shared/CustomButton";
+import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 
 const SearchOrderRowsList = () => {
@@ -33,6 +32,7 @@ const SearchOrderRowsList = () => {
     const filterProductionStatus = useStore(state => state.filters.filterProductionStatus);
     const filterPrintStatus = useStore(state => state.filters.filterPrintStatus);
     const filterClientId = useStore(state => state.filters.filterClientId);
+    const filterAll = useStore(state => state.filters.filterAll);
     const setFilters = useStore(state => state.setFilters);
 
     const queryParams = useMemo(() => cleanFilters(
@@ -49,7 +49,8 @@ const SearchOrderRowsList = () => {
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
-    const getOrderSummaryPrint = useGetClientOrderRowSummaryPrint();
+    const {mutateAsync: getOrderRowPrint, isPending} = useGetClientOrderRowSummaryPrint();
+
     const canPrint = !!queryParams.client_id && orderRows.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IOrderRowsSearch>[]>(() => [
@@ -181,20 +182,24 @@ const SearchOrderRowsList = () => {
                                 />,
                                 <RadioGroupFieldFilter
                                     key={"f-shipping-status-all"}
-                                    value={filterShippingStatus ?? ""}
+                                    value={filterAll ?? ""}
                                     onFilterChange={() => setFilters({
                                         filterShippingStatus: undefined,
                                         filterProductionStatus: undefined,
                                         filterPrintStatus: undefined,
+                                        filterAll: "all"
                                     })}
                                     options={[
-                                        {label: t("order-search.all"), value: ""},
+                                        {label: t("order-search.all"), value: "all"},
                                     ]}
                                 />,
                                 <RadioGroupFieldFilter
                                     key={"f-shipping-status"}
                                     value={filterShippingStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({filterShippingStatus: (value === "" ? undefined : value) as "to_ship" | "shipped"})}
+                                    onFilterChange={(value) => setFilters({
+                                        filterShippingStatus: (value === "" ? undefined : value) as "to_ship" | "shipped",
+                                        filterAll: undefined
+                                    })}
                                     options={[
                                         {label: t("order-search.to-ship"), value: "to_ship"},
                                         {label: t("order-search.shipped"), value: "shipped"},
@@ -203,7 +208,10 @@ const SearchOrderRowsList = () => {
                                 <RadioGroupFieldFilter
                                     key={"f-production-status"}
                                     value={filterProductionStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({filterProductionStatus: (value === "" ? undefined : value) as "to_produce" | "produced"})}
+                                    onFilterChange={(value) => setFilters({
+                                        filterProductionStatus: (value === "" ? undefined : value) as "to_produce" | "produced",
+                                        filterAll: undefined
+                                    })}
                                     options={[
                                         {label: t("order-search.to-produce"), value: "to_produce"},
                                         {label: t("order-search.produced"), value: "produced"},
@@ -212,7 +220,10 @@ const SearchOrderRowsList = () => {
                                 <RadioGroupFieldFilter
                                     key={"f-print-status"}
                                     value={filterPrintStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({filterPrintStatus: (value === "" ? undefined : value) as "to_print" | "printed"})}
+                                    onFilterChange={(value) => setFilters({
+                                        filterPrintStatus: (value === "" ? undefined : value) as "to_print" | "printed",
+                                        filterAll: undefined
+                                    })}
                                     options={[
                                         {label: t("order-search.to-print"), value: "to_print"},
                                         {label: t("order-search.printed"), value: "printed"},
@@ -220,15 +231,15 @@ const SearchOrderRowsList = () => {
                                 />
                             ]}
                             buttons={[
-                                <CustomButton
-                                    label={""}
-                                    minWidth={0}
-                                    color={"primary"}
-                                    icon={<PrintRounded fontSize={"small"}/>}
-                                    isEnable={canPrint}
-                                    onClick={() => getOrderSummaryPrint(queryParams.client_id as number, {
-                                        start_date: queryParams.start_date as string,
-                                        end_date: queryParams.end_date as string
+                                <PrintButton
+                                    canPrint={canPrint}
+                                    isPending={isPending}
+                                    onClick={() => getOrderRowPrint({
+                                        clientId: queryParams.client_id as number,
+                                        params: {
+                                            start_date: queryParams.start_date as string,
+                                            end_date: queryParams.end_date as string
+                                        }
                                     })}
                                 />
                             ]}

@@ -17,7 +17,7 @@ import TextFieldValue from "@ui/form/controlled/TextFieldValue";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import {Box} from "@mui/material";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
-import CustomButton from "@features/panels/shared/CustomButton";
+import CustomButton, {PrintButton} from "@features/panels/shared/CustomButton";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import {openDialog} from "@ui/dialog/dialogHelper";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
@@ -28,7 +28,6 @@ import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
 import useCallablePanel from "@ui/panel/useCallablePanel";
-import {PrintRounded} from "@mui/icons-material";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
@@ -73,7 +72,7 @@ const BatchesForm = () => {
 
     const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
-    const getBatchPdf = useGetPdf();
+    const {mutateAsync: getBatchPdf, isPending: isPrinting} = useGetPdf();
 
     const {mutateAsync: createBatch, isPending: isPosting} = usePost();
     const {mutateAsync: updateBatch, isPending: isPutting} = usePut();
@@ -197,13 +196,13 @@ const BatchesForm = () => {
                         isEnable={canSplit}
                         onClick={() => openDialog(splitDialogRef)}
                     />,
-                    <CustomButton
-                        label={""}
-                        minWidth={0}
-                        color={"primary"}
-                        icon={<PrintRounded fontSize={"small"}/>}
-                        isEnable={canPrint}
-                        onClick={() => selectedBatchId && getBatchPdf(selectedBatchId, batchItem?.batch_code ?? "")}
+                    <PrintButton
+                        canPrint={canPrint}
+                        isPending={isPrinting}
+                        onClick={() => selectedBatchId && getBatchPdf({
+                            id: selectedBatchId,
+                            batchCode: batchItem?.batch_code ?? ""
+                        })}
                     />
                 ]}
                 renderFields={() => (

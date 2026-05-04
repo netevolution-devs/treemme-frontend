@@ -33,6 +33,7 @@ export type IArticleForm = {
     print_id: number | null;
     note: string;
     client_code: string | null;
+    client_code_note: string | null;
 }
 
 const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IArticleStoreParams>) => {
@@ -92,6 +93,7 @@ const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IAr
                 print_id: null,
                 note: '',
                 client_code: null,
+                client_code_note: null,
             }}
             mapEntityToForm={(a) => ({
                 code: a.code,
@@ -104,6 +106,7 @@ const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IAr
                 print_id: a.print?.id ?? null,
                 note: a.note ?? '',
                 client_code: a.client_code ?? null,
+                client_code_note: a.client_code_note ?? null,
             })}
             create={(payload) => createArticle(payload)}
             update={(id, payload) => updateArticle({id, payload})}
@@ -147,7 +150,10 @@ const ArticlesFormFields = ({
     const {data: colors = []} = colorApi.useGetList({queryParams: {client: clientId as number}});
 
     const colorOptions = useMemo(() =>
-            colors.map(c => ({value: c.id, label: `${c.color} ${c.internal_color ? " - " + c.internal_color?.name : ""}`})),
+            colors.map(c => ({
+                value: c.id,
+                label: c.internal_color?.name || c.color
+            })),
         [colors]);
 
     const {add: addSelectPanel} = useCallablePanel();
@@ -215,9 +221,14 @@ const ArticlesFormFields = ({
                         })
                     }}
                 />
-                <TextFieldControlled<IArticleForm>
-                    name="client_code"
+                <TextFieldValue
                     label={t("products.articles.client_code")}
+                    value={article?.client_code as string}
+                    isFilled={!!selectedArticledId}
+                />
+                <TextFieldControlled<IArticleForm>
+                    name="note"
+                    label={t("products.articles.client-code-refer-note")}
                 />
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
