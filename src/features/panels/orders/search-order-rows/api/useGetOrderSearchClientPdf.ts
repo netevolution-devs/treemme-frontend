@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import useApi from "@api/useApi";
 
 interface IClientOrderRowSummaryPrintParams {
@@ -5,18 +6,31 @@ interface IClientOrderRowSummaryPrintParams {
     end_date?: string;
 }
 
+interface IMutateParams {
+    clientId: number;
+    params: IClientOrderRowSummaryPrintParams;
+}
+
 const useGetClientOrderRowSummaryPrint = () => {
-    const {get} = useApi();
-    return async (clientId: number, params: IClientOrderRowSummaryPrintParams) => {
-        const endpoint = `/client/${clientId}/client-order-row-summary-print`;
-        const response = await get<Blob>(endpoint, {
-            params,
-            responseType: "blob",
-        });
-        const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
-        const url = window.URL.createObjectURL(blob);
-        window.open(url, "_blank");
-    };
+    const { get } = useApi();
+
+    return useMutation({
+        mutationFn: async ({ clientId, params }: IMutateParams) => {
+            const endpoint = `/client/${clientId}/client-order-row-summary-print`;
+
+            const response = await get<Blob>(endpoint, {
+                params,
+                responseType: "blob",
+            });
+
+            const blob = new Blob([response.data as unknown as BlobPart], { type: "application/pdf" });
+            const url = window.URL.createObjectURL(blob);
+            window.open(url, "_blank");
+
+            return url;
+        },
+        mutationKey: ["CLIENT-ORDER-ROW-SUMMARY-PRINT"],
+    });
 }
 
 export default useGetClientOrderRowSummaryPrint;

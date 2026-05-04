@@ -16,8 +16,7 @@ import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import RadioGroupFieldFilter from "@ui/form/filters/RadioGroupFieldFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
-import {PrintRounded} from "@mui/icons-material";
-import CustomButton from "@features/panels/shared/CustomButton";
+import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 
 const SearchOrderRowsList = () => {
@@ -50,7 +49,8 @@ const SearchOrderRowsList = () => {
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
-    const getOrderSummaryPrint = useGetClientOrderRowSummaryPrint();
+    const {mutateAsync: getOrderRowPrint, isPending} = useGetClientOrderRowSummaryPrint();
+
     const canPrint = !!queryParams.client_id && orderRows.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IOrderRowsSearch>[]>(() => [
@@ -231,15 +231,15 @@ const SearchOrderRowsList = () => {
                                 />
                             ]}
                             buttons={[
-                                <CustomButton
-                                    label={""}
-                                    minWidth={0}
-                                    color={"primary"}
-                                    icon={<PrintRounded fontSize={"small"}/>}
-                                    isEnable={canPrint}
-                                    onClick={() => getOrderSummaryPrint(queryParams.client_id as number, {
-                                        start_date: queryParams.start_date as string,
-                                        end_date: queryParams.end_date as string
+                                <PrintButton
+                                    canPrint={canPrint}
+                                    isPending={isPending}
+                                    onClick={() => getOrderRowPrint({
+                                        clientId: queryParams.client_id as number,
+                                        params: {
+                                            start_date: queryParams.start_date as string,
+                                            end_date: queryParams.end_date as string
+                                        }
                                     })}
                                 />
                             ]}

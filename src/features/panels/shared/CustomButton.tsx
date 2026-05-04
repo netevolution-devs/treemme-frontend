@@ -2,6 +2,7 @@ import {Button, CircularProgress, type SxProps} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import type {ReactNode} from "react";
 import AddIcon from "@mui/icons-material/Add";
+import {PrintRounded} from "@mui/icons-material";
 
 interface CustomButtonProps {
     label: string;
@@ -13,10 +14,25 @@ interface CustomButtonProps {
     icon: ReactNode;
     variant?: "text" | "outlined" | "contained";
     minWidth?: number;
+    minHeight?: number;
     sx?: SxProps;
+    disableIcon?: boolean;
 }
 
-const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true, isLoading = false, icon, variant = "outlined", minWidth = 100, sx}: CustomButtonProps) => {
+const CustomButton = ({
+                          label,
+                          onClick,
+                          color,
+                          isSubmit = false,
+                          isEnable = true,
+                          isLoading = false,
+                          disableIcon = false,
+                          icon,
+                          variant = "outlined",
+                          minWidth = 100,
+                          minHeight = 30,
+                          sx
+                      }: CustomButtonProps) => {
     const {t} = useTranslation(["common"]);
 
     return (
@@ -25,9 +41,11 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             onClick={onClick}
             color={color}
             size="small"
-            startIcon={isLoading ? <CircularProgress size={16} color="inherit" /> : (label && icon)}
+            startIcon={isLoading ? <CircularProgress size={16} color="inherit"/> : (label && icon)}
+            loading={isLoading}
             sx={{
                 height: "100%",
+                minHeight: minHeight,
                 minWidth: minWidth,
                 fontWeight: 'bold',
                 textTransform: 'none',
@@ -36,7 +54,12 @@ const CustomButton = ({label, onClick, color, isSubmit = false, isEnable = true,
             type={isSubmit ? "submit" : "button"}
             disabled={!isEnable || isLoading}
         >
-            {label ? t(label) : icon}
+            {label
+                ? t(label)
+                : disableIcon
+                    ? <></>
+                    : icon
+            }
         </Button>
     );
 };
@@ -58,6 +81,27 @@ export const NewButton = ({onClick, isEnable = true, disableLabel = false, sx}: 
             icon={<AddIcon/>}
             isEnable={isEnable}
             sx={sx as SxProps}
+        />
+    )
+}
+
+interface PrintButtonProps {
+    canPrint: boolean;
+    isPending: boolean;
+    onClick: () => void;
+}
+
+export const PrintButton = ({canPrint, isPending, onClick}: PrintButtonProps) => {
+    return (
+        <CustomButton
+            label={""}
+            minWidth={60}
+            color={"primary"}
+            icon={<PrintRounded fontSize={"small"}/>}
+            isEnable={canPrint && !isPending}
+            isLoading={isPending}
+            disableIcon={isPending}
+            onClick={() => onClick()}
         />
     )
 }
