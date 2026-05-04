@@ -22,6 +22,8 @@ import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {usePanel} from "@ui/panel/PanelContext";
 import {useEffect} from "react";
+import {PrintRounded} from "@mui/icons-material";
+import CustomButton from "@features/panels/shared/CustomButton";
 
 export interface IBatchDataForm {
     delivery_date: string | null;
@@ -264,14 +266,18 @@ const BatchDataFields = ({batchData}: {
 const BatchDataForm = ({
                            extra
                        }: ICustomPanelFormProps<IBatchDataStoreParams>) => {
-    const {useGetDetail, usePut} = batchDataApi;
+    const {useGetDetail, usePut, useGetBatchDataPdf} = batchDataApi;
     const {data: batchData} = useGetDetail(extra?.batchDataId);
+    const getBatchDataPdf = useGetBatchDataPdf();
 
     const {mutateAsync: update, isPending: isUpdating} = usePut();
 
     const {useStore} = usePanel<unknown, IBatchDataStoreState>();
     const selectedBatchDataId = useStore(state => state.uiState.selectedBatchDataId);
     const setUIState = useStore(state => state.setUIState);
+
+    const batchId = batchData?.batch?.id;
+    const canPrint = !!batchId && !!batchData?.batch?.batch_code;
 
     useEffect(() => {
         if (extra?.batchDataId) {
@@ -336,6 +342,16 @@ const BatchDataForm = ({
             onClearSelection={() => setUIState({selectedBatchDataId: null})}
             update={(id, payload) => update({id, payload})}
             renderFields={() => <BatchDataFields batchData={batchData as IBatchData}/>}
+            extraButtons={[
+                <CustomButton
+                    label={""}
+                    minWidth={0}
+                    color={"primary"}
+                    icon={<PrintRounded fontSize={"small"}/>}
+                    isEnable={canPrint}
+                    onClick={() => getBatchDataPdf(batchId as number)}
+                />
+            ]}
         />
     );
 };

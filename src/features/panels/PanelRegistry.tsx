@@ -45,6 +45,7 @@ import ArticleInternalColorsPanel from "@features/panels/products/article-intern
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
 import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
 import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
+import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -92,6 +93,7 @@ export type TPanelKind =
     | 'articlePrints'
     | 'pallets'
     | 'batchData'
+    | 'searchOrderRows'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -126,8 +128,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     articleClasses:         (props) => <ArticleClassesPanel {...props}/>,
     articlePrints:          (props) => <ArticlePrintsPanel {...props}/>,
     // orders
-    customerOrders: () => <CustomerOrdersPanel/>,
-    orderRows:      (props) => <OrderRowsPanel {...props}/>,
+    customerOrders:     () => <CustomerOrdersPanel/>,
+    orderRows:          (props) => <OrderRowsPanel {...props}/>,
+    searchOrderRows:    () => <SearchOrderRowsPanel />,
     // warehouse
     lotsBatches:    () => <LotsBatchesPanel />,
     pallets:        () => <PalletsPanel />,

@@ -16,6 +16,7 @@
       "fiscal-code": "Codice Fiscale",
       "user-code": "Codice Utente",
       "address": "Indirizzo",
-      "registration-date": "Data registrazione"
+      "registration-date": "Data registrazione",
+      "access-control": "Accesso permessi"
     }
   }}
