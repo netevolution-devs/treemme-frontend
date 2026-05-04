@@ -16,6 +16,10 @@ import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import RadioGroupFieldFilter from "@ui/form/filters/RadioGroupFieldFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {Box} from "@mui/material";
+import {PrintRounded} from "@mui/icons-material";
+import CustomButton from "@features/panels/shared/CustomButton";
+import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -45,6 +49,9 @@ const SearchOrderRowsList = () => {
 
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
+
+    const getOrderSummaryPrint = useGetClientOrderRowSummaryPrint();
+    const canPrint = !!queryParams.client_id && orderRows.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IOrderRowsSearch>[]>(() => [
         {
@@ -212,6 +219,21 @@ const SearchOrderRowsList = () => {
                                         {label: t("order-search.printed"), value: "printed"},
                                     ]}
                                 />
+                            ]}
+                            buttons={[
+                                <Box sx={{width: "100%", display: "flex", justifyContent: "flex-end", mr: 1.5}}>
+                                    <CustomButton
+                                        label={""}
+                                        minWidth={0}
+                                        color={"primary"}
+                                        icon={<PrintRounded fontSize={"small"}/>}
+                                        isEnable={canPrint}
+                                        onClick={() => getOrderSummaryPrint(queryParams.client_id as number, {
+                                            start_date: queryParams.start_date as string,
+                                            end_date: queryParams.end_date as string
+                                        })}
+                                    />
+                                </Box>
                             ]}
                         />
                     )
