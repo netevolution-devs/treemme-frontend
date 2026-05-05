@@ -74,7 +74,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
             const queryClient = useQueryClient();
             return useMutation({
                 mutationKey: [queryKey, 'UPDATE'],
-                mutationFn: async ({id, payload}: { id: number; payload: TPayload }) => {
+                mutationFn: async ({id, payload}: { id: number; payload: Partial<TPayload> }) => {
                     const response = await put(`${baseEndpoint}/${id}`, payload);
                     return response.data.data;
                 },

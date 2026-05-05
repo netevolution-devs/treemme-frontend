@@ -5,6 +5,7 @@ import type {IContactAddress} from "@features/panels/contacts/contacts/api/conta
 import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contacts-address/contactsAddressApi";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import {nationsApi} from "@features/panels/contacts/nations/api/nationsApi";
 import {Box, Stack} from "@mui/material";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
@@ -24,6 +25,7 @@ export type IContactAddressForm = Omit<IContactAddress,
     nation_id: number | null;
     contact_id: number | null;
     zip_code: string;
+    default_address: boolean;
 };
 
 const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStoreParams>) => {
@@ -79,6 +81,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
                 nation_id: null,
                 contact_id: null,
                 zip_code: '',
+                default_address: false,
             }}
             mapEntityToForm={(x) => ({
                 address: x.address,
@@ -89,6 +92,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
                 nation_id: x.nation.id,
                 contact_id: extra?.contact_id as number,
                 zip_code: x.zip_code,
+                default_address: x.default_address,
             })}
             create={(payload) => createAddress({...payload, contact_id: extra?.contact_id as number})}
             update={(id, payload) => updateAddress({
@@ -142,6 +146,10 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
                             required
                         />
                     </Box>
+                    <FlagCheckBoxFieldControlled<IContactAddressForm>
+                        name="default_address"
+                        label={t("contacts.address.default")}
+                    />
                 </>
             )}
         />

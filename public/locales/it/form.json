@@ -95,6 +95,7 @@
     "client_shipment_note": "Note spedizione cliente",
     "agent_percentage": "Provvigione agente",
     "address": {
+      "default": "Indirizzo predefinito",
       "list": "Lista indirizzi",
       "name": "Tipologia indirizzo",
       "address": "Indirizzo",
