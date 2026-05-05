@@ -239,6 +239,22 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
+            if (selectedId && event.key === "F4") {
+                event.preventDefault();
+                if (isFormDisabled) {
+                    handleEdit();
+                }
+                return;
+            }
+
+            if (event.key === "F9") {
+                event.preventDefault();
+                if (isFormDisabled) {
+                    handleNew();
+                }
+                return;
+            }
+
             if (event.key === "F10") {
                 event.preventDefault();
                 if (!isFormDisabled) {
