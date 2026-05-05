@@ -101,6 +101,7 @@ const ContactsDetailForm = ({extra}: ICustomPanelFormProps<IContactsDetailStoreP
                     <TextFieldControlled<IContactDetailForm>
                         name={"note"}
                         label={t("contacts.details.note")}
+                        TextFieldProps={{multiline: true, rows: 2}}
                     />
                 </>
             )}
