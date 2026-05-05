@@ -13,4 +13,5 @@ export interface IProcess {
     machine: IMachine;
     production_note: string;
     scheduled_date: string;
+    client_name: string;
 }
