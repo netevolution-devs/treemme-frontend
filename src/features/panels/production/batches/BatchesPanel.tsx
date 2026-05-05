@@ -62,6 +62,7 @@ const BatchesPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchesStore
     return (
         <GenericPanel<IBatchesStoreFilter, IBatchesStoreState>
             kind={"batches"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<BatchesList/>}
         >
