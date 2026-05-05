@@ -45,7 +45,7 @@ const PanelContext = createContext<PanelContextValue<any, any> | null>(null);
 export interface PanelProviderProps<F, U> {
   kind: TPanelKind;
   /** Optional – generated if missing */
-  uuid?: string;
+  uuid?: string | undefined;
   /** Optional initial state – useful for tests or pre‑population */
   initialState?: Partial<PanelState<F, U>>;
   children: ReactNode;

@@ -6,7 +6,7 @@ import type {ReactNode} from "react";
 
 interface GenericPanelProps<F, U> {
     kind: TPanelKind;
-    uuid: string;
+    uuid?: string | undefined;
     initialState: Partial<PanelState<F, U>>;
     children?: ReactNode;
     listComponent?: ReactNode;

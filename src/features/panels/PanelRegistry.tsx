@@ -139,7 +139,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     searchOrderRows:            () => <SearchOrderRowsPanel />,
     // warehouse
     lotsBatches:                () => <LotsBatchesPanel />,
-    pallets:                    () => <PalletsPanel />,
+    pallets:                    (props) => <PalletsPanel {...props}/>,
     // production
     batches:                    (props) => <BatchesPanel {...props}/>,
     machinery:                  () => <MachineryPanel/>,
