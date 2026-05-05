@@ -134,7 +134,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     articleClasses:             (props) => <ArticleClassesPanel {...props}/>,
     articlePrints:              (props) => <ArticlePrintsPanel {...props}/>,
     // orders
-    customerOrders:             () => <CustomerOrdersPanel/>,
+    customerOrders:             (props) => <CustomerOrdersPanel {...props}/>,
     orderRows:                  (props) => <OrderRowsPanel {...props}/>,
     searchOrderRows:            () => <SearchOrderRowsPanel />,
     // warehouse
