@@ -56,7 +56,7 @@ const ContactsDetailList = () => {
             },
             menu: {
                 component: "contactsDetail",
-                i18nKey: "contacts.details-add-btn"
+                i18nKey: "menu.contacts.add-detail"
             },
             customId: "createContactDetail"
         });
@@ -72,7 +72,7 @@ const ContactsDetailList = () => {
             },
             menu: {
                 component: "contactsDetail",
-                i18nKey: "form:contacts.details.value"
+                i18nKey: "menu.contacts.add-detail"
             },
             customId: "updateContactDetail:" + id
         });

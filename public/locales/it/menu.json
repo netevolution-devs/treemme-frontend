@@ -8,7 +8,9 @@
       "contacts": "Contatti",
       "seaports": "Porti Marittimi",
       "add-agent": "Aggiungi Agente",
-      "add-subcontractor": "Aggiungi Terzista"
+      "add-subcontractor": "Aggiungi Terzista",
+      "add-address": "Aggiungi Indirizzo",
+      "add-detail": "Aggiungi Recapito"
     },
     "leathers": {
       "self": "Pellami",

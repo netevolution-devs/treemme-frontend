@@ -84,7 +84,7 @@ const ContactsAgentsList = () => {
                                                 component: "contactsAgents",
                                                 i18nKey: "menu.contacts.add-agent"
                                             },
-                                            customId: `createContactsAgents:${selectedContactId}`
+                                            customId: `createContactsAgents:${selectedContactId}`,
                                         });
                                     }}
                                 />

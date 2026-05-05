@@ -65,7 +65,7 @@ const ContactsAddressList = () => {
             },
             menu: {
                 component: "contactsAddress",
-                i18nKey: "contacts.addresses-add-btn"
+                i18nKey: "menu.contacts.add-address"
             },
             customId: "createContactAddress"
         });
@@ -81,7 +81,7 @@ const ContactsAddressList = () => {
             },
             menu: {
                 component: "contactsAddress",
-                i18nKey: "contacts.address.name"
+                i18nKey: "menu.contacts.add-address"
             },
             customId: "updateContactAddress:" + id
         });
