@@ -147,7 +147,7 @@ const OrderRowsList = () => {
                         <ListToolbar
                             buttons={[
                                 <NewButton
-                                    isEnable={!!selectedCustomerOrderId && canPost}
+                                    isEnable={!!selectedCustomerOrderId && canPost && !customerOrder?.checked}
                                     onClick={() => handleOpenCreateRowDialog()}
                                 />
                             ]}
