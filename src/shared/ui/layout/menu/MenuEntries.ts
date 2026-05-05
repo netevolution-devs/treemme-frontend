@@ -125,11 +125,11 @@ export const MenuEntries: IMenuEntry[] = [
                 component: "articleInternalColors",
                 permissionCheck: {resource: "articoli - colori interni", action: "get"}
             },
-            {
-                i18nKey: "menu.products.article-classes",
-                component: "articleClasses",
-                permissionCheck: {resource: "articoli - classi", action: "get"}
-            },
+            // {
+            //     i18nKey: "menu.products.article-classes",
+            //     component: "articleClasses",
+            //     permissionCheck: {resource: "articoli - classi", action: "get"}
+            // },
             {
                 i18nKey: "menu.products.article-prints", component: "articlePrints", permissionCheck: {
                     resource: "articoli - stampe", action: "get"

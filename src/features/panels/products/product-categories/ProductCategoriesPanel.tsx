@@ -14,6 +14,7 @@ const ProductCategoriesPanel = () => {
     return (
         <GenericPanel<unknown, IProductCategoriesStoreState>
             kind={"productCategories"}
+            uuid={""}
             initialState={{uiState: initialUiState}}
         >
             <ProductCategoriesList/>
