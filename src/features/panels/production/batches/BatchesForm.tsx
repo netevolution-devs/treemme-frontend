@@ -276,7 +276,7 @@ const BatchesForm = () => {
                             <SelectFieldControlled<IBatchesForm>
                                 name="measurement_unit_id"
                                 label={t("production.batch.measurement_unit")}
-                                options={measurementUnits.map(x => ({label: x.name, value: x.id}))}
+                                options={measurementUnits.map(x => ({label: x.prefix, value: x.id}))}
                                 required
                             />
                             {selectedBatchId && (

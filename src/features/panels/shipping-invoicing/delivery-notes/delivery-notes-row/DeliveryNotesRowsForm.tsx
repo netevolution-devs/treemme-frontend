@@ -289,7 +289,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <SelectFieldControlled<IDeliveryNoteRowForm>
                     name="measurement_unit_id"
                     label={t("orders.row.measurement_unit")}
-                    options={measurementUnits.map(mu => ({value: mu.id, label: mu.name}))}
+                    options={measurementUnits.map(mu => ({value: mu.id, label: mu.prefix}))}
                     required
                 />
                 <NumberFieldControlled<IDeliveryNoteRowForm>
