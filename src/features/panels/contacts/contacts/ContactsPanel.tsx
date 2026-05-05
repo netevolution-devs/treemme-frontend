@@ -38,6 +38,7 @@ const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsSto
     return (
         <GenericPanel<IContactsStoreFilter, IContactsStoreState>
             kind={"contacts"}
+            uuid={props.api.id}
             initialState={{
                 filters: {},
                 uiState: initialUiState

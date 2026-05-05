@@ -65,7 +65,7 @@ export const PanelProvider = <F, U>({
                                     }: PanelProviderProps<F, U>) => {
   const uuid = useMemo(() => uuidProp ?? crypto.randomUUID(), [uuidProp]);
 
-  const panelId = `${kind}:${uuid}`;
+  const panelId = `${uuid}`;
 
   // Create a fresh store for this panel
   const [store] = useState(() => createPanelStore<F, U>(initialState));

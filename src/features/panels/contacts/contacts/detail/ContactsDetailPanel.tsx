@@ -22,6 +22,7 @@ const ContactsDetailPanel = (props: IDockviewPanelProps<ICustomPanelProps<IConta
         <GenericPanel<unknown, IContactsDetailStoreState>
             disableBorders
             kind={"contactsDetail"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
         >
             <ContactsDetailForm {...props.params}/>
