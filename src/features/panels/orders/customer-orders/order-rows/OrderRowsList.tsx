@@ -74,6 +74,7 @@ const OrderRowsList = () => {
         addSelectPanel({
             initialValue: '',
             extra: {
+                clientId: selectedClientId,
                 client_order_id: selectedCustomerOrderId,
                 panelId: "createOrderRows"
             },
