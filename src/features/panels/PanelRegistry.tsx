@@ -156,9 +156,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     paymentTypes:               (props) => <PaymentTypesPanel {...props}/>,
     shipmentConditions:         (props) => <ShipmentConditionsPanel {...props}/>,
     // system
-    "users":                    () => <UsersPanel />,
+    "users":                    (props) => <UsersPanel {...props}/>,
     "user-access-management":   () => <UserAccessPanel />,
     "organization-management":  () => <OrganizationManagementPanel />,
-    "functionality-management": () => <WorkAreaPanel />,
+    "functionality-management": (props) => <WorkAreaPanel {...props}/>,
     "not-implemented":          () => <>To implement</>,
 }
