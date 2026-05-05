@@ -18,6 +18,7 @@ const WeightsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, IWeightsStoreState>
             kind={"weights"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<WeightsList/>}
         >

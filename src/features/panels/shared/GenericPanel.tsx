@@ -6,6 +6,7 @@ import type {ReactNode} from "react";
 
 interface GenericPanelProps<F, U> {
     kind: TPanelKind;
+    uuid?: string | undefined;
     initialState: Partial<PanelState<F, U>>;
     children?: ReactNode;
     listComponent?: ReactNode;
@@ -14,6 +15,7 @@ interface GenericPanelProps<F, U> {
 
 const GenericPanel = <F, U>({
                                 kind,
+                                uuid,
                                 initialState,
                                 children,
                                 listComponent,
@@ -22,6 +24,7 @@ const GenericPanel = <F, U>({
     return (
         <PanelProvider<F, U>
             kind={kind}
+            uuid={uuid}
             initialState={initialState}
         >
             <Box sx={{

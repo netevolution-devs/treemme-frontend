@@ -21,6 +21,7 @@ const ContactsSubcontractorsPanel = (props: IDockviewPanelProps<ICustomPanelProp
         <GenericPanel<unknown, IContactsSubcontractorsStoreState>
             kind={"contactsSubcontractors"}
             initialState={{uiState: initialUiState}}
+            uuid={props.api.id}
             disableBorders
         >
             <ContactsSubcontractorsForm {...props.params}/>

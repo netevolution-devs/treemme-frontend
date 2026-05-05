@@ -19,6 +19,7 @@ const ArticlePrintsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, IArticlePrintsStoreState>
             kind={"articlePrints"}
+            uuid={props.api.id}
             initialState={{
                 uiState: initialUiState,
             }}

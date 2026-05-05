@@ -17,6 +17,7 @@ const NationsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, INationsStoreState>
             kind={"nations"}
             initialState={{uiState: initialUiState}}
+            uuid={props.api.id}
             listComponent={
                 <NationsList/>
             }

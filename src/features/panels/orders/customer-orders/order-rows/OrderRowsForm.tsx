@@ -326,7 +326,7 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                 <SelectFieldControlled<IOrderRowForm>
                     name="measurement_unit_id"
                     label={t("orders.row.measurement_unit")}
-                    options={measurementUnits?.map(mu => ({value: mu.id, label: mu.name})) || []}
+                    options={measurementUnits?.map(mu => ({value: mu.id, label: mu.prefix})) || []}
                     required
                 />
                 <NumberFieldControlled<IOrderRowForm>

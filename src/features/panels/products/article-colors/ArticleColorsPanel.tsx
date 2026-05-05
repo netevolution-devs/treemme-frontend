@@ -24,6 +24,7 @@ const ArticleColorsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IArticl
     return (
         <GenericPanel<unknown, IArticleColorsStoreState>
             kind={"articleColors"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<ArticleColorsList/>}
         >

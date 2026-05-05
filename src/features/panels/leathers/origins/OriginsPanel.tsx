@@ -18,6 +18,7 @@ const OriginsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, IOriginsStoreState>
             kind={"origins"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<OriginsList/>}
         >

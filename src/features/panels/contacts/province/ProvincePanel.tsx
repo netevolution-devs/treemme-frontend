@@ -17,6 +17,7 @@ const ProvincePanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, IProvinceStoreState>
             kind={"province"}
             initialState={{uiState: initialUiState}}
+            uuid={props.api.id}
             listComponent={
                 <ProvinceList/>
             }

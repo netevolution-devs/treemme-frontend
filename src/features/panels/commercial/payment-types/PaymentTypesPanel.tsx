@@ -19,6 +19,7 @@ const PaymentTypesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, IPaymentTypesStoreState>
             kind={"paymentTypes"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<PaymentTypesList/>}
         >

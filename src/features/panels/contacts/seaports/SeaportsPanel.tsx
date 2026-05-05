@@ -17,6 +17,7 @@ const SeaportsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
         <GenericPanel<unknown, ISeaportsStoreState>
             kind={"seaports"}
             initialState={{uiState: initialUiState}}
+            uuid={props.api.id}
             listComponent={
                 <SeaPortsList/>
             }

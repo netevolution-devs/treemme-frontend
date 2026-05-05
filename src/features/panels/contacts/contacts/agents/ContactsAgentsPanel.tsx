@@ -21,6 +21,7 @@ const ContactsAgentsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IConta
         <GenericPanel<unknown, IContactsAgentsStoreState>
             kind={"contactsAgents"}
             initialState={{uiState: initialUiState}}
+            uuid={props.api.id}
             disableBorders
         >
             <ContactsAgentsForm {...props.params}/>
