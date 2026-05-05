@@ -71,7 +71,7 @@ const MenuToolbar = () => {
 
     return isMenuVisible && (
         <AppBar position="static">
-            <Toolbar disableGutters sx={{px: 1}} variant="dense">
+            <Toolbar disableGutters sx={{px: 0.7}} variant="dense">
                 <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', flex: 1}}>
                     <Box>
                         {visibleEntries.map((entry) => (
@@ -86,7 +86,7 @@ const MenuToolbar = () => {
                         display: 'flex',
                         flexDirection: 'row',
                         justifyContent: 'flex-end',
-                        gap: 2,
+                        gap: 1.5,
                         alignItems: 'center',
                         mr: 1
                     }}>
