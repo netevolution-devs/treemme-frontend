@@ -281,10 +281,6 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     return (
        <Box sx={{width: '100%', height: '100%'}}>
-           <pre>{JSON.stringify({
-               "a": activePanelId,
-               "c": panelId,
-           }, null, 2)}</pre>
             <FormProvider {...methods}>
                 <Stack
                     component="form"
