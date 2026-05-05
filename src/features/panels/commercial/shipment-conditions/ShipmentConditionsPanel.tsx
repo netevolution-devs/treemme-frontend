@@ -19,6 +19,7 @@ const ShipmentConditionsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) 
     return (
         <GenericPanel<unknown, IShipmentConditionsStoreState>
             kind={"shipmentConditions"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<ShipmentConditionsList/>}
         >

@@ -5,18 +5,21 @@ import CurrenciesList from "@features/panels/commercial/currenciesExchange/Curre
 import CurrenciesForm from "@features/panels/commercial/currenciesExchange/CurrenciesForm";
 import CurrenciesExchangeList from "@features/panels/commercial/currenciesExchange/exchange/CurrenciesExchangeList";
 import {Box} from "@mui/material";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface ICurrenciesExchangeStoreState extends IPanelUIState {
     selectedCurrencyId?: number | null;
     selectedCurrencyExchangeId?: number | null;
 }
 
-const CurrenciesExchangePanel = () => {
+const CurrenciesExchangePanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: ICurrenciesExchangeStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
         <GenericPanel<unknown, ICurrenciesExchangeStoreState>
             kind={"currenciesExchange"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<CurrenciesList/>}
         >

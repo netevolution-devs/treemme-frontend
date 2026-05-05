@@ -152,7 +152,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     reasons:                    (props) => <ReasonsPanel {...props}/>,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     // commercial
-    currenciesExchange:         () => <CurrenciesExchangePanel />,
+    currenciesExchange:         (props) => <CurrenciesExchangePanel {...props}/>,
     paymentTypes:               (props) => <PaymentTypesPanel {...props}/>,
     shipmentConditions:         (props) => <ShipmentConditionsPanel {...props}/>,
     // system
