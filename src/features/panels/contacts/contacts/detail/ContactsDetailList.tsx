@@ -2,13 +2,11 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
-import {useMemo, useRef} from "react";
+import {useMemo} from "react";
 import type {IContactDetail} from "@features/panels/contacts/contacts/api/contacts-detail/IContactDetail";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
-import ContactsDetailFormDialog from "@features/panels/contacts/contacts/detail/ContactsDetailFormDialog";
-import type {IDialogActions} from "@ui/dialog/IDialogActions";
-import {openDialog} from "@ui/dialog/dialogHelper";
+import useCallablePanel from "@ui/panel/useCallablePanel";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
 import {Typography} from "@mui/material";
@@ -21,6 +19,8 @@ const ContactsDetailList = () => {
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const selectedDetailId = useStore(state => state.uiState.selectedDetailId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {add: addSelectPanel} = useCallablePanel();
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
 
@@ -37,7 +37,7 @@ const ContactsDetailList = () => {
             accessorKey: "name",
             header: t("form:contacts.details.value"),
             Cell: ({row}) => (
-                <Typography sx={{textTransform: "lowercase"}}>{row.original.detail_type.name}</Typography>
+                <Typography sx={{textTransform: "lowercase"}}>{row.original.name}</Typography>
             )
         },
         {
@@ -46,18 +46,40 @@ const ContactsDetailList = () => {
         }
     ], [t]);
 
-    const editDialogRef = useRef<IDialogActions | null>(null);
-
     const handleOpenCreateDialog = () => {
         setUIState({selectedDetailId: null});
-        openDialog(editDialogRef);
+        addSelectPanel({
+            initialValue: '',
+            extra: {
+                contact_id: selectedContactId,
+                panelId: "createContactDetail"
+            },
+            menu: {
+                component: "contactsDetail",
+                i18nKey: "contacts.details-add-btn"
+            },
+            customId: "createContactDetail"
+        });
+    }
+
+    const handleOpenUpdateDialog = (id: number) => {
+        addSelectPanel({
+            initialValue: '',
+            extra: {
+                contact_id: selectedContactId,
+                detail_id: id,
+                panelId: "updateContactDetail:" + id
+            },
+            menu: {
+                component: "contactsDetail",
+                i18nKey: "form:contacts.details.value"
+            },
+            customId: "updateContactDetail:" + id
+        });
     }
 
     return (
-        <>
-            <ContactsDetailFormDialog ref={editDialogRef}/>
-
-            <GenericList<IContactDetail>
+        <GenericList<IContactDetail>
                 disableBorder
                 data={contact?.contact_details || []}
                 isLoading={isLoading}
@@ -65,7 +87,7 @@ const ContactsDetailList = () => {
                 columns={columns}
                 selectedId={selectedDetailId}
                 onRowSelect={(id) => setUIState({selectedDetailId: id})}
-                onRowDoubleClick={() => openDialog(editDialogRef)}
+                onRowDoubleClick={() => handleOpenUpdateDialog(selectedDetailId as number)}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar:
@@ -83,7 +105,6 @@ const ContactsDetailList = () => {
                         />
                 }}
             />
-        </>
     )
 }
 
