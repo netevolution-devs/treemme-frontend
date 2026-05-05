@@ -46,6 +46,7 @@ import ArticlePrintsPanel from "@features/panels/products/article-prints/Article
 import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
 import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
 import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
+import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -94,6 +95,7 @@ export type TPanelKind =
     | 'pallets'
     | 'batchData'
     | 'searchOrderRows'
+    | 'contactsAddress'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -101,6 +103,7 @@ export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewP
 export const PANEL_REGISTRY: DockviewComponents = {
     // contacts
     contacts:   (props) => <ContactsPanel {...props}/>,
+    contactsAddress: (props) => <ContactsAddressPanel {...props}/>,
     contactsAgents: (props) => <ContactsAgentsPanel {...props}/>,
     contactsSubcontractors: (props) => <ContactsSubcontractorsPanel {...props}/>,
     cap:        () => <CapPanel/>,
