@@ -63,7 +63,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                             },
                             htmlInput: {
                                 maxLength: maxLength,
-                                sx: {textTransform: showUpperCase ? "uppercase" : "lowercase"}
+                                sx: {textTransform: showUpperCase && !TextFieldProps?.multiline ? "uppercase" : "lowercase"}
                             },
                             inputLabel: {
                                 shrink: isShrink,
