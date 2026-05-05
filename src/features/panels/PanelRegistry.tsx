@@ -147,9 +147,9 @@ export const PANEL_REGISTRY: DockviewComponents = {
     workings:                   (props) => <WorkingsPanel {...props}/>,
     batchData:                  (props) => <BatchDataPanel {...props}/>,
     // ddt
-    deliveryNotes:              () => <DeliveryNotesPanel />,
+    deliveryNotes:              (props) => <DeliveryNotesPanel {...props}/>,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
-    reasons:                    () => <ReasonsPanel />,
+    reasons:                    (props) => <ReasonsPanel {...props}/>,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     // commercial
     currenciesExchange:         () => <CurrenciesExchangePanel />,

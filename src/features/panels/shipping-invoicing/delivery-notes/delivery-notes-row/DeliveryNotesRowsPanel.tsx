@@ -21,6 +21,7 @@ const DeliveryNotesRowsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IDe
     return (
         <GenericPanel<unknown, IDeliveryNotesRowsStoreState>
             kind={"deliveryNotesRows"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             disableBorders
         >
