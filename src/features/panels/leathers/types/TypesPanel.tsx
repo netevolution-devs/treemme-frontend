@@ -18,6 +18,7 @@ const TypesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, ITypesStoreState>
             kind={"types"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<TypesList/>}
         >

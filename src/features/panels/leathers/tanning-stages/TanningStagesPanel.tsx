@@ -18,6 +18,7 @@ const TanningStagesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, ITanningStagesStoreState>
             kind={"tanningStages"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<TanningStagesList/>}
         >
