@@ -1,9 +1,10 @@
-import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import {ButtonStateDisabled} from "@features/panels/shared/FormButtons";
 import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
 import GenericPanel from "@features/panels/shared/GenericPanel";
 import type {IDockviewPanelProps} from "dockview";
 import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 import ContactsDetailForm from "@features/panels/contacts/contacts/detail/ContactsDetailForm";
+import type {IContactsAddressStoreState} from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 
 export interface IContactsDetailStoreState extends IPanelUIState {
     selectedDetailId?: number | null;
@@ -16,7 +17,7 @@ export interface IContactsDetailStoreParams {
 }
 
 const ContactsDetailPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsDetailStoreParams>>) => {
-    const initialUiState: IContactsDetailStoreState = {isFormDisabled: false, buttonsState: BaseButtonState};
+    const initialUiState: IContactsAddressStoreState = {isFormDisabled: true, buttonsState: ButtonStateDisabled}
 
     return (
         <GenericPanel<unknown, IContactsDetailStoreState>

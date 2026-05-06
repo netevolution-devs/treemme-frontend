@@ -25,6 +25,15 @@ export const BaseButtonState: IButtonState = {
     update: false
 };
 
+export const ButtonStateDisabled: IButtonState = {
+    new: false,
+    edit: false,
+    delete: false,
+    save: false,
+    cancel: false,
+    update: false
+}
+
 interface FormButtonsProps {
     onNew: () => void;
     onEdit: () => void;
