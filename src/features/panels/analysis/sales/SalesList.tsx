@@ -11,6 +11,8 @@ import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {PrintButton} from "@features/panels/shared/CustomButton";
+import useGetDDTRowSoldClientPdf from "@features/panels/analysis/sales/api/useGetDDTRowSoldClientPdf";
 
 const SalesList = () => {
     const {t} = useTranslation(["form"]);
@@ -33,6 +35,9 @@ const SalesList = () => {
 
     const {data: ddtRowsSold = [], isLoading, isFetching} = useGetDDTRowSold({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
+
+    const {mutateAsync: getDdtRowSoldPdf, isPending} = useGetDDTRowSoldClientPdf();
+    const canPrint = ddtRowsSold.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IDDTRowSold>[]>(() => [
         {
@@ -146,6 +151,20 @@ const SalesList = () => {
                                 onFilterChange={(value) => setFilters({filterClientId: value as number})}
                             />,
                         ]}
+                        buttons={[
+                            <PrintButton
+                                canPrint={canPrint}
+                                isPending={isPending}
+                                onClick={() => getDdtRowSoldPdf({
+                                    params: {
+                                        start_date: queryParams.start_date as string,
+                                        end_date: queryParams.end_date as string
+                                    }
+                                })}
+                            />
+                        ]}
+                        alignButtons={"flex-end"}
+                        sx={{mr: 1}}
                     />
                 )
             }}
