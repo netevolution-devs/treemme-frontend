@@ -9,8 +9,8 @@ import {usePanel} from "@ui/panel/PanelContext";
 import type {IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
-import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import CustomButton from "@features/panels/shared/CustomButton";
+import UnfoldMoreIcon from "@mui/icons-material/UnfoldMore";
 
 type Props = {
     batchSelectionId?: number | null;
@@ -60,8 +60,8 @@ const BatchesCompensationFormDialog = forwardRef<IDialogActions, Props>((props, 
                 extraButtons={[
                     <CustomButton
                         label={t("common:button.execute")}
-                        icon={<SettingsBackupRestoreIcon/>}
-                        color={"success"}
+                        icon={<UnfoldMoreIcon/>}
+                        color={"warning"}
                         isSubmit
                     />
                 ]}
