@@ -83,7 +83,16 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         onChange={(_, newValue) => {
                             onChange(newValue ? newValue.value : null);
                         }}
-                        onBlur={onBlur}
+                        onBlur={() => {
+                            onBlur();
+                            const exactMatch = options.find(
+                                opt => opt.label.toUpperCase() === inputValue.toUpperCase()
+                            );
+                            if (exactMatch) {
+                                onChange(exactMatch.value);
+                                setInputValue(exactMatch.label.toUpperCase());
+                            }
+                        }}
                         onKeyDown={(e) => {
                             // Accetta il suggerimento con Freccia Destra o Tab
                             if ((e.key === "Tab" || e.key === "ArrowRight") && ghostText && ghostText !== inputValue.toUpperCase()) {
