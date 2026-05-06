@@ -7,6 +7,8 @@ interface ISubcontractingTransferPayload {
     date: string;
     pieces: number;
     note: string;
+    processing_id: number | null;
+    ddt_number: string;
 }
 
 const usePostSubcontractingTransfer = () => {
@@ -21,6 +23,8 @@ const usePostSubcontractingTransfer = () => {
                 date: payload.date,
                 pieces: payload.pieces,
                 row_note: payload.note,
+                processing_id: payload.processing_id,
+                ddt_number: payload.ddt_number,
             } as never);
             return response.data.data;
         },
