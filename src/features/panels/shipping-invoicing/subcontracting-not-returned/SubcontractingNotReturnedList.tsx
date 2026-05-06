@@ -2,14 +2,13 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {
-    IDeliveryNoteRow
-} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
 import GenericList from "@features/panels/shared/GenericList";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {openDialog} from "@ui/dialog/dialogHelper";
 import useGetDDTNotReturned
-    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned";
+    , {
+    type IDDTRowNotReturned
+} from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned";
 import type {
     ISubcontractingNotReturnedStoreState
 } from "@features/panels/shipping-invoicing/subcontracting-not-returned/SubcontractingNotReturnedPanel";
@@ -34,7 +33,7 @@ const SubcontractingNotReturnedList = () => {
     const {data: ddtRowsNotReturned = [], isLoading, isFetching} = useGetDDTNotReturned();
     // const {mutateAsync: returnSubcontract, isPending} = usePostSubcontractingReturn();
 
-    const columns = useMemo<MRT_ColumnDef<IDeliveryNoteRow>[]>(() => [
+    const columns = useMemo<MRT_ColumnDef<IDDTRowNotReturned>[]>(() => [
         {
             accessorKey: "batch.batch_code",
             header: t("production.batch.batch_code"),
@@ -42,6 +41,14 @@ const SubcontractingNotReturnedList = () => {
         {
             accessorKey: "stock_pieces",
             header: t("production.batch.selections.external-pieces"),
+        },
+        {
+            accessorKey: "ddt.ddt_number",
+            header: t("production.ddt.ddt_number"),
+        },
+        {
+            accessorKey: "ddt.subcontractor.name",
+            header: t("production.ddt.subcontractor_name")
         },
         // {
         //     accessorKey: "quantity",
@@ -63,7 +70,7 @@ const SubcontractingNotReturnedList = () => {
             <DDTReturnFormDialog ref={ddtReturnDialogRef} />
             <DDTTransferFormDialog ref={ddtTransferDialogRef} />
 
-            <GenericList<IDeliveryNoteRow>
+            <GenericList<IDDTRowNotReturned>
                 minHeight={"835px"}
                 data={ddtRowsNotReturned}
                 columns={columns}

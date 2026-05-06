@@ -207,6 +207,10 @@
     }
   },
   "production": {
+    "ddt": {
+      "ddt_number": "Numero DDT",
+      "subcontractor_name": "Terzista"
+    },
     "batches": "Lotti",
     "date": "Data",
     "title": "Produzione",

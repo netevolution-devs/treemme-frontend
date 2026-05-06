@@ -4,13 +4,24 @@ import type {
   IDeliveryNoteRow
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
 
+export interface IDDTRowNotReturned extends IDeliveryNoteRow {
+  ddt: {
+    id: number;
+    ddt_number: string;
+    subcontractor: {
+      id: number;
+      name: string;
+    }
+  }
+}
+
 const useGetDDTNotReturned = () => {
   const { get } = useApi();
   return useQuery({
     queryKey: ['DDT-ROW-NOT-RETURNED', 'LIST'],
     queryFn: async () => {
 
-      const response = await get<IDeliveryNoteRow[]>(`/ddt-row/subcontracting-not-returned`);
+      const response = await get<IDDTRowNotReturned[]>(`/ddt-row/subcontracting-not-returned`);
       return response.data.data;
     },
     staleTime: 0,
