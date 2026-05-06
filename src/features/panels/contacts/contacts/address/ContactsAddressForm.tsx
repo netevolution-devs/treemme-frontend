@@ -103,7 +103,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedAddressId: null})}
-            validateBeforeSave={(v) => !!v.address_name && !!v.address && !!v.nation_id && !!v.zip_code}
+            validateBeforeSave={(v) => !!v.address_name && !!v.address && !!v.nation_id}
             renderFields={() => (
                 <>
                     <Stack gap={1} sx={{mb: 1}}>
@@ -134,7 +134,6 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
                         <TextFieldControlled<IContactAddressForm>
                             name={"zip_code"}
                             label={t("contacts.address.cap")}
-                            required
                         />
                         <SelectFieldControlled<IContactAddressForm>
                             name={"nation_id"}
