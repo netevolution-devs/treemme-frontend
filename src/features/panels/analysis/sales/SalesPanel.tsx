@@ -4,7 +4,7 @@ import GenericPanel from "@features/panels/shared/GenericPanel";
 import SalesList from "@features/panels/analysis/sales/SalesList";
 
 export interface ISalesStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedOrderRowSoldId?: number | null;
 }
 
 const SalesPanel = () => {

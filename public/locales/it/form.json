@@ -61,6 +61,27 @@
   "nations": {
     "name": "Nazione"
   },
+  "sales": {
+    "ddt-date": "Data DDT",
+    "ddt-number": "Numero DDT",
+    "client": "Cliente",
+    "batch": "Lotto",
+    "order-number": "Numero ordine",
+    "order-date": "Data ordine",
+    "pieces": "Pezzi",
+    "half-pieces": "Pezzi mezzi",
+    "whole-pieces": "Pezzi interi",
+    "weight-kg": "Peso kg",
+    "product": "Prodotto",
+    "selection": "Scelta",
+    "um": "U.M.",
+    "quantity": "Quantità",
+    "order-price": "Prezzo ordine",
+    "ddt-price": "Prezzo DDT",
+    "client-order-number": "N. ordine cliente",
+    "client-order-date": "Data ordine cliente",
+    "note": "Note"
+  },
   "contacts": {
     "details-add-btn": "Nuovo recapito",
     "addresses-add-btn": "Nuovo indirizzo",
