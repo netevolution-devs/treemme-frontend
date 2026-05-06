@@ -2,6 +2,7 @@ import {usePanel} from "@ui/panel/PanelContext";
 import {useTranslation} from "react-i18next";
 import GenericForm from "@features/panels/shared/GenericForm";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import MultiSelectFieldControlled from "@ui/form/controlled/MultiSelectFieldControlled";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {Box, Stack, Typography} from "@mui/material";
@@ -46,6 +47,7 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'pieces' |
     'quantity' |
     'processing' |
+    'ddtRowProcessing' |
     'stock_pieces' |
     'currency_total_value' |
     'price' |
@@ -58,7 +60,7 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     ddt_id: number;
     pieces: number | null;
     quantity: number | null;
-    processing_id: number | null;
+    processing_ids: string | null;
 };
 
 const DeliveryNotesRowsForm = ({
@@ -136,7 +138,7 @@ const DeliveryNotesRowsForm = ({
                     whole_piece: null,
                     half_piece: 0,
                     ddt_id: ddtId,
-                    processing_id: null,
+                    processing_ids: null,
                 }}
                 mapEntityToForm={(x) => ({
                     batch_id: x.batch?.id || null,
@@ -156,7 +158,7 @@ const DeliveryNotesRowsForm = ({
                     whole_piece: x.whole_piece,
                     half_piece: x.half_piece || 0,
                     ddt_id: ddtId,
-                    processing_id: x.processing?.id ?? 0
+                    processing_ids: x.ddtRowProcessing?.map(p => p.processing.id).join(',') || null
                 })}
                 create={(payload) => createRow(payload)}
                 update={(id, payload) => updateRow({id, payload})}
@@ -269,8 +271,8 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                         label={t("production.batch.selection")}
                         options={selections.map(s => ({value: s.id, label: s.name}))}
                     />
-                    <SelectFieldControlled<IDeliveryNoteRowForm>
-                        name="processing_id"
+                    <MultiSelectFieldControlled<IDeliveryNoteRowForm>
+                        name="processing_ids"
                         label={t("production.batch.workings")}
                         options={workings.map(s => ({value: s.id, label: s.name}))}
                     />
