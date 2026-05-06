@@ -24,6 +24,7 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog";
+import BatchesCompensationFormDialog from "@features/panels/production/batches/compensation/BatchesCompensationFormDialog";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
@@ -32,6 +33,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 import {useAuth} from "@features/auth/model/AuthContext";
+import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -86,6 +88,7 @@ const BatchesForm = () => {
 
     const reworkDialogRef = useRef<IDialogActions | null>(null);
     const splitDialogRef = useRef<IDialogActions | null>(null);
+    const compensationDialogRef = useRef<IDialogActions | null>(null);
 
     const {add: addSelectPanel} = useCallablePanel();
 
@@ -101,11 +104,13 @@ const BatchesForm = () => {
     const canRework = !!selectedBatchId && isBatchBaseType && hasStock && canPost;
     const canSplit = !!selectedBatchId && (isBatchBaseType || isRework) && canPost;
     const canPrint = !!selectedBatchId && (isBatchBaseType || isTF);
+    const canCompensate = !!selectedBatchId && canPost;
 
     return (
         <>
             <BatchesReworkFormDialog ref={reworkDialogRef}/>
             <BatchesSplitFormDialog ref={splitDialogRef}/>
+            <BatchesCompensationFormDialog ref={compensationDialogRef}/>
 
             <GenericForm<IBatchesForm, IBatch, IBatchesStoreState>
                 resource="produzione - lotti"
@@ -159,6 +164,13 @@ const BatchesForm = () => {
                     !!v.batch_date
                 }
                 extraButtons={[
+                    <CustomButton
+                        label={t("production.batch.compensation")}
+                        color={"warning"}
+                        icon={<UnfoldMoreIcon/>}
+                        isEnable={canCompensate}
+                        onClick={() => openDialog(compensationDialogRef)}
+                    />,
                     <CustomButton
                         label={t("production.batch.data")}
                         color={"primary"}

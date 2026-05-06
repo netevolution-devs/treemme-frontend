@@ -211,6 +211,8 @@
     "date": "Data",
     "title": "Produzione",
     "batch": {
+      "compensation": "Compensazione",
+      "compensation_sign": "Aggiungi/Rimuovi",
       "data": "Dati lotto",
       "workings": "Lavorazione",
       "note": "Note composizione",
@@ -243,6 +245,7 @@
       "split": "Spaccatura",
       "selection": "Scelta",
       "selections": {
+        "pieces_to_edit": "Pezzi",
         "pieces": "Pezzi totali",
         "external-pieces": "Pezzi da ritornare",
         "stock_items": "Giacenza pezzi",

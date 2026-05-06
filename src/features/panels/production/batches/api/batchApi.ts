@@ -1,8 +1,8 @@
-import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
+import {createPanelApi, type ApiOptions} from "@features/panels/shared/hooks/createPanelApiFactory";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import useApi from "@api/useApi";
 
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
 
 export interface IBatchesPayload extends Omit<IBatch, 'id'
@@ -26,11 +26,34 @@ interface IMutateParamsGetPdf {
     batchCode: string;
 }
 
+export interface IBatchPieceCompensationPayload {
+    pieces: number;
+    sign: "+" | "-";
+    batch_selection_id?: number | null;
+}
+
 export const batchApi = {
     ...createPanelApi<IBatch, IBatchesPayload>({
         baseEndpoint: "/batch",
         queryKey: "BATCH"
     }),
+    usePutBatchPieceCompensation: (options?: ApiOptions) => {
+        const {put} = useApi();
+        const queryClient = useQueryClient();
+        return useMutation({
+            mutationKey: ["BATCH", "COMPENSATION"],
+            mutationFn: async ({id, payload}: { id: number; payload: IBatchPieceCompensationPayload }) => {
+                const response = await put(`/batch/${id}/compensation`, payload);
+                return response.data.data;
+            },
+            onSuccess: (_, variables) => {
+                void queryClient.invalidateQueries({queryKey: ["BATCH", "DETAIL", variables.id]});
+                options?.invalidateQueries?.forEach(key => {
+                    void queryClient.invalidateQueries({queryKey: [key]});
+                });
+            }
+        });
+    },
     useGetPdf: () => {
         const {get} = useApi();
         return useMutation({
