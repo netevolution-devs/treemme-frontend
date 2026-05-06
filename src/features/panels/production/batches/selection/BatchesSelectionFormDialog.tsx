@@ -13,8 +13,8 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
 import CustomButton from "@features/panels/shared/CustomButton";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import useGetSplitThicknesses from "@features/panels/production/batches/selection/api/useGetSplitThicknesses";
 
 type Props = unknown;
 
@@ -36,7 +36,7 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
     const {mutateAsync: createBatchSelection, isPending} = batchSelectionApi.usePost({invalidateQueries: ['BATCH', 'DETAIL', String(batch?.id)]});
 
     const {data: selections = []} = selectionApi.useGetList();
-    const {data: thicknesses = []} = thicknessApi.useGetList();
+    const {data: thicknesses = []} = useGetSplitThicknesses(selectedBatchId as number);
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
