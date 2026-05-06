@@ -5,15 +5,34 @@ import type {MRT_ColumnDef} from "material-react-table";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
 import {usePanel} from "@ui/panel/PanelContext";
-import type {ISalesStoreState} from "@features/panels/analysis/sales/SalesPanel";
+import type {ISalesStoreFilter, ISalesStoreState} from "@features/panels/analysis/sales/SalesPanel";
 import ListToolbar from "@features/panels/shared/ListToolbar";
+import {cleanFilters} from "@ui/form/filters/useCleanFilters";
+import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
+import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 
 const SalesList = () => {
     const {t} = useTranslation(["form"]);
-    const {data: ddtRowsSold = [], isLoading, isFetching} = useGetDDTRowSold();
 
-    const {useStore} = usePanel<unknown, ISalesStoreState>();
+    const {useStore} = usePanel<ISalesStoreFilter, ISalesStoreState>();
     const setUiState = useStore(state => state.setUIState);
+
+    const filterStartDate = useStore(state => state.filters.filterStartDate)
+    const filterEndDate = useStore(state => state.filters.filterEndDate)
+    const filterClientId = useStore(state => state.filters.filterClientId)
+    const setFilters = useStore(state => state.setFilters)
+
+    const queryParams = useMemo(() => cleanFilters(
+        {
+            start_date: filterStartDate,
+            end_date: filterEndDate,
+            client_id: filterClientId,
+        }
+    ), [filterStartDate, filterEndDate, filterClientId])
+
+    const {data: ddtRowsSold = [], isLoading, isFetching} = useGetDDTRowSold({queryParams});
+    const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
     const columns = useMemo<MRT_ColumnDef<IDDTRowSold>[]>(() => [
         {
@@ -110,7 +129,22 @@ const SalesList = () => {
                 renderTopToolbar: () => (
                     <ListToolbar
                         filters={[
-                            <></>
+                            <DateFieldRangeFilter
+                                key={"f-date-range"}
+                                startValue={filterStartDate}
+                                endValue={filterEndDate}
+                                onStartFilterChange={(value) => setFilters({filterStartDate: value as string})}
+                                onEndFilterChange={(value) => setFilters({filterEndDate: value as string})}
+                                startLabel={t("shipping.date_start")}
+                                endLabel={t("shipping.date_end")}
+                            />,
+                            <SelectFieldFilter
+                                key={"f-client"}
+                                label={t("orders.client")}
+                                value={filterClientId}
+                                options={clients.map(s => ({value: s.id, label: s.name}))}
+                                onFilterChange={(value) => setFilters({filterClientId: value as number})}
+                            />,
                         ]}
                     />
                 )

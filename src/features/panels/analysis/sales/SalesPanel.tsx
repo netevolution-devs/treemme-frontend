@@ -7,11 +7,17 @@ export interface ISalesStoreState extends IPanelUIState {
     selectedOrderRowSoldId?: number | null;
 }
 
+export interface ISalesStoreFilter {
+    filterStartDate?: string;
+    filterEndDate?: string;
+    filterClientId?: number;
+}
+
 const SalesPanel = () => {
     const initialUiState: ISalesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, ISalesStoreState>
+        <GenericPanel<ISalesStoreFilter, ISalesStoreState>
             kind={"sales"}
             initialState={{uiState: initialUiState}}
             listComponent={<SalesList/>}
