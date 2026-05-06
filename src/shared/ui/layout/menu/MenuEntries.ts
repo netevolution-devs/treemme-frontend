@@ -270,9 +270,8 @@ export const MenuEntries: IMenuEntry[] = [
         icon: "ANALYSIS",
         permissionCheck: {resource: "analisi", action: "get"},
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.analysis.orders"},
-            // {i18nKey: "menu.analysis.sales"},
+            {i18nKey: "menu.analysis.sales", component: "sales" },
             // {i18nKey: "menu.analysis.costs-revenues"},
             // {i18nKey: "menu.analysis.batches-lots"},
             // {i18nKey: "menu.analysis.subcontracting"},

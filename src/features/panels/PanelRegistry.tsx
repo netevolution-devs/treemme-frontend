@@ -48,6 +48,7 @@ import BatchDataPanel from "@features/panels/production/batches/batch-data/Batch
 import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
 import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
+import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -98,6 +99,7 @@ export type TPanelKind =
     | 'searchOrderRows'
     | 'contactsAddress'
     | 'contactsDetail'
+    | 'sales'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -155,6 +157,8 @@ export const PANEL_REGISTRY: DockviewComponents = {
     currenciesExchange:         (props) => <CurrenciesExchangePanel {...props}/>,
     paymentTypes:               (props) => <PaymentTypesPanel {...props}/>,
     shipmentConditions:         (props) => <ShipmentConditionsPanel {...props}/>,
+    // analysis
+    sales:                      (props) => <SalesPanel {...props}/>,
     // system
     "users":                    (props) => <UsersPanel {...props}/>,
     "user-access-management":   () => <UserAccessPanel />,
