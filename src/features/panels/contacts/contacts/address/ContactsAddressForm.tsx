@@ -70,6 +70,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
             selectedId={selectedAddressId}
             floatingPanelMode
             floatingPanelUUID={floatingPanelUUID}
+            disableCreateButton
             entity={address}
             selectedIdKey={"selectedAddressId"}
             emptyValues={{

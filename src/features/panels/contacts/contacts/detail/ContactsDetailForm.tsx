@@ -57,6 +57,7 @@ const ContactsDetailForm = ({extra}: ICustomPanelFormProps<IContactsDetailStoreP
         <GenericForm<IContactDetailForm, IContactDetail, IContactsDetailStoreState>
             resource="contatti - contatti"
             selectedId={selectedDetailId}
+            disableCreateButton
             floatingPanelMode
             floatingPanelUUID={floatingPanelUUID}
             entity={detail}
