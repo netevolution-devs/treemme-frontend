@@ -15,6 +15,7 @@ import MoveDownIcon from '@mui/icons-material/MoveDown';
 import useGetDDTNotReturned from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
+import MultiSelectFieldControlled from "@shared/ui/form/controlled/MultiSelectFieldControlled";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {workingApi} from "@features/panels/production/workings/api/workingApi";
 
@@ -26,7 +27,7 @@ export type IDDTTransferForm = {
     pieces: number | null;
     note: string;
     ddt_number: string;
-    processing_id: number | null;
+    processing_ids: string | null;
 }
 
 const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
@@ -60,7 +61,7 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                     pieces: null,
                     note: "",
                     ddt_number: "",
-                    processing_id: null
+                    processing_ids: null
                 }}
                 emptyValues={{
                     subcontractor_id: 0,
@@ -68,7 +69,7 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                     pieces: null,
                     note: "",
                     ddt_number: "",
-                    processing_id: null
+                    processing_ids: null
                 }}
                 mapEntityToForm={(x) => ({
                     subcontractor_id: x.subcontractor_id,
@@ -76,11 +77,11 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                     pieces: x.pieces,
                     note: x.note,
                     ddt_number: x.ddt_number,
-                    processing_id: x.processing_id
+                    processing_ids: x.processing_id ? String(x.processing_id) : null
                 })}
                 create={(payload) => transferSubcontract({
                     ddtRowId: selectedId as number,
-                    processing_id: payload.processing_id as number,
+                    processing_ids: payload.processing_ids,
                     ddt_number: payload.ddt_number,
                     subcontractor_id: payload.subcontractor_id,
                     date: payload.date,
@@ -110,8 +111,8 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                             options={subcontractors.map(s => ({value: s.id, label: s.name}))}
                             required
                         />
-                        <SelectFieldControlled<IDDTTransferForm>
-                            name={"processing_id"}
+                        <MultiSelectFieldControlled<IDDTTransferForm>
+                            name={"processing_ids"}
                             label={t("production.batch.workings")}
                             options={processes.map(s => ({value: s.id, label: s.name}))}
                             required
