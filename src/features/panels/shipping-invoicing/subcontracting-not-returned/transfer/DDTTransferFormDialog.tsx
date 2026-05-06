@@ -77,7 +77,7 @@ const DDTTransferFormDialog = forwardRef<IDialogActions, Props>((_props, ref) =>
                     pieces: x.pieces,
                     note: x.note,
                     ddt_number: x.ddt_number,
-                    processing_ids: x.processing_id ? String(x.processing_id) : null
+                    processing_ids: x.processing_ids ? String(x.processing_ids) : null
                 })}
                 create={(payload) => transferSubcontract({
                     ddtRowId: selectedId as number,
