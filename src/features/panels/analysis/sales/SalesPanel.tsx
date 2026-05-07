@@ -11,6 +11,7 @@ export interface ISalesStoreFilter {
     filterStartDate?: string;
     filterEndDate?: string;
     filterClientId?: number;
+    filterBatchCode?: string;
 }
 
 const SalesPanel = () => {

@@ -19,6 +19,7 @@ import dayjs from "dayjs";
 import useGetExternalProcessingReturnsPrint
     from "@features/panels/analysis/external-movements/api/useGetExternalProcessingReturnsPrint";
 import {PrintButton} from "@features/panels/shared/CustomButton";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
 
 const ExternalMovementsList = () => {
     const {t} = useTranslation(["form"]);
@@ -29,6 +30,7 @@ const ExternalMovementsList = () => {
     const filterStartDate = useStore(state => state.filters.filterStartDate)
     const filterEndDate = useStore(state => state.filters.filterEndDate)
     const filterSubcontractorId = useStore(state => state.filters.filterSubcontractorId)
+    const filterBatchCode = useStore(state => state.filters.filterBatchCode)
     const setFilters = useStore(state => state.setFilters)
 
     const queryParams = useMemo(() => cleanFilters(
@@ -36,8 +38,9 @@ const ExternalMovementsList = () => {
             start_date: filterStartDate,
             end_date: filterEndDate,
             subcontractor_id: filterSubcontractorId,
+            batch_code: filterBatchCode,
         }
-    ), [filterStartDate, filterEndDate, filterSubcontractorId])
+    ), [filterStartDate, filterEndDate, filterSubcontractorId, filterBatchCode])
 
     const {data: movements = [], isLoading, isFetching} = useGetExternalProcessingMovements({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
@@ -98,6 +101,12 @@ const ExternalMovementsList = () => {
                         alignButtons={"flex-end"}
                         sx={{mr: 1}}
                         filters={[
+                            <TextFieldFilter
+                                key={"f-batch_code"}
+                                label={t("production.batch.batch_code")}
+                                value={filterBatchCode}
+                                onFilterChange={(val) => setFilters({filterBatchCode: val as string})}
+                            />,
                             <DateFieldRangeFilter
                                 key={"f-date-range"}
                                 startValue={filterStartDate}

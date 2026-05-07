@@ -13,6 +13,7 @@ import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetDDTRowSoldClientPdf from "@features/panels/analysis/sales/api/useGetDDTRowSoldClientPdf";
+import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
 
 const SalesList = () => {
     const {t} = useTranslation(["form"]);
@@ -23,6 +24,7 @@ const SalesList = () => {
     const filterStartDate = useStore(state => state.filters.filterStartDate)
     const filterEndDate = useStore(state => state.filters.filterEndDate)
     const filterClientId = useStore(state => state.filters.filterClientId)
+    const filterBatchCode = useStore(state => state.filters.filterBatchCode)
     const setFilters = useStore(state => state.setFilters)
 
     const queryParams = useMemo(() => cleanFilters(
@@ -30,8 +32,9 @@ const SalesList = () => {
             start_date: filterStartDate,
             end_date: filterEndDate,
             client_id: filterClientId,
+            batch_code: filterBatchCode,
         }
-    ), [filterStartDate, filterEndDate, filterClientId])
+    ), [filterStartDate, filterEndDate, filterClientId, filterBatchCode])
 
     const {data: ddtRowsSold = [], isLoading, isFetching} = useGetDDTRowSold({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
@@ -134,6 +137,12 @@ const SalesList = () => {
                 renderTopToolbar: () => (
                     <ListToolbar
                         filters={[
+                            <TextFieldFilter
+                                key={"f-batch_code"}
+                                label={t("production.batch.batch_code")}
+                                value={filterBatchCode}
+                                onFilterChange={(val) => setFilters({filterBatchCode: val as string})}
+                            />,
                             <DateFieldRangeFilter
                                 key={"f-date-range"}
                                 startValue={filterStartDate}

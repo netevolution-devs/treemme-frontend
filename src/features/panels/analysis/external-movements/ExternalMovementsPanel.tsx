@@ -8,6 +8,7 @@ export interface IExternalMovementsStoreFilter {
     filterStartDate?: string;
     filterEndDate?: string;
     filterSubcontractorId?: number;
+    filterBatchCode?: string;
 }
 
 export interface IExternalMovementsStoreState extends IPanelUIState {
