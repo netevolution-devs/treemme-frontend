@@ -272,6 +272,7 @@ export const MenuEntries: IMenuEntry[] = [
         subMenu: [
             // {i18nKey: "menu.analysis.orders"},
             {i18nKey: "menu.analysis.sales", component: "sales" },
+            {i18nKey: "menu.analysis.external-movements" , component: "externalMovements" },
             // {i18nKey: "menu.analysis.costs-revenues"},
             // {i18nKey: "menu.analysis.batches-lots"},
             // {i18nKey: "menu.analysis.subcontracting"},

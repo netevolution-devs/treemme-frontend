@@ -106,7 +106,8 @@
       "iso-quality": {
         "self": "Controllo Qualità ISO",
         "order-fulfillment": "Evasione Ordini"
-      }
+      },
+      "external-movements": "Movimenti conto lavorazione"
     },
     "system": {
       "self": "Sistema",

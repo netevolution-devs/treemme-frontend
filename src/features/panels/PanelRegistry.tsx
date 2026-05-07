@@ -49,6 +49,7 @@ import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/Sear
 import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
 import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
+import ExternalMovementsPanel from "@features/panels/analysis/external-movements/ExternalMovementsPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -100,6 +101,7 @@ export type TPanelKind =
     | 'contactsAddress'
     | 'contactsDetail'
     | 'sales'
+    | 'externalMovements'
     | 'not-implemented';
 
 export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
@@ -159,6 +161,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     shipmentConditions:         (props) => <ShipmentConditionsPanel {...props}/>,
     // analysis
     sales:                      () => <SalesPanel/>,
+    externalMovements:          () => <ExternalMovementsPanel />,
     // system
     "users":                    (props) => <UsersPanel {...props}/>,
     "user-access-management":   () => <UserAccessPanel />,
