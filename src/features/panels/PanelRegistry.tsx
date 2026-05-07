@@ -102,9 +102,10 @@ export type TPanelKind =
     | 'contactsDetail'
     | 'sales'
     | 'externalMovements'
-    | 'not-implemented';
+    | 'not-implemented'
+    | 'dialog'; // special panel for dialogs
 
-export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
+export type DockviewComponents = Omit<Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>, "dialog">;
 
 export const PANEL_REGISTRY: DockviewComponents = {
     // contacts

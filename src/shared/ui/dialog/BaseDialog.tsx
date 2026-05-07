@@ -10,6 +10,8 @@ import {
 import {Dialog, useMediaQuery, useTheme, type SxProps} from "@mui/material";
 import type {Theme} from "@emotion/react";
 import type {IDialogActions} from "./IDialogActions";
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import {PanelProvider} from "@ui/panel/PanelContext";
 
 interface BaseDialogProps {
     children: ReactNode;
@@ -54,28 +56,33 @@ function BaseDialogWrapper({
     }
 
     return (
-        <Dialog
-            fullScreen={isSmallScreen || fullscreen}
-            open={open}
-            onClose={() => handleClose()}
-            onKeyDown={onKeyDown}
-            slotProps={{
-                paper: {
-                    sx: {
-                        minWidth: minWidth ? minWidth : 0,
-                        borderRadius: isSmallScreen || fullscreen ? 0 : 4,
-                        minHeight: minHeight ? minHeight : 0,
-                        maxHeight: '90vh',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        ...sx
-                    },
-                },
-            }}
-            sx={{m: 2}}
+        <PanelProvider
+            kind={"dialog"}
+            initialState={{uiState: {isFormDisabled: true, buttonsState: BaseButtonState}}}
         >
-            {children}
-        </Dialog>
+            <Dialog
+                fullScreen={isSmallScreen || fullscreen}
+                open={open}
+                onClose={() => handleClose()}
+                onKeyDown={onKeyDown}
+                slotProps={{
+                    paper: {
+                        sx: {
+                            minWidth: minWidth ? minWidth : 0,
+                            borderRadius: isSmallScreen || fullscreen ? 0 : 4,
+                            minHeight: minHeight ? minHeight : 0,
+                            maxHeight: '90vh',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            ...sx
+                        },
+                    },
+                }}
+                sx={{m: 2}}
+            >
+                {children}
+            </Dialog>
+        </PanelProvider>
     );
 }
 
