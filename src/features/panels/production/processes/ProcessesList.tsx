@@ -70,6 +70,10 @@ const ProcessesList = () => {
             header: t("processes.batch_quantity")
         },
         {
+            accessorKey: "client_name",
+            header: t("processes.client_name")
+        },
+        {
             accessorKey: "production_note",
             header: t("processes.production_note")
         }

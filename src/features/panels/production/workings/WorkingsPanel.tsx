@@ -3,17 +3,20 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel";
 import WorkingsList from "@features/panels/production/workings/WorkingsList";
 import WorkingsForm from "@features/panels/production/workings/WorkingsForm";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface IWorkingsStoreState extends IPanelUIState {
     selectedWorkingId?: number | null;
 }
 
-const WorkingsPanel = () => {
+const WorkingsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IWorkingsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
         <GenericPanel<unknown, IWorkingsStoreState>
             kind={"workings"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<WorkingsList/>}
         >

@@ -24,6 +24,7 @@ const LeathersPanel = (props: IDockviewPanelProps<ICustomPanelProps<ILeatherStor
     return (
         <GenericPanel<unknown, ILeathersStoreState>
             kind={"leathers"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={
                 <LeathersList enableFilters={false}/>

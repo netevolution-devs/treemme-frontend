@@ -6,6 +6,8 @@ import DeliveryNotesForm from "@features/panels/shipping-invoicing/delivery-note
 import {Box} from "@mui/material";
 import DeliveryNotesRowsList
     from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsList";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface IDeliveryNotesStoreState extends IPanelUIState {
     selectedDeliveryNoteId?: number | null;
@@ -18,12 +20,13 @@ export interface IDeliveryNotesStoreFilter {
     filterEndDate?: string;
 }
 
-const DeliveryNotesPanel = () => {
+const DeliveryNotesPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: IDeliveryNotesStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
         <GenericPanel<IDeliveryNotesStoreFilter, IDeliveryNotesStoreState>
             kind={"deliveryNotes"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<DeliveryNotesList/>}
         >

@@ -6,6 +6,8 @@ import CustomerOrdersList from "@features/panels/orders/customer-orders/Customer
 
 import CustomerOrdersForm from "@features/panels/orders/customer-orders/CustomerOrdersForm";
 import OrderRowsList from "@features/panels/orders/customer-orders/order-rows/OrderRowsList";
+import type {IDockviewPanelProps} from "dockview";
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 
 export interface ICustomerOrdersStoreState extends IPanelUIState {
     selectedClientId?: number | null;
@@ -18,12 +20,13 @@ export interface ICustomerOrdersFilters {
     filterOrderClientId?: number;
 }
 
-const CustomerOrdersPanel = () => {
+const CustomerOrdersPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: ICustomerOrdersStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
         <GenericPanel<ICustomerOrdersFilters, ICustomerOrdersStoreState>
             kind={"customerOrders"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<CustomerOrdersList/>}
         >

@@ -32,15 +32,18 @@ if (!fs.existsSync(targetDir)) {
 
 // 2. Creazione file componente
 const componentPath = path.join(targetDir, `${panelNameCapitalized}Panel.tsx`);
-const componentContent = `import {BaseButtonState} from "@features/panels/shared/FormButtons.tsx";
-import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons.ts";
-import GenericPanel from "@features/panels/shared/GenericPanel.tsx";
+const componentContent = `
+import {BaseButtonState} from "@features/panels/shared/FormButtons";
+import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButtons";
+import GenericPanel from "@features/panels/shared/GenericPanel"; 
+import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
+import type {IDockviewPanelProps} from "dockview";
 
 export interface I${panelNameCapitalized}StoreState extends IPanelUIState {
     _placeholder?: string;
 }
 
-const ${panelNameCapitalized}Panel = () => {
+const ${panelNameCapitalized}Panel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     const initialUiState: I${panelNameCapitalized}StoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (

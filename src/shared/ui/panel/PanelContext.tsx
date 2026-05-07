@@ -45,7 +45,7 @@ const PanelContext = createContext<PanelContextValue<any, any> | null>(null);
 export interface PanelProviderProps<F, U> {
   kind: TPanelKind;
   /** Optional – generated if missing */
-  uuid?: string;
+  uuid?: string | undefined;
   /** Optional initial state – useful for tests or pre‑population */
   initialState?: Partial<PanelState<F, U>>;
   children: ReactNode;
@@ -65,7 +65,7 @@ export const PanelProvider = <F, U>({
                                     }: PanelProviderProps<F, U>) => {
   const uuid = useMemo(() => uuidProp ?? crypto.randomUUID(), [uuidProp]);
 
-  const panelId = `${kind}:${uuid}`;
+  const panelId = `${uuid}`;
 
   // Create a fresh store for this panel
   const [store] = useState(() => createPanelStore<F, U>(initialState));

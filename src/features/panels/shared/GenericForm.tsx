@@ -91,8 +91,9 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
+    const activePanelId = useDockviewStore(state => state.activePanelId);
 
-    const {useStore} = usePanel<unknown, TUI>();
+    const {useStore, panelId} = usePanel<unknown, TUI>();
     const {isFormDisabled, buttonsState} = useStore(state => state.uiState);
     const setUIState = useStore(state => state.setUIState);
     const {setFormState} = usePanelFormButtons<unknown, TUI>();
@@ -239,29 +240,38 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "F10") {
+            if (event.key === "F4" ||
+                event.key === "F9" ||
+                event.key === "F10" ||
+                event.key === "Escape"
+            ) {
                 event.preventDefault();
+            }
+            if (activePanelId !== panelId) return;
+
+            if (selectedId && event.key === "F4") {
+                if (isFormDisabled) {
+                    handleEdit();
+                }
+                return;
+            }
+
+            if (!selectedId && event.key === "F9") {
+                if (isFormDisabled) {
+                    handleNew();
+                }
+                return;
+            }
+
+            if (event.key === "F10") {
                 if (!isFormDisabled) {
                     methods.handleSubmit(onSubmit as SubmitHandler<TForm>)();
                 }
                 return;
             }
 
-            const target = event.target as HTMLElement;
-            if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable) {
-                return;
-            }
-
             if (event.key === "Escape") {
                 handleCancel();
-            }
-
-            if ((event.ctrlKey && event.key === "F7" || event.key == "Enter") && isFormDisabled) {
-                handleNew();
-            }
-
-            if (event.key === "Enter" && isFormDisabled && !!selectedId) {
-                handleEdit();
             }
         };
 

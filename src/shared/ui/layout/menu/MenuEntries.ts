@@ -125,11 +125,11 @@ export const MenuEntries: IMenuEntry[] = [
                 component: "articleInternalColors",
                 permissionCheck: {resource: "articoli - colori interni", action: "get"}
             },
-            {
-                i18nKey: "menu.products.article-classes",
-                component: "articleClasses",
-                permissionCheck: {resource: "articoli - classi", action: "get"}
-            },
+            // {
+            //     i18nKey: "menu.products.article-classes",
+            //     component: "articleClasses",
+            //     permissionCheck: {resource: "articoli - classi", action: "get"}
+            // },
             {
                 i18nKey: "menu.products.article-prints", component: "articlePrints", permissionCheck: {
                     resource: "articoli - stampe", action: "get"
@@ -270,9 +270,9 @@ export const MenuEntries: IMenuEntry[] = [
         icon: "ANALYSIS",
         permissionCheck: {resource: "analisi", action: "get"},
         subMenu: [
-            {i18nKey: "to-implement"},
             // {i18nKey: "menu.analysis.orders"},
-            // {i18nKey: "menu.analysis.sales"},
+            {i18nKey: "menu.analysis.sales", component: "sales" },
+            {i18nKey: "menu.analysis.external-movements" , component: "externalMovements" },
             // {i18nKey: "menu.analysis.costs-revenues"},
             // {i18nKey: "menu.analysis.batches-lots"},
             // {i18nKey: "menu.analysis.subcontracting"},

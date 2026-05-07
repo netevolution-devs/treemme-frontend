@@ -61,6 +61,27 @@
   "nations": {
     "name": "Nazione"
   },
+  "sales": {
+    "ddt-date": "Data DDT",
+    "ddt-number": "Numero DDT",
+    "client": "Cliente",
+    "batch": "Lotto",
+    "order-number": "Numero ordine",
+    "order-date": "Data ordine",
+    "pieces": "Pezzi",
+    "half-pieces": "Pezzi mezzi",
+    "whole-pieces": "Pezzi interi",
+    "weight-kg": "Peso kg",
+    "product": "Prodotto",
+    "selection": "Scelta",
+    "um": "U.M.",
+    "quantity": "Quantità",
+    "order-price": "Prezzo ordine",
+    "ddt-price": "Prezzo DDT",
+    "client-order-number": "N. ordine cliente",
+    "client-order-date": "Data ordine cliente",
+    "note": "Note"
+  },
   "contacts": {
     "details-add-btn": "Nuovo recapito",
     "addresses-add-btn": "Nuovo indirizzo",
@@ -81,7 +102,7 @@
       "add": "Aggiungi agente"
     },
     "subcontractors": {
-      "list": "Lista terzista",
+      "list": "Lista terzisti",
       "add": "Aggiungi terzista"
     },
     "name": "Nome",
@@ -95,6 +116,7 @@
     "client_shipment_note": "Note spedizione cliente",
     "agent_percentage": "Provvigione agente",
     "address": {
+      "default": "Indirizzo predefinito",
       "list": "Lista indirizzi",
       "name": "Tipologia indirizzo",
       "address": "Indirizzo",
@@ -206,12 +228,18 @@
     }
   },
   "production": {
+    "ddt": {
+      "ddt_number": "Numero DDT",
+      "subcontractor_name": "Terzista"
+    },
     "batches": "Lotti",
     "date": "Data",
     "title": "Produzione",
     "batch": {
+      "compensation": "Compensazione",
+      "compensation_sign": "Aggiungi/Rimuovi",
       "data": "Dati lotto",
-      "workings": "Lavorazione",
+      "workings": "Lavorazioni",
       "note": "Note composizione",
       "article": "Articolo",
       "year": "Anno",
@@ -242,12 +270,14 @@
       "split": "Spaccatura",
       "selection": "Scelta",
       "selections": {
+        "pieces_to_edit": "Pezzi",
         "pieces": "Pezzi totali",
         "external-pieces": "Pezzi da ritornare",
         "stock_items": "Giacenza pezzi",
         "selection": "Tipo scelta",
         "note": "Note scelta",
-        "thickness": "Spessore"
+        "thickness": "Spessore",
+        "processings": "Lavorazioni"
       },
       "father_batch": "Lotto padre",
       "father_batch_selection": "Scelta lotto",
@@ -460,6 +490,9 @@
     "date_end": "Data fine",
     "subcontractor": "Terzista",
     "reason": "Causale trasporto",
+    "pieces": "Pezzi",
+    "quantity": "Quantità",
+    "um": "U.M.",
     "reasons": {
       "name": "Nome causale",
       "warehouse_movement_reason": "Causale magazzino"

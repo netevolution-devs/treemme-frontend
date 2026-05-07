@@ -74,6 +74,7 @@ const OrderRowsList = () => {
         addSelectPanel({
             initialValue: '',
             extra: {
+                clientId: selectedClientId,
                 client_order_id: selectedCustomerOrderId,
                 panelId: "createOrderRows"
             },
@@ -147,7 +148,7 @@ const OrderRowsList = () => {
                         <ListToolbar
                             buttons={[
                                 <NewButton
-                                    isEnable={!!selectedCustomerOrderId && canPost}
+                                    isEnable={!!selectedCustomerOrderId && canPost && !customerOrder?.checked}
                                     onClick={() => handleOpenCreateRowDialog()}
                                 />
                             ]}

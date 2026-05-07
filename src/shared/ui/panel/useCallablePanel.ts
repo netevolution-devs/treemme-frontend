@@ -12,6 +12,7 @@ interface CallablePanelProps<TExtra = unknown> {
     >
     extra?: TExtra;
     customId?: string;
+    size?: {width?: number, height?: number}
 }
 
 const useCallablePanel = () => {
@@ -19,7 +20,7 @@ const useCallablePanel = () => {
     const addPanel = useDockviewStore(state => state.addPanel);
     const queryClient = useQueryClient();
 
-    const add = useCallback(({initialValue, menu, extra, customId}: CallablePanelProps) => {
+    const add = useCallback(({initialValue, menu, extra, customId, size}: CallablePanelProps) => {
         const dockviewApi = useDockviewStore.getState().api;
 
         let floatingPanelsCount = 0;
@@ -35,8 +36,8 @@ const useCallablePanel = () => {
             component: menu.component || "not-implemented",
             title: t(menu.i18nKey),
             floating: {
-                width: 900,
-                height: 800,
+                width: size?.width || 900,
+                height: size?.height || 800,
                 x: 100 + offset,
                 y: 10 + offset,
             },

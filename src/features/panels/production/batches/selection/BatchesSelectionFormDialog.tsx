@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, useMemo} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import BaseDialog from "@ui/dialog/BaseDialog";
 import {Typography} from "@mui/material";
@@ -13,8 +13,9 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import HighlightAltIcon from "@mui/icons-material/HighlightAlt";
 import CustomButton from "@features/panels/shared/CustomButton";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
+import useGetSplitThicknesses from "@features/panels/production/batches/selection/api/useGetSplitThicknesses";
+import {useWatch} from "react-hook-form";
 
 type Props = unknown;
 
@@ -34,9 +35,6 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
 
     const {data: batch} = batchApi.useGetDetail(selectedBatchId);
     const {mutateAsync: createBatchSelection, isPending} = batchSelectionApi.usePost({invalidateQueries: ['BATCH', 'DETAIL', String(batch?.id)]});
-
-    const {data: selections = []} = selectionApi.useGetList();
-    const {data: thicknesses = []} = thicknessApi.useGetList();
 
     return (
         <BaseDialog ref={ref} sx={{p: 2}}>
@@ -82,37 +80,59 @@ const BatchesSelectionFormDialog = forwardRef<IDialogActions, Props>((_props, re
                 ]}
                 validateBeforeSave={(v) => !!v.selection_id && !!v.thickness_id && !!v.pieces}
                 renderFields={() => (
-                    <>
-                        <SelectFieldControlled<IBatchSelectionForm>
-                            name={"selection_id"}
-                            label={t("production.batch.selection")}
-                            options={selections.map((x) => ({label: x.name, value: x.id}))}
-                            required
-                        />
-                        <SelectFieldControlled<IBatchSelectionForm>
-                            name={"thickness_id"}
-                            label={t("leathers.type.thickness")}
-                            options={thicknesses.map((x) => ({label: x.name, value: x.id}))}
-                            required
-                        />
-                        <NumberFieldControlled<IBatchSelectionForm>
-                            name={"pieces"}
-                            label={t("production.batch.selections.pieces")}
-                            min={0}
-                            max={batch?.batch_selections_count as number}
-                            precision={0}
-                            required
-                        />
-                        <TextFieldControlled<IBatchSelectionForm>
-                            name={"note"}
-                            label={t("production.batch.selections.note")}
-                            TextFieldProps={{multiline: true, rows: 2}}
-                        />
-                    </>
+                    <BatchSelectionFormFields selectedBatchId={selectedBatchId as number} />
                 )}
             />
         </BaseDialog>
     )
 })
+
+interface BatchSelectionFormFieldsProps {
+    selectedBatchId: number;
+}
+
+const BatchSelectionFormFields = ({selectedBatchId}: BatchSelectionFormFieldsProps) => {
+    const {t} = useTranslation(["form", "common"]);
+
+    const {data: selections = []} = selectionApi.useGetList();
+
+    const {data: thicknesses = []} = useGetSplitThicknesses(selectedBatchId as number);
+
+    const watchedThickness = useWatch<IBatchSelectionForm>({name: "thickness_id"});
+    const currentThicknessPieces = useMemo(() => {
+        return thicknesses.find(t => t.thickness.id === watchedThickness)?.total_pieces ?? 0
+    }, [thicknesses, watchedThickness])
+
+    return (
+        <>
+            <SelectFieldControlled<IBatchSelectionForm>
+                name={"selection_id"}
+                label={t("production.batch.selection")}
+                options={selections.map((x) => ({label: x.name, value: x.id}))}
+                required
+            />
+            <SelectFieldControlled<IBatchSelectionForm>
+                name={"thickness_id"}
+                label={t("leathers.type.thickness")}
+                options={thicknesses.map((x) => ({label: x.thickness.name, value: x.thickness.id}))}
+                required
+            />
+            <NumberFieldControlled<IBatchSelectionForm>
+                name={"pieces"}
+                label={t("production.batch.selections.pieces")}
+                min={0}
+                max={currentThicknessPieces}
+                precision={0}
+                required
+                deactivated={currentThicknessPieces === 0}
+            />
+            <TextFieldControlled<IBatchSelectionForm>
+                name={"note"}
+                label={t("production.batch.selections.note")}
+                TextFieldProps={{multiline: true, rows: 2}}
+            />
+        </>
+    )
+}
 
 export default BatchesSelectionFormDialog;

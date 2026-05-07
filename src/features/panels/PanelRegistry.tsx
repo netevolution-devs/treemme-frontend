@@ -46,6 +46,10 @@ import ArticlePrintsPanel from "@features/panels/products/article-prints/Article
 import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
 import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
 import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
+import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
+import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
+import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
+import ExternalMovementsPanel from "@features/panels/analysis/external-movements/ExternalMovementsPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -94,65 +98,75 @@ export type TPanelKind =
     | 'pallets'
     | 'batchData'
     | 'searchOrderRows'
-    | 'not-implemented';
+    | 'contactsAddress'
+    | 'contactsDetail'
+    | 'sales'
+    | 'externalMovements'
+    | 'not-implemented'
+    | 'dialog'; // special panel for dialogs
 
-export type DockviewComponents = Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>;
+export type DockviewComponents = Omit<Record<TPanelKind, FunctionComponent<IDockviewPanelProps>>, "dialog">;
 
 export const PANEL_REGISTRY: DockviewComponents = {
     // contacts
-    contacts:   (props) => <ContactsPanel {...props}/>,
-    contactsAgents: (props) => <ContactsAgentsPanel {...props}/>,
-    contactsSubcontractors: (props) => <ContactsSubcontractorsPanel {...props}/>,
-    cap:        () => <CapPanel/>,
-    province:   (props) => <ProvincePanel {...props}/>,
-    nations:    (props) => <NationsPanel {...props}/>,
-    seaports:   (props) => <SeaportsPanel {...props}/>,
+    contacts:                   (props) => <ContactsPanel {...props}/>,
+    contactsAddress:            (props) => <ContactsAddressPanel {...props}/>,
+    contactsDetail:             (props) => <ContactsDetailPanel {...props}/>,
+    contactsAgents:             (props) => <ContactsAgentsPanel {...props}/>,
+    contactsSubcontractors:     (props) => <ContactsSubcontractorsPanel {...props}/>,
+    cap:                        () => <CapPanel/>,
+    province:                   (props) => <ProvincePanel {...props}/>,
+    nations:                    (props) => <NationsPanel {...props}/>,
+    seaports:                   (props) => <SeaportsPanel {...props}/>,
     // leathers
-    leathers:       (props) => <LeathersPanel {...props}/>,
-    weights:        (props) => <WeightsPanel {...props}/>,
-    species:        (props) => <SpeciesPanel {...props}/>,
-    thicknesses:    (props) => <ThicknessesPanel {...props}/>,
-    types:          (props) => <TypesPanel {...props}/>,
-    flaying:        (props) => <FlayingPanel {...props}/>,
-    tanningStages:  (props) => <TanningStagesPanel {...props}/>,
-    origins:        (props) => <OriginsPanel {...props}/>,
+    leathers:                   (props) => <LeathersPanel {...props}/>,
+    weights:                    (props) => <WeightsPanel {...props}/>,
+    species:                    (props) => <SpeciesPanel {...props}/>,
+    thicknesses:                (props) => <ThicknessesPanel {...props}/>,
+    types:                      (props) => <TypesPanel {...props}/>,
+    flaying:                    (props) => <FlayingPanel {...props}/>,
+    tanningStages:              (props) => <TanningStagesPanel {...props}/>,
+    origins:                    (props) => <OriginsPanel {...props}/>,
     // products
-    products:               () => <ProductsPanel/>,
-    articles:               (props) => <ArticlesPanel {...props}/>,
-    selection:              (props) => <SelectionPanel {...props}/>,
-    productCategories:      () => <ProductCategoriesPanel/>,
-    productTypes:           () => <ProductTypesPanel/>,
-    articleTypes:           (props) => <ArticleTypesPanel {...props}/>,
-    articleColors:          (props) => <ArticleColorsPanel {...props}/>,
-    articleInternalColors:  (props) => <ArticleInternalColorsPanel {...props}/>,
-    articleClasses:         (props) => <ArticleClassesPanel {...props}/>,
-    articlePrints:          (props) => <ArticlePrintsPanel {...props}/>,
+    products:                   () => <ProductsPanel/>,
+    articles:                   (props) => <ArticlesPanel {...props}/>,
+    selection:                  (props) => <SelectionPanel {...props}/>,
+    productCategories:          () => <ProductCategoriesPanel/>,
+    productTypes:               () => <ProductTypesPanel/>,
+    articleTypes:               (props) => <ArticleTypesPanel {...props}/>,
+    articleColors:              (props) => <ArticleColorsPanel {...props}/>,
+    articleInternalColors:      (props) => <ArticleInternalColorsPanel {...props}/>,
+    articleClasses:             (props) => <ArticleClassesPanel {...props}/>,
+    articlePrints:              (props) => <ArticlePrintsPanel {...props}/>,
     // orders
-    customerOrders:     () => <CustomerOrdersPanel/>,
-    orderRows:          (props) => <OrderRowsPanel {...props}/>,
-    searchOrderRows:    () => <SearchOrderRowsPanel />,
+    customerOrders:             (props) => <CustomerOrdersPanel {...props}/>,
+    orderRows:                  (props) => <OrderRowsPanel {...props}/>,
+    searchOrderRows:            () => <SearchOrderRowsPanel />,
     // warehouse
-    lotsBatches:    () => <LotsBatchesPanel />,
-    pallets:        () => <PalletsPanel />,
+    lotsBatches:                () => <LotsBatchesPanel />,
+    pallets:                    (props) => <PalletsPanel {...props}/>,
     // production
-    batches:    (props) => <BatchesPanel {...props}/>,
-    machinery:  () => <MachineryPanel/>,
-    processes:  () => <ProcessesPanel />,
-    workings:   () => <WorkingsPanel />,
-    batchData:  (props) => <BatchDataPanel {...props}/>,
+    batches:                    (props) => <BatchesPanel {...props}/>,
+    machinery:                  (props) => <MachineryPanel {...props}/>,
+    processes:                  () => <ProcessesPanel />,
+    workings:                   (props) => <WorkingsPanel {...props}/>,
+    batchData:                  (props) => <BatchDataPanel {...props}/>,
     // ddt
-    deliveryNotes:              () => <DeliveryNotesPanel />,
+    deliveryNotes:              (props) => <DeliveryNotesPanel {...props}/>,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
-    reasons:                    () => <ReasonsPanel />,
+    reasons:                    (props) => <ReasonsPanel {...props}/>,
     subcontractingNotReturned:  () => <SubcontractingNotReturnedPanel />,
     // commercial
-    currenciesExchange: () => <CurrenciesExchangePanel />,
-    paymentTypes:       (props) => <PaymentTypesPanel {...props}/>,
-    shipmentConditions: (props) => <ShipmentConditionsPanel {...props}/>,
+    currenciesExchange:         (props) => <CurrenciesExchangePanel {...props}/>,
+    paymentTypes:               (props) => <PaymentTypesPanel {...props}/>,
+    shipmentConditions:         (props) => <ShipmentConditionsPanel {...props}/>,
+    // analysis
+    sales:                      () => <SalesPanel/>,
+    externalMovements:          () => <ExternalMovementsPanel />,
     // system
-    "users": () => <UsersPanel />,
-    "user-access-management": () => <UserAccessPanel />,
-    "organization-management": () => <OrganizationManagementPanel />,
-    "functionality-management": () => <WorkAreaPanel />,
-    "not-implemented": () => <>To implement</>,
+    "users":                    (props) => <UsersPanel {...props}/>,
+    "user-access-management":   () => <UserAccessPanel />,
+    "organization-management":  () => <OrganizationManagementPanel />,
+    "functionality-management": (props) => <WorkAreaPanel {...props}/>,
+    "not-implemented":          () => <>To implement</>,
 }

@@ -22,6 +22,7 @@ const BatchDataPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchDataS
     return (
         <GenericPanel<unknown, IBatchDataStoreState>
             kind={"batchData"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             disableBorders
         >

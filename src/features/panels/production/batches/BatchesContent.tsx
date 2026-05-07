@@ -15,8 +15,8 @@ const BatchesContent = () => {
                 width: '100%'
             }}>
                 <Box sx={{
-                    minWidth: '600px',
-                    flex: '1 1 600px',
+                    minWidth: '800px',
+                    flex: '1 1 800px',
                 }}>
                     <BatchesForm/>
                 </Box>

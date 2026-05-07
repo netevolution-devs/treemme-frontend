@@ -18,6 +18,7 @@ const FlayingPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, IFlayingStoreState>
             kind={"flaying"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<FlayingList/>}
         >

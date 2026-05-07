@@ -2,16 +2,15 @@ import GenericList from "@features/panels/shared/GenericList";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
 import {useTranslation} from "react-i18next";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {contactsAddressApi} from "@features/panels/contacts/contacts/api/contacts-address/contactsAddressApi";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IContactsStoreState} from "@features/panels/contacts/contacts/ContactsPanel";
-import {useMemo, useRef} from "react";
+import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import ContactsAddressFormDialog from "@features/panels/contacts/contacts/address/ContactsAddressFormDialog";
-import type {IDialogActions} from "@ui/dialog/IDialogActions";
-import {openDialog} from "@ui/dialog/dialogHelper";
+import useCallablePanel from "@ui/panel/useCallablePanel";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
-import {Box, Typography} from "@mui/material";
+import {Box, Checkbox, CircularProgress, Typography} from "@mui/material";
 import PostAddIcon from '@mui/icons-material/PostAdd';
 
 const ContactsAddressList = () => {
@@ -21,6 +20,11 @@ const ContactsAddressList = () => {
     const selectedContactId = useStore(state => state.uiState.selectedContactId);
     const selectedAddressId = useStore(state => state.uiState.selectedAddressId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    const {usePut} = contactsAddressApi;
+    const {mutateAsync: updateAddress, isPending} = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', String(selectedContactId)]});
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
 
@@ -53,20 +57,71 @@ const ContactsAddressList = () => {
             accessorKey: "nation.name",
             header: t("nations.name")
         },
-    ], [t]);
-
-    const editDialogRef = useRef<IDialogActions | null>(null);
+        {
+            accessorKey: "default_address",
+            header: t("contacts.address.default"),
+            size: 100,
+            Cell: ({row}) => (
+                <Box sx={{minHeight: 45, display: "flex", alignItems: "center" }}>
+                    {((isPending || isFetching) && row.original.id === selectedAddressId) ? (
+                        <>
+                            <CircularProgress size={20} color={"secondary"} sx={{ml: 1.2}}/>
+                        </>
+                    ) : (
+                        <Checkbox
+                            color={"secondary"}
+                            checked={row.original.default_address}
+                            onClick={(e) => e.stopPropagation()}
+                            onChange={async (e) => {
+                                setUIState({selectedAddressId: row.original.id});
+                                await updateAddress({
+                                    id: row.original.id,
+                                    payload: {
+                                        default_address: e.target.checked
+                                    }
+                                })
+                            }}
+                        />
+                    )}
+                </Box>
+            )
+        },
+    ], [t, selectedContactId, updateAddress, isPending, isFetching]);
 
     const handleOpenCreateDialog = () => {
         setUIState({selectedAddressId: null});
-        openDialog(editDialogRef);
+        addSelectPanel({
+            initialValue: '',
+            extra: {
+                contact_id: selectedContactId,
+                panelId: "createContactAddress"
+            },
+            menu: {
+                component: "contactsAddress",
+                i18nKey: "menu.contacts.add-address"
+            },
+            customId: "createContactAddress"
+        });
+    }
+
+    const handleOpenUpdateDialog = (id: number) => {
+        addSelectPanel({
+            initialValue: '',
+            extra: {
+                contact_id: selectedContactId,
+                address_id: id,
+                panelId: "updateContactAddress:" + id
+            },
+            menu: {
+                component: "contactsAddress",
+                i18nKey: "menu.contacts.add-address"
+            },
+            customId: "updateContactAddress:" + id
+        });
     }
 
     return (
-        <>
-            <ContactsAddressFormDialog ref={editDialogRef}/>
-
-            <GenericList<IContactAddress>
+        <GenericList<IContactAddress>
                 disableBorder
                 data={contact?.contact_addresses || []}
                 isLoading={isLoading}
@@ -74,7 +129,7 @@ const ContactsAddressList = () => {
                 columns={columns}
                 selectedId={selectedAddressId}
                 onRowSelect={(id) => setUIState({selectedAddressId: id})}
-                onRowDoubleClick={() => openDialog(editDialogRef)}
+                onRowDoubleClick={() => handleOpenUpdateDialog(selectedAddressId as number)}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar:
@@ -92,8 +147,7 @@ const ContactsAddressList = () => {
                         />
                 }}
             />
-        </>
-    )
-}
+        )
+    }
 
 export default ContactsAddressList;

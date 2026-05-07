@@ -28,7 +28,6 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
             control={control}
             rules={{
                 required: {value: required, message: t("common:form.error.required")},
-                maxLength: {value: maxLength, message: t("common:form.error.too-long")},
             }}
             render={({field, fieldState: {error}}) => {
                 const {onBlur, value, onChange, ...restField} = field;
@@ -62,8 +61,8 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                     <ErrorFormHelperText isError={!!error} children={children}/>
                             },
                             htmlInput: {
-                                maxLength: maxLength,
-                                sx: {textTransform: showUpperCase ? "uppercase" : "lowercase"}
+                                maxLength: TextFieldProps?.multiline ? undefined : maxLength,
+                                sx: {textTransform: showUpperCase && !TextFieldProps?.multiline ? "uppercase" : "lowercase"}
                             },
                             inputLabel: {
                                 shrink: isShrink,

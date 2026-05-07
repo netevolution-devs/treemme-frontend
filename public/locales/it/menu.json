@@ -8,7 +8,9 @@
       "contacts": "Contatti",
       "seaports": "Porti Marittimi",
       "add-agent": "Aggiungi Agente",
-      "add-subcontractor": "Aggiungi Terzista"
+      "add-subcontractor": "Aggiungi Terzista",
+      "add-address": "Aggiungi Indirizzo",
+      "add-detail": "Aggiungi Recapito"
     },
     "leathers": {
       "self": "Pellami",
@@ -76,7 +78,6 @@
       "search": "Ricerca Documenti",
       "deliveryNotes": "DeliveryNotes",
       "reasons": "Ragioni di trasporto",
-      "subcontractingNotReturned": "SubcontractingNotReturned",
       "subcontracting-not-returned": "Lotti conto lavoro",
       "rows": "Riga DDT"
     },
@@ -104,7 +105,8 @@
       "iso-quality": {
         "self": "Controllo Qualità ISO",
         "order-fulfillment": "Evasione Ordini"
-      }
+      },
+      "external-movements": "Movimenti conto lavorazione"
     },
     "system": {
       "self": "Sistema",
