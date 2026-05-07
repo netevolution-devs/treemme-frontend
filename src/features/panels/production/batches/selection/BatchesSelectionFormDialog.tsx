@@ -124,6 +124,7 @@ const BatchSelectionFormFields = ({selectedBatchId}: BatchSelectionFormFieldsPro
                 max={currentThicknessPieces}
                 precision={0}
                 required
+                deactivated={currentThicknessPieces === 0}
             />
             <TextFieldControlled<IBatchSelectionForm>
                 name={"note"}
