@@ -225,7 +225,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
 
     const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
 
-    const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name;
+    const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name ||  batch?.article?.code;
     const {setValue} = useFormContext<IDeliveryNoteRowForm>();
 
     return (
@@ -319,6 +319,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="currency_price"
                     label={t("orders.row.currency_price")}
+                    precision={4}
                 />
                 <TextFieldValue
                     label={t("orders.row.total_currency_price")}
@@ -346,6 +347,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     label={t("orders.row.price")}
                     value={deliveryNoteRow?.price ?? undefined}
                     isFilled={!!deliveryNoteRow}
+                    precision={4}
                 />
                 <TextFieldValue
                     label={t("orders.row.total_price")}

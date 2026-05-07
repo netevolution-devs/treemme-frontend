@@ -386,6 +386,7 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                 <NumberFieldControlled<IOrderRowForm>
                     name="currency_price"
                     label={t("orders.row.currency_price")}
+                    precision={4}
                 />
                 <TextFieldValue
                     label={t("orders.row.total_currency_price")}
@@ -413,6 +414,7 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                     label={t("orders.row.price")}
                     value={orderRow?.price ?? undefined}
                     isFilled={!!orderRow}
+                    precision={4}
                 />
                 <TextFieldValue
                     label={t("orders.row.total_price")}
