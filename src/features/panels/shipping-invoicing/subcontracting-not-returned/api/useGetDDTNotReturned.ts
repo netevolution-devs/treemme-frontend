@@ -15,13 +15,21 @@ export interface IDDTRowNotReturned extends IDeliveryNoteRow {
   }
 }
 
-const useGetDDTNotReturned = () => {
+interface IDDTNotReturnedQueryParams {
+  start_date?: string;
+  end_date?: string;
+  subcontractor_id?: number;
+}
+
+const useGetDDTNotReturned = ({queryParams}: { queryParams?: IDDTNotReturnedQueryParams } = {}) => {
   const { get } = useApi();
   return useQuery({
-    queryKey: ['DDT-ROW-NOT-RETURNED', 'LIST'],
+    queryKey: ['DDT-ROW-NOT-RETURNED', 'LIST', queryParams],
     queryFn: async () => {
 
-      const response = await get<IDDTRowNotReturned[]>(`/ddt-row/subcontracting-not-returned`);
+      const response = await get<IDDTRowNotReturned[]>(`/ddt-row/subcontracting-not-returned`, {
+        params: queryParams
+      });
       return response.data.data;
     },
     staleTime: 0,
