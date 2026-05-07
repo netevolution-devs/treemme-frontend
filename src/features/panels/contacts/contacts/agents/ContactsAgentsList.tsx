@@ -42,7 +42,6 @@ const ContactsAgentsList = () => {
     ], [t]);
 
     const handleConfirmDelete = async () => {
-        console.log("Deleting agent");
         await deleteAgent({agent_id: selectedAgentId as number});
     }
 

@@ -154,6 +154,7 @@ const UserProfileCard = (
                                 <Box sx={{display: 'flex', gap: 0.6, flexWrap: 'wrap'}}>
                                     {groupRoles.map((role) => (
                                         <Chip
+                                            color={"primary"}
                                             label={`${role.group} - ${role.role}`}
                                             size={"small"}
                                         />
