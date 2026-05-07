@@ -102,10 +102,10 @@ const UsersForm = () => {
                         </Box>
                         <PasswordGenerator/>
                     </Box>
+                    {user && <UserGroupAssignment user={user} />}
                 </>
             )}
         />
-        {user && <UserGroupAssignment user={user} />}
         </>
     );
 };

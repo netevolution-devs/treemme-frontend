@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
-import {Box, Chip, CircularProgress, Divider, Typography} from "@mui/material";
+import {Box, Chip, CircularProgress, Typography} from "@mui/material";
 import type {IUserManagement} from "@features/panels/user-management/users/api/IUserManagement";
 import {useAssignGroup, useRemoveGroup} from "@features/panels/user-management/users/api/usersApi";
 import {groupManagementApi} from "@features/panels/user-management/organization/api/groupManagementApi";
@@ -49,10 +49,9 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
 
     return (
         <Box sx={{mt: 2}}>
-            <Typography variant="subtitle2" sx={{mb: 0.5}}>
+            <Typography variant="h6" sx={{mb: 0.5}}>
                 {t("form:user_management.groups")}
             </Typography>
-            <Divider sx={{mb: 1.5}}/>
 
             <Box sx={{display: "flex", flexWrap: "wrap", gap: 0.5, mb: 1.5, minHeight: 32}}>
                 {user.group_users.length === 0 && (
@@ -60,6 +59,7 @@ const UserGroupAssignment = ({user}: UserGroupAssignmentProps) => {
                 )}
                 {user.group_users.map(gu => (
                     <Chip
+                        color={"primary"}
                         key={gu.id}
                         label={gu.group.name}
                         size="small"
