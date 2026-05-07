@@ -276,7 +276,8 @@
         "stock_items": "Giacenza pezzi",
         "selection": "Tipo scelta",
         "note": "Note scelta",
-        "thickness": "Spessore"
+        "thickness": "Spessore",
+        "processings": "Lavorazioni"
       },
       "father_batch": "Lotto padre",
       "father_batch_selection": "Scelta lotto",
@@ -489,6 +490,9 @@
     "date_end": "Data fine",
     "subcontractor": "Terzista",
     "reason": "Causale trasporto",
+    "pieces": "Pezzi",
+    "quantity": "Quantità",
+    "um": "U.M.",
     "reasons": {
       "name": "Nome causale",
       "warehouse_movement_reason": "Causale magazzino"

@@ -74,14 +74,18 @@ const SubcontractingNotReturnedList = () => {
             accessorKey: "ddt.subcontractor.name",
             header: t("production.ddt.subcontractor_name")
         },
-        // {
-        //     accessorKey: "quantity",
-        //     header: t("orders.row.quantity"),
-        // },
-        // {
-        //     accessorKey: "measurement_unit.name",
-        //     header: t("orders.row.measurement_unit"),
-        // }
+        {
+            accessorKey: "pieces",
+            header: t("shipping.pieces"),
+        },
+        {
+            accessorKey: "quantity",
+            header: t("shipping.quantity"),
+        },
+        {
+            accessorKey: "measurement_unit.prefix",
+            header: t("shipping.um"),
+        }
     ], [t]);
 
     const editRowDialogRef = useRef<IDialogActions | null>(null);

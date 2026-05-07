@@ -4,15 +4,21 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel";
 import ExternalMovementsList from "@features/panels/analysis/external-movements/ExternalMovementsList";
 
+export interface IExternalMovementsStoreFilter {
+    filterStartDate?: string;
+    filterEndDate?: string;
+    filterSubcontractorId?: number;
+}
+
 export interface IExternalMovementsStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedExternalMovementId?: number | null;
 }
 
 const ExternalMovementsPanel = () => {
     const initialUiState: IExternalMovementsStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
-        <GenericPanel<unknown, IExternalMovementsStoreState>
+        <GenericPanel<IExternalMovementsStoreFilter, IExternalMovementsStoreState>
             kind={"externalMovements"}
             initialState={{uiState: initialUiState}}
             listComponent={<ExternalMovementsList/>}
