@@ -18,8 +18,13 @@ const ArticleList = () => {
     const columns = useMemo<MRT_ColumnDef<IArticle>[]>(
         () => [
             {
-                accessorKey: "code",
-                header: t("products.articles.code"),
+                accessorKey: "name",
+                header: t("products.articles.name"),
+                size: 0
+            },
+            {
+                accessorKey: "client_code",
+                header: t("products.articles.client_code"),
             },
             {
                 accessorKey: "client.name",

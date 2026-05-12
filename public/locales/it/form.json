@@ -545,6 +545,8 @@
     "filter": "Filtra"
   },
   "processes": {
+    "article_name": "Articolo",
+    "client_name": "Cliente",
     "scheduled_date": "Data programmazione",
     "batch_code": "Codice lotto",
     "batch_pieces": "Pezzi lotto",
