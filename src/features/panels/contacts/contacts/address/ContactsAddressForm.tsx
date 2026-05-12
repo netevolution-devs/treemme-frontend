@@ -16,6 +16,8 @@ import type {
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import {useEffect} from "react";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IContactAddressForm = Omit<IContactAddress,
     'id' |
@@ -29,8 +31,6 @@ export type IContactAddressForm = Omit<IContactAddress,
 };
 
 const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStoreParams>) => {
-    const {t} = useTranslation(["form"]);
-
     const {useStore} = usePanel<unknown, IContactsAddressStoreState>();
     const selectedStoreId = useStore((state) => state.uiState.selectedAddressId);
     const selectedAddressId = extra?.address_id ?? selectedStoreId;
@@ -52,8 +52,6 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
         mutateAsync: deleteAddress,
         isPending: isDeleting
     } = useDelete({invalidateQueries: ['CONTACT', 'LIST']});
-
-    const {data: nations} = nationsApi.useGetList();
 
     const {setFormState} = usePanelFormButtons();
     const floatingPanelUUID = extra?.panelId as string;
@@ -106,54 +104,81 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
             onClearSelection={() => setUIState({selectedAddressId: null})}
             validateBeforeSave={(v) => !!v.address_name && !!v.address && !!v.nation_id}
             renderFields={() => (
-                <>
-                    <Stack gap={1} sx={{mb: 1}}>
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_name"
-                            label={t("contacts.address.name")}
-                            required
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address"
-                            label={t("contacts.address.address-1")}
-                            required
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_2"
-                            label={t("contacts.address.address-2")}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_3"
-                            label={t("contacts.address.address-3")}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_4"
-                            label={t("contacts.address.address-4")}
-                        />
-                    </Stack>
-                    <Box sx={{display: 'flex', gap: 1}}>
-                        <TextFieldControlled<IContactAddressForm>
-                            name={"zip_code"}
-                            label={t("contacts.address.cap")}
-                        />
-                        <SelectFieldControlled<IContactAddressForm>
-                            name={"nation_id"}
-                            label={t("nations.name")}
-                            options={nations?.map((x) => ({
-                                value: x.id,
-                                label: x.name
-                            })) || []}
-                            required
-                        />
-                    </Box>
-                    <FlagCheckBoxFieldControlled<IContactAddressForm>
-                        name="default_address"
-                        label={t("contacts.address.default")}
-                    />
-                </>
+                <ContactAddressFormFields/>
             )}
         />
     )
 }
+
+const ContactAddressFormFields = () => {
+    const {t} = useTranslation(["form"]);
+
+    const {data: nations} = nationsApi.useGetList();
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IContactAddressForm>({
+        formKey: "nation_id",
+        dependencyKey: "nations"
+    })
+
+    return (
+        <>
+            <Stack gap={1} sx={{mb: 1}}>
+                <TextFieldControlled<IContactAddressForm>
+                    name="address_name"
+                    label={t("contacts.address.name")}
+                    required
+                />
+                <TextFieldControlled<IContactAddressForm>
+                    name="address"
+                    label={t("contacts.address.address-1")}
+                    required
+                />
+                <TextFieldControlled<IContactAddressForm>
+                    name="address_2"
+                    label={t("contacts.address.address-2")}
+                />
+                <TextFieldControlled<IContactAddressForm>
+                    name="address_3"
+                    label={t("contacts.address.address-3")}
+                />
+                <TextFieldControlled<IContactAddressForm>
+                    name="address_4"
+                    label={t("contacts.address.address-4")}
+                />
+            </Stack>
+            <Box sx={{display: 'flex', gap: 1}}>
+                <TextFieldControlled<IContactAddressForm>
+                    name={"zip_code"}
+                    label={t("contacts.address.cap")}
+                />
+                <SelectFieldControlled<IContactAddressForm>
+                    name={"nation_id"}
+                    label={t("nations.name")}
+                    options={nations?.map((x) => ({
+                        value: x.id,
+                        label: x.name
+                    })) || []}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "nations",
+                                i18nKey: "menu.contacts.nations"
+                            }
+                        })
+                    }}
+                    required
+                />
+            </Box>
+            <FlagCheckBoxFieldControlled<IContactAddressForm>
+                name="default_address"
+                label={t("contacts.address.default")}
+            />
+        </>
+    )
+}
+
 
 export default ContactsAddressForm;
