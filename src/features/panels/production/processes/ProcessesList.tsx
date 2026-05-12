@@ -58,6 +58,10 @@ const ProcessesList = () => {
             header: t("processes.batch_code")
         },
         {
+            accessorKey: "batch.article.name",
+            header: t("processes.article_name")
+        },
+        {
             accessorKey: "machine.name",
             header: t("processes.machine_name")
         },
