@@ -1,5 +1,7 @@
 # Treemme Frontend
 
+![alt text](https://raw.githubusercontent.com/netevolution-devs/treemme-frontend/refs/heads/main/public/imgs/watermark.png "Treemme Logo")
+
 Software gestionale Conceria Treemme
 
 ## Variabili d'ambiente
