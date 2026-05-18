@@ -37,6 +37,8 @@ import type {
     IDeliveryNotesRowsStoreParams,
     IDeliveryNotesRowsStoreState
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -78,6 +80,8 @@ const DeliveryNotesRowsForm = ({
     const selectedDeliveryNoteRowId = ddtRowId || selectedStoreId;
 
     const floatingPanelUUID = extra?.panelId as string;
+
+    console.log(floatingPanelUUID);
 
     const {setFormState} = usePanelFormButtons();
     const {handlePanelSuccess} = usePanelFormLogic({
@@ -228,6 +232,13 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name ||  batch?.article?.code;
     const {setValue} = useFormContext<IDeliveryNoteRowForm>();
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IDeliveryNoteRowForm>({
+        formKey: "selection_id",
+        dependencyKey: "selection"
+    })
+
     return (
         <Stack gap={1}>
             <CurrencyWatcher
@@ -270,6 +281,15 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                         name="selection_id"
                         label={t("production.batch.selection")}
                         options={selections.map(s => ({value: s.id, label: s.name}))}
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                initialValue: input,
+                                menu: {
+                                    component: "selection",
+                                    i18nKey: "menu.products.selection"
+                                }
+                            })
+                        }}
                     />
                     <MultiSelectFieldControlled<IDeliveryNoteRowForm>
                         name="processing_ids"
