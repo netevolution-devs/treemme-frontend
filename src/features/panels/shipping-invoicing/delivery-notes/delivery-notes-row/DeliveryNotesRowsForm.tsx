@@ -81,8 +81,6 @@ const DeliveryNotesRowsForm = ({
 
     const floatingPanelUUID = extra?.panelId as string;
 
-    console.log(floatingPanelUUID);
-
     const {setFormState} = usePanelFormButtons();
     const {handlePanelSuccess} = usePanelFormLogic({
         initialName,
@@ -90,7 +88,6 @@ const DeliveryNotesRowsForm = ({
         onSuccess,
         setFormState
     });
-
 
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteRowApi;
     const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
