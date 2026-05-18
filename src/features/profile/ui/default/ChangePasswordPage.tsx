@@ -45,7 +45,7 @@ const ChangePasswordPage = () => {
 
     let errorMessage = "Errore durante il cambio password";
     if (isError && isAxiosError(error)) {
-        errorMessage = error.response?.data?.message || error.message || errorMessage;
+        errorMessage = "Errore cambio password";
     }
 
     return (
@@ -74,17 +74,18 @@ const ChangePasswordPage = () => {
                         {t("settings:interface.change-password")}
                     </Typography>
 
-                    {isSuccess && (
-                        <Alert severity="success" sx={{mb: 2}}>
-                            {t("common:form.success.save") || "Password cambiata con successo"}
-                        </Alert>
-                    )}
-
-                    {isError && (
-                        <Alert severity="error">
-                            {errorMessage}
-                        </Alert>
-                    )}
+                    <Box sx={{mb: 2}}>
+                        {isSuccess && (
+                            <Alert severity="success">
+                                {t("common:form.success.save") || "Password cambiata con successo"}
+                            </Alert>
+                        )}
+                        {isError && (
+                            <Alert severity="error">
+                                {errorMessage}
+                            </Alert>
+                        )}
+                    </Box>
 
                     <FormProvider {...methods}>
                         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
