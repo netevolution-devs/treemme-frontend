@@ -238,7 +238,8 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
 
     useSubscribePanel<IDeliveryNoteRowForm>({
         formKey: "processing_ids",
-        dependencyKey: "workings"
+        dependencyKey: "workings",
+        isMulti: true
     })
 
     return (
