@@ -5,7 +5,8 @@
     "language": "Lingua",
     "go-back": "Indietro",
     "go-to-app": "Torna all'app",
-    "go-to-setup-otp": "Due fattori"
+    "go-to-setup-otp": "Due fattori",
+    "change-password": "Cambia password"
   },
   "profile":{
     "title": "Profilo",

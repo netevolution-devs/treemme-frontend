@@ -10,6 +10,7 @@ import ButtonStartOtpSetup from "@features/auth/ui/ButtonStartOtpSetup";
 // import {useAuth} from "@features/auth/model/AuthContext";
 // import UserProfileCardSkeleton from "@features/profile/ui/default/UserProfileCardSkeleton";
 import {version} from "../../../../../package.json";
+import ButtonChangePassword from "@features/profile/ui/default/components/ButtonChangePassword";
 
 const ProfilePage = () => {
     const {t} = useTranslation(["settings"]);
@@ -27,6 +28,7 @@ const ProfilePage = () => {
                     <UserProfileCard/>
                     <Stack direction={"row"} spacing={2}>
                         <ButtonStartOtpSetup/>
+                        <ButtonChangePassword/>
                         <ButtonLogout/>
                     </Stack>
                     <Box sx={{width: "100%", mt: 2, mb: 2, textAlign: "center", flexDirection: "column", display: "flex", gap: 0.5}}>

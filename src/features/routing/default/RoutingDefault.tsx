@@ -11,6 +11,7 @@ import PermissionGuard from "@features/authz/PermissionGuard";
 import LogoutAndRedirect from "@features/routing/LogoutAndRedirect";
 import {EnumRoles} from "@features/user/model/RoleInterfaces";
 import SubcontractorFilePage from "@features/file/subcontractor/ui/SubcontractorFilePage";
+import ChangePasswordPage from "@features/profile/ui/default/ChangePasswordPage";
 
 const RoutingDefault = () => {
     useAxiosInstance();
@@ -38,6 +39,8 @@ const RoutingDefault = () => {
                         </PermissionGuard>
                     }
                 />
+
+                <Route path="/change-password" element={<ChangePasswordPage/>}/>
 
                 <Route element={
                     <PermissionGuard
