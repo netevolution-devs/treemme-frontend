@@ -20,7 +20,7 @@ const WorkingsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
             initialState={{uiState: initialUiState}}
             listComponent={<WorkingsList/>}
         >
-            <WorkingsForm/>
+            <WorkingsForm {...props.params}/>
         </GenericPanel>
     )
 }

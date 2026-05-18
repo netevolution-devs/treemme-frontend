@@ -8,6 +8,7 @@ interface MultiSelectFieldProps<TFieldValues extends FieldValues> extends Contro
     options: { value: string | number; label: string }[];
     minWidth?: number | string;
     deactivated?: boolean;
+    onNoOptionsMatch?: (inputValue: string) => void;
 }
 
 const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
@@ -19,6 +20,7 @@ const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                           TextFieldProps,
                                                                           minWidth = 150,
                                                                           deactivated = false,
+                                                                          onNoOptionsMatch,
                                                                       }: MultiSelectFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const {
@@ -54,6 +56,22 @@ const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
                             onChange(stringValue || null);
                         }}
                         onBlur={onBlur}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                e.preventDefault();
+
+                                if (onNoOptionsMatch) {
+                                    const target = e.target as HTMLInputElement;
+                                    const currentVal = target.value;
+
+                                    const match = options.find(opt => opt.label.toLowerCase() === currentVal.toLowerCase());
+                                    if (!match && currentVal.trim()) {
+                                        onNoOptionsMatch(currentVal);
+                                        target.blur();
+                                    }
+                                }
+                            }
+                        }}
                         renderInput={(params) => {
                             const { InputLabelProps, InputProps, inputProps, ...restParams } = params;
                             return (
