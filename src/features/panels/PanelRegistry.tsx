@@ -50,6 +50,7 @@ import ContactsAddressPanel from "@features/panels/contacts/contacts/address/Con
 import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
 import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
 import ExternalMovementsPanel from "@features/panels/analysis/external-movements/ExternalMovementsPanel";
+import CarriersPanel from "@features/panels/contacts/carriers/CarriersPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -102,6 +103,7 @@ export type TPanelKind =
     | 'contactsDetail'
     | 'sales'
     | 'externalMovements'
+    | 'carriers'
     | 'not-implemented'
     | 'dialog'; // special panel for dialogs
 
@@ -118,6 +120,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     province:                   (props) => <ProvincePanel {...props}/>,
     nations:                    (props) => <NationsPanel {...props}/>,
     seaports:                   (props) => <SeaportsPanel {...props}/>,
+    carriers:                   (props) => <CarriersPanel {...props}/>,
     // leathers
     leathers:                   (props) => <LeathersPanel {...props}/>,
     weights:                    (props) => <WeightsPanel {...props}/>,

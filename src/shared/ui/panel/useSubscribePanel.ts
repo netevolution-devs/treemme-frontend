@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { type FieldValues, type Path, type PathValue, useFormContext } from "react-hook-form";
-import type {TPanelKind} from "@features/panels/PanelRegistry";
+import type { TPanelKind } from "@features/panels/PanelRegistry";
 
 interface ISubscribeProps<T extends FieldValues> {
     formKey: Path<T>;
     dependencyKey: TPanelKind;
+    isMulti?: boolean;
 }
 
-const useSubscribePanel = <T extends FieldValues>({ formKey, dependencyKey }: ISubscribeProps<T>) => {
+const useSubscribePanel = <T extends FieldValues>({ formKey, dependencyKey, isMulti = false }: ISubscribeProps<T>) => {
     const queryClient = useQueryClient();
-    const { setValue } = useFormContext<T>();
+    const { setValue, getValues } = useFormContext<T>();
 
     useEffect(() => {
         const queryKey = ['LAST_CREATED', dependencyKey];
@@ -23,7 +24,23 @@ const useSubscribePanel = <T extends FieldValues>({ formKey, dependencyKey }: IS
                 const lastId = queryClient.getQueryData<number>(queryKey);
 
                 if (lastId) {
-                    setValue(formKey, lastId as PathValue<T, Path<T>>, {
+                    let newValueToSet: unknown = lastId;
+
+                    if (isMulti) {
+                        const currentValue = getValues(formKey);
+                        if (typeof currentValue === 'string') {
+                            const currentIds = currentValue ? currentValue.split(',') : [];
+                            const newIdStr = String(lastId);
+
+                            if (!currentIds.includes(newIdStr)) {
+                                newValueToSet = [...currentIds, newIdStr].join(',');
+                            } else {
+                                newValueToSet = currentValue;
+                            }
+                        }
+                    }
+
+                    setValue(formKey, newValueToSet as PathValue<T, Path<T>>, {
                         shouldValidate: true,
                         shouldDirty: true
                     });
@@ -34,7 +51,7 @@ const useSubscribePanel = <T extends FieldValues>({ formKey, dependencyKey }: IS
         });
 
         return () => unsubscribe();
-    }, [queryClient, setValue, formKey, dependencyKey]);
+    }, [queryClient, setValue, getValues, formKey, dependencyKey, isMulti]);
 };
 
 export default useSubscribePanel;

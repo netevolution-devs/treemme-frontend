@@ -3,12 +3,12 @@ import type { ControlledFieldProps } from "@ui/form/controlled/ControlledFieldPr
 import { useTranslation } from "react-i18next";
 import { Autocomplete, TextField, Box, Chip } from "@mui/material";
 import ErrorFormHelperText from "@ui/form/ErrorFormHelperText";
-import { useState } from "react";
 
 interface MultiSelectFieldProps<TFieldValues extends FieldValues> extends ControlledFieldProps<TFieldValues> {
     options: { value: string | number; label: string }[];
     minWidth?: number | string;
     deactivated?: boolean;
+    onNoOptionsMatch?: (inputValue: string) => void;
 }
 
 const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
@@ -20,15 +20,13 @@ const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
                                                                           TextFieldProps,
                                                                           minWidth = 150,
                                                                           deactivated = false,
+                                                                          onNoOptionsMatch,
                                                                       }: MultiSelectFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const {
         control,
         formState: { disabled }
     } = useFormContext<TFieldValues>();
-
-    const [open, setOpen] = useState(false);
-    const [inputValue, setInputValue] = useState("");
 
     const formattedLabel = required && label ? `${label} *` : label;
 
@@ -48,24 +46,37 @@ const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
                         multiple
                         sx={{ minWidth, width: "100%" }}
                         options={options}
-                        open={open}
-                        onOpen={() => setOpen(true)}
-                        onClose={() => setOpen(false)}
                         disabled={disabled || deactivated}
                         value={selectedOptions}
-                        inputValue={inputValue}
-                        onInputChange={(_, newInputValue) => {
-                            setInputValue(newInputValue);
-                        }}
                         noOptionsText={t("common:search.no-options")}
                         getOptionLabel={(option) => (option.label || "").toUpperCase()}
                         isOptionEqualToValue={(option, val) => String(option.value) === String(val?.value)}
                         onChange={(_, newValue) => {
-                            // Converte l'array di oggetti in una stringa separata da virgole
                             const stringValue = newValue.map(opt => opt.value).join(',');
                             onChange(stringValue || null);
                         }}
                         onBlur={onBlur}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                const target = e.target as HTMLInputElement;
+                                const hasHighlightedOption = target.hasAttribute('aria-activedescendant');
+
+                                if (hasHighlightedOption) {
+                                    return;
+                                }
+
+                                if (onNoOptionsMatch) {
+                                    const currentVal = target.value;
+                                    const match = options.find(opt => opt.label.toLowerCase() === currentVal.toLowerCase());
+
+                                    if (!match && currentVal.trim()) {
+                                        e.preventDefault();
+                                        onNoOptionsMatch(currentVal);
+                                        target.blur();
+                                    }
+                                }
+                            }
+                        }}
                         renderInput={(params) => {
                             const { InputLabelProps, InputProps, inputProps, ...restParams } = params;
                             return (

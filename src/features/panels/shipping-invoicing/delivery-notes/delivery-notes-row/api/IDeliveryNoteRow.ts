@@ -23,6 +23,6 @@ export interface IDeliveryNoteRow {
     row_note: string | null;
     whole_piece: number | null;
     half_piece: number | null;
-    ddtRowProcessing: { processing: IWorking }[];
+    ddt_row_processings: { processing: IWorking }[];
     stock_pieces: number;
 }

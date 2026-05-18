@@ -7,6 +7,9 @@ import type {IWorking} from "@features/panels/production/workings/api/IWorking";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import {Box} from "@mui/material";
+import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
+import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export interface IWorkingForm {
     name: string;
@@ -16,12 +19,20 @@ export interface IWorkingForm {
     processing_recipe: boolean;
 }
 
-const WorkingsForm = () => {
+const WorkingsForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<unknown, IWorkingsStoreState>();
     const selectedWorkingId = useStore(state => state.uiState.selectedWorkingId);
     const setUIState = useStore(state => state.setUIState);
+
+    const {setFormState} = usePanelFormButtons();
+    const {handlePanelSuccess} = usePanelFormLogic({
+        initialName,
+        selectedId: selectedWorkingId,
+        onSuccess,
+        setFormState
+    });
 
     const { useGetDetail, usePost, usePut, useDelete } = workingApi;
     const {data: working} = useGetDetail(selectedWorkingId);
@@ -31,11 +42,12 @@ const WorkingsForm = () => {
 
     return (
         <GenericForm<IWorkingForm, IWorking, IWorkingsStoreState>
+            onSuccess={handlePanelSuccess}
             resource="produzione - lavorazioni"
             selectedId={selectedWorkingId}
             entity={working}
             emptyValues={{
-                name: '',
+                name: initialName ?? '',
                 external: false,
                 color_recipe: false,
                 final_check: false,

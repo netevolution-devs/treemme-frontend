@@ -6,6 +6,7 @@ import type {
 } from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
 import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
+import type {ICarrier} from "@features/panels/contacts/carriers/api/ICarrier";
 
 export interface ICustomerOrder {
     id: number;
@@ -34,4 +35,5 @@ export interface ICustomerOrder {
     shipment_condition: IShipmentCondition;
     address: IContactAddress;
     client_order_rows: IOrderRow[];
+    shipping_carrier: ICarrier;
 }

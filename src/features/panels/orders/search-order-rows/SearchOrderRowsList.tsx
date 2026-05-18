@@ -51,7 +51,7 @@ const SearchOrderRowsList = () => {
 
     const {mutateAsync: getOrderRowPrint, isPending} = useGetClientOrderRowSummaryPrint();
 
-    const canPrint = !!queryParams.client_id && orderRows.length > 0;
+    const canPrint = orderRows.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IOrderRowsSearch>[]>(() => [
         {
@@ -235,8 +235,8 @@ const SearchOrderRowsList = () => {
                                     canPrint={canPrint}
                                     isPending={isPending}
                                     onClick={() => getOrderRowPrint({
-                                        clientId: queryParams.client_id as number,
                                         params: {
+                                            client_id: queryParams.client_id as number,
                                             start_date: queryParams.start_date as string,
                                             end_date: queryParams.end_date as string
                                         }

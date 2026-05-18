@@ -4,10 +4,10 @@ import useApi from "@api/useApi";
 interface IClientOrderRowSummaryPrintParams {
     start_date?: string;
     end_date?: string;
+    client_id?: number;
 }
 
 interface IMutateParams {
-    clientId: number;
     params: IClientOrderRowSummaryPrintParams;
 }
 
@@ -15,8 +15,8 @@ const useGetClientOrderRowSummaryPrint = () => {
     const { get } = useApi();
 
     return useMutation({
-        mutationFn: async ({ clientId, params }: IMutateParams) => {
-            const endpoint = `/client/${clientId}/client-order-row-summary-print`;
+        mutationFn: async ({ params }: IMutateParams) => {
+            const endpoint = `/client/client-order-row-summary-print`;
 
             const response = await get<Blob>(endpoint, {
                 params,

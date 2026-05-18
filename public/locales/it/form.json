@@ -83,6 +83,7 @@
     "note": "Note"
   },
   "contacts": {
+    "carrier-name": "Trasportatore",
     "details-add-btn": "Nuovo recapito",
     "addresses-add-btn": "Nuovo indirizzo",
     "payment": "Pagamento predefinito",
@@ -350,6 +351,7 @@
     "movement_note": "Note movimento"
   },
   "orders": {
+    "shipping-carrier": "Trasportatore",
     "order_code": "Codice ordine",
     "shipment-condition": "Resa",
     "order_number": "Ordine",

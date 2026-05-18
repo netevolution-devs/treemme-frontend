@@ -31,6 +31,7 @@ import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {useCanCheckOrder} from "@features/authz/useHasPermission";
 import {useFilteringAddress} from "@features/panels/shared/hooks/useFilteringAddress";
+import {carrierApi} from "@features/panels/contacts/carriers/api/carrierApi";
 
 export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "client"
@@ -38,12 +39,14 @@ export type ICustomerOrderForm = Omit<ICustomerOrder, "id"
     | "payment"
     | "shipment_condition"
     | "address"
+    | "shipping_carrier"
 > & {
     client_id: number | null;
     payment_id?: number | null;
     agent_id?: number | null;
     shipment_condition_id?: number | null;
     address_id?: number | null;
+    shipping_carrier_id?: number | null;
 };
 
 const FormFields = ({clients, payments, shipmentConditions, order, selectedCustomerOrderId}: {
@@ -81,6 +84,8 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         label: ca.agent.name
     })) ?? [];
 
+    const {data: carriers} = carrierApi.useGetList();
+
     useEffect(() => {
         if (clientId && !selectedCustomerOrderId && clientDetail) {
             if (clientDetail.contact_agents && clientDetail.contact_agents.length > 0) {
@@ -101,6 +106,20 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
             }
         }
     }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
+
+    const watchedDestination = useWatch({ name: 'address_id', control });
+
+    useEffect(() => {
+        if (clientDetail?.contact_addresses && !watchedDestination) {
+            const defaultAddr = clientDetail?.contact_addresses.find(
+                (addr) => addr.default_address
+            );
+
+            if (defaultAddr) {
+                setValue('address_id', defaultAddr.id);
+            }
+        }
+    }, [clientDetail, setValue]);
 
     const {filterAddressString} = useFilteringAddress();
 
@@ -228,6 +247,12 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
             </Box>
 
             <SelectFieldControlled<ICustomerOrderForm>
+                name={"shipping_carrier_id"}
+                label={t("orders.shipping-carrier")}
+                options={carriers?.map(p => ({value: p.id, label: p.name})) ?? []}
+            />
+
+            <SelectFieldControlled<ICustomerOrderForm>
                 name={"address_id"}
                 label={t("orders.destination")}
                 options={clientAddresses.map(p => ({
@@ -353,6 +378,7 @@ const CustomerOrdersForm = () => {
                 client_order_date: "",
                 agent_order_number: "",
                 agent_order_date: "",
+                shipping_carrier_id: null,
             } as ICustomerOrderForm}
             mapEntityToForm={(x) => ({
                 client_id: x.client?.id || null,
@@ -377,6 +403,7 @@ const CustomerOrdersForm = () => {
                 client_order_date: x.client_order_date,
                 agent_order_number: x.agent_order_number,
                 agent_order_date: x.agent_order_date,
+                shipping_carrier_id: x.shipping_carrier?.id || null,
             } as ICustomerOrderForm)}
             create={(payload) => createOrder(payload as ICustomerOrderPayload)}
             onCreateSuccess={(id) => setUIState({selectedCustomerOrderId: id})}

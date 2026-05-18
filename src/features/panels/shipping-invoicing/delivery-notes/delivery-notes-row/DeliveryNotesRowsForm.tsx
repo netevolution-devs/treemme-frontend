@@ -37,6 +37,8 @@ import type {
     IDeliveryNotesRowsStoreParams,
     IDeliveryNotesRowsStoreState
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -47,7 +49,7 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'pieces' |
     'quantity' |
     'processing' |
-    'ddtRowProcessing' |
+    'ddt_row_processings' |
     'stock_pieces' |
     'currency_total_value' |
     'price' |
@@ -86,7 +88,6 @@ const DeliveryNotesRowsForm = ({
         onSuccess,
         setFormState
     });
-
 
     const {useGetDetail, usePost, usePut, useDelete} = deliveryNoteRowApi;
     const {data: deliveryNoteRow} = useGetDetail(selectedDeliveryNoteRowId);
@@ -158,7 +159,7 @@ const DeliveryNotesRowsForm = ({
                     whole_piece: x.whole_piece,
                     half_piece: x.half_piece || 0,
                     ddt_id: ddtId,
-                    processing_ids: x.ddtRowProcessing?.map(p => p.processing.id).join(',') || null
+                    processing_ids: x.ddt_row_processings?.map(p => p.processing.id).join(',') || null
                 })}
                 create={(payload) => createRow(payload)}
                 update={(id, payload) => updateRow({id, payload})}
@@ -228,6 +229,19 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name ||  batch?.article?.code;
     const {setValue} = useFormContext<IDeliveryNoteRowForm>();
 
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IDeliveryNoteRowForm>({
+        formKey: "selection_id",
+        dependencyKey: "selection"
+    })
+
+    useSubscribePanel<IDeliveryNoteRowForm>({
+        formKey: "processing_ids",
+        dependencyKey: "workings",
+        isMulti: true
+    })
+
     return (
         <Stack gap={1}>
             <CurrencyWatcher
@@ -270,11 +284,29 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                         name="selection_id"
                         label={t("production.batch.selection")}
                         options={selections.map(s => ({value: s.id, label: s.name}))}
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                initialValue: input,
+                                menu: {
+                                    component: "selection",
+                                    i18nKey: "menu.products.selection"
+                                }
+                            })
+                        }}
                     />
                     <MultiSelectFieldControlled<IDeliveryNoteRowForm>
                         name="processing_ids"
                         label={t("production.batch.workings")}
-                        options={workings.map(s => ({value: s.id, label: s.name}))}
+                        options={workings.map(s => ({value: String(s.id), label: s.name}))}
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                initialValue: input,
+                                menu: {
+                                    component: "workings",
+                                    i18nKey: "menu.production.workings"
+                                }
+                            })
+                        }}
                     />
                 </Box>
             )}

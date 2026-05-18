@@ -119,7 +119,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             closeDialog(dialogRef)
         }
         if (floatingPanelMode) {
-            const panel = dockviewApi?.getPanel(floatingPanelUUID as string) as IDockviewPanel;
+            const panel = dockviewApi?.getPanel("floating:" + floatingPanelUUID as string) as IDockviewPanel;
             dockviewApi?.removePanel(panel);
         }
     }, [dialogRef]);
@@ -271,7 +271,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             }
 
             if (event.key === "Escape") {
-                handleCancel();
+                if (activePanelId.includes("floating")) {
+                    const panel = dockviewApi?.getPanel(activePanelId as string) as IDockviewPanel;
+                    dockviewApi?.removePanel(panel);
+                    handleCloseDialog();
+                } else {
+                    handleCancel();
+                }
             }
         };
 
