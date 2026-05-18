@@ -10,8 +10,8 @@ Software gestionale Conceria Treemme
 - `VITE_API`: indica l'indirizzo delle chiamate al backend
 
 
-    VITE_BUILD_VERSION=
-    VITE_API=xxx
+        VITE_BUILD_VERSION=
+        VITE_API=xxx
 
 ## Build
 Il processo di build si differenzia per ambiente di build. E' necessario avere l'env corretto
