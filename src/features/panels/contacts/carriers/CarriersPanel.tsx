@@ -8,7 +8,7 @@ import CarriersList from "@features/panels/contacts/carriers/CarriersList";
 import CarriersForm from "@features/panels/contacts/carriers/CarriersForm";
 
 export interface ICarriersStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedCarrierId?: number | null;
 }
 
 const CarriersPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
@@ -17,10 +17,11 @@ const CarriersPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
     return (
         <GenericPanel<unknown, ICarriersStoreState>
             kind={"carriers"}
+            uuid={props.api.id}
             initialState={{uiState: initialUiState}}
             listComponent={<CarriersList/>}
         >
-            <CarriersForm {...props.params}/>
+            <CarriersForm/>
         </GenericPanel>
     )
 }

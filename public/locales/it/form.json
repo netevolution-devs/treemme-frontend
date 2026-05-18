@@ -83,6 +83,7 @@
     "note": "Note"
   },
   "contacts": {
+    "carrier-name": "Trasportatore",
     "details-add-btn": "Nuovo recapito",
     "addresses-add-btn": "Nuovo indirizzo",
     "payment": "Pagamento predefinito",
