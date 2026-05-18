@@ -47,7 +47,7 @@ export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'pieces' |
     'quantity' |
     'processing' |
-    'ddtRowProcessing' |
+    'ddt_row_processings' |
     'stock_pieces' |
     'currency_total_value' |
     'price' |
@@ -158,7 +158,7 @@ const DeliveryNotesRowsForm = ({
                     whole_piece: x.whole_piece,
                     half_piece: x.half_piece || 0,
                     ddt_id: ddtId,
-                    processing_ids: x.ddtRowProcessing?.map(p => p.processing.id).join(',') || null
+                    processing_ids: x.ddt_row_processings?.map(p => p.processing.id).join(',') || null
                 })}
                 create={(payload) => createRow(payload)}
                 update={(id, payload) => updateRow({id, payload})}
@@ -274,7 +274,7 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     <MultiSelectFieldControlled<IDeliveryNoteRowForm>
                         name="processing_ids"
                         label={t("production.batch.workings")}
-                        options={workings.map(s => ({value: s.id, label: s.name}))}
+                        options={workings.map(s => ({value: String(s.id), label: s.name}))}
                     />
                 </Box>
             )}

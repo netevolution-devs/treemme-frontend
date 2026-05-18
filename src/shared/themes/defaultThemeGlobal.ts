@@ -366,7 +366,11 @@ const lightTheme: Theme = createTheme({
                     // @ts-expect-error style works correctly
                     style: ({theme}) => ({
                         color: theme.palette.text,
-                        backgroundColor: theme.palette.primary.light
+                        backgroundColor: theme.palette.primary.light,
+                        "&.Mui-disabled": {
+                            color: "#ffffff",
+                            opacity: 0.6
+                        }
                     })
                 },
             ]
