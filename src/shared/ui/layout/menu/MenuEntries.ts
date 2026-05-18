@@ -40,6 +40,11 @@ export const MenuEntries: IMenuEntry[] = [
                 i18nKey: "menu.contacts.seaports",
                 component: "seaports",
                 permissionCheck: {resource: "contatti - porti marittimi", action: "get"}
+            },
+            {
+                i18nKey: "menu.contacts.carriers",
+                component: "carriers",
+                permissionCheck: {resource: "contatti - trasportatori", action: "get" }
             }
         ]
     },

@@ -19,6 +19,7 @@ export type ResourceContacts = "contatti"
     | "contatti - nazioni"
     | "contatti - province"
     | "contatti - porti marittimi"
+    | "contatti - trasportatori"
 
 export type ResourceLeathers = "pellami"
     | "pellami - pellami"
