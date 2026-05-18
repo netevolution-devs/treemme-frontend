@@ -236,6 +236,12 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
         dependencyKey: "selection"
     })
 
+    useSubscribePanel<IDeliveryNoteRowForm>({
+        formKey: "processing_ids",
+        dependencyKey: "workings",
+        isMulti: true
+    })
+
     return (
         <Stack gap={1}>
             <CurrencyWatcher
@@ -292,6 +298,15 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                         name="processing_ids"
                         label={t("production.batch.workings")}
                         options={workings.map(s => ({value: String(s.id), label: s.name}))}
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                initialValue: input,
+                                menu: {
+                                    component: "workings",
+                                    i18nKey: "menu.production.workings"
+                                }
+                            })
+                        }}
                     />
                 </Box>
             )}
