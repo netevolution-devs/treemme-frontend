@@ -13,7 +13,8 @@ const PasswordField = <TFieldValues extends FieldValues>({
                                                              required = false,
                                                              showRequired = true,
                                                              rules,
-                                                             autoComplete
+                                                             autoComplete,
+                                                             TextFieldProps,
                                                          }: ControlledFieldProps<TFieldValues>) => {
     const {t} = useTranslation(["common"])
     const {control} = useFormContext<TFieldValues>();
@@ -34,10 +35,13 @@ const PasswordField = <TFieldValues extends FieldValues>({
             render={({field, fieldState: {error}}) =>
                 <TextField
                     {...field}
+                    {...TextFieldProps}
                     label={formattedLabel}
                     type={showPassword ? "text" : "password"}
                     autoComplete={autoComplete || "off"}
                     helperText={error?.message ?? " "}
+                    fullWidth
+                    size="small"
                     slotProps={{
                         input: {
                             endAdornment: (
@@ -48,16 +52,20 @@ const PasswordField = <TFieldValues extends FieldValues>({
                                         {showPassword ? <VisibilityOff/> : <Visibility/>}
                                     </IconButton>
                                 </InputAdornment>
-                            )
+                            ),
+                            ...TextFieldProps?.slotProps?.input
                         },
                         inputLabel: {
                             shrink: !!field.value,
+                            ...TextFieldProps?.slotProps?.inputLabel
                         },
                         formHelperText: {
                             component: ({children}) =>
-                                <ErrorFormHelperText isError={!!error} children={children}/>
+                                <ErrorFormHelperText isError={!!error} children={children}/>,
+                            ...TextFieldProps?.slotProps?.formHelperText
                         },
-                        htmlInput: {maxLength: 255},
+                        htmlInput: {maxLength: 255, ...TextFieldProps?.slotProps?.htmlInput},
+                        ...TextFieldProps?.slotProps
                     }}
                     error={!!error}
                 />
