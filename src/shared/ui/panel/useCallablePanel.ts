@@ -32,7 +32,7 @@ const useCallablePanel = () => {
         const offset = (floatingPanelsCount % 6) * 50;
 
         addPanel({
-            id: customId || `${menu.component}:${crypto.randomUUID()}`,
+            id: "floating:" + (customId || `${menu.component}:${crypto.randomUUID()}`),
             component: menu.component || "not-implemented",
             title: t(menu.i18nKey),
             floating: {

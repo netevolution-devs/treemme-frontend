@@ -271,7 +271,13 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             }
 
             if (event.key === "Escape") {
-                handleCancel();
+                if (activePanelId.includes("floating")) {
+                    const panel = dockviewApi?.getPanel(activePanelId as string) as IDockviewPanel;
+                    dockviewApi?.removePanel(panel);
+                    handleCloseDialog();
+                } else {
+                    handleCancel();
+                }
             }
         };
 
