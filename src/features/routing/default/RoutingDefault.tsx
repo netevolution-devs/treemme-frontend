@@ -9,7 +9,6 @@ import {defaultProtectedRoutes} from "@features/routing/default/defaultProtected
 import useAxiosInstance from "@api/useAxiosInstance";
 import PermissionGuard from "@features/authz/PermissionGuard";
 import LogoutAndRedirect from "@features/routing/LogoutAndRedirect";
-import ResetPasswordPage from "@features/password-reset/ui/shared/ResetPasswordPage";
 import {EnumRoles} from "@features/user/model/RoleInterfaces";
 import SubcontractorFilePage from "@features/file/subcontractor/ui/SubcontractorFilePage";
 
@@ -24,8 +23,6 @@ const RoutingDefault = () => {
                 <Route path="/login/otp" element={<OtpPage/>}/>
                 <Route path="/login/otp/setup" element={<OtpSetupPage/>}/>
             </Route>
-
-            <Route path="/reset-password" element={<ResetPasswordPage/>}/>
 
             <Route element={<AuthUserGuard/>}>
                 {/* File routes: auth required, no Admin/Staff gate, no app Layout */}
