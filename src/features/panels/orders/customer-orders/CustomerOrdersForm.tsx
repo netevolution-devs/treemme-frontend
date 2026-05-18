@@ -102,6 +102,20 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         }
     }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 
+    const watchedDestination = useWatch({ name: 'address_id', control });
+
+    useEffect(() => {
+        if (clientDetail?.contact_addresses && !watchedDestination) {
+            const defaultAddr = clientDetail?.contact_addresses.find(
+                (addr) => addr.default_address
+            );
+
+            if (defaultAddr) {
+                setValue('address_id', defaultAddr.id);
+            }
+        }
+    }, [clientDetail, setValue]);
+
     const {filterAddressString} = useFilteringAddress();
 
     const {add: addSelectPanel} = useCallablePanel();
