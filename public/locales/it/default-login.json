@@ -7,7 +7,7 @@
     "welcome": "Login",
     "subtitle": "Usa le tue credenziali",
     "button": "Accedi",
-    "forgotPassword": "Password dimenticata? <outLink>Clicca qui</outLink>"
+    "forgotPassword": "Password dimenticata? Chiedi il recupero ad un amministratore"
   },
   "otp": {
     "login": {

@@ -3,12 +3,11 @@ import {
     Button,
     Stack,
     Typography,
-    Link as MUILink,
     Card,
     CircularProgress,
     useTheme, Grid
 } from "@mui/material";
-import {Link as RouterLink, useLocation, useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {Trans, useTranslation} from "react-i18next";
 import {appNs} from "../../../i18n";
 import Splash from "./Splash";
@@ -30,7 +29,7 @@ const LoginPage = () => {
     const {showMenu} = useMenuStore();
 
     const {setUserCode} = useAuth();
-    const from = (location.state as {from?: {pathname: string; search: string}})?.from;
+    const from = (location.state as { from?: { pathname: string; search: string } })?.from;
 
     const methods = useForm<{ email: string; password: string }>({
         defaultValues: {email: "", password: ""},
@@ -142,27 +141,19 @@ const LoginPage = () => {
                                 </Stack>
                             </Box>
                         </FormProvider>
-                        <Stack direction={"row"} alignItems={"center"} spacing={2}
-                               sx={{mt: 4, justifyContent: 'center'}}>
+                        <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            spacing={2}
+                            sx={{
+                                mt: 4,
+                                justifyContent: 'center'
+                            }}
+                        >
                             <Typography variant="body2" color="text.secondary" sx={{textAlign: 'center'}}>
                                 <Trans
                                     t={t}
                                     i18nKey={"form.forgotPassword"}
-                                    components={{
-                                        outLink: (
-                                            <MUILink
-                                                component={RouterLink}
-                                                to="/reset-password"
-                                                rel="noopener noreferrer"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                }}
-                                                onMouseDown={(e) => {
-                                                    e.stopPropagation();
-                                                }}
-                                            />
-                                        )
-                                    }}
                                 />
                             </Typography>
                         </Stack>
