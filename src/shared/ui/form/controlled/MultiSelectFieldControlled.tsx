@@ -58,14 +58,19 @@ const MultiSelectFieldControlled = <TFieldValues extends FieldValues>({
                         onBlur={onBlur}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') {
-                                e.preventDefault();
+                                const target = e.target as HTMLInputElement;
+                                const hasHighlightedOption = target.hasAttribute('aria-activedescendant');
+
+                                if (hasHighlightedOption) {
+                                    return;
+                                }
 
                                 if (onNoOptionsMatch) {
-                                    const target = e.target as HTMLInputElement;
                                     const currentVal = target.value;
-
                                     const match = options.find(opt => opt.label.toLowerCase() === currentVal.toLowerCase());
+
                                     if (!match && currentVal.trim()) {
+                                        e.preventDefault();
                                         onNoOptionsMatch(currentVal);
                                         target.blur();
                                     }
