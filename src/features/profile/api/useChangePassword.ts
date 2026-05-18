@@ -12,10 +12,10 @@ interface IChangePasswordResponse {
 }
 
 const useChangePassword = () => {
-    const {post} = useApi()
+    const {put} = useApi()
 
     async function doPostChangePassword(data: IChangePassword): Promise<IChangePasswordResponse> {
-        const response = await post<IChangePassword, IChangePasswordResponse>(`/api/change-password`, data);
+        const response = await put<IChangePassword, IChangePasswordResponse>(`/api/change-password`, data);
         return response.data as unknown as IChangePasswordResponse;
     }
 
