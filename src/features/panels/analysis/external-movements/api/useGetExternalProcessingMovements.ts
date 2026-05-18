@@ -3,10 +3,11 @@ import useApi from "@api/useApi";
 import type {ApiOptions} from "@features/panels/shared/hooks/createPanelApiFactory";
 import type {IDeliveryNoteRow} from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/api/IDeliveryNoteRow";
 import type {IDeliveryNote} from "@features/panels/shipping-invoicing/delivery-notes/api/IDeliveryNote";
+import type {IWorking} from "@features/panels/production/workings/api/IWorking";
 
 export interface IExternalProcessingMovementRow extends IDeliveryNoteRow {
     ddt: IDeliveryNote;
-    ddt_row_processings: { processing: { id: number; name: string } }[];
+    ddt_row_processings: { processing: IWorking }[];
 }
 
 export interface IExternalProcessingMovement {
