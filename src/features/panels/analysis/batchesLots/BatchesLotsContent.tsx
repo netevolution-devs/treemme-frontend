@@ -24,6 +24,8 @@ const BatchesLotsContent = () => {
                     {label: "Lotto", component: <BatchesForm disableFunctions/>},
                     {label: "Movimenti", component: <WarehouseMovementsList/>},
                     {label: "Cronologia", component: <BatchesChronology/>},
+                    {label: "Costi", component: <>Costi</>},
+                    {label: "Vendite", component: <>Vendite</>}
                 ]}
             />
             <pre>{JSON.stringify(batchReport, null, 2)}</pre>
