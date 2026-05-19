@@ -1,18 +1,13 @@
 import type {IBatchesLotsStoreState} from "@features/panels/analysis/batchesLots/BatchesLotsPanel";
-import {batchApi} from "@features/panels/production/batches/api/batchApi";
-import {usePanel} from "@ui/panel/PanelContext";
 import {useState} from "react";
 import BatchesChronology from "@features/panels/production/batches/chronology/BatchesCronology";
 import WarehouseMovementsList from "@features/panels/production/batches/movements/WarehouseMovementsList";
 import GenericTabContent from "@features/panels/shared/GenericTabContent";
 import BatchesForm from "@features/panels/production/batches/BatchesForm";
+import BatchesLotsCostsList from "@features/panels/analysis/batchesLots/BatchesLotsCostsList";
+import BatchesLotsSalesList from "@features/panels/analysis/batchesLots/BatchesLotsSalesList";
 
 const BatchesLotsContent = () => {
-    const {useStore} = usePanel<unknown, IBatchesLotsStoreState>();
-    const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
-
-    const {data: batchReport} = batchApi.useGetBatchReport(selectedBatchId as number);
-
     const [tabIndex, setTabIndex] = useState(0);
 
     return (
@@ -24,11 +19,10 @@ const BatchesLotsContent = () => {
                     {label: "Lotto", component: <BatchesForm disableFunctions/>},
                     {label: "Movimenti", component: <WarehouseMovementsList/>},
                     {label: "Cronologia", component: <BatchesChronology/>},
-                    {label: "Costi", component: <>Costi</>},
-                    {label: "Vendite", component: <>Vendite</>}
+                    {label: "Costi", component: <BatchesLotsCostsList/>},
+                    {label: "Vendite", component: <BatchesLotsSalesList/>}
                 ]}
             />
-            <pre>{JSON.stringify(batchReport, null, 2)}</pre>
         </>
     )
 }
