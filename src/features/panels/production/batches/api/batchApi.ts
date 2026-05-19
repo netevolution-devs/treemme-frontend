@@ -37,6 +37,17 @@ export const batchApi = {
         baseEndpoint: "/batch",
         queryKey: "BATCH"
     }),
+    useGetBatchReport: (batch_id: number) => {
+        const {get} = useApi();
+        return useQuery({
+            queryKey: ["BATCH", "REPORT", batch_id],
+            queryFn: async () => {
+                const response = await get(`/batch/${batch_id}/report`);
+                return response.data.data;
+            },
+            enabled: !!batch_id,
+        });
+    },
     usePutBatchPieceCompensation: (options?: ApiOptions) => {
         const {put} = useApi();
         const queryClient = useQueryClient();

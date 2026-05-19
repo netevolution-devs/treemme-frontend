@@ -4,9 +4,10 @@ import type {IPanelUIState} from "@features/panels/shared/hooks/usePanelFormButt
 import GenericPanel from "@features/panels/shared/GenericPanel";
 import BatchesForm from "@features/panels/production/batches/BatchesForm";
 import BatchesList from "@features/panels/production/batches/BatchesList";
+import BatchesLotsContent from "@features/panels/analysis/batchesLots/BatchesLotsContent";
 
 export interface IBatchesLotsStoreState extends IPanelUIState {
-    _placeholder?: string;
+    selectedBatchId?: number | null;
 }
 
 const BatchesLotsPanel = () => {
@@ -19,6 +20,7 @@ const BatchesLotsPanel = () => {
             listComponent={<BatchesList/>}
         >
             <BatchesForm disableFunctions />
+            <BatchesLotsContent/>
         </GenericPanel>
     )
 }
