@@ -10,8 +10,8 @@ Software gestionale Conceria Treemme
 - `VITE_API`: indica l'indirizzo delle chiamate backend
 
 ```dotenv
-    VITE_BUILD_VERSION=<development|staging|production>
-    VITE_API=xxx
+VITE_BUILD_VERSION=<development|staging|production>
+VITE_API=xxx
 ```
 
 #### Esempio
@@ -19,8 +19,8 @@ Software gestionale Conceria Treemme
 .env.development
 
 ```dotenv
-    VITE_BUILD_VERSION=development
-    VITE_API=https://api.treemme.lan
+VITE_BUILD_VERSION=development
+VITE_API=https://api.treemme.lan
 ```
 
 ## Sviluppo
