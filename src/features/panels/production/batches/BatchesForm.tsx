@@ -24,7 +24,8 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog";
-import BatchesCompensationFormDialog from "@features/panels/production/batches/compensation/BatchesCompensationFormDialog";
+import BatchesCompensationFormDialog
+    from "@features/panels/production/batches/compensation/BatchesCompensationFormDialog";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
@@ -110,6 +111,30 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
     const canPrint = !!selectedBatchId && (isBatchBaseType || isTF);
     const canCompensate = !!selectedBatchId && canPost;
 
+    const BatchDataButton = () => (
+        <CustomButton
+            label={t("production.batch.data")}
+            color={"primary"}
+            icon={<TextSnippetIcon/>}
+            isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita")}
+            onClick={() => {
+                addSelectPanel({
+                    initialValue: '',
+                    extra: {
+                        batchId: selectedBatchId,
+                        batchDataId: batchItem?.batch_data[0]?.id,
+                        panelId: "batchDataFormPanel:" + selectedBatchId
+                    },
+                    menu: {
+                        component: "batchData",
+                        i18nKey: "menu.production.batch-data"
+                    },
+                    customId: "batchDataFormPanel:" + selectedBatchId
+                });
+            }}
+        />
+    );
+
     return (
         <>
             <BatchesReworkFormDialog ref={reworkDialogRef}/>
@@ -179,27 +204,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                             isEnable={canCompensate}
                             onClick={() => openDialog(compensationDialogRef)}
                         />,
-                        <CustomButton
-                            label={t("production.batch.data")}
-                            color={"primary"}
-                            icon={<TextSnippetIcon/>}
-                            isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita")}
-                            onClick={() => {
-                                addSelectPanel({
-                                    initialValue: '',
-                                    extra: {
-                                        batchId: selectedBatchId,
-                                        batchDataId: batchItem?.batch_data[0]?.id,
-                                        panelId: "batchDataFormPanel:" + selectedBatchId
-                                    },
-                                    menu: {
-                                        component: "batchData",
-                                        i18nKey: "menu.production.batch-data"
-                                    },
-                                    customId: "batchDataFormPanel:" + selectedBatchId
-                                });
-                            }}
-                        />,
+                        <BatchDataButton />,
                         <CustomButton
                             label={t("production.batch.rework")}
                             color={"success"}
@@ -224,7 +229,9 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                                 batchCode: batchItem?.batch_code ?? ""
                             })}
                         />
-                    ]) : [<></>]
+                    ]) : [
+                        <BatchDataButton />
+                    ]
                 }
                 renderFields={() => (
                     <>
