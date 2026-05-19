@@ -120,6 +120,9 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                 resource="produzione - lotti"
                 selectedId={selectedBatchId}
                 entity={batchItem}
+                disableDeleteButton={disableFunctions}
+                disableEditButton={disableFunctions}
+                disableCreateButton={disableFunctions}
                 emptyValues={{
                     leather_id: null,
                     batch_type_id: batchTypes.find(x => x.name === "Lotto")?.id || null,
