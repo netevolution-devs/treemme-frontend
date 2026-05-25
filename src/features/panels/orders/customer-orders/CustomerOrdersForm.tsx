@@ -131,6 +131,11 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
         dependencyKey: "contacts"
     })
 
+    useSubscribePanel<ICustomerOrderForm>({
+        formKey: "shipping_carrier_id",
+        dependencyKey: "carriers"
+    })
+
     return (
         <>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
@@ -250,6 +255,15 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                 name={"shipping_carrier_id"}
                 label={t("orders.shipping-carrier")}
                 options={carriers?.map(p => ({value: p.id, label: p.name})) ?? []}
+                onNoOptionsMatch={(initialValue) => {
+                    addSelectPanel({
+                        initialValue: initialValue,
+                        menu: {
+                            component: "carriers",
+                            i18nKey: "menu.contacts.carriers"
+                        }
+                    })
+                }}
             />
 
             <SelectFieldControlled<ICustomerOrderForm>
