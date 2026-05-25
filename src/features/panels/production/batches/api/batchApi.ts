@@ -4,6 +4,7 @@ import useApi from "@api/useApi";
 
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
+import type {IBatchDetailReport} from "@features/panels/analysis/batchesLots/api/IBatchDetailReport";
 
 export interface IBatchesPayload extends Omit<IBatch, 'id'
     | 'leather'
@@ -37,6 +38,17 @@ export const batchApi = {
         baseEndpoint: "/batch",
         queryKey: "BATCH"
     }),
+    useGetBatchReport: (batch_id: number) => {
+        const {get} = useApi();
+        return useQuery({
+            queryKey: ["BATCH", "REPORT", batch_id],
+            queryFn: async () => {
+                const response = await get(`/batch/${batch_id}/report`);
+                return response.data.data as IBatchDetailReport;
+            },
+            enabled: !!batch_id,
+        });
+    },
     usePutBatchPieceCompensation: (options?: ApiOptions) => {
         const {put} = useApi();
         const queryClient = useQueryClient();

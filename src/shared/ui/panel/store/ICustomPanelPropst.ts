@@ -10,4 +10,5 @@ export interface ICustomPanelFormProps<TExtra = unknown> {
     onSuccess?: ((id: number) => void) | undefined;
     extra?: TExtra;
     customId?: string;
+    disableButtons?: boolean;
 }

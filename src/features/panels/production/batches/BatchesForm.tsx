@@ -24,7 +24,8 @@ import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import {useRef} from "react";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog";
-import BatchesCompensationFormDialog from "@features/panels/production/batches/compensation/BatchesCompensationFormDialog";
+import BatchesCompensationFormDialog
+    from "@features/panels/production/batches/compensation/BatchesCompensationFormDialog";
 import CallSplitIcon from '@mui/icons-material/CallSplit';
 import dayjs from "dayjs";
 import {TMLeatherIcon} from "@ui/layout/menu/MenuIcons";
@@ -63,7 +64,11 @@ export type IBatchesForm = Omit<IBatch, 'id'
     pieces: number | null;
 };
 
-const BatchesForm = () => {
+interface IBatchesFormProps {
+    disableFunctions?: boolean;
+}
+
+const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -106,6 +111,31 @@ const BatchesForm = () => {
     const canPrint = !!selectedBatchId && (isBatchBaseType || isTF);
     const canCompensate = !!selectedBatchId && canPost;
 
+    const BatchDataButton = ({disabled = false}: {disabled?: boolean}) => (
+        <CustomButton
+            label={t("production.batch.data")}
+            color={"primary"}
+            icon={<TextSnippetIcon/>}
+            isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita")}
+            onClick={() => {
+                addSelectPanel({
+                    initialValue: '',
+                    extra: {
+                        batchId: selectedBatchId,
+                        batchDataId: batchItem?.batch_data[0]?.id,
+                        panelId: "batchDataFormPanel:" + selectedBatchId,
+                        disableControls: disabled
+                    },
+                    menu: {
+                        component: "batchData",
+                        i18nKey: "menu.production.batch-data"
+                    },
+                    customId: "batchDataFormPanel:" + selectedBatchId
+                });
+            }}
+        />
+    );
+
     return (
         <>
             <BatchesReworkFormDialog ref={reworkDialogRef}/>
@@ -116,6 +146,10 @@ const BatchesForm = () => {
                 resource="produzione - lotti"
                 selectedId={selectedBatchId}
                 entity={batchItem}
+                disableDeleteButton={disableFunctions}
+                disableEditButton={disableFunctions}
+                disableSaveButton={disableFunctions}
+                disableCreateButton={disableFunctions}
                 emptyValues={{
                     leather_id: null,
                     batch_type_id: batchTypes.find(x => x.name === "Lotto")?.id || null,
@@ -163,60 +197,44 @@ const BatchesForm = () => {
                     !!v.pieces &&
                     !!v.batch_date
                 }
-                extraButtons={[
-                    <CustomButton
-                        label={t("production.batch.compensation")}
-                        color={"warning"}
-                        icon={<UnfoldMoreIcon/>}
-                        isEnable={canCompensate}
-                        onClick={() => openDialog(compensationDialogRef)}
-                    />,
-                    <CustomButton
-                        label={t("production.batch.data")}
-                        color={"primary"}
-                        icon={<TextSnippetIcon/>}
-                        isEnable={!!selectedBatchId && (batchItem?.batch_type.name === "Lotto" || batchItem?.batch_type.name === "Partita")}
-                        onClick={() => {
-                            addSelectPanel({
-                                initialValue: '',
-                                extra: {
-                                    batchId: selectedBatchId,
-                                    batchDataId: batchItem?.batch_data[0]?.id,
-                                    panelId: "batchDataFormPanel:" + selectedBatchId
-                                },
-                                menu: {
-                                    component: "batchData",
-                                    i18nKey: "menu.production.batch-data"
-                                },
-                                customId: "batchDataFormPanel:" + selectedBatchId
-                            });
-                        }}
-                    />,
-                    <CustomButton
-                        label={t("production.batch.rework")}
-                        color={"success"}
-                        icon={<SettingsBackupRestoreIcon/>}
-                        isEnable={canRework}
-                        onClick={() => {
-                            openDialog(reworkDialogRef)
-                        }}
-                    />,
-                    <CustomButton
-                        label={t("production.batch.split")}
-                        color={"primary"}
-                        icon={<CallSplitIcon/>}
-                        isEnable={canSplit}
-                        onClick={() => openDialog(splitDialogRef)}
-                    />,
-                    <PrintButton
-                        canPrint={canPrint}
-                        isPending={isPrinting}
-                        onClick={() => selectedBatchId && getBatchPdf({
-                            id: selectedBatchId,
-                            batchCode: batchItem?.batch_code ?? ""
-                        })}
-                    />
-                ]}
+                extraButtons={
+                    !disableFunctions ? ([
+                        <CustomButton
+                            label={t("production.batch.compensation")}
+                            color={"warning"}
+                            icon={<UnfoldMoreIcon/>}
+                            isEnable={canCompensate}
+                            onClick={() => openDialog(compensationDialogRef)}
+                        />,
+                        <BatchDataButton />,
+                        <CustomButton
+                            label={t("production.batch.rework")}
+                            color={"success"}
+                            icon={<SettingsBackupRestoreIcon/>}
+                            isEnable={canRework}
+                            onClick={() => {
+                                openDialog(reworkDialogRef)
+                            }}
+                        />,
+                        <CustomButton
+                            label={t("production.batch.split")}
+                            color={"primary"}
+                            icon={<CallSplitIcon/>}
+                            isEnable={canSplit}
+                            onClick={() => openDialog(splitDialogRef)}
+                        />,
+                        <PrintButton
+                            canPrint={canPrint}
+                            isPending={isPrinting}
+                            onClick={() => selectedBatchId && getBatchPdf({
+                                id: selectedBatchId,
+                                batchCode: batchItem?.batch_code ?? ""
+                            })}
+                        />
+                    ]) : [
+                        <BatchDataButton disabled/>
+                    ]
+                }
                 renderFields={() => (
                     <>
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>

@@ -1,4 +1,28 @@
 {
+  "batches": {
+    "tabs": {
+      "batch": "Batch",
+      "movements": "Movements",
+      "chronology": "Chronology",
+      "costs": "Costs",
+      "sales": "Sales"
+    },
+    "costs": {
+      "date": "Date",
+      "type": "Type",
+      "amount": "Amount",
+      "note": "Note"
+    },
+    "sales": {
+      "ddt_date": "DDT Date",
+      "ddt_number": "DDT Number",
+      "client": "Client",
+      "pieces": "Pieces",
+      "quantity": "Quantity",
+      "total_value": "Total value",
+      "note": "Note"
+    }
+  },
   "subcontractor": {
     "create": {
       "title": "Enter new subcontractor",

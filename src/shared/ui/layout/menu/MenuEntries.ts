@@ -279,7 +279,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.analysis.sales", component: "sales" },
             {i18nKey: "menu.analysis.external-movements" , component: "externalMovements" },
             // {i18nKey: "menu.analysis.costs-revenues"},
-            // {i18nKey: "menu.analysis.batches-lots"},
+            {i18nKey: "menu.analysis.batches-lots", component: "batchesLots" },
             // {i18nKey: "menu.analysis.subcontracting"},
             // {i18nKey: "menu.analysis.phone-traffic"},
             // {
