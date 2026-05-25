@@ -42,26 +42,14 @@ const BatchesLotsSalesList = () => {
         {
             accessorKey: "pieces",
             header: t("batches.sales.pieces"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            }
         },
         {
             accessorKey: "quantity",
             header: t("batches.sales.quantity"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            }
         },
         {
             accessorKey: "total_value",
-            header: t("batches.sales.total_value"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
-            Cell: ({row}) => (
-                new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(row.original.total_value)
-            )
+            header: t("batches.sales.total_value")
         },
         {
             accessorKey: "note",

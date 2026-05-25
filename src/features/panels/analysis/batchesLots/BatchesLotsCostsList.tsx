@@ -37,13 +37,7 @@ const BatchesLotsCostsList = () => {
         },
         {
             accessorKey: "amount",
-            header: t("batches.costs.amount"),
-            muiTableBodyCellProps: {
-                align: 'right',
-            },
-            Cell: ({row}) => (
-                new Intl.NumberFormat('it-IT', { style: 'currency', currency: row.original.currency || 'EUR' }).format(row.original.amount)
-            )
+            header: t("batches.costs.amount")
         },
         {
             accessorKey: "note",
