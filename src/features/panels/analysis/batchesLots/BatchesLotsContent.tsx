@@ -7,13 +7,15 @@ import BatchesLotsCostsList from "@features/panels/analysis/batchesLots/BatchesL
 import BatchesLotsSalesList from "@features/panels/analysis/batchesLots/BatchesLotsSalesList";
 
 import {useTranslation} from "react-i18next";
+import BatchesLotsResume from "@features/panels/analysis/batchesLots/BatchesLotsResume";
+import {Box} from "@mui/material";
 
 const BatchesLotsContent = () => {
     const {t} = useTranslation(["form"]);
     const [tabIndex, setTabIndex] = useState(0);
 
     return (
-        <>
+        <Box sx={{display: "flex", width: "100%", gap: 2}}>
             <GenericTabContent
                 value={tabIndex}
                 onChange={(_, newValue) => setTabIndex(newValue)}
@@ -25,7 +27,8 @@ const BatchesLotsContent = () => {
                     {label: t("batches.tabs.sales"), component: <BatchesLotsSalesList/>}
                 ]}
             />
-        </>
+            <BatchesLotsResume />
+        </Box>
     )
 }
 
