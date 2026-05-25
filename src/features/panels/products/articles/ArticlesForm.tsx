@@ -227,7 +227,7 @@ const ArticlesFormFields = ({
                     isFilled={!!selectedArticledId}
                 />
                 <TextFieldControlled<IArticleForm>
-                    name="note"
+                    name="client_code_note"
                     label={t("products.articles.client-code-refer-note")}
                 />
             </Box>
