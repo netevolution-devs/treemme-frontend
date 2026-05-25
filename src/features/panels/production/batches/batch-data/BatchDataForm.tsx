@@ -294,6 +294,9 @@ const BatchDataForm = ({
             entity={batchData}
             disableDeleteButton
             isSaving={isUpdating}
+            disableUpdateButton={extra?.disableControls as boolean}
+            disableSaveButton={extra?.disableControls as boolean}
+            disableEditButton={extra?.disableControls as boolean}
             emptyValues={{
                 amount: null,
                 delivery_date: null,

@@ -111,7 +111,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
     const canPrint = !!selectedBatchId && (isBatchBaseType || isTF);
     const canCompensate = !!selectedBatchId && canPost;
 
-    const BatchDataButton = () => (
+    const BatchDataButton = ({disabled = false}: {disabled?: boolean}) => (
         <CustomButton
             label={t("production.batch.data")}
             color={"primary"}
@@ -123,7 +123,8 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                     extra: {
                         batchId: selectedBatchId,
                         batchDataId: batchItem?.batch_data[0]?.id,
-                        panelId: "batchDataFormPanel:" + selectedBatchId
+                        panelId: "batchDataFormPanel:" + selectedBatchId,
+                        disableControls: disabled
                     },
                     menu: {
                         component: "batchData",
@@ -230,7 +231,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                             })}
                         />
                     ]) : [
-                        <BatchDataButton />
+                        <BatchDataButton disabled/>
                     ]
                 }
                 renderFields={() => (
