@@ -34,22 +34,27 @@ export interface ICalculatedStockBatchDetailReport {
     current_stock_quantity: number;
 }
 
+export interface IBatchDetailReportObj {
+    total_pieces: number;
+    total_quantity: number;
+    total_quantity_ftsq: number;
+    sold_pieces: number;
+    sold_quantity: number;
+    sold_quantity_ftsq: number;
+    available_pieces: number;
+    available_quantity: number;
+    available_quantity_ftsq: number;
+    sale_price_per_leather: number;
+    total_sale_price: number;
+    total_revenue: number;
+    average_revenue_per_leather: number;
+    average_ftsq_per_leather: number;
+}
+
 export interface IBatchDetailReport {
     id: number;
     code: string;
-    date: string;
-    type: string;
-    pieces: number;
-    quantity: number;
-    um: string;
-    leather: string;
-    article: string | null;
-    movements: IMovementBatchDetailReport[];
+    report: IBatchDetailReportObj;
     costs: ICostBatchDetailReport[];
     sales: ISaleBatchDetailReport[];
-    orders: unknown[];
-    productions: unknown[];
-    selections: unknown[];
-    calculated: ICalculatedStockBatchDetailReport;
-    children: IBatchDetailReport[];
 }
