@@ -1,4 +1,28 @@
 {
+  "batches": {
+    "tabs": {
+      "batch": "Lotto",
+      "movements": "Movimenti",
+      "chronology": "Cronologia",
+      "costs": "Costi",
+      "sales": "Vendite"
+    },
+    "costs": {
+      "date": "Data",
+      "type": "Tipo",
+      "amount": "Importo",
+      "note": "Note"
+    },
+    "sales": {
+      "ddt_date": "Data DDT",
+      "ddt_number": "Numero DDT",
+      "client": "Cliente",
+      "pieces": "Pezzi",
+      "quantity": "Quantità",
+      "total_value": "Valore totale",
+      "note": "Note"
+    }
+  },
   "subcontractor": {
     "create": {
       "title": "Inserisci nuovo terzista",

@@ -19,7 +19,7 @@ const BatchesLotsCostsList = () => {
     const costs = useMemo(() => {
         return (batchReport?.costs || []).map((cost, index) => ({
             ...cost,
-            id: cost.id || index // Assicuriamoci che ci sia un id per GenericList
+            id: cost.id || index
         }));
     }, [batchReport?.costs]);
 
