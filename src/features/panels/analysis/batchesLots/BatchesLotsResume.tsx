@@ -37,7 +37,7 @@ const BatchesLotsResume = () => {
                     precision={2}
                 />
                 <TextFieldValue
-                    label={"Totale Quantità (ft²)"}
+                    label={"Totale Quantità (PQ)"}
                     value={report.total_quantity_ftsq}
                     isFilled={true}
                     precision={2}
@@ -57,7 +57,7 @@ const BatchesLotsResume = () => {
                     precision={2}
                 />
                 <TextFieldValue
-                    label={"Quantità Venduta (ft²)"}
+                    label={"Quantità Venduta (PQ)"}
                     value={report.sold_quantity_ftsq}
                     isFilled={true}
                     precision={2}
@@ -77,7 +77,7 @@ const BatchesLotsResume = () => {
                     precision={2}
                 />
                 <TextFieldValue
-                    label={"Quantità Disponibile (ft²)"}
+                    label={"Quantità Disponibile (PQ)"}
                     value={report.available_quantity_ftsq}
                     isFilled={true}
                     precision={2}
@@ -113,7 +113,7 @@ const BatchesLotsResume = () => {
                     precision={2}
                 />
                 <TextFieldValue
-                    label={"ft² Medi / Pelle"}
+                    label={"PQ Medi / Pelle"}
                     value={report.average_ftsq_per_leather}
                     isFilled={true}
                     precision={2}
