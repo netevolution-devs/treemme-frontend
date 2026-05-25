@@ -148,6 +148,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                 entity={batchItem}
                 disableDeleteButton={disableFunctions}
                 disableEditButton={disableFunctions}
+                disableSaveButton={disableFunctions}
                 disableCreateButton={disableFunctions}
                 emptyValues={{
                     leather_id: null,
