@@ -335,46 +335,46 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                 />
             </Box>
 
-            <SelectFieldControlled<IOrderRowForm>
-                name="article_id"
-                label={t("orders.row.article")}
-                options={articles?.map(p => ({value: p.id, label: `${p.name}`})) || []}
-                required
-                onNoOptionsMatch={(input) => {
-                    addSelectPanel({
-                        extra: {
-                            clientId: order?.client.id as number,
-                        },
-                        initialValue: input,
-                        menu: {
-                            component: "articles",
-                            i18nKey: "menu.products.articles"
-                        }
-                    })
-                }}
-            />
-
             <Box sx={{display: 'flex', gap: 1}}>
+                <SelectFieldControlled<IOrderRowForm>
+                    name="article_id"
+                    label={t("orders.row.article")}
+                    options={articles?.map(p => ({value: p.id, label: `${p.name}`})) || []}
+                    required
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            extra: {
+                                clientId: order?.client.id as number,
+                            },
+                            initialValue: input,
+                            menu: {
+                                component: "articles",
+                                i18nKey: "menu.products.articles"
+                            }
+                        })
+                    }}
+                />
                 <NumberFieldControlled<IOrderRowForm>
                     name="quantity"
                     label={t("orders.row.quantity")}
                     required
                 />
-                <SelectFieldControlled<IOrderRowForm>
-                    name={"selection_id"}
-                    label={t("orders.row.selection")}
-                    options={selections?.map(s => ({value: s.id, label: s.name})) || []}
-                    onNoOptionsMatch={(input) => {
-                        addSelectPanel({
-                            initialValue: input,
-                            menu: {
-                                component: "selection",
-                                i18nKey: "menu.products.selection"
-                            }
-                        })
-                    }}
-                />
             </Box>
+
+            <SelectFieldControlled<IOrderRowForm>
+                name={"selection_id"}
+                label={t("orders.row.selection")}
+                options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+                onNoOptionsMatch={(input) => {
+                    addSelectPanel({
+                        initialValue: input,
+                        menu: {
+                            component: "selection",
+                            i18nKey: "menu.products.selection"
+                        }
+                    })
+                }}
+            />
 
             <Box sx={{display: 'flex', gap: 1, flexDirection: "column"}}>
                 <Typography variant={"h6"}>Prezzo</Typography>
@@ -418,7 +418,6 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
 
 
             <Box sx={{display: 'flex', gap: 1}}>
-
                 <TextFieldValue
                     label={t("orders.row.price")}
                     value={orderRow?.price ?? undefined}
