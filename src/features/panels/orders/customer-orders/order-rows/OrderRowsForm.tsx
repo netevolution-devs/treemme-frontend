@@ -5,7 +5,7 @@ import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
-import {Box, Stack} from "@mui/material";
+import {Box, Divider, Stack, Typography} from "@mui/material";
 import {useEffect, useMemo, useRef} from "react";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
 import type {IOrderRow} from "@features/panels/orders/customer-orders/order-rows/api/IOrderRow";
@@ -329,14 +329,6 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                     options={measurementUnits?.map(mu => ({value: mu.id, label: mu.prefix})) || []}
                     required
                 />
-                <NumberFieldControlled<IOrderRowForm>
-                    name="quantity"
-                    label={t("orders.row.quantity")}
-                    required
-                />
-            </Box>
-
-            <Box sx={{display: 'flex', gap: 1, mb: 1.5}}>
                 <DateFieldControlled<IOrderRowForm>
                     name="delivery_date_confirmed"
                     label={t("orders.row.delivery_date_confirmed")}
@@ -362,54 +354,71 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                 }}
             />
 
-            <SelectFieldControlled<IOrderRowForm>
-                name={"selection_id"}
-                label={t("orders.row.selection")}
-                options={selections?.map(s => ({value: s.id, label: s.name})) || []}
-                onNoOptionsMatch={(input) => {
-                    addSelectPanel({
-                        initialValue: input,
-                        menu: {
-                            component: "selection",
-                            i18nKey: "menu.products.selection"
-                        }
-                    })
-                }}
-            />
-
             <Box sx={{display: 'flex', gap: 1}}>
-                <SelectFieldControlled<IOrderRowForm>
-                    name="currency_id"
-                    label={t("orders.row.currency")}
-                    options={currencyOptions}
-                />
                 <NumberFieldControlled<IOrderRowForm>
-                    name="currency_price"
-                    label={t("orders.row.currency_price")}
-                    precision={4}
+                    name="quantity"
+                    label={t("orders.row.quantity")}
+                    required
                 />
-                <TextFieldValue
-                    label={t("orders.row.total_currency_price")}
-                    value={orderRow?.total_currency_price ?? undefined}
-                    isFilled={!!orderRow}
+                <SelectFieldControlled<IOrderRowForm>
+                    name={"selection_id"}
+                    label={t("orders.row.selection")}
+                    options={selections?.map(s => ({value: s.id, label: s.name})) || []}
+                    onNoOptionsMatch={(input) => {
+                        addSelectPanel({
+                            initialValue: input,
+                            menu: {
+                                component: "selection",
+                                i18nKey: "menu.products.selection"
+                            }
+                        })
+                    }}
                 />
             </Box>
 
-            <Box sx={{display: 'flex', gap: 1}}>
-                <NumberFieldControlled<IOrderRowForm>
-                    name="currency_exchange"
-                    label={t("orders.row.currency_exchange")}
-                    precision={4}
-                    deactivated
-                />
-                <Box sx={{mb: 1}}>
-                    <NewButton
-                        sx={{px: 0.5, maxHeight: 32}}
-                        onClick={() => openDialog(addExchangeDialogRef)}
-                        isEnable={!isEuro(watchedCurrencyId as number) && !isFormDisabled}
-                        disableLabel
+            <Box sx={{display: 'flex', gap: 1, flexDirection: "column"}}>
+                <Typography variant={"h6"}>Prezzo</Typography>
+                <Divider sx={{mb: 1}}/>
+
+                <Box sx={{display: 'flex', gap: 1}}>
+                    <SelectFieldControlled<IOrderRowForm>
+                        name="currency_id"
+                        label={t("orders.row.currency")}
+                        options={currencyOptions}
+                    />
+                    <NumberFieldControlled<IOrderRowForm>
+                        name="currency_exchange"
+                        label={t("orders.row.currency_exchange")}
+                        precision={4}
+                        deactivated
+                    />
+                    <Box sx={{mb: 1}}>
+                        <NewButton
+                            sx={{px: 0.5, maxHeight: 32}}
+                            onClick={() => openDialog(addExchangeDialogRef)}
+                            isEnable={!isEuro(watchedCurrencyId as number) && !isFormDisabled}
+                            disableLabel
+                        />
+                    </Box>
+                </Box>
+                <Box sx={{display: 'flex', gap: 1}}>
+
+                    <NumberFieldControlled<IOrderRowForm>
+                        name="currency_price"
+                        label={t("orders.row.currency_price")}
+                        precision={4}
+                    />
+                    <TextFieldValue
+                        label={t("orders.row.total_currency_price")}
+                        value={orderRow?.total_currency_price ?? undefined}
+                        isFilled={!!orderRow}
                     />
                 </Box>
+            </Box>
+
+
+            <Box sx={{display: 'flex', gap: 1}}>
+
                 <TextFieldValue
                     label={t("orders.row.price")}
                     value={orderRow?.price ?? undefined}
@@ -422,6 +431,9 @@ const OrderRowFormFields = ({clientId, clientOrderId, selectedOrderRowId}: Order
                     isFilled={!!orderRow}
                 />
             </Box>
+
+            <Divider sx={{mb: 1}}/>
+
             <SelectFieldControlled<ICustomerOrderForm>
                 name={"address_id"}
                 label={t("orders.destination")}
