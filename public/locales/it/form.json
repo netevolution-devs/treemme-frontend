@@ -410,6 +410,7 @@
       "product": "Prodotto",
       "measurement_unit": "Unità di misura",
       "quantity": "Quantità",
+      "available_quantity": "Quantità disponibile",
       "tolerance_quantity_percentage": "Tolleranza %",
       "delivery_date_request": "Data richiesta",
       "delivery_date_confirmed": "Data confermata",
