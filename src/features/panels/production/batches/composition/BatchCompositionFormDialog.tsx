@@ -120,7 +120,7 @@ const BatchCompositionFormFields = () => {
                 label={t("production.batch.father_batch_selection")}
                 options={batchSelections.map((b) => ({
                     value: b.id,
-                    label: `${b.selection?.name || ''} - ${b.thickness?.name || ''} - ${b.stock_pieces} ${t("production.batch.pieces-string")}`
+                    label: `${b.selection?.name || ''} - ${b.thickness?.name || ''} - ${b.stock_pieces} ${t("production.batch.pieces-string")} - ${b.note}`
                 }))}
                 required
                 deactivated={!watchedFatherBatchId}
