@@ -5,10 +5,7 @@ import type {IBatchesStoreState} from "@features/panels/production/batches/Batch
 import {batchApi} from "@features/panels/production/batches/api/batchApi";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
-import {openDialog} from "@ui/dialog/dialogHelper";
-import BatchCompositionFormDialog from "@features/panels/production/batches/composition/BatchCompositionFormDialog";
-import {useMemo, useRef} from "react";
-import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {
     IBatchCompositionResponse
@@ -16,6 +13,7 @@ import type {
 import {Typography} from "@mui/material";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import dayjs from "dayjs";
+import useCallablePanel from "@ui/panel/useCallablePanel";
 
 interface ICompositionDialogProps {
     customBatchId?: number;
@@ -27,6 +25,10 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
 
     const {useStore} = usePanel<unknown, IBatchesStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId) || customBatchId;
+    const selectedBatchCompositionId = useStore(state => state.uiState.selectedBatchCompositionId);
+    const setUIState = useStore(state => state.setUIState);
+
+    const {add: addSelectPanel} = useCallablePanel();
 
     const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId as number);
     const compositions = batch?.batch_compositions ?? [];
@@ -34,6 +36,39 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
     const canComposition = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
 
     const isTForUF = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
+
+    const handleOpenCreateComposition = () => {
+        setUIState({selectedBatchCompositionId: null});
+        addSelectPanel({
+            initialValue: '',
+            extra: {
+                batch_id: selectedBatchId,
+                panelId: "createBatchComposition"
+            },
+            menu: {
+                component: "batchComposition",
+                i18nKey: "menu.production.composition"
+            },
+            customId: "createBatchComposition"
+        });
+    }
+
+    const handleOpenUpdateComposition = (id: number) => {
+        setUIState({selectedBatchCompositionId: id});
+        addSelectPanel({
+            initialValue: '',
+            extra: {
+                batch_id: selectedBatchId,
+                batch_composition_id: id,
+                panelId: "updateBatchComposition:" + id
+            },
+            menu: {
+                component: "batchComposition",
+                i18nKey: "menu.production.composition"
+            },
+            customId: "updateBatchComposition:" + id
+        });
+    }
 
     const columns = useMemo<MRT_ColumnDef<IBatchCompositionResponse>[]>(() => [
         {
@@ -59,38 +94,35 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
         }
     ], [t, isTForUF]);
 
-    const compositionDialogRef = useRef<IDialogActions | null>(null);
-
     return (
-        <>
-            <BatchCompositionFormDialog ref={compositionDialogRef} />
-
-            <GenericList<IBatchCompositionResponse>
-                disableBorder
-                minHeight={"265px"}
-                columns={columns}
-                data={compositions}
-                isLoading={isLoading}
-                isFetching={isFetching}
-                additionalOptions={{
-                    enableTopToolbar: enableToolbar,
-                    renderTopToolbar: () => <ListToolbar
-                        label={<Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1, textWrap: 'nowrap'}}>{t("composition.title")}</Typography>}
-                        buttons={[
-                            <CustomButton
-                                color={"primary"}
-                                icon={<AddToPhotosIcon/>}
-                                label={t("composition.button")}
-                                onClick={() => openDialog(compositionDialogRef)}
-                                isEnable={!!selectedBatchId && canComposition}
-                            />,
-                        ]}
-                        sx={{mt: 0}}
-                        alignButtons={'flex-end'}
-                    />
-                }}
-            />
-        </>
+        <GenericList<IBatchCompositionResponse>
+            disableBorder
+            minHeight={"265px"}
+            columns={columns}
+            data={compositions}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            selectedId={selectedBatchCompositionId}
+            onRowSelect={(id) => setUIState({selectedBatchCompositionId: id})}
+            onRowDoubleClick={(id) => handleOpenUpdateComposition(id)}
+            additionalOptions={{
+                enableTopToolbar: enableToolbar,
+                renderTopToolbar: () => <ListToolbar
+                    label={<Typography variant="h6" sx={{mb: enableToolbar ? 0 : 1, textWrap: 'nowrap'}}>{t("composition.title")}</Typography>}
+                    buttons={[
+                        <CustomButton
+                            color={"primary"}
+                            icon={<AddToPhotosIcon/>}
+                            label={t("composition.button")}
+                            onClick={handleOpenCreateComposition}
+                            isEnable={!!selectedBatchId && canComposition}
+                        />,
+                    ]}
+                    sx={{mt: 0}}
+                    alignButtons={'flex-end'}
+                />
+            }}
+        />
     )
 };
 
