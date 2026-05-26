@@ -15,6 +15,8 @@ import {useWatch} from "react-hook-form";
 
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
 import type {IDeliveryReason} from "@features/panels/shipping-invoicing/reasons/api/IDeliveryReason";
+import useCallablePanel from "@ui/panel/useCallablePanel";
+import useSubscribePanel from "@ui/panel/useSubscribePanel";
 
 export type IDeliveryNoteForm = Omit<IDeliveryNote, 'id' | 'subcontractor' | 'reason' | 'ddt_rows' | 'client'> & {
     subcontractor_id: number | null;
@@ -30,6 +32,18 @@ const Fields = ({subcontractors, clients, reasons}: {subcontractors: IContact[],
 
     const contactLabel = isSale ? t("orders.client") : t("shipping.subcontractor");
     const combinedLabel = `${t("shipping.subcontractor")} / ${t("orders.client")}`;
+
+    const {add: addSelectPanel} = useCallablePanel();
+
+    useSubscribePanel<IDeliveryNoteForm>({
+        formKey: "client_id",
+        dependencyKey: "contacts"
+    })
+
+    useSubscribePanel<IDeliveryNoteForm>({
+        formKey: "subcontractor_id",
+        dependencyKey: "contacts"
+    })
 
     return (
         <>
@@ -70,6 +84,18 @@ const Fields = ({subcontractors, clients, reasons}: {subcontractors: IContact[],
                         label={contactLabel}
                         options={clients.map(c => ({value: c.id, label: c.name}))}
                         required
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                extra: {
+                                    client: true
+                                },
+                                initialValue: input,
+                                menu: {
+                                    component: "contacts",
+                                    i18nKey: "menu.contacts.contacts"
+                                }
+                            })
+                        }}
                     />
                 ) : (
                     <SelectFieldControlled<IDeliveryNoteForm>
@@ -77,6 +103,18 @@ const Fields = ({subcontractors, clients, reasons}: {subcontractors: IContact[],
                         label={contactLabel}
                         options={subcontractors.map(s => ({value: s.id, label: s.name}))}
                         required
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                extra: {
+                                    subcontractor: true
+                                },
+                                initialValue: input,
+                                menu: {
+                                    component: "contacts",
+                                    i18nKey: "menu.contacts.contacts"
+                                }
+                            })
+                        }}
                     />
                 )}
             </Box>
