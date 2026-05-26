@@ -38,6 +38,10 @@ const OrderRowsList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IOrderRow>[]>(() => [
         {
+            accessorKey: "article.name",
+            header: t("orders.row.article"),
+        },
+        {
             accessorKey: "measurement_unit.name",
             header: t("orders.row.measurement_unit"),
         },
@@ -50,10 +54,6 @@ const OrderRowsList = () => {
             accessorKey: "delivery_date_confirmed",
             header: t("orders.row.delivery_date_confirmed"),
             Cell: ({row}) => row.original.delivery_date_confirmed ? dayjs(row.original.delivery_date_confirmed).format("DD/MM/YYYY") : "-",
-        },
-        {
-            accessorKey: "article.name",
-            header: t("orders.row.article"),
         },
         {
             accessorKey: "currency.sign",
