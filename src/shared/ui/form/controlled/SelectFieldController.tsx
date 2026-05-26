@@ -33,6 +33,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
     const activePanelId = useDockviewStore(state => state.activePanelId);
     const [open, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState("");
+    const [highlightedOption, setHighlightedOption] = useState<{ value: string | number; label: string } | null>(null);
 
     // Chiudi il menu se cambia il pannello attivo
     useEffect(() => {
@@ -40,6 +41,32 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
     }, [activePanelId]);
 
     const formattedLabel = required && label ? `${label} *` : label;
+
+    // Logica per il testo "fantasma" (ghost text) e filtraggio opzioni
+    const filteredOptions = useMemo(() => {
+        if (!inputValue) return options;
+        return options.filter(opt =>
+            opt.label.toUpperCase().startsWith(inputValue.toUpperCase())
+        );
+    }, [options, inputValue]);
+
+    const suggestion = useMemo(() => {
+        if (!open) return null;
+        if (highlightedOption) return highlightedOption;
+        if (!inputValue) return null;
+        return filteredOptions.find(opt =>
+            opt.label.toUpperCase().startsWith(inputValue.toUpperCase())
+        );
+    }, [inputValue, filteredOptions, open, highlightedOption]);
+
+    const ghostText = useMemo(() => {
+        if (!suggestion) return "";
+        const label = suggestion.label.toUpperCase();
+        if (label.startsWith(inputValue.toUpperCase())) {
+            return inputValue + label.slice(inputValue.length);
+        }
+        return label;
+    }, [suggestion, inputValue]);
 
     return (
         <Controller
@@ -51,26 +78,21 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
             render={({ field: { onChange, value, onBlur, ref }, fieldState: { error } }) => {
                 const selectedOption = options.find(opt => opt.value === value) || null;
 
-                // Logica per il testo "fantasma" (ghost text)
-                const suggestion = useMemo(() => {
-                    if (!inputValue || !open) return null;
-                    return options.find(opt =>
-                        opt.label.toUpperCase().startsWith(inputValue.toUpperCase())
-                    );
-                }, [inputValue, options, open]);
-
-                const ghostText = suggestion
-                    ? inputValue + suggestion.label.slice(inputValue.length).toUpperCase()
-                    : "";
-
                 return (
                     <Autocomplete
                         sx={{ minWidth, width: "100%" }}
-                        options={options}
+                        options={filteredOptions}
                         open={open}
+                        filterOptions={(x) => x}
                         autoHighlight
                         onOpen={() => setOpen(true)}
-                        onClose={() => setOpen(false)}
+                        onClose={() => {
+                            setOpen(false);
+                            setHighlightedOption(null);
+                        }}
+                        onHighlightChange={(_, option) => {
+                            setHighlightedOption(option);
+                        }}
                         disabled={disabled || deactivated}
                         value={selectedOption}
                         inputValue={inputValue}
@@ -85,7 +107,7 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                         }}
                         onBlur={() => {
                             onBlur();
-                            const exactMatch = options.find(
+                            const exactMatch = filteredOptions.find(
                                 opt => opt.label.toUpperCase() === inputValue.toUpperCase()
                             );
                             if (exactMatch) {
@@ -99,13 +121,14 @@ const SelectFieldControlled = <TFieldValues extends FieldValues>({
                                 if (suggestion) {
                                     onChange(suggestion.value);
                                     setInputValue(suggestion.label.toUpperCase());
+                                    if (e.key === "ArrowRight") e.preventDefault();
                                 }
                             }
 
                             if (e.key === 'Enter' && onNoOptionsMatch) {
                                 const target = e.target as HTMLInputElement;
                                 const currentVal = target.value;
-                                const match = options.find(opt => opt.label.toLowerCase() === currentVal.toLowerCase());
+                                const match = filteredOptions.find(opt => opt.label.toLowerCase() === currentVal.toLowerCase());
                                 if (!match && currentVal.trim()) {
                                     onNoOptionsMatch(currentVal);
                                     target.blur();
