@@ -55,7 +55,6 @@ export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
     if (overrideProps.sx) delete overrideProps.sx;
 
     return {
-        onDoubleClick: () => (table.setEditingRow(row)),
         sx: finalSx,
         ...overrideProps,
     };

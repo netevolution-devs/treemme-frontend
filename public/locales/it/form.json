@@ -532,7 +532,9 @@
       "half_piece": "Mezze",
       "whole_piece": "Intere",
       "row_note": "Note riga",
-      "return": "Rientra lotto"
+      "return": "Rientra lotto",
+      "massive_return": "Rientro massivo",
+      "confirm_return": "Conferma rientro"
     }
   },
   "warehouse": {

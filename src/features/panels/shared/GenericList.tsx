@@ -6,7 +6,6 @@ import {
 } from "material-react-table";
 import {Box, Card, CircularProgress} from "@mui/material";
 import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions";
-import type {SyntheticEvent} from "react";
 
 export interface BaseEntity {
     id: string | number;
@@ -52,11 +51,9 @@ const GenericList = <TData extends BaseEntity>({
         },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
-                onRowSelect?.(row.original.id);
                 onRowDoubleClick?.(row.original.id);
             },
-            onClick: (e: SyntheticEvent) => {
-                e.preventDefault();
+            onClick: () => {
                 onRowSelect?.(row.original.id);
             },
             selected: row.original.id === selectedId,

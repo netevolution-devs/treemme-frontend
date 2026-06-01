@@ -11,6 +11,8 @@ import useGetDDTNotReturned
 } from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturned";
 import useGetDDTNotReturnedPrint
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturnedPrint";
+import useGetMassiveReturn
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetMassiveReturn";
 import type {
     ISubcontractingNotReturnedStoreFilter,
     ISubcontractingNotReturnedStoreState
@@ -18,6 +20,7 @@ import type {
 import {MenuItem} from "@mui/material";
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import MoveDownIcon from '@mui/icons-material/MoveDown';
+import ChecklistIcon from '@mui/icons-material/Checklist';
 import DDTReturnFormDialog
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/return/DDTReturnFormDialog";
 import DDTTransferFormDialog
@@ -25,11 +28,13 @@ import DDTTransferFormDialog
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import ListToolbar from "@features/panels/shared/ListToolbar";
-import {PrintButton} from "@features/panels/shared/CustomButton";
+import CustomButton, {PrintButton} from "@features/panels/shared/CustomButton";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {useState} from "react";
+import type {MRT_RowSelectionState} from "material-react-table";
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);
@@ -54,6 +59,10 @@ const SubcontractingNotReturnedList = () => {
 
     const {data: ddtRowsNotReturned = [], isLoading, isFetching} = useGetDDTNotReturned({queryParams});
     const {mutateAsync: getDdtNotReturnedPdf, isPending} = useGetDDTNotReturnedPrint();
+    const {mutateAsync: massiveReturn, isPending: isMassiveReturnPending} = useGetMassiveReturn();
+
+    const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
+    const [multiSelectionEnabled, setMultiSelectionEnabled] = useState(false);
 
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
 
@@ -88,8 +97,6 @@ const SubcontractingNotReturnedList = () => {
         }
     ], [t]);
 
-    const editRowDialogRef = useRef<IDialogActions | null>(null);
-
     const ddtReturnDialogRef = useRef<IDialogActions | null>(null);
     const ddtTransferDialogRef = useRef<IDialogActions | null>(null);
 
@@ -106,9 +113,12 @@ const SubcontractingNotReturnedList = () => {
                 columns={columns}
                 isLoading={isLoading}
                 isFetching={isFetching}
-                selectedId={selectedSubcontractingNotReturnedId}
-                onRowSelect={(id) => setUIState({selectedSubcontractingNotReturnedId: id as number})}
-                onRowDoubleClick={() => openDialog(editRowDialogRef)}
+                selectedId={multiSelectionEnabled ? null : selectedSubcontractingNotReturnedId}
+                onRowSelect={(id) => {
+                    if (!multiSelectionEnabled && id !== undefined) {
+                        setUIState({selectedSubcontractingNotReturnedId: id as number});
+                    }
+                }}
                 additionalOptions={{
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
@@ -134,7 +144,40 @@ const SubcontractingNotReturnedList = () => {
                                 />,
                             ]}
                             buttons={[
+                                <CustomButton
+                                    key={"b-multi-selection"}
+                                    variant={"outlined"}
+                                    color={multiSelectionEnabled ? "warning" : "primary"}
+                                    icon={<ChecklistIcon/>}
+                                    onClick={() => {
+                                        setMultiSelectionEnabled(prev => !prev);
+                                        setRowSelection({});
+                                    }}
+                                    label={multiSelectionEnabled ? "common:button.cancel" : "form:shipping.ddt_rows.massive_return"}
+                                />,
+                                multiSelectionEnabled && (
+                                    <CustomButton
+                                        key={"b-massive-return"}
+                                        variant={"outlined"}
+                                        color={"success"}
+                                        isEnable={Object.keys(rowSelection).length > 0 && !isMassiveReturnPending}
+                                        isLoading={isMassiveReturnPending}
+                                        icon={<AssignmentReturnIcon/>}
+                                        onClick={async () => {
+                                            const selectedIds = Object.keys(rowSelection).map(Number);
+                                            if (selectedIds.length > 0) {
+                                                await massiveReturn({
+                                                    rows: selectedIds.map(id => ({id}))
+                                                });
+                                                setRowSelection({});
+                                                setMultiSelectionEnabled(false);
+                                            }
+                                        }}
+                                        label={"form:shipping.ddt_rows.confirm_return"}
+                                    />
+                                ),
                                 <PrintButton
+                                    key={"b-print"}
                                     canPrint={canPrint}
                                     isPending={isPending}
                                     onClick={() => getDdtNotReturnedPdf({
@@ -149,6 +192,12 @@ const SubcontractingNotReturnedList = () => {
                         />
                     ),
                     enableRowActions: true,
+                    enableRowSelection: multiSelectionEnabled,
+                    onRowSelectionChange: setRowSelection,
+                    state: {
+                        rowSelection,
+                    },
+                    getRowId: (row) => row.id?.toString(),
                     renderRowActionMenuItems: ({row, closeMenu}) => [
                         <MenuItem key={"view_batch"} onClick={() => {
                             addPanel({
@@ -173,7 +222,7 @@ const SubcontractingNotReturnedList = () => {
                             closeMenu()
                         }}>
                             <AssignmentReturnIcon color={"primary"} sx={{mr: 1}}/>
-                            {t("shipping.ddt_rows.return")}
+                            {t("form:shipping.ddt_rows.return")}
                         </MenuItem>,
                         <MenuItem key="m-transfer" onClick={() => {
                             setUIState({selectedSubcontractingNotReturnedId: row.original.id})
@@ -181,7 +230,7 @@ const SubcontractingNotReturnedList = () => {
                             closeMenu()
                         }}>
                             <MoveDownIcon color={"warning"} sx={{mr: 1}}/>
-                            {t("shipping.ddt_rows.transfer")}
+                            {t("form:shipping.ddt_rows.transfer")}
                         </MenuItem>
                     ],
                 }}
