@@ -53,7 +53,7 @@ export type ResourceOrders = "ordini"
     | "ordini - ricerca ordini fornitori"
 
 export type ResourceWarehouse = "magazzino"
-    | "magazzino - movimenti di magazzino"
+    | "magazzino - movimenti"
     | "magazzino - tipologie pallets"
     | "magazzino - lotti e partite"
     | "magazzino - ricerca lotti/partite"

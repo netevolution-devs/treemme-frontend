@@ -52,6 +52,7 @@ import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
 import ExternalMovementsPanel from "@features/panels/analysis/external-movements/ExternalMovementsPanel";
 import CarriersPanel from "@features/panels/contacts/carriers/CarriersPanel";
 import BatchesLotsPanel from "@features/panels/analysis/batchesLots/BatchesLotsPanel";
+import MovementsPanel from "@features/panels/warehouse/movements/MovementsPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -106,6 +107,7 @@ export type TPanelKind =
     | 'externalMovements'
     | 'carriers'
     | 'batchesLots'
+    | 'movements'
     | 'not-implemented'
     | 'dialog'; // special panel for dialogs
 
@@ -150,6 +152,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     // warehouse
     lotsBatches:                () => <LotsBatchesPanel />,
     pallets:                    (props) => <PalletsPanel {...props}/>,
+    movements:                  () => <MovementsPanel/>,
     // production
     batches:                    (props) => <BatchesPanel {...props}/>,
     machinery:                  (props) => <MachineryPanel {...props}/>,

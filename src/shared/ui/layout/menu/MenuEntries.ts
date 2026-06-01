@@ -168,7 +168,11 @@ export const MenuEntries: IMenuEntry[] = [
         icon: "WAREHOUSE",
         permissionCheck: {resource: "magazzino", action: "get"},
         subMenu: [
-            // {i18nKey: "menu.warehouse.movements"},
+            {
+                i18nKey: "menu.warehouse.movements",
+                component: "movements",
+                permissionCheck: {resource: "magazzino - movimenti", action: "get"}
+            },
             // {i18nKey: "menu.warehouse.api-types"},
             {
                 i18nKey: "menu.warehouse.lots-batches",

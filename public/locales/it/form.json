@@ -372,7 +372,9 @@
     "date": "Data",
     "reason": "Motivo",
     "piece": "Pezzi",
-    "movement_note": "Note movimento"
+    "movement_note": "Note movimento",
+    "ddt_number": "Numero DDT",
+    "ddt_date": "Data DDT"
   },
   "orders": {
     "shipping-carrier": "Trasportatore",

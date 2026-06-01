@@ -75,11 +75,26 @@
     }
   },
   "production": {
+    "batch": {
+      "batch_code": "Batch"
+    },
     "machinery": {
       "name": "Machinery name",
       "prefix": "Prefix",
       "batch_type": "Batch type"
     }
+  },
+  "sales": {
+    "ddt-price": "DDT Price"
+  },
+  "movements": {
+    "contact": "Site",
+    "date": "Date",
+    "reason": "Reason",
+    "piece": "Pieces",
+    "movement_note": "Movement note",
+    "ddt_number": "DDT Number",
+    "ddt_date": "DDT Date"
   },
   "products": {
     "articles": {
