@@ -15,6 +15,7 @@ export interface IBatchComposition {
     father_batch: IBatch;
     father_batch_piece: number;
     father_batch_quantity: number;
+    batch_selection_id: number; // TODO to implement in backend
     composition_note: string;
     date: string;
     thickness: IThickness | null;

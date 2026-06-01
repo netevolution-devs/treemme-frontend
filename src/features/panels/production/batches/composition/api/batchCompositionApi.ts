@@ -3,8 +3,10 @@ import type {IBatchCompositionResponse} from "@features/panels/production/batche
 
 export interface IBatchCompositionPayload {
     batch_id: number;
+    father_batch_id: number;
     batch_selection_id: number;
     father_batch_piece: number;
+    father_batch_quantity: number;
     date: string;
     composition_note?: string;
 }

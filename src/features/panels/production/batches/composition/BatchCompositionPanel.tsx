@@ -25,8 +25,6 @@ const BatchCompositionPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBat
             initialState={{uiState: initialUiState}}
             disableBorders
         >
-            <pre>{JSON.stringify(props.params, null, 2)}</pre>
-            <pre>{JSON.stringify(props.api.id, null, 2)}</pre>
             <BatchCompositionForm {...props.params}/>
         </GenericPanel>
     )

@@ -8,12 +8,10 @@ import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import {useWatch} from "react-hook-form";
 import dayjs from "dayjs";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
-import CustomButton from "@features/panels/shared/CustomButton";
-import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
-import {useEffect} from "react";
+import {useEffect, useMemo} from "react";
 import type {
     IBatchCompositionStoreParams,
     IBatchCompositionStoreState
@@ -23,6 +21,7 @@ import useGetBatchSplitAvailability from "@features/panels/production/batches/co
 import type {
     IBatchComposition,
 } from "@features/panels/production/batches/composition/api/IBatchComposition";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 
 export interface IBatchCompositionForm {
     father_batch_piece: number | null;
@@ -38,8 +37,6 @@ const BatchCompositionForm = ({
                                    onSuccess,
                                    extra
                                }: ICustomPanelFormProps<IBatchCompositionStoreParams>) => {
-    const {t} = useTranslation(["form", "common"]);
-
     const batchId = extra?.batch_id ?? 0;
     const batchCompositionId = extra?.batch_composition_id ?? 0;
     const floatingPanelUUID = extra?.panelId as string;
@@ -72,10 +69,20 @@ const BatchCompositionForm = ({
     });
 
     useEffect(() => {
-        if (floatingPanelUUID?.includes("create")) {
+        if (floatingPanelUUID?.startsWith("createBatchComposition")) {
             setFormState("new");
         }
     }, [floatingPanelUUID, setFormState]);
+
+    const {data: batchesAvailability = []} = useGetBatchSplitAvailability();
+
+    const batches = useMemo(() => {
+        const list = [...batchesAvailability];
+        if (batchCompositionDetail?.father_batch && !list.find(b => b.id === batchCompositionDetail.father_batch.id)) {
+            list.push(batchCompositionDetail.father_batch);
+        }
+        return list;
+    }, [batchesAvailability, batchCompositionDetail?.father_batch]);
 
     return (
         <GenericForm<IBatchCompositionForm, IBatchComposition, IBatchCompositionStoreState>
@@ -83,9 +90,8 @@ const BatchCompositionForm = ({
             resource="produzione - lotti"
             selectedId={selectedBatchCompositionId}
             floatingPanelUUID={floatingPanelUUID}
-            disabledBasicButtons
+            disableUpdateButton={false}
             disableCreateButton
-            bypassConfirm
             entity={batchCompositionDetail}
             emptyValues={{
                 father_batch_piece: null,
@@ -98,55 +104,62 @@ const BatchCompositionForm = ({
             mapEntityToForm={(entity) => ({
                 father_batch_piece: entity.father_batch_piece,
                 father_batch_id: entity.father_batch?.id || null,
-                batch_selection_id: null,
+                batch_selection_id: entity.batch_selection_id || null,
                 composition_note: entity.composition_note,
                 date: entity.date,
                 batch_id: batchId
             })}
-            create={(data) => createComposition({
-                batch_id: batchId,
-                batch_selection_id: data.batch_selection_id as number,
-                date: data.date as string,
-                composition_note: data.composition_note as string,
-                father_batch_piece: data.father_batch_piece as number
-            })}
-            update={(data) => updateComposition({
-                id: selectedBatchCompositionId as number,
-                payload: {
+            create={(data) => {
+                const fatherBatch = batchesAvailability.find(b => b.id === data.father_batch_id);
+                const selection = fatherBatch?.batch_selections.find(s => s.id === data.batch_selection_id);
+                const quantityPerPiece = (selection && selection.pieces > 0) ? selection.quantity / selection.pieces : 0;
+                const calculatedQuantity = (data.father_batch_piece || 0) * quantityPerPiece;
+
+                return createComposition({
                     batch_id: batchId,
+                    father_batch_id: data.father_batch_id as number,
                     batch_selection_id: data.batch_selection_id as number,
                     date: data.date as string,
                     composition_note: data.composition_note as string,
-                    father_batch_piece: data.father_batch_piece as number
-                }
-            })}
-            delete={() => deleteComposition(selectedBatchCompositionId as number)}
+                    father_batch_piece: data.father_batch_piece as number,
+                    father_batch_quantity: calculatedQuantity
+                });
+            }}
+            update={(_, payload) => {
+                const fatherBatch = batches.find(b => b.id === payload.father_batch_id);
+                const selection = fatherBatch?.batch_selections.find(s => s.id === payload.batch_selection_id);
+                const quantityPerPiece = (selection && selection.pieces > 0) ? selection.quantity / selection.pieces : 0;
+                const calculatedQuantity = (payload.father_batch_piece || 0) * quantityPerPiece;
+
+                return updateComposition({
+                    id: selectedBatchCompositionId as number,
+                    payload: {
+                        batch_id: batchId,
+                        father_batch_id: payload.father_batch_id as number,
+                        batch_selection_id: payload.batch_selection_id as number,
+                        date: payload.date as string,
+                        composition_note: payload.composition_note as string,
+                        father_batch_piece: payload.father_batch_piece as number,
+                        father_batch_quantity: calculatedQuantity
+                    }
+                });
+            }}
+            remove={() => deleteComposition(selectedBatchCompositionId as number)}
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             validateBeforeSave={(v) =>
-                !!v.father_batch_piece &&
+                v.father_batch_piece !== null && v.father_batch_piece > 0 &&
                 !!v.batch_selection_id
             }
-            extraButtons={[
-                <CustomButton
-                    key="execute-btn"
-                    label={t("common:button.execute")}
-                    color={"primary"}
-                    icon={<AddToPhotosIcon/>}
-                    isSubmit
-                />
-            ]}
             renderFields={() => (
-                <BatchCompositionFormFields/>
+                <BatchCompositionFormFields batches={batches}/>
             )}
         />
     );
 };
 
-const BatchCompositionFormFields = () => {
+const BatchCompositionFormFields = ({batches}: {batches: IBatch[]}) => {
     const {t} = useTranslation(["form"]);
-
-    const {data: batches = []} = useGetBatchSplitAvailability();
 
     const watchedFatherBatchId = useWatch<IBatchCompositionForm>({name: "father_batch_id"});
     const watchedSelectionId = useWatch<IBatchCompositionForm>({name: "batch_selection_id"});
@@ -154,7 +167,6 @@ const BatchCompositionFormFields = () => {
 
     return (
         <Box sx={{mb: 1}}>
-            <pre>{JSON.stringify(batchSelections, null, 2)}</pre>
             <Box sx={{mb: 1.2}}>
                 <DateFieldControlled<IBatchCompositionForm>
                     name={"date"}
@@ -175,7 +187,7 @@ const BatchCompositionFormFields = () => {
                 label={t("production.batch.father_batch_selection")}
                 options={batchSelections.map((b) => ({
                     value: b.id,
-                    label: `${b.selection?.name || ''} - ${b.thickness?.name || ''} - ${b.stock_pieces} ${t("production.batch.pieces-string")} - ${b.note}`
+                    label: `${b.selection?.name || ''} - ${b.thickness?.name || ''} - ${b.stock_pieces} ${t("production.batch.pieces-string")} ${b.note ? '- ' + b.note : ""}`
                 }))}
                 required
                 deactivated={!watchedFatherBatchId}
