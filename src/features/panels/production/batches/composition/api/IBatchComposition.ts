@@ -8,7 +8,7 @@ export interface IBatchComposition {
     father_batch: IBatch;
     father_batch_piece: number;
     father_batch_quantity: number;
-    batch_selection: IBatchSelection;
+    selection: IBatchSelection;
     composition_note: string;
     date: string;
     thickness: IThickness | null;
