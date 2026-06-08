@@ -45,6 +45,7 @@ import ArticleInternalColorsPanel from "@features/panels/products/article-intern
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
 import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
 import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
+import BatchCompositionPanel from "@features/panels/production/batches/composition/BatchCompositionPanel";
 import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
 import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
@@ -100,6 +101,7 @@ export type TPanelKind =
     | 'articlePrints'
     | 'pallets'
     | 'batchData'
+    | 'batchComposition'
     | 'searchOrderRows'
     | 'contactsAddress'
     | 'contactsDetail'
@@ -159,6 +161,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     processes:                  () => <ProcessesPanel />,
     workings:                   (props) => <WorkingsPanel {...props}/>,
     batchData:                  (props) => <BatchDataPanel {...props}/>,
+    batchComposition:           (props) => <BatchCompositionPanel {...props}/>,
     // ddt
     deliveryNotes:              (props) => <DeliveryNotesPanel {...props}/>,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,

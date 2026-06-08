@@ -6,7 +6,7 @@ import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-mov
 import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle";
 import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction";
-import type {IBatchCompositionResponse} from "@features/panels/production/batches/composition/api/IBatchComposition";
+import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
 
 export interface IFatcherBatchDetails {
     father_batch_pieces: number;
@@ -46,6 +46,6 @@ export interface IBatch {
     warehouse_movements: IWarehouseMovement[];
     batch_selections_count: number;
     productions: IBatchProduction[];
-    batch_compositions: IBatchCompositionResponse[];
+    batch_compositions: IBatchComposition[];
     batch_data: {id: number}[]
 }
