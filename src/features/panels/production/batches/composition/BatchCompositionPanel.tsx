@@ -16,7 +16,7 @@ export interface IBatchCompositionStoreParams {
 }
 
 const BatchCompositionPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchCompositionStoreParams>>) => {
-    const initialUiState: IBatchCompositionStoreState = {isFormDisabled: false, buttonsState: BaseButtonState};
+    const initialUiState: IBatchCompositionStoreState = {isFormDisabled: true, buttonsState: BaseButtonState};
 
     return (
         <GenericPanel<unknown, IBatchCompositionStoreState>

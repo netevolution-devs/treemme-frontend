@@ -89,6 +89,8 @@ const BatchCompositionForm = ({
             onSuccess={handlePanelSuccess}
             resource="produzione - lotti"
             selectedId={selectedBatchCompositionId}
+            floatingPanelMode
+            closePanelOnSave
             floatingPanelUUID={floatingPanelUUID}
             disableUpdateButton={false}
             disableCreateButton
@@ -104,7 +106,7 @@ const BatchCompositionForm = ({
             mapEntityToForm={(entity) => ({
                 father_batch_piece: entity.father_batch_piece,
                 father_batch_id: entity.father_batch?.id || null,
-                batch_selection_id: entity.batch_selection_id || null,
+                batch_selection_id: entity.batch_selection?.id || null,
                 composition_note: entity.composition_note,
                 date: entity.date,
                 batch_id: batchId

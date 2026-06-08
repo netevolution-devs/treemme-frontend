@@ -7,9 +7,7 @@ import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
-import type {
-    IBatchCompositionResponse
-} from "@features/panels/production/batches/composition/api/IBatchComposition";
+import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
 import {Typography} from "@mui/material";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import dayjs from "dayjs";
@@ -33,9 +31,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
     const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId as number);
     const compositions = batch?.batch_compositions ?? [];
 
-    const canComposition = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
-
-    const isTForUF = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
+    const isTinturaORifinizione = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
 
     const handleOpenCreateComposition = () => {
         setUIState({selectedBatchCompositionId: null});
@@ -70,10 +66,10 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
         });
     }
 
-    const columns = useMemo<MRT_ColumnDef<IBatchCompositionResponse>[]>(() => [
+    const columns = useMemo<MRT_ColumnDef<IBatchComposition>[]>(() => [
         {
             accessorKey: "date",
-            header: isTForUF ? t("composition.date-tf") : t("composition.date"),
+            header: isTinturaORifinizione ? t("composition.date-tf") : t("composition.date"),
             Cell: ({row}) => dayjs(row.original.date).format("DD/MM/YYYY")
         },
         {
@@ -92,10 +88,10 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
             accessorKey: "composition_note",
             header: t("composition.composition_note"),
         }
-    ], [t, isTForUF]);
+    ], [t, isTinturaORifinizione]);
 
     return (
-        <GenericList<IBatchCompositionResponse>
+        <GenericList<IBatchComposition>
             disableBorder
             minHeight={"265px"}
             columns={columns}
@@ -115,7 +111,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
                             icon={<AddToPhotosIcon/>}
                             label={t("composition.button")}
                             onClick={handleOpenCreateComposition}
-                            isEnable={!!selectedBatchId && canComposition}
+                            isEnable={!!selectedBatchId && isTinturaORifinizione}
                         />,
                     ]}
                     sx={{mt: 0}}

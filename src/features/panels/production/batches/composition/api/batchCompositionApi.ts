@@ -1,5 +1,5 @@
 import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
-import type {IBatchCompositionResponse} from "@features/panels/production/batches/composition/api/IBatchComposition";
+import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
 
 export interface IBatchCompositionPayload {
     batch_id: number;
@@ -11,7 +11,7 @@ export interface IBatchCompositionPayload {
     composition_note?: string;
 }
 
-export const batchCompositionApi = createPanelApi<IBatchCompositionResponse, IBatchCompositionPayload>({
+export const batchCompositionApi = createPanelApi<IBatchComposition, IBatchCompositionPayload>({
     baseEndpoint: "/batch-composition",
     queryKey: "BATCH-COMPOSITION"
 });
