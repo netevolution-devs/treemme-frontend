@@ -35,6 +35,7 @@ import {permissionEngine} from "@features/authz/permission.utils";
 import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 import {useAuth} from "@features/auth/model/AuthContext";
 import UnfoldMoreIcon from '@mui/icons-material/UnfoldMore';
+import VerticalSplitIcon from '@mui/icons-material/VerticalSplit';
 
 export type IBatchesForm = Omit<IBatch, 'id'
     | 'leather'
@@ -57,6 +58,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'pieces'
     | 'batch_data'
     | 'half_pieces_count'
+    | 'stock_half_pieces'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
@@ -205,7 +207,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                         <CustomButton
                             label={t("production.batch.calculate_half_pieces")}
                             color={"primary"}
-                            icon={<CallSplitIcon/>}
+                            icon={<VerticalSplitIcon/>}
                             isEnable={canCalculateHalfPieces}
                             isLoading={isCalculatingHalfPieces}
                             onClick={() => calculateHalfPieces(selectedBatchId as number)}

@@ -49,4 +49,5 @@ export interface IBatch {
     batch_compositions: IBatchComposition[];
     batch_data: {id: number}[];
     half_pieces_count: number | null;
+    stock_half_pieces: number | null;
 }
