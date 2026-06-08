@@ -96,4 +96,18 @@ export const batchApi = {
             staleTime: 0,
         });
     },
+    useCalculateHalfPieces: () => {
+        const {post} = useApi();
+        const queryClient = useQueryClient();
+        return useMutation({
+            mutationKey: ["BATCH", "CALCULATE-HALF-PIECES"],
+            mutationFn: async (id: number) => {
+                const response = await post(`/batch/${id}/calculate-half-pieces`);
+                return response.data.data;
+            },
+            onSuccess: (_, id) => {
+                void queryClient.invalidateQueries({queryKey: ["BATCH", "DETAIL", id]});
+            }
+        });
+    },
 };

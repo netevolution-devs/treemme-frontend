@@ -56,6 +56,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'quantity'
     | 'pieces'
     | 'batch_data'
+    | 'half_pieces_count'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
@@ -80,6 +81,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
     const {useGetDetail, usePost, usePut, useDelete, useGetPdf} = batchApi;
     const {data: batchItem} = useGetDetail(selectedBatchId);
     const {mutateAsync: getBatchPdf, isPending: isPrinting} = useGetPdf();
+    const {mutateAsync: calculateHalfPieces, isPending: isCalculatingHalfPieces} = batchApi.useCalculateHalfPieces();
 
     const {mutateAsync: createBatch, isPending: isPosting} = usePost();
     const {mutateAsync: updateBatch, isPending: isPutting} = usePut();
@@ -109,6 +111,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
     const canRework = !!selectedBatchId && isBatchBaseType && hasStock && canPost;
     const canSplit = !!selectedBatchId && (isBatchBaseType || isRework) && canPost;
     const canPrint = !!selectedBatchId && (isBatchBaseType || isTF);
+    const canCalculateHalfPieces = !!selectedBatchId && isTF && canPost && (batchItem?.stock_items ?? 0) > 0;
     const canCompensate = !!selectedBatchId && canPost;
 
     const BatchDataButton = ({disabled = false}: {disabled?: boolean}) => (
@@ -199,6 +202,14 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                 }
                 extraButtons={
                     !disableFunctions ? ([
+                        <CustomButton
+                            label={t("production.batch.calculate_half_pieces")}
+                            color={"primary"}
+                            icon={<CallSplitIcon/>}
+                            isEnable={canCalculateHalfPieces}
+                            isLoading={isCalculatingHalfPieces}
+                            onClick={() => calculateHalfPieces(selectedBatchId as number)}
+                        />,
                         <CustomButton
                             label={t("production.batch.compensation")}
                             color={"warning"}
@@ -296,6 +307,14 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                                 precision={0}
                                 required
                             />
+                            {selectedBatchId && isTF && (
+                                <TextFieldValue
+                                    label={t("production.batch.half_pieces_count")}
+                                    value={batchItem?.half_pieces_count ?? 0}
+                                    isFilled={!!selectedBatchId}
+                                    precision={0}
+                                />
+                            )}
                             <NumberFieldControlled<IBatchesForm>
                                 name="quantity"
                                 label={t("production.batch.quantity")}

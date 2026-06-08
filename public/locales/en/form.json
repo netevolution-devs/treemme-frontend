@@ -76,7 +76,9 @@
   },
   "production": {
     "batch": {
-      "batch_code": "Batch"
+      "batch_code": "Batch",
+      "calculate_half_pieces": "Calculate half pieces",
+      "half_pieces_count": "Calculated half pieces"
     },
     "machinery": {
       "name": "Machinery name",

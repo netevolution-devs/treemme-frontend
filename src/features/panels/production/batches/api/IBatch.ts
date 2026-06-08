@@ -47,5 +47,6 @@ export interface IBatch {
     batch_selections_count: number;
     productions: IBatchProduction[];
     batch_compositions: IBatchComposition[];
-    batch_data: {id: number}[]
+    batch_data: {id: number}[];
+    half_pieces_count: number | null;
 }
