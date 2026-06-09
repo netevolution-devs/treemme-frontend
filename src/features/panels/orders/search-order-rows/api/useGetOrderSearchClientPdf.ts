@@ -5,6 +5,9 @@ interface IClientOrderRowSummaryPrintParams {
     start_date?: string;
     end_date?: string;
     client_id?: number;
+    shipping_status?: "to_ship" | "shipped",
+    production_status?: "to_produce" | "produced",
+    print_status?: "to_print" | "printed",
 }
 
 interface IMutateParams {
