@@ -2,8 +2,8 @@ import type {SxProps, TableRowProps as MUITableRowProps, Theme} from "@mui/mater
 import type {MRT_Row, MRT_RowData, MRT_TableInstance} from "material-react-table";
 
 export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
-    table: MRT_TableInstance<D>,
-    row: MRT_Row<D>,
+    _table: MRT_TableInstance<D>,
+    _row: MRT_Row<D>,
     staticRowIndex: number,
     theme: Theme,
     isDetailPanel?: boolean,
