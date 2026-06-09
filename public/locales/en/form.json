@@ -1,4 +1,28 @@
 {
+  "batches": {
+    "tabs": {
+      "batch": "Batch",
+      "movements": "Movements",
+      "chronology": "Chronology",
+      "costs": "Costs",
+      "sales": "Sales"
+    },
+    "costs": {
+      "date": "Date",
+      "type": "Type",
+      "amount": "Amount",
+      "note": "Note"
+    },
+    "sales": {
+      "ddt_date": "DDT Date",
+      "ddt_number": "DDT Number",
+      "client": "Client",
+      "pieces": "Pieces",
+      "quantity": "Quantity",
+      "total_value": "Total value",
+      "note": "Note"
+    }
+  },
   "subcontractor": {
     "create": {
       "title": "Enter new subcontractor",
@@ -51,11 +75,28 @@
     }
   },
   "production": {
+    "batch": {
+      "batch_code": "Batch",
+      "calculate_half_pieces": "Calculate half pieces",
+      "half_pieces_count": "Calculated half pieces"
+    },
     "machinery": {
       "name": "Machinery name",
       "prefix": "Prefix",
       "batch_type": "Batch type"
     }
+  },
+  "sales": {
+    "ddt-price": "DDT Price"
+  },
+  "movements": {
+    "contact": "Site",
+    "date": "Date",
+    "reason": "Reason",
+    "piece": "Pieces",
+    "movement_note": "Movement note",
+    "ddt_number": "DDT Number",
+    "ddt_date": "DDT Date"
   },
   "products": {
     "articles": {

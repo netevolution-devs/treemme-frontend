@@ -273,7 +273,9 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     label={t("production.batch.selections.pieces")}
                     required
                     max={batch?.stock_items as number || deliveryNoteRow?.pieces as number}
-                    precision={0}
+                    precision={1}
+                    step={0.5}
+                    enforceStep
                     deactivated={!watchedBatchId || !!deliveryNoteRow?.pieces}
                 />
             </Box>
@@ -334,12 +336,14 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                 <NumberFieldControlled<IDeliveryNoteRowForm>
                     name="half_piece"
                     label={t("shipping.ddt_rows.half_piece")}
+                    max={batch?.stock_half_pieces ?? 0}
+                    precision={0}
                 />
-                <TextFieldValue
-                    label={t("shipping.ddt_rows.whole_piece")}
-                    value={deliveryNoteRow?.whole_piece as number}
-                    isFilled={!!deliveryNoteRow}
-                />
+                {/*<TextFieldValue*/}
+                {/*    label={t("shipping.ddt_rows.whole_piece")}*/}
+                {/*    value={deliveryNoteRow?.whole_piece as number}*/}
+                {/*    isFilled={!!deliveryNoteRow}*/}
+                {/*/>*/}
             </Box>
 
             <Box sx={{display: 'flex', gap: 1}}>

@@ -1,4 +1,5 @@
 import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
+import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 
 export interface IWarehouseMovementReasonType {
     id: number;
@@ -14,6 +15,7 @@ export interface IWarehouseMovementReason {
 
 export interface IWarehouseMovement {
     id: number;
+    batch: IBatch;
     reason: IWarehouseMovementReason;
     date: string;
     piece: number;

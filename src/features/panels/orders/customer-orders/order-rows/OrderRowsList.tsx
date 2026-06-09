@@ -38,22 +38,25 @@ const OrderRowsList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IOrderRow>[]>(() => [
         {
+            accessorKey: "article.name",
+            header: t("orders.row.article"),
+        },
+        {
             accessorKey: "measurement_unit.name",
             header: t("orders.row.measurement_unit"),
         },
-
         {
             accessorKey: "quantity",
             header: t("orders.row.quantity"),
         },
         {
+            accessorKey: "available_quantity",
+            header: t("orders.row.available_quantity"),
+        },
+        {
             accessorKey: "delivery_date_confirmed",
             header: t("orders.row.delivery_date_confirmed"),
             Cell: ({row}) => row.original.delivery_date_confirmed ? dayjs(row.original.delivery_date_confirmed).format("DD/MM/YYYY") : "-",
-        },
-        {
-            accessorKey: "article.name",
-            header: t("orders.row.article"),
         },
         {
             accessorKey: "currency.sign",
@@ -100,7 +103,7 @@ const OrderRowsList = () => {
 
             <GenericList<IOrderRow>
                 disableBorder
-                minHeight={"455px"}
+                minHeight={"400px"}
                 data={orderRows}
                 columns={columns}
                 isLoading={isLoading}

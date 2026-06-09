@@ -14,6 +14,7 @@ import BatchesSelectionList from "@features/panels/production/batches/selection/
 
 export interface IBatchesStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
+    selectedBatchCompositionId?: number | null;
 }
 
 export interface IBatchesStoreFilter {

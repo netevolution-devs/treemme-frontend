@@ -13,6 +13,7 @@ interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledF
     max?: number;
     startAdornment?: ReactNode;
     deactivated?: boolean;
+    enforceStep?: boolean;
 }
 
 const NumberFieldControlled = <TFieldValues extends FieldValues>({
@@ -25,9 +26,10 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                                                      maxWidth = '100%',
                                                                      min = 0,
                                                                      max,
-                                                                     startAdornment,
-                                                                     deactivated = false,
-                                                                     rules: propRules,
+                                                                      startAdornment,
+                                                                      deactivated = false,
+                                                                      enforceStep = false,
+                                                                      rules: propRules,
                                                                  }: NumberFieldProps<TFieldValues>) => {
     const { t } = useTranslation(["common"]);
     const { control, setValue, getValues, formState: { disabled } } = useFormContext<TFieldValues>();
@@ -102,6 +104,9 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                 if (!isNaN(num)) {
                                     if (num < min) num = min;
                                     if (max !== undefined && num > max) num = max;
+                                    if (enforceStep && step) {
+                                        num = Math.round(num / step) * step;
+                                    }
                                     onChange(toFixedString(num));
                                 }
                             } else if (displayValue === "-") {
@@ -143,8 +148,8 @@ const NumberFieldControlled = <TFieldValues extends FieldValues>({
                                 ) : undefined,
                                 endAdornment: max !== undefined ? (
                                     <InputAdornment position="end">
-                                        <Typography color="textSecondary">
-                                            / {max}
+                                        <Typography color={disabled || deactivated ? 'textDisabled' : 'textSecondary'}>
+                                            /{max}
                                         </Typography>
                                     </InputAdornment>
                                 ) : undefined,

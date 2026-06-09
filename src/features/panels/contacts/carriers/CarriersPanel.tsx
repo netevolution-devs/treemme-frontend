@@ -21,7 +21,7 @@ const CarriersPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
             initialState={{uiState: initialUiState}}
             listComponent={<CarriersList/>}
         >
-            <CarriersForm/>
+            <CarriersForm {...props.params}/>
         </GenericPanel>
     )
 }

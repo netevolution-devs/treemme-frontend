@@ -14,6 +14,7 @@ export interface IBatchDataStoreParams {
     batchId: number;
     batchDataId: number;
     panelId: string;
+    disableControls?: boolean;
 }
 
 const BatchDataPanel = (props: IDockviewPanelProps<ICustomPanelProps<IBatchDataStoreParams>>) => {

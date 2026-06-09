@@ -1,4 +1,28 @@
 {
+  "batches": {
+    "tabs": {
+      "batch": "Lotto",
+      "movements": "Movimenti",
+      "chronology": "Cronologia",
+      "costs": "Costi",
+      "sales": "Vendite"
+    },
+    "costs": {
+      "date": "Data",
+      "type": "Tipo",
+      "amount": "Importo",
+      "note": "Note"
+    },
+    "sales": {
+      "ddt_date": "Data DDT",
+      "ddt_number": "Numero DDT",
+      "client": "Cliente",
+      "pieces": "Pezzi",
+      "quantity": "Quantità",
+      "total_value": "Valore totale",
+      "note": "Note"
+    }
+  },
   "subcontractor": {
     "create": {
       "title": "Inserisci nuovo terzista",
@@ -267,6 +291,8 @@
       "check_date": "Data controllo",
       "check_user": "Utente controllo",
       "check_note": "Note controllo",
+      "calculate_half_pieces": "Dividi",
+      "half_pieces_count": "Mezzi",
       "rework": "Rinverdimento",
       "split": "Spaccatura",
       "selection": "Scelta",
@@ -312,7 +338,7 @@
         "currency": "Valuta",
         "weights": "Pesi",
         "payment_and_delivery": "Pagamento e consegna",
-        "port": "Porto",
+        "port": "Trasporto",
         "costs": "Costi",
         "type": "Tipo",
         "date": "Data",
@@ -348,7 +374,9 @@
     "date": "Data",
     "reason": "Motivo",
     "piece": "Pezzi",
-    "movement_note": "Note movimento"
+    "movement_note": "Note movimento",
+    "ddt_number": "Numero DDT",
+    "ddt_date": "Data DDT"
   },
   "orders": {
     "shipping-carrier": "Trasportatore",
@@ -386,15 +414,16 @@
       "product": "Prodotto",
       "measurement_unit": "Unità di misura",
       "quantity": "Quantità",
+      "available_quantity": "Quantità disponibile",
       "tolerance_quantity_percentage": "Tolleranza %",
       "delivery_date_request": "Data richiesta",
       "delivery_date_confirmed": "Data confermata",
       "currency": "Valuta",
-      "currency_price": "Prezzo divisa",
+      "currency_price": "Prezzo",
       "currency_exchange": "Cambio in €",
-      "total_currency_price": "Totale valuta estera",
-      "price": "Prezzo",
-      "total_price": "Totale in €",
+      "total_currency_price": "Prezzo totale",
+      "price": "Prezzo €",
+      "total_price": "Prezzo totale €",
       "agent_percentage_row": "Provv. riga %",
       "weight": "Peso",
       "shipment_schedule": "Settimana spedizione",
@@ -505,7 +534,9 @@
       "half_piece": "Mezze",
       "whole_piece": "Intere",
       "row_note": "Note riga",
-      "return": "Rientra lotto"
+      "return": "Rientra lotto",
+      "massive_return": "Rientro massivo",
+      "confirm_return": "Conferma rientro"
     }
   },
   "warehouse": {

@@ -45,12 +45,15 @@ import ArticleInternalColorsPanel from "@features/panels/products/article-intern
 import ArticlePrintsPanel from "@features/panels/products/article-prints/ArticlePrintsPanel";
 import PalletsPanel from "@features/panels/warehouse/pallets/PalletsPanel";
 import BatchDataPanel from "@features/panels/production/batches/batch-data/BatchDataPanel";
+import BatchCompositionPanel from "@features/panels/production/batches/composition/BatchCompositionPanel";
 import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
 import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
 import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
 import ExternalMovementsPanel from "@features/panels/analysis/external-movements/ExternalMovementsPanel";
 import CarriersPanel from "@features/panels/contacts/carriers/CarriersPanel";
+import BatchesLotsPanel from "@features/panels/analysis/batchesLots/BatchesLotsPanel";
+import MovementsPanel from "@features/panels/warehouse/movements/MovementsPanel";
 
 export type TPanelKind =
     | 'contactsAgents'
@@ -98,12 +101,15 @@ export type TPanelKind =
     | 'articlePrints'
     | 'pallets'
     | 'batchData'
+    | 'batchComposition'
     | 'searchOrderRows'
     | 'contactsAddress'
     | 'contactsDetail'
     | 'sales'
     | 'externalMovements'
     | 'carriers'
+    | 'batchesLots'
+    | 'movements'
     | 'not-implemented'
     | 'dialog'; // special panel for dialogs
 
@@ -148,12 +154,14 @@ export const PANEL_REGISTRY: DockviewComponents = {
     // warehouse
     lotsBatches:                () => <LotsBatchesPanel />,
     pallets:                    (props) => <PalletsPanel {...props}/>,
+    movements:                  () => <MovementsPanel/>,
     // production
     batches:                    (props) => <BatchesPanel {...props}/>,
     machinery:                  (props) => <MachineryPanel {...props}/>,
     processes:                  () => <ProcessesPanel />,
     workings:                   (props) => <WorkingsPanel {...props}/>,
     batchData:                  (props) => <BatchDataPanel {...props}/>,
+    batchComposition:           (props) => <BatchCompositionPanel {...props}/>,
     // ddt
     deliveryNotes:              (props) => <DeliveryNotesPanel {...props}/>,
     deliveryNotesRows:          (props) => <DeliveryNotesRowsPanel {...props}/>,
@@ -166,6 +174,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     // analysis
     sales:                      () => <SalesPanel/>,
     externalMovements:          () => <ExternalMovementsPanel />,
+    batchesLots:                () => <BatchesLotsPanel />,
     // system
     "users":                    (props) => <UsersPanel {...props}/>,
     "user-access-management":   () => <UserAccessPanel />,

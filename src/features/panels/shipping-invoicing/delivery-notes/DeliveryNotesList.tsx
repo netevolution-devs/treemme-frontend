@@ -57,8 +57,8 @@ const DeliveryNotesList = () => {
             header: t("shipping.reason"),
         },
         {
-            accessorKey: "subcontractor.name",
-            header: t("shipping.subcontractor"),
+            header: t("shipping.subcontractor_clients"),
+            Cell: ({row}) => row.original.subcontractor?.name as string || row.original.client?.name as string
         },
         {
             accessorKey: "ddt_date",

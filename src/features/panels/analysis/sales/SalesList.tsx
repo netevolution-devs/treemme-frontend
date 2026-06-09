@@ -1,6 +1,6 @@
 import useGetDDTRowSold, {type IDDTRowSold} from "@features/panels/analysis/sales/api/useGetDDTRowSold";
 import GenericList from "@features/panels/shared/GenericList";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import {useTranslation} from "react-i18next";
 import dayjs from "dayjs";
@@ -26,6 +26,12 @@ const SalesList = () => {
     const filterClientId = useStore(state => state.filters.filterClientId)
     const filterBatchCode = useStore(state => state.filters.filterBatchCode)
     const setFilters = useStore(state => state.setFilters)
+
+    const setTodayDate = () => setFilters({filterStartDate: dayjs(Date()).format("YYYY-MM-DD")});
+
+    useEffect(() => {
+        setTodayDate();
+    }, []);
 
     const queryParams = useMemo(() => cleanFilters(
         {

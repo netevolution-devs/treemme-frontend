@@ -168,7 +168,11 @@ export const MenuEntries: IMenuEntry[] = [
         icon: "WAREHOUSE",
         permissionCheck: {resource: "magazzino", action: "get"},
         subMenu: [
-            // {i18nKey: "menu.warehouse.movements"},
+            {
+                i18nKey: "menu.warehouse.movements",
+                component: "movements",
+                permissionCheck: {resource: "magazzino - movimenti", action: "get"}
+            },
             // {i18nKey: "menu.warehouse.api-types"},
             {
                 i18nKey: "menu.warehouse.lots-batches",
@@ -279,7 +283,7 @@ export const MenuEntries: IMenuEntry[] = [
             {i18nKey: "menu.analysis.sales", component: "sales" },
             {i18nKey: "menu.analysis.external-movements" , component: "externalMovements" },
             // {i18nKey: "menu.analysis.costs-revenues"},
-            // {i18nKey: "menu.analysis.batches-lots"},
+            {i18nKey: "menu.analysis.batches-lots", component: "batchesLots" },
             // {i18nKey: "menu.analysis.subcontracting"},
             // {i18nKey: "menu.analysis.phone-traffic"},
             // {
