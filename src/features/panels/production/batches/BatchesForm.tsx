@@ -309,7 +309,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                                 precision={0}
                                 required
                             />
-                            {selectedBatchId && isTF && (
+                            {selectedBatchId && isTF && batchItem?.half_pieces_count && batchItem?.half_pieces_count > 0 && (
                                 <TextFieldValue
                                     label={t("production.batch.half_pieces_count")}
                                     value={batchItem?.half_pieces_count ?? 0}
