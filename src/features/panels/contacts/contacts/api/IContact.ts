@@ -26,7 +26,7 @@ export interface IContact {
     contact_subcontractors: { subcontractor: IContact }[];
     agent_clients: { contact: IContact }[];
     subcontractor_suppliers: { contact: IContact }[];
-    contact_processings: { processing: IWorking }[];
+    processings: IWorking[];
     payment: IPayment;
     shipment_condition: IShipmentCondition;
 }

@@ -91,7 +91,7 @@ const ContactsProcessingsFormFields = ({selectedContactId}: IContactsProcessings
     const {t} = useTranslation(["form"]);
 
     const {data: client} = contactsApi.useGetDetail(selectedContactId);
-    const assignedProcessingIds = client?.contact_processings?.map(x => x.processing.id) ?? [];
+    const assignedProcessingIds = client?.processings?.map(x => x.id) ?? [];
 
     const {data: allProcessings = []} = workingApi.useGetList();
     const filteredProcessings = allProcessings.filter(p =>

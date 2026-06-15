@@ -29,7 +29,7 @@ const ContactsProcessingsList = () => {
     const {add: addSelectPanel} = useCallablePanel();
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
-    const processings = contact?.contact_processings?.map((x) => x.processing).filter(Boolean) || [];
+    const processings = contact?.processings?.map((x) => x).filter(Boolean) || [];
 
     const {mutateAsync: deleteProcessing} = useRemoveProcessingFromContact(selectedContactId as number);
 
