@@ -108,11 +108,11 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
     ], [t, isTinturaORifinizione]);
 
     return (
-        <Box>
+        <Box sx={{mb: 2}}>
             <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
             <GenericList<IBatchComposition>
             disableBorder
-            minHeight={"265px"}
+            minHeight={"238px"}
             columns={columns}
             data={batchCompositions}
             isLoading={isLoading}
