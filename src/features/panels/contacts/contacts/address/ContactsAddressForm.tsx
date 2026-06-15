@@ -128,7 +128,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
                 zip_code: x.zip_code,
                 default_address: x.default_address,
                 different_destination_id: null,
-                selected_contact_id: contactId as number,
+                selected_contact_id: null,
                 selected_contact_address_id: null,
             })}
             create={(payload) => createAddress(buildPayload(payload) as unknown as IContactAddressForm)}
@@ -187,7 +187,6 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestin
 
     return (
         <>
-            <pre>{JSON.stringify({contactId})}</pre>
             <>
                 <Stack gap={1} sx={{mb: 1}}>
                     <TextFieldControlled<IContactAddressForm>
