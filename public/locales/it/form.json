@@ -536,7 +536,8 @@
       "row_note": "Note riga",
       "return": "Rientra lotto",
       "massive_return": "Rientro massivo",
-      "confirm_return": "Conferma rientro"
+      "confirm_return": "Conferma rientro",
+      "close_row": "Chiudi riga ddt"
     }
   },
   "warehouse": {
