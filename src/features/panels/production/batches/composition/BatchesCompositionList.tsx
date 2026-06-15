@@ -28,8 +28,10 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
 
     const {add: addSelectPanel} = useCallablePanel();
 
-    const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId as number);
-    const compositions = batch?.batch_compositions ?? [];
+    const {data: batch, isLoading: isLoadingBatch, isFetching: isFetchingBatch} = batchApi.useGetDetail(selectedBatchId as number);
+    const {data: batchCompositions = [], isLoading: isLoadingComposition, isFetching: isFetchingComposition} = batchApi.useGetBatchCompositionDetail(selectedBatchId as number);
+    const isLoading = isLoadingBatch || isLoadingComposition;
+    const isFetching = isFetchingBatch || isFetchingComposition;
 
     const isTinturaORifinizione = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
 
@@ -95,7 +97,7 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
             disableBorder
             minHeight={"265px"}
             columns={columns}
-            data={compositions}
+            data={batchCompositions}
             isLoading={isLoading}
             isFetching={isFetching}
             selectedId={selectedBatchCompositionId}

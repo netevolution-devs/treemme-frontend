@@ -5,6 +5,7 @@ import useApi from "@api/useApi";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
 import type {IBatchDetailReport} from "@features/panels/analysis/batchesLots/api/IBatchDetailReport";
+import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
 
 export interface IBatchesPayload extends Omit<IBatch, 'id'
     | 'leather'
@@ -38,6 +39,17 @@ export const batchApi = {
         baseEndpoint: "/batch",
         queryKey: "BATCH"
     }),
+    useGetBatchCompositionDetail: (batch_id: number) => {
+        const {get} = useApi();
+        return useQuery({
+            queryKey: ["BATCH", "COMPOSITION", batch_id],
+            queryFn: async () => {
+                const response = await get<IBatchComposition[]>(`/batch/${batch_id}/batch-composition`);
+                return response.data.data;
+            },
+            enabled: !!batch_id,
+        });
+    },
     useGetBatchReport: (batch_id: number) => {
         const {get} = useApi();
         return useQuery({
