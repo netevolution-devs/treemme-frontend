@@ -24,7 +24,10 @@ const ContactsAddressList = () => {
     const {add: addSelectPanel} = useCallablePanel();
 
     const {usePut} = contactsAddressApi;
-    const {mutateAsync: updateAddress, isPending} = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', String(selectedContactId)]});
+    const {
+        mutateAsync: updateAddress,
+        isPending
+    } = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', String(selectedContactId)]});
 
     const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
 
@@ -62,7 +65,7 @@ const ContactsAddressList = () => {
             header: t("contacts.address.default"),
             size: 100,
             Cell: ({row}) => (
-                <Box sx={{minHeight: 45, display: "flex", alignItems: "center" }}>
+                <Box sx={{minHeight: 45, display: "flex", alignItems: "center"}}>
                     {((isPending || isFetching) && row.original.id === selectedAddressId) ? (
                         <>
                             <CircularProgress size={20} color={"secondary"} sx={{ml: 1.2}}/>
@@ -122,32 +125,32 @@ const ContactsAddressList = () => {
 
     return (
         <GenericList<IContactAddress>
-                disableBorder
-                data={contact?.contact_addresses || []}
-                isLoading={isLoading}
-                isFetching={isFetching}
-                columns={columns}
-                selectedId={selectedAddressId}
-                onRowSelect={(id) => setUIState({selectedAddressId: id})}
-                onRowDoubleClick={() => handleOpenUpdateDialog(selectedAddressId as number)}
-                additionalOptions={{
-                    enableTopToolbar: true,
-                    renderTopToolbar:
-                        <ListToolbar
-                            label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
-                            buttons={[
-                                <CustomButton
-                                    isEnable={!!selectedContactId}
-                                    label={t("contacts.addresses-add-btn")}
-                                    color={"primary"}
-                                    icon={<PostAddIcon/>}
-                                    onClick={() => handleOpenCreateDialog()}
-                                />
-                            ]}
-                        />
-                }}
-            />
-        )
-    }
+            disableBorder
+            data={contact?.contact_addresses || []}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            columns={columns}
+            selectedId={selectedAddressId}
+            onRowSelect={(id) => setUIState({selectedAddressId: id})}
+            onRowDoubleClick={() => handleOpenUpdateDialog(selectedAddressId as number)}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar:
+                    <ListToolbar
+                        label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
+                        buttons={[
+                            <CustomButton
+                                isEnable={!!selectedContactId}
+                                label={t("contacts.addresses-add-btn")}
+                                color={"primary"}
+                                icon={<PostAddIcon/>}
+                                onClick={() => handleOpenCreateDialog()}
+                            />
+                        ]}
+                    />
+            }}
+        />
+    )
+}
 
 export default ContactsAddressList;

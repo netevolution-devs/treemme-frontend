@@ -49,15 +49,24 @@ const ContactsPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsSto
             }
         >
             <>
-                <Box sx={{display: 'flex', gap: 1, width: '100%'}}>
-                    <ContactsForm {...props.params}/>
-                    <ContactsContent/>
-                </Box>
                 <Box sx={{
                     display: 'flex',
                     flexDirection: {xs: 'column', lg: 'row'},
-                    flexWrap: 'wrap',
-                    gap: 0.5,
+                    gap: 2,
+                    width: '100%'
+                }}>
+                    <Box sx={{flex: 1, minWidth: 0}}>
+                        <ContactsForm {...props.params}/>
+                    </Box>
+                    <Box sx={{flex: 1, minWidth: 0}}>
+                        <ContactsContent/>
+                    </Box>
+                </Box>
+
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: {xs: 'column', lg: 'row'},
+                    gap: 1.5,
                     width: '100%',
                     mb: 1.5
                 }}>
