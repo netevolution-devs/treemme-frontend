@@ -128,7 +128,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
                 zip_code: x.zip_code,
                 default_address: x.default_address,
                 different_destination_id: null,
-                selected_contact_id: null,
+                selected_contact_id: extra?.contact_id as number,
                 selected_contact_address_id: null,
             })}
             create={(payload) => createAddress(buildPayload(payload) as unknown as IContactAddressForm)}
@@ -187,73 +187,73 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestin
 
     return (
         <>
-                <>
-                    <Stack gap={1} sx={{mb: 1}}>
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_name"
-                            label={t("contacts.address.name")}
-                            required={!disabledFormMode}
-                            deactivated={disabledFormMode}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address"
-                            label={t("contacts.address.address-1")}
-                            required={!disabledFormMode}
-                            deactivated={disabledFormMode}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_2"
-                            label={t("contacts.address.address-2")}
-                            deactivated={disabledFormMode}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_3"
-                            label={t("contacts.address.address-3")}
-                            deactivated={disabledFormMode}
-                        />
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_4"
-                            label={t("contacts.address.address-4")}
-                            deactivated={disabledFormMode}
-                        />
-                    </Stack>
-                    <Box sx={{display: 'flex', gap: 1}}>
-                        <TextFieldControlled<IContactAddressForm>
-                            name={"zip_code"}
-                            label={t("contacts.address.cap")}
-                            deactivated={disabledFormMode}
-                        />
-                        <SelectFieldControlled<IContactAddressForm>
-                            name={"nation_id"}
-                            label={t("nations.name")}
-                            options={nations?.map((x) => ({
-                                value: x.id,
-                                label: x.name
-                            })) || []}
-                            onNoOptionsMatch={(input) => {
-                                addSelectPanel({
-                                    initialValue: input,
-                                    menu: {
-                                        component: "nations",
-                                        i18nKey: "menu.contacts.nations"
-                                    }
-                                })
-                            }}
-                            required={!disabledFormMode}
-                            deactivated={disabledFormMode}
-                        />
-                    </Box>
-                    <FlagCheckBoxFieldControlled<IContactAddressForm>
-                        name="default_address"
-                        label={t("contacts.address.default")}
-                        disabled={disabledFormMode}
+            <>
+                <Stack gap={1} sx={{mb: 1}}>
+                    <TextFieldControlled<IContactAddressForm>
+                        name="address_name"
+                        label={t("contacts.address.name")}
+                        required={!disabledFormMode}
+                        deactivated={disabledFormMode}
                     />
-                </>
+                    <TextFieldControlled<IContactAddressForm>
+                        name="address"
+                        label={t("contacts.address.address-1")}
+                        required={!disabledFormMode}
+                        deactivated={disabledFormMode}
+                    />
+                    <TextFieldControlled<IContactAddressForm>
+                        name="address_2"
+                        label={t("contacts.address.address-2")}
+                        deactivated={disabledFormMode}
+                    />
+                    <TextFieldControlled<IContactAddressForm>
+                        name="address_3"
+                        label={t("contacts.address.address-3")}
+                        deactivated={disabledFormMode}
+                    />
+                    <TextFieldControlled<IContactAddressForm>
+                        name="address_4"
+                        label={t("contacts.address.address-4")}
+                        deactivated={disabledFormMode}
+                    />
+                </Stack>
+                <Box sx={{display: 'flex', gap: 1}}>
+                    <TextFieldControlled<IContactAddressForm>
+                        name={"zip_code"}
+                        label={t("contacts.address.cap")}
+                        deactivated={disabledFormMode}
+                    />
+                    <SelectFieldControlled<IContactAddressForm>
+                        name={"nation_id"}
+                        label={t("nations.name")}
+                        options={nations?.map((x) => ({
+                            value: x.id,
+                            label: x.name
+                        })) || []}
+                        onNoOptionsMatch={(input) => {
+                            addSelectPanel({
+                                initialValue: input,
+                                menu: {
+                                    component: "nations",
+                                    i18nKey: "menu.contacts.nations"
+                                }
+                            })
+                        }}
+                        required={!disabledFormMode}
+                        deactivated={disabledFormMode}
+                    />
+                </Box>
+                <FlagCheckBoxFieldControlled<IContactAddressForm>
+                    name="default_address"
+                    label={t("contacts.address.default")}
+                    disabled={disabledFormMode}
+                />
+            </>
             {disabledFormMode && (
                 <>
                     <SelectFieldControlled<IContactAddressForm>
                         name={"selected_contact_id"}
-                        label={t("contacts.address.contact")}
+                        label={"Contatto"}
                         options={otherContacts.map((x) => ({
                             value: x.id,
                             label: x.name
@@ -261,7 +261,7 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestin
                     />
                     <SelectFieldControlled<IContactAddressForm>
                         name={"selected_contact_address_id"}
-                        label={t("contacts.address.contact")}
+                        label={"Indirizzo del contatto da associare"}
                         options={contactAddresses.map((x) => ({
                             value: x.id,
                             label: `${x.address_name} - ${filterAddressString({addressLabels: [x.address, x.address_2, x.address_3, x.address_4]})} - ${x.zip_code} - ${x.nation?.name || ''}`

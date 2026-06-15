@@ -70,6 +70,10 @@ const ContactsAddressList = () => {
             header: t("nations.name")
         },
         {
+            header: "Destinazione diversa",
+            Cell: ({row}) => row.original.different_destination ? row.original.contact.name : "",
+        },
+        {
             accessorKey: "default_address",
             header: t("contacts.address.default"),
             size: 100,
@@ -97,10 +101,6 @@ const ContactsAddressList = () => {
                     )}
                 </Box>
             )
-        },
-        {
-            header: "Destinazione diversa",
-            Cell: ({row}) => row.original.different_destination ? row.original.contact.name : "",
         }
     ], [t, selectedContactId, updateAddress, isPending, isFetching]);
 
@@ -122,12 +122,15 @@ const ContactsAddressList = () => {
     }
 
     const handleOpenUpdateDialog = (id: number) => {
+        const addr = addresses.find(x => x.id === id);
+
         addSelectPanel({
             initialValue: '',
             extra: {
                 contact_id: selectedContactId,
                 address_id: id,
-                panelId: "updateContactAddress:" + id
+                panelId: "updateContactAddress:" + id,
+                associateContact: !!addr?.different_destination,
             },
             menu: {
                 component: "contactsAddress",
