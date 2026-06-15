@@ -24,12 +24,17 @@ const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder 
     const filteredOptionsRef = useRef<SelectFieldOption[]>(options);
     const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Sync inputValue when external value is cleared (e.g. form reset)
+    // Sync inputValue when external value changes
     useEffect(() => {
         if (value === undefined || value === null) {
             setInputValue("");
+        } else {
+            const option = options.find(o => o.value === value);
+            if (option) {
+                setInputValue(option.label);
+            }
         }
-    }, [value]);
+    }, [value, options]);
 
     // Cleanup debounce timer on unmount
     useEffect(() => {
@@ -45,12 +50,14 @@ const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder 
         onFilterChange(undefined);
     };
 
+    const selectedOption = options.find(o => o.value === value) || null;
+
     return (
         <Autocomplete<SelectFieldOption, false, false, false>
             sx={{ minWidth: 200, width: "100%" }}
             options={options}
             autoHighlight={true}
-            value={null}
+            value={selectedOption}
             inputValue={inputValue}
             filterOptions={(opts, state) => {
                 const filtered = defaultFilterOptions(opts, state);

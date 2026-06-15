@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IBatchesStoreFilter, IBatchesStoreState} from "@features/panels/production/batches/BatchesPanel";
 import {batchApi} from "@features/panels/production/batches/api/batchApi";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
 import type {MRT_ColumnDef, MRT_TableOptions} from "material-react-table";
 import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import GenericList from "@features/panels/shared/GenericList";
@@ -19,9 +19,10 @@ interface BatchesListProps {
     data?: IBatch[];
     minHeight?: string;
     additionalOptions?: Partial<MRT_TableOptions<IBatch>>;
+    preselectedBatchTypeId?: number;
 }
 
-const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions}: BatchesListProps) => {
+const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions, preselectedBatchTypeId}: BatchesListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -32,6 +33,7 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
     const filterBatchCode = useStore(state => state.filters.filterBatchCode);
     const filterYear = useStore(state => state.filters.filterYear);
     const setFilters = useStore(state => state.setFilters);
+
 
     const queryParams = useMemo(() => cleanFilters(
         {
@@ -45,6 +47,12 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
     const {data: batchTypes = []} = batchTypeApi.useGetList();
 
     const batchesFetched = data ? data : batches;
+
+    useEffect(() => {
+        if (preselectedBatchTypeId) {
+            setFilters({filterBatchTypeId: preselectedBatchTypeId});
+        }
+    }, [preselectedBatchTypeId])
 
     const columns = useMemo<MRT_ColumnDef<IBatch>[]>(() => [
         {
