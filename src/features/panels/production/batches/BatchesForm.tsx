@@ -59,6 +59,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_data'
     | 'half_pieces_count'
     | 'stock_half_pieces'
+    | 'compensation_waste'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
