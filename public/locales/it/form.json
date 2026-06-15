@@ -130,6 +130,10 @@
       "list": "Lista terzisti",
       "add": "Aggiungi terzista"
     },
+    "processings": {
+      "list": "Lista lavorazioni",
+      "add": "Aggiungi lavorazione"
+    },
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",

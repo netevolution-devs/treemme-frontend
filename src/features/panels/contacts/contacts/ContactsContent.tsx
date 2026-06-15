@@ -7,6 +7,7 @@ import type {IContactsStoreState} from "@features/panels/contacts/contacts/Conta
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList";
 import ContactsSupplierList from "@features/panels/contacts/contacts/subcontractors/ContactsSupplierList";
+import ContactsProcessingsList from "@features/panels/contacts/contacts/processings/ContactsProcessingsList";
 
 const ContactsContent = () => {
     const {useStore} = usePanel<unknown, IContactsStoreState>();
@@ -43,6 +44,11 @@ const ContactsContent = () => {
                     {contact?.subcontractor && (
                         <Box sx={{width: '100%', height: '100%'}}>
                             <ContactsSupplierList/>
+                        </Box>
+                    )}
+                    {contact?.subcontractor && (
+                        <Box sx={{width: '100%', height: '100%'}}>
+                            <ContactsProcessingsList/>
                         </Box>
                     )}
                 </Stack>
