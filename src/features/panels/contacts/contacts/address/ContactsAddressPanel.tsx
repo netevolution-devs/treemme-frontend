@@ -13,6 +13,7 @@ export interface IContactsAddressStoreParams {
     contact_id?: number;
     address_id?: number;
     panelId?: string;
+    associateContact?: boolean;
 }
 
 const ContactsAddressPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsAddressStoreParams>>) => {

@@ -29,4 +29,5 @@ export interface IContact {
     processings: IWorking[];
     payment: IPayment;
     shipment_condition: IShipmentCondition;
+    different_destination_id?: number | null;
 }

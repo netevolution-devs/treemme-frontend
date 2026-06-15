@@ -110,6 +110,7 @@
     "carrier-name": "Trasportatore",
     "details-add-btn": "Nuovo recapito",
     "addresses-add-btn": "Nuovo indirizzo",
+    "addresses-add-btn-existing": "Associa indirizzo esistente",
     "payment": "Pagamento predefinito",
     "select": "Tipologia",
     "client": "Cliente",

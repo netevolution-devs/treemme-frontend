@@ -1,4 +1,5 @@
 import type {INation} from "@features/panels/contacts/nations/api/INation";
+import type {IContact} from "@features/panels/contacts/contacts/api/IContact";
 
 export interface IContactAddress {
     id: number;
@@ -13,4 +14,6 @@ export interface IContactAddress {
     default_address: boolean;
     // contact_id?: number;
     // weight?: number;
+    different_destination: IContactAddress | null;
+    contact: IContact;
 }

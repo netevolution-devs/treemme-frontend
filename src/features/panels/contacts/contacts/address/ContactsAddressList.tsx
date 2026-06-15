@@ -12,6 +12,7 @@ import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
 import {Box, Checkbox, CircularProgress, Typography} from "@mui/material";
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import FormatListBulletedAddIcon from '@mui/icons-material/FormatListBulletedAdd';
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -27,9 +28,17 @@ const ContactsAddressList = () => {
     const {
         mutateAsync: updateAddress,
         isPending
-    } = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', String(selectedContactId)]});
+    } = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', 'ADDRESS', String(selectedContactId)]});
 
-    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
+    const {data: contactAddresses = [], isLoading, isFetching} = contactsApi.useGetContactAddressDetail(selectedContactId as number);
+
+    const addresses = useMemo(() => {
+        return contactAddresses.map((addr) => ({
+            ...addr,
+            ...addr.different_destination,
+            different_destination: !!addr.different_destination,
+        })) as unknown as IContactAddress[];
+    }, [contactAddresses])
 
     const columns = useMemo<MRT_ColumnDef<IContactAddress>[]>(() => [
         {
@@ -89,15 +98,20 @@ const ContactsAddressList = () => {
                 </Box>
             )
         },
+        {
+            header: "Destinazione diversa",
+            Cell: ({row}) => row.original.different_destination ? row.original.contact.name : "",
+        }
     ], [t, selectedContactId, updateAddress, isPending, isFetching]);
 
-    const handleOpenCreateDialog = () => {
+    const handleOpenCreateDialog = (associateContact: boolean) => {
         setUIState({selectedAddressId: null});
         addSelectPanel({
             initialValue: '',
             extra: {
                 contact_id: selectedContactId,
-                panelId: "createContactAddress"
+                panelId: "createContactAddress",
+                associateContact
             },
             menu: {
                 component: "contactsAddress",
@@ -126,7 +140,7 @@ const ContactsAddressList = () => {
     return (
         <GenericList<IContactAddress>
             disableBorder
-            data={contact?.contact_addresses || []}
+            data={addresses}
             isLoading={isLoading}
             isFetching={isFetching}
             columns={columns}
@@ -144,7 +158,14 @@ const ContactsAddressList = () => {
                                 label={t("contacts.addresses-add-btn")}
                                 color={"primary"}
                                 icon={<PostAddIcon/>}
-                                onClick={() => handleOpenCreateDialog()}
+                                onClick={() => handleOpenCreateDialog(false)}
+                            />,
+                            <CustomButton
+                                isEnable={!!selectedContactId}
+                                label={t("contacts.addresses-add-btn-existing")}
+                                color={"primary"}
+                                icon={<FormatListBulletedAddIcon/>}
+                                onClick={() => handleOpenCreateDialog(true)}
                             />
                         ]}
                     />
