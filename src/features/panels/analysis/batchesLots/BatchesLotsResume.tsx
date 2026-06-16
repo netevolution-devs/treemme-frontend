@@ -24,25 +24,25 @@ const BatchesLotsResume = () => {
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', gap: 2, mt: 5.5, ml: 1}}>
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <TextFieldValue
-                    label={"Totale Pezzi"}
-                    value={report.total_pieces}
-                    isFilled={true}
-                />
-                <TextFieldValue
-                    label={"Totale Quantità"}
-                    value={report.total_quantity}
-                    isFilled={true}
-                    precision={2}
-                />
-                <TextFieldValue
-                    label={"Totale Quantità (PQ)"}
-                    value={report.total_quantity_ftsq}
-                    isFilled={true}
-                    precision={2}
-                />
-            </Box>
+            {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+            {/*    <TextFieldValue*/}
+            {/*        label={"Totale Pezzi"}*/}
+            {/*        value={report.total_pieces}*/}
+            {/*        isFilled={true}*/}
+            {/*    />*/}
+            {/*    <TextFieldValue*/}
+            {/*        label={"Totale Quantità"}*/}
+            {/*        value={report.total_quantity}*/}
+            {/*        isFilled={true}*/}
+            {/*        precision={2}*/}
+            {/*    />*/}
+            {/*    <TextFieldValue*/}
+            {/*        label={"Totale Quantità (PQ)"}*/}
+            {/*        value={report.total_quantity_ftsq}*/}
+            {/*        isFilled={true}*/}
+            {/*        precision={2}*/}
+            {/*    />*/}
+            {/*</Box>*/}
 
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <TextFieldValue
