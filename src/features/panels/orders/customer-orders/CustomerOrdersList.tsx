@@ -15,6 +15,8 @@ import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import {PrintButton} from "@features/panels/shared/CustomButton";
+import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
 
 const CustomerOrdersList = () => {
     const {t} = useTranslation(["form"]);
@@ -37,6 +39,8 @@ const CustomerOrdersList = () => {
     const {data: customerOrders = [], isLoading, isFetching} = customerOrderApi.useGetList({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
+    const {mutateAsync: getProductionReport, isPending} = useGetProductionReportPdf();
+    const canPrint = customerOrders.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<ICustomerOrder>[]>(() => [
         {
@@ -82,6 +86,15 @@ const CustomerOrdersList = () => {
                                 onFilterChange={(value) => setFilters({filterOrderClientId: value as number})}
                             />,
                         ]}
+                        buttons={[
+                            <PrintButton
+                                canPrint={canPrint}
+                                isPending={isPending}
+                                onClick={() => getProductionReport()}
+                            />
+                        ]}
+                        alignButtons={"flex-end"}
+                        sx={{mr: 1}}
                     />
                 )
             }}
