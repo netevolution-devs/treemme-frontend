@@ -74,6 +74,8 @@ const BatchCompositionForm = ({
         }
     }, [floatingPanelUUID, setFormState]);
 
+    const isEditMode = floatingPanelUUID.includes("update");
+
     const {data: batchesAvailability = []} = useGetBatchSplitAvailability();
 
     const batches = useMemo(() => {
@@ -150,17 +152,17 @@ const BatchCompositionForm = ({
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             validateBeforeSave={(v) =>
-                v.father_batch_piece !== null && v.father_batch_piece > 0 &&
+                v.father_batch_piece !== null &&
                 !!v.batch_selection_id
             }
             renderFields={() => (
-                <BatchCompositionFormFields batches={batches}/>
+                <BatchCompositionFormFields batches={batches} isEditMode={isEditMode}/>
             )}
         />
     );
 };
 
-const BatchCompositionFormFields = ({batches}: {batches: IBatch[]}) => {
+const BatchCompositionFormFields = ({batches, isEditMode}: {batches: IBatch[], isEditMode: boolean}) => {
     const {t} = useTranslation(["form"]);
 
     const watchedFatherBatchId = useWatch<IBatchCompositionForm>({name: "father_batch_id"});
@@ -183,6 +185,7 @@ const BatchCompositionFormFields = ({batches}: {batches: IBatch[]}) => {
                     label: `${b.batch_code} - ${b.leather?.name || b.article?.name || ''}`
                 }))}
                 required
+                deactivated={isEditMode}
             />
             <SelectFieldControlled<IBatchCompositionForm>
                 name="batch_selection_id"
@@ -192,15 +195,15 @@ const BatchCompositionFormFields = ({batches}: {batches: IBatch[]}) => {
                     label: `${b.selection?.name || ''} - ${b.thickness?.name || ''} - ${b.stock_pieces} ${t("production.batch.pieces-string")} ${b.note ? '- ' + b.note : ""}`
                 }))}
                 required
-                deactivated={!watchedFatherBatchId}
+                deactivated={!watchedFatherBatchId || isEditMode}
             />
             <NumberFieldControlled<IBatchCompositionForm>
                 name="father_batch_piece"
                 label={t("production.batch.pieces")}
                 required
                 precision={0}
-                max={batchSelections.find(b => b.id === watchedSelectionId)?.stock_pieces as number || 0}
-                deactivated={!watchedSelectionId}
+                max={!isEditMode ? batchSelections.find(b => b.id === watchedSelectionId)?.stock_pieces as number : undefined}
+                deactivated={!watchedSelectionId || isEditMode}
             />
             <TextFieldControlled<IBatchCompositionForm>
                 name="composition_note"

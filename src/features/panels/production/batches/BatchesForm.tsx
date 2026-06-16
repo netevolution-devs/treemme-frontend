@@ -59,6 +59,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     | 'batch_data'
     | 'half_pieces_count'
     | 'stock_half_pieces'
+    | 'compensation_waste'
 > & {
     leather_id: number | null;
     batch_type_id: number | null;
@@ -309,7 +310,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                                 precision={0}
                                 required
                             />
-                            {selectedBatchId && isTF && (
+                            {selectedBatchId && isTF && batchItem?.half_pieces_count && batchItem?.half_pieces_count > 0 && (
                                 <TextFieldValue
                                     label={t("production.batch.half_pieces_count")}
                                     value={batchItem?.half_pieces_count ?? 0}

@@ -38,6 +38,7 @@ export type IContactForm = Omit<IContact, 'id'
     | 'payment'
     | 'shipment_condition'
     | 'subcontractor_suppliers'
+    | 'processings'
 > & {
     payment_id: number | null;
     shipment_condition_id: number | null;

@@ -9,6 +9,7 @@ interface ISubcontractingTransferPayload {
     note: string;
     processing_ids: string | null;
     ddt_number: string;
+    closed?: boolean;
 }
 
 const usePostSubcontractingTransfer = () => {
@@ -25,6 +26,7 @@ const usePostSubcontractingTransfer = () => {
                 row_note: payload.note,
                 processing_ids: payload.processing_ids,
                 ddt_number: payload.ddt_number,
+                ...(payload.closed !== undefined && { closed: payload.closed }),
             } as never);
             return response.data.data;
         },

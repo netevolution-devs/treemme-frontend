@@ -149,5 +149,10 @@
     "last_rate": "Last rate",
     "change_value": "Change",
     "date": "Date"
+  },
+  "shipping": {
+    "ddt_rows": {
+      "close_row": "Close DDT row"
+    }
   }
 }

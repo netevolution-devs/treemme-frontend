@@ -13,7 +13,8 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                                                                    showHelperRow = false,
                                                                    maxLength = 255,
                                                                    showUpperCase = true,
-                                                               }: ControlledFieldProps<TFieldValues> & {showUpperCase?: boolean}) => {
+                                                                   deactivated = false,
+                                                               }: ControlledFieldProps<TFieldValues> & {showUpperCase?: boolean, deactivated?: boolean}) => {
     const {t} = useTranslation(["common"])
     const {
         control,
@@ -71,7 +72,7 @@ const TextFieldControlled = <TFieldValues extends FieldValues>({
                             ...TextFieldProps?.slotProps
                         }}
                         sx={{mb: 1.2}}
-                        disabled={disabled}
+                        disabled={disabled || deactivated}
                     />
                 )
             }}

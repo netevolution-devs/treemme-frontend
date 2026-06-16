@@ -7,6 +7,11 @@ export const getMrtTableHeadCellProps = (): MUITableCellProps => ({
         paddingTop: 0.5,
         paddingBottom: 0.5,
         fontWeight: 600,
-        border: 'none',
-    }
+        borderBottom: 'none',
+        borderLeft: '1px solid',
+        borderLeftColor: 'grey.400',
+        '&:first-of-type': {
+            borderLeft: 'none',
+        },
+    },
 })

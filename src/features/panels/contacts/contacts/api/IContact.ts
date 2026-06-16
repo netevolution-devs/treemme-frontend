@@ -5,6 +5,7 @@ import type {IPayment} from "@features/panels/commercial/payment-types/api/IPaym
 import type {
     IShipmentCondition
 } from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
+import type {IWorking} from "@features/panels/production/workings/api/IWorking";
 
 export interface IContact {
     id: number;
@@ -25,6 +26,8 @@ export interface IContact {
     contact_subcontractors: { subcontractor: IContact }[];
     agent_clients: { contact: IContact }[];
     subcontractor_suppliers: { contact: IContact }[];
+    processings: IWorking[];
     payment: IPayment;
     shipment_condition: IShipmentCondition;
+    different_destination_id?: number | null;
 }

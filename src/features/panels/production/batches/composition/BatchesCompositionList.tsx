@@ -5,13 +5,18 @@ import type {IBatchesStoreState} from "@features/panels/production/batches/Batch
 import {batchApi} from "@features/panels/production/batches/api/batchApi";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
-import {Typography} from "@mui/material";
+import {Box, MenuItem, Typography} from "@mui/material";
 import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
 import dayjs from "dayjs";
 import useCallablePanel from "@ui/panel/useCallablePanel";
+import {openDialog} from "@ui/dialog/dialogHelper";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteConfirmDialog from "@ui/dialog/confirm/DeleteConfirmDialog";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import {batchCompositionApi} from "@features/panels/production/batches/composition/api/batchCompositionApi";
 
 interface ICompositionDialogProps {
     customBatchId?: number;
@@ -28,10 +33,22 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
 
     const {add: addSelectPanel} = useCallablePanel();
 
-    const {data: batch, isLoading, isFetching} = batchApi.useGetDetail(selectedBatchId as number);
-    const compositions = batch?.batch_compositions ?? [];
+    const {data: batch, isLoading: isLoadingBatch, isFetching: isFetchingBatch} = batchApi.useGetDetail(selectedBatchId as number);
+    const {data: batchCompositions = [], isLoading: isLoadingComposition, isFetching: isFetchingComposition} = batchApi.useGetBatchCompositionDetail(selectedBatchId as number);
+    const isLoading = isLoadingBatch || isLoadingComposition;
+    const isFetching = isFetchingBatch || isFetchingComposition;
 
     const isTinturaORifinizione = batch?.batch_type.name === "Tintura" || batch?.batch_type.name === "Rifinizione";
+
+    const {mutateAsync: deleteComposition} = batchCompositionApi.useDelete({
+        invalidateQueries: ['BATCH', 'LIST', 'DETAIL', String(selectedBatchId)]
+    });
+
+    const deleteConfirmDialogRef = useRef<IDialogActions | null>(null);
+
+    const handleConfirmDelete = async () => {
+        await deleteComposition(selectedBatchCompositionId as number);
+    }
 
     const handleOpenCreateComposition = () => {
         setUIState({selectedBatchCompositionId: null});
@@ -91,11 +108,13 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
     ], [t, isTinturaORifinizione]);
 
     return (
-        <GenericList<IBatchComposition>
+        <Box sx={{mb: 2}}>
+            <DeleteConfirmDialog ref={deleteConfirmDialogRef} onConfirm={handleConfirmDelete}/>
+            <GenericList<IBatchComposition>
             disableBorder
-            minHeight={"265px"}
+            minHeight={"238px"}
             columns={columns}
-            data={compositions}
+            data={batchCompositions}
             isLoading={isLoading}
             isFetching={isFetching}
             selectedId={selectedBatchCompositionId}
@@ -116,9 +135,21 @@ const BatchesCompositionList = ({customBatchId, enableToolbar = true}: IComposit
                     ]}
                     sx={{mt: 0}}
                     alignButtons={'flex-end'}
-                />
+                />,
+                enableRowActions: true,
+                renderRowActionMenuItems: ({row, closeMenu}) => [
+                    <MenuItem key="delete" onClick={() => {
+                        openDialog(deleteConfirmDialogRef);
+                        setUIState({selectedBatchCompositionId: row.original.id});
+                        closeMenu();
+                    }}>
+                        <DeleteIcon color={"error"}/>
+                        {t("common:button.remove")}
+                    </MenuItem>
+                ],
             }}
         />
+        </Box>
     )
 };
 

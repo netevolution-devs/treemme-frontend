@@ -7,6 +7,7 @@ import type {IContactsStoreState} from "@features/panels/contacts/contacts/Conta
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import ContactsClientsList from "@features/panels/contacts/contacts/agents/ContactsClientsList";
 import ContactsSupplierList from "@features/panels/contacts/contacts/subcontractors/ContactsSupplierList";
+import ContactsProcessingsList from "@features/panels/contacts/contacts/processings/ContactsProcessingsList";
 
 const ContactsContent = () => {
     const {useStore} = usePanel<unknown, IContactsStoreState>();
@@ -14,14 +15,18 @@ const ContactsContent = () => {
 
     const {data: contact} = contactsApi.useGetDetail(selectedContactId as number);
 
+    if (!selectedContactId || !(contact?.client || contact?.supplier || contact?.agent || contact?.subcontractor)) {
+        return null;
+    }
+
     return (
-        <>
-            {(selectedContactId && (contact?.client || contact?.supplier || contact?.agent || contact?.subcontractor)) && (
-                <Stack sx={{width: '100%', gap: 1}}>
+        <Box>
+            <Stack sx={{width: '100%', gap: 1.5}}>
+                {(contact?.client || contact?.supplier) && (
                     <Box sx={{
                         display: 'flex',
                         flexDirection: {xs: 'column', md: 'row'},
-                        gap: 1,
+                        gap: 1.5,
                         width: '100%'
                     }}>
                         {contact?.client && (
@@ -35,19 +40,24 @@ const ContactsContent = () => {
                             </Box>
                         )}
                     </Box>
-                    {contact?.agent && (
-                        <Box sx={{width: '100%', height: '100%'}}>
-                            <ContactsClientsList/>
-                        </Box>
-                    )}
-                    {contact?.subcontractor && (
-                        <Box sx={{width: '100%', height: '100%'}}>
-                            <ContactsSupplierList/>
-                        </Box>
-                    )}
-                </Stack>
-            )}
-        </>
+                )}
+                {contact?.agent && (
+                    <Box sx={{width: '100%', height: '100%'}}>
+                        <ContactsClientsList/>
+                    </Box>
+                )}
+                {contact?.subcontractor && (
+                    <Box sx={{width: '100%', height: '100%'}}>
+                        <ContactsSupplierList/>
+                    </Box>
+                )}
+                {contact?.subcontractor && (
+                    <Box sx={{width: '100%', height: '100%'}}>
+                        <ContactsProcessingsList/>
+                    </Box>
+                )}
+            </Stack>
+        </Box>
     )
 }
 

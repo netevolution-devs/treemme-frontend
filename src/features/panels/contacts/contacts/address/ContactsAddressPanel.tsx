@@ -4,6 +4,7 @@ import GenericPanel from "@features/panels/shared/GenericPanel";
 import type {IDockviewPanelProps} from "dockview";
 import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
 import ContactsAddressForm from "@features/panels/contacts/contacts/address/ContactsAddressForm";
+import type {IContactAddress} from "@features/panels/contacts/contacts/api/contacts-address/IContactAddress";
 
 export interface IContactsAddressStoreState extends IPanelUIState {
     selectedAddressId?: number | null;
@@ -13,6 +14,8 @@ export interface IContactsAddressStoreParams {
     contact_id?: number;
     address_id?: number;
     panelId?: string;
+    ddAddr?: IContactAddress;
+    associateContact?: boolean;
 }
 
 const ContactsAddressPanel = (props: IDockviewPanelProps<ICustomPanelProps<IContactsAddressStoreParams>>) => {

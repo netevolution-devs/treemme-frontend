@@ -235,11 +235,7 @@ const SearchOrderRowsList = () => {
                                     canPrint={canPrint}
                                     isPending={isPending}
                                     onClick={() => getOrderRowPrint({
-                                        params: {
-                                            client_id: queryParams.client_id as number,
-                                            start_date: queryParams.start_date as string,
-                                            end_date: queryParams.end_date as string
-                                        }
+                                        params: queryParams
                                     })}
                                 />
                             ]}

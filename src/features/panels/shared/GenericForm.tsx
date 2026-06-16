@@ -242,7 +242,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "F4" ||
+            if (event.key === "F3" ||
+                event.key === "F4" ||
                 event.key === "F9" ||
                 event.key === "F10" ||
                 event.key === "Escape"
@@ -251,7 +252,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             }
             if (activePanelId !== panelId) return;
 
-            if (selectedId && event.key === "F4") {
+            if (selectedId && (event.key === "F3" || event.key === "F4")) {
                 if (isFormDisabled) {
                     handleEdit();
                 }

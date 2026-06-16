@@ -12,6 +12,7 @@ import ListToolbar from "@features/panels/shared/ListToolbar";
 import CustomButton from "@features/panels/shared/CustomButton";
 import {Box, Checkbox, CircularProgress, Typography} from "@mui/material";
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import FormatListBulletedAddIcon from '@mui/icons-material/FormatListBulletedAdd';
 
 const ContactsAddressList = () => {
     const {t} = useTranslation(["form"]);
@@ -24,9 +25,16 @@ const ContactsAddressList = () => {
     const {add: addSelectPanel} = useCallablePanel();
 
     const {usePut} = contactsAddressApi;
-    const {mutateAsync: updateAddress, isPending} = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', String(selectedContactId)]});
+    const {
+        mutateAsync: updateAddress,
+        isPending
+    } = usePut({invalidateQueries: ['CONTACT', 'CONTACT_ADDRESS', 'DETAIL', 'ADDRESS', String(selectedContactId)]});
 
-    const {data: contact, isLoading, isFetching} = contactsApi.useGetDetail(selectedContactId);
+    const {
+        data: contactAddresses = [],
+        isLoading,
+        isFetching
+    } = contactsApi.useGetContactAddressDetail(selectedContactId as number);
 
     const columns = useMemo<MRT_ColumnDef<IContactAddress>[]>(() => [
         {
@@ -58,43 +66,50 @@ const ContactsAddressList = () => {
             header: t("nations.name")
         },
         {
+            header: "Destinazione diversa",
+            Cell: ({row}) => row.original.different_destination ? row.original.contact.name : "",
+        },
+        {
             accessorKey: "default_address",
             header: t("contacts.address.default"),
             size: 100,
             Cell: ({row}) => (
-                <Box sx={{minHeight: 45, display: "flex", alignItems: "center" }}>
-                    {((isPending || isFetching) && row.original.id === selectedAddressId) ? (
-                        <>
-                            <CircularProgress size={20} color={"secondary"} sx={{ml: 1.2}}/>
-                        </>
-                    ) : (
-                        <Checkbox
-                            color={"secondary"}
-                            checked={row.original.default_address}
-                            onClick={(e) => e.stopPropagation()}
-                            onChange={async (e) => {
-                                setUIState({selectedAddressId: row.original.id});
-                                await updateAddress({
-                                    id: row.original.id,
-                                    payload: {
-                                        default_address: e.target.checked
-                                    }
-                                })
-                            }}
-                        />
-                    )}
-                </Box>
+                <>
+                    <Box sx={{minHeight: 45, display: "flex", alignItems: "center"}}>
+                        {((isPending || isFetching) && row.original.id === selectedAddressId) ? (
+                            <>
+                                <CircularProgress size={20} color={"secondary"} sx={{ml: 1.2}}/>
+                            </>
+                        ) : (
+                            <Checkbox
+                                color={"secondary"}
+                                checked={row.original.default_address}
+                                onClick={(e) => e.stopPropagation()}
+                                onChange={async (e) => {
+                                    setUIState({selectedAddressId: row.original.id});
+                                    await updateAddress({
+                                        id: row.original.id,
+                                        payload: {
+                                            default_address: e.target.checked
+                                        }
+                                    })
+                                }}
+                            />
+                        )}
+                    </Box>
+                </>
             )
-        },
+        }
     ], [t, selectedContactId, updateAddress, isPending, isFetching]);
 
-    const handleOpenCreateDialog = () => {
+    const handleOpenCreateDialog = (associateContact: boolean) => {
         setUIState({selectedAddressId: null});
         addSelectPanel({
             initialValue: '',
             extra: {
                 contact_id: selectedContactId,
-                panelId: "createContactAddress"
+                panelId: "createContactAddress",
+                associateContact
             },
             menu: {
                 component: "contactsAddress",
@@ -105,12 +120,15 @@ const ContactsAddressList = () => {
     }
 
     const handleOpenUpdateDialog = (id: number) => {
+        const addr = contactAddresses.find(x => (x.id === id && !!x.different_destination));
+
         addSelectPanel({
             initialValue: '',
             extra: {
                 contact_id: selectedContactId,
                 address_id: id,
-                panelId: "updateContactAddress:" + id
+                panelId: "updateContactAddress:" + id,
+                ddAddr: addr,
             },
             menu: {
                 component: "contactsAddress",
@@ -122,32 +140,39 @@ const ContactsAddressList = () => {
 
     return (
         <GenericList<IContactAddress>
-                disableBorder
-                data={contact?.contact_addresses || []}
-                isLoading={isLoading}
-                isFetching={isFetching}
-                columns={columns}
-                selectedId={selectedAddressId}
-                onRowSelect={(id) => setUIState({selectedAddressId: id})}
-                onRowDoubleClick={() => handleOpenUpdateDialog(selectedAddressId as number)}
-                additionalOptions={{
-                    enableTopToolbar: true,
-                    renderTopToolbar:
-                        <ListToolbar
-                            label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
-                            buttons={[
-                                <CustomButton
-                                    isEnable={!!selectedContactId}
-                                    label={t("contacts.addresses-add-btn")}
-                                    color={"primary"}
-                                    icon={<PostAddIcon/>}
-                                    onClick={() => handleOpenCreateDialog()}
-                                />
-                            ]}
-                        />
-                }}
-            />
-        )
-    }
+            disableBorder
+            data={contactAddresses}
+            isLoading={isLoading}
+            isFetching={isFetching}
+            columns={columns}
+            selectedId={selectedAddressId}
+            onRowSelect={(id) => setUIState({selectedAddressId: id})}
+            onRowDoubleClick={() => handleOpenUpdateDialog(selectedAddressId as number)}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar:
+                    <ListToolbar
+                        label={<Typography variant="h6">{t("contacts.address.list")}</Typography>}
+                        buttons={[
+                            <CustomButton
+                                isEnable={!!selectedContactId}
+                                label={t("contacts.addresses-add-btn")}
+                                color={"primary"}
+                                icon={<PostAddIcon/>}
+                                onClick={() => handleOpenCreateDialog(false)}
+                            />,
+                            <CustomButton
+                                isEnable={!!selectedContactId}
+                                label={t("contacts.addresses-add-btn-existing")}
+                                color={"primary"}
+                                icon={<FormatListBulletedAddIcon/>}
+                                onClick={() => handleOpenCreateDialog(true)}
+                            />
+                        ]}
+                    />
+            }}
+        />
+    )
+}
 
 export default ContactsAddressList;

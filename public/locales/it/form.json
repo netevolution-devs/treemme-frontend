@@ -110,6 +110,7 @@
     "carrier-name": "Trasportatore",
     "details-add-btn": "Nuovo recapito",
     "addresses-add-btn": "Nuovo indirizzo",
+    "addresses-add-btn-existing": "Associa indirizzo esistente",
     "payment": "Pagamento predefinito",
     "select": "Tipologia",
     "client": "Cliente",
@@ -130,6 +131,10 @@
       "list": "Lista terzisti",
       "add": "Aggiungi terzista"
     },
+    "processings": {
+      "list": "Lista lavorazioni",
+      "add": "Aggiungi lavorazione"
+    },
     "name": "Nome",
     "title": "Titolo",
     "notes": "Note",
@@ -141,7 +146,7 @@
     "client_shipment_note": "Note spedizione cliente",
     "agent_percentage": "Provvigione agente",
     "address": {
-      "default": "Indirizzo predefinito",
+      "default": "Predefinito",
       "list": "Lista indirizzi",
       "name": "Tipologia indirizzo",
       "address": "Indirizzo",
@@ -292,7 +297,7 @@
       "check_user": "Utente controllo",
       "check_note": "Note controllo",
       "calculate_half_pieces": "Dividi",
-      "half_pieces_count": "Mezzi",
+      "half_pieces_count": "Mezze",
       "rework": "Rinverdimento",
       "split": "Spaccatura",
       "selection": "Scelta",
@@ -536,7 +541,8 @@
       "row_note": "Note riga",
       "return": "Rientra lotto",
       "massive_return": "Rientro massivo",
-      "confirm_return": "Conferma rientro"
+      "confirm_return": "Conferma rientro",
+      "close_row": "Chiudi riga ddt"
     }
   },
   "warehouse": {

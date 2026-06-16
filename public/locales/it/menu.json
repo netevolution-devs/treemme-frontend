@@ -11,6 +11,7 @@
       "add-subcontractor": "Aggiungi Terzista",
       "add-address": "Aggiungi Indirizzo",
       "add-detail": "Aggiungi Recapito",
+      "add-processing": "Aggiungi Lavorazione",
       "carriers": "Trasportatori"
     },
     "leathers": {
@@ -70,7 +71,8 @@
       "batch-selection": "Scelta Partite",
       "pirovano-monitor": "Monitor Pirovano",
       "pirovano-recipes": "Ricettario Pirovano",
-      "batch-data": "Dati lotto"
+      "batch-data": "Dati lotto",
+      "composition": "Composizione"
     },
     "shipping-invoicing": {
       "self": "DDT & Fatture",

@@ -10,7 +10,7 @@ interface NumberFieldProps<TFieldValues extends FieldValues> extends ControlledF
     step?: number;
     maxWidth?: number | string;
     min?: number;
-    max?: number;
+    max?: number | undefined;
     startAdornment?: ReactNode;
     deactivated?: boolean;
     enforceStep?: boolean;

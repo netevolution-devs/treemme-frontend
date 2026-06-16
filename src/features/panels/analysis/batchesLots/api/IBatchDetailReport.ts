@@ -49,6 +49,21 @@ export interface IBatchDetailReportObj {
     total_revenue: number;
     average_revenue_per_leather: number;
     average_ftsq_per_leather: number;
+    total_costs: number;
+    sq_ft_average_expected: number;
+    sq_ft_average_found: number;
+    sq_ft_average_diff: number;
+    cost_per_piece_euro_mq: number;
+    cost_per_piece_lire_pq: number;
+    revenue_per_piece_euro_mq: number;
+    revenue_per_piece_lire_pq: number;
+    sc_sale_revenue_euro_mq: number;
+    sc_sale_revenue_lire_pq: number;
+    compensation_waste: number;
+    flower_total_revenue: number;
+    flower_total_revenue_lire: number;
+    flower_cost_euro_mq: number;
+    flower_cost_lire_pq: number;
 }
 
 export interface IBatchDetailReport {

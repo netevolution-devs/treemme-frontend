@@ -24,25 +24,25 @@ const BatchesLotsResume = () => {
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column', gap: 2, mt: 5.5, ml: 1}}>
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                <TextFieldValue
-                    label={"Totale Pezzi"}
-                    value={report.total_pieces}
-                    isFilled={true}
-                />
-                <TextFieldValue
-                    label={"Totale Quantità"}
-                    value={report.total_quantity}
-                    isFilled={true}
-                    precision={2}
-                />
-                <TextFieldValue
-                    label={"Totale Quantità (PQ)"}
-                    value={report.total_quantity_ftsq}
-                    isFilled={true}
-                    precision={2}
-                />
-            </Box>
+            {/*<Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>*/}
+            {/*    <TextFieldValue*/}
+            {/*        label={"Totale Pezzi"}*/}
+            {/*        value={report.total_pieces}*/}
+            {/*        isFilled={true}*/}
+            {/*    />*/}
+            {/*    <TextFieldValue*/}
+            {/*        label={"Totale Quantità"}*/}
+            {/*        value={report.total_quantity}*/}
+            {/*        isFilled={true}*/}
+            {/*        precision={2}*/}
+            {/*    />*/}
+            {/*    <TextFieldValue*/}
+            {/*        label={"Totale Quantità (PQ)"}*/}
+            {/*        value={report.total_quantity_ftsq}*/}
+            {/*        isFilled={true}*/}
+            {/*        precision={2}*/}
+            {/*    />*/}
+            {/*</Box>*/}
 
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                 <TextFieldValue
@@ -115,6 +115,116 @@ const BatchesLotsResume = () => {
                 <TextFieldValue
                     label={"PQ Medi / Pelle"}
                     value={report.average_ftsq_per_leather}
+                    isFilled={true}
+                    precision={2}
+                />
+            </Box>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Costi Totali"}
+                    value={report.total_costs}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Piedaggio Teorico"}
+                    value={report.sq_ft_average_expected}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Piedaggio Effettivo"}
+                    value={report.sq_ft_average_found}
+                    isFilled={true}
+                    precision={2}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Differenza Piedaggio"}
+                    value={report.sq_ft_average_diff}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Pelli Scartate"}
+                    value={report.compensation_waste}
+                    isFilled={true}
+                    precision={0}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Costo/Pezzo (€/MQ)"}
+                    value={report.cost_per_piece_euro_mq}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Costo/Pezzo (Lire/PQ)"}
+                    value={report.cost_per_piece_lire_pq}
+                    isFilled={true}
+                    precision={2}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Ricavo/Pezzo (€/MQ)"}
+                    value={report.revenue_per_piece_euro_mq}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Ricavo/Pezzo (Lire/PQ)"}
+                    value={report.revenue_per_piece_lire_pq}
+                    isFilled={true}
+                    precision={2}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Crosta Venduta (€/MQ)"}
+                    value={report.sc_sale_revenue_euro_mq}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Crosta Venduta (Lire/PQ)"}
+                    value={report.sc_sale_revenue_lire_pq}
+                    isFilled={true}
+                    precision={2}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Ricavo Fiore (€)"}
+                    value={report.flower_total_revenue}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Ricavo Fiore (Lire)"}
+                    value={report.flower_total_revenue_lire}
+                    isFilled={true}
+                    precision={2}
+                />
+            </Box>
+
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                <TextFieldValue
+                    label={"Costo Fiore (€/MQ)"}
+                    value={report.flower_cost_euro_mq}
+                    isFilled={true}
+                    precision={2}
+                />
+                <TextFieldValue
+                    label={"Costo Fiore (Lire/PQ)"}
+                    value={report.flower_cost_lire_pq}
                     isFilled={true}
                     precision={2}
                 />

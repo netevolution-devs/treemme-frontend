@@ -39,6 +39,7 @@ import type {
 } from "@features/panels/shipping-invoicing/delivery-notes/delivery-notes-row/DeliveryNotesRowsPanel";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 
 export type IDeliveryNoteRowForm = Omit<IDeliveryNoteRow,
     'id' |
@@ -79,6 +80,15 @@ const DeliveryNotesRowsForm = ({
     const selectedStoreId = useStore(state => state.uiState.selectedDeliveryNoteRowId);
     const selectedDeliveryNoteRowId = ddtRowId || selectedStoreId;
 
+    const {data: deliveryNote} = deliveryNoteApi.useGetDetail(ddtId);
+    const currentSubContractor = deliveryNote?.subcontractor;
+    const {data: subcontractorDetail} = contactsApi.useGetDetail(currentSubContractor?.id as number);
+    const selectedCurrentSubcontractorWorkingsIds = subcontractorDetail?.processings?.map(x => x.id) ?? [];
+
+    const processingIds = useMemo(() => {
+        return (selectedCurrentSubcontractorWorkingsIds as number[]).map(p => p).join(',')
+    }, [selectedCurrentSubcontractorWorkingsIds]);
+
     const floatingPanelUUID = extra?.panelId as string;
 
     const {setFormState} = usePanelFormButtons();
@@ -110,6 +120,8 @@ const DeliveryNotesRowsForm = ({
         }
     }, [floatingPanelUUID, selectedDeliveryNoteRowId]);
 
+    const isCreateMode = floatingPanelUUID.includes("create");
+
     return (
         <Box sx={{p: 0}}>
             <GenericForm<IDeliveryNoteRowForm, IDeliveryNoteRow, IDeliveryNotesRowsStoreState>
@@ -139,7 +151,7 @@ const DeliveryNotesRowsForm = ({
                     whole_piece: null,
                     half_piece: 0,
                     ddt_id: ddtId,
-                    processing_ids: null,
+                    processing_ids: isCreateMode ? processingIds : null,
                 }}
                 mapEntityToForm={(x) => ({
                     batch_id: x.batch?.id || null,
