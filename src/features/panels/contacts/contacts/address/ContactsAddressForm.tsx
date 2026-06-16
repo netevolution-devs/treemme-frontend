@@ -49,8 +49,6 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
     const {useGetDetail, usePost, usePut, useDelete} = contactsAddressApi;
     const {data: address} = useGetDetail(selectedAddressId);
 
-    const differentDestination = address?.different_destination;
-
     const {
         mutateAsync: createAddress,
         isPending: isPosting
@@ -74,7 +72,7 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
     }, [floatingPanelUUID]);
 
     const buildPayload = (payload: IContactAddressForm) => {
-        if (extra?.associateContact) {
+        if (extra?.ddAddr?.different_destination || extra?.associateContact) {
             return {
                 different_destination_id: payload.selected_contact_address_id,
                 default_address: payload.default_address,
@@ -95,70 +93,72 @@ const ContactsAddressForm = ({extra}: ICustomPanelFormProps<IContactsAddressStor
     };
 
     return (
-        <GenericForm<IContactAddressForm, IContactAddress, IContactsAddressStoreState>
-            resource="contatti - contatti"
-            selectedId={selectedAddressId}
-            floatingPanelMode
-            floatingPanelUUID={floatingPanelUUID}
-            disableCreateButton
-            entity={differentDestination ? differentDestination : address}
-            selectedIdKey={"selectedAddressId"}
-            emptyValues={{
-                address: '',
-                address_2: '',
-                address_3: '',
-                address_4: '',
-                address_name: '',
-                nation_id: null,
-                contact_id: null,
-                zip_code: '',
-                default_address: false,
-                different_destination_id: null,
-                selected_contact_id: null,
-                selected_contact_address_id: null,
-            }}
-            mapEntityToForm={(x) => ({
-                address: x.address,
-                address_2: x.address_2,
-                address_3: x.address_3,
-                address_4: x.address_4,
-                address_name: x.address_name,
-                nation_id: x.nation.id,
-                contact_id: contactId as number,
-                zip_code: x.zip_code,
-                default_address: x.default_address,
-                different_destination_id: null,
-                selected_contact_id: null,
-                selected_contact_address_id: null,
-            })}
-            create={(payload) => createAddress(buildPayload(payload) as unknown as IContactAddressForm)}
-            update={(id, payload) => updateAddress({
-                id,
-                payload: buildPayload(payload) as unknown as IContactAddressForm,
-            })}
-            remove={(id) => deleteAddress(id)}
-            isSaving={isPosting || isPutting}
-            isDeleting={isDeleting}
-            onClearSelection={() => setUIState({selectedAddressId: null})}
-            validateBeforeSave={(v) => !!(
-                v.selected_contact_address_id ||
-                (v.address_name && v.address && v.nation_id)
-            )}
-            renderFields={() => (
-                <ContactAddressFormFields
-                    contactId={contactId}
-                    isAssociationMode={extra?.associateContact as boolean}
-                    differentDestination={differentDestination as IContactAddress}
-                />
-            )}
-        />
+        <>
+            <GenericForm<IContactAddressForm, IContactAddress, IContactsAddressStoreState>
+                resource="contatti - contatti"
+                selectedId={selectedAddressId}
+                floatingPanelMode
+                floatingPanelUUID={floatingPanelUUID}
+                disableCreateButton
+                entity={extra?.ddAddr ? extra?.ddAddr : address}
+                selectedIdKey={"selectedAddressId"}
+                emptyValues={{
+                    address: '',
+                    address_2: '',
+                    address_3: '',
+                    address_4: '',
+                    address_name: '',
+                    nation_id: null,
+                    contact_id: null,
+                    zip_code: '',
+                    default_address: false,
+                    different_destination_id: null,
+                    selected_contact_id: null,
+                    selected_contact_address_id: null,
+                }}
+                mapEntityToForm={(x) => ({
+                    address: x.address,
+                    address_2: x.address_2,
+                    address_3: x.address_3,
+                    address_4: x.address_4,
+                    address_name: x.address_name,
+                    nation_id: x.nation.id,
+                    contact_id: contactId as number,
+                    zip_code: x.zip_code,
+                    default_address: x.default_address,
+                    different_destination_id: null,
+                    selected_contact_id: extra?.ddAddr?.contact.id || null,
+                    selected_contact_address_id: extra?.ddAddr?.different_destination_id || null,
+                })}
+                create={(payload) => createAddress(buildPayload(payload) as unknown as IContactAddressForm)}
+                update={(id, payload) => updateAddress({
+                    id,
+                    payload: buildPayload(payload) as unknown as IContactAddressForm,
+                })}
+                remove={(id) => deleteAddress(id)}
+                isSaving={isPosting || isPutting}
+                isDeleting={isDeleting}
+                onClearSelection={() => setUIState({selectedAddressId: null})}
+                validateBeforeSave={(v) => !!(
+                    v.selected_contact_address_id ||
+                    (v.address_name && v.address && v.nation_id)
+                )}
+                renderFields={() => (
+                    <ContactAddressFormFields
+                        contactId={contactId}
+                        isAssociationMode={!!extra?.ddAddr?.different_destination as boolean || !!extra?.associateContact}
+                        address={extra?.ddAddr as IContactAddress || address}
+                    />
+                )}
+            />
+        </>
     )
 }
 
-const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestination}: {
+const ContactAddressFormFields = ({contactId, isAssociationMode, address}: {
     contactId: number | undefined;
     isAssociationMode: boolean,
-    differentDestination: IContactAddress | undefined;
+    address: IContactAddress | undefined;
 }) => {
     const {t} = useTranslation(["form"]);
 
@@ -171,6 +171,24 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestin
     const watchedSelectedContactId = watch("selected_contact_id");
 
     const {data: contactAddresses = []} = contactsApi.useGetContactAddressDetail(watchedSelectedContactId as number);
+    // const {data: currentContactDifferentDestinations = []} = contactsApi.useGetContactAddressDetail(contactId as number);
+    //
+    // const currentlyUsedDestinationIds = useMemo(() => {
+    //     return new Set(
+    //         currentContactDifferentDestinations
+    //             .filter(x => x.different_destination)
+    //             .map(x => x.different_destination!.id)
+    //     );
+    // }, [currentContactDifferentDestinations]);
+    //
+    // const availableDifferentDestinations = useMemo(() => {
+    //     if (!contactAddresses.length) return [];
+    //     const ids = new Set(currentlyUsedDestinationIds);
+    //     if (differentDestination) {
+    //         ids.delete(differentDestination.id);
+    //     }
+    //     return contactAddresses.filter(addr => !ids.has(addr.id));
+    // }, [contactAddresses, currentlyUsedDestinationIds, differentDestination]);
 
     const {filterAddressString} = useFilteringAddress();
 
@@ -183,73 +201,11 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestin
         return contacts?.filter((x) => x.id !== contactId) || [];
     }, [contacts, contactId]);
 
-    const disabledFormMode = isAssociationMode || !!differentDestination;
+    const disabledFormMode = isAssociationMode || !!address?.different_destination;
 
     return (
         <>
-            <>
-                <Stack gap={1} sx={{mb: 1}}>
-                    <TextFieldControlled<IContactAddressForm>
-                        name="address_name"
-                        label={t("contacts.address.name")}
-                        required={!disabledFormMode}
-                        deactivated={disabledFormMode}
-                    />
-                    <TextFieldControlled<IContactAddressForm>
-                        name="address"
-                        label={t("contacts.address.address-1")}
-                        required={!disabledFormMode}
-                        deactivated={disabledFormMode}
-                    />
-                    <TextFieldControlled<IContactAddressForm>
-                        name="address_2"
-                        label={t("contacts.address.address-2")}
-                        deactivated={disabledFormMode}
-                    />
-                    <TextFieldControlled<IContactAddressForm>
-                        name="address_3"
-                        label={t("contacts.address.address-3")}
-                        deactivated={disabledFormMode}
-                    />
-                    <TextFieldControlled<IContactAddressForm>
-                        name="address_4"
-                        label={t("contacts.address.address-4")}
-                        deactivated={disabledFormMode}
-                    />
-                </Stack>
-                <Box sx={{display: 'flex', gap: 1}}>
-                    <TextFieldControlled<IContactAddressForm>
-                        name={"zip_code"}
-                        label={t("contacts.address.cap")}
-                        deactivated={disabledFormMode}
-                    />
-                    <SelectFieldControlled<IContactAddressForm>
-                        name={"nation_id"}
-                        label={t("nations.name")}
-                        options={nations?.map((x) => ({
-                            value: x.id,
-                            label: x.name
-                        })) || []}
-                        onNoOptionsMatch={(input) => {
-                            addSelectPanel({
-                                initialValue: input,
-                                menu: {
-                                    component: "nations",
-                                    i18nKey: "menu.contacts.nations"
-                                }
-                            })
-                        }}
-                        required={!disabledFormMode}
-                        deactivated={disabledFormMode}
-                    />
-                </Box>
-                <FlagCheckBoxFieldControlled<IContactAddressForm>
-                    name="default_address"
-                    label={t("contacts.address.default")}
-                    disabled={disabledFormMode}
-                />
-            </>
-            {disabledFormMode && (
+            {disabledFormMode ? (
                 <>
                     <SelectFieldControlled<IContactAddressForm>
                         name={"selected_contact_id"}
@@ -269,6 +225,70 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, differentDestin
                         deactivated={!watchedSelectedContactId}
                     />
                 </>
+            ) : (
+                <>
+                    <Stack gap={1} sx={{mb: 1, pt: 2}}>
+                        <TextFieldControlled<IContactAddressForm>
+                            name="address_name"
+                            label={t("contacts.address.name")}
+                            required={!disabledFormMode}
+                            deactivated={disabledFormMode}
+                        />
+                        <TextFieldControlled<IContactAddressForm>
+                            name="address"
+                            label={t("contacts.address.address-1")}
+                            required={!disabledFormMode}
+                            deactivated={disabledFormMode}
+                        />
+                        <TextFieldControlled<IContactAddressForm>
+                            name="address_2"
+                            label={t("contacts.address.address-2")}
+                            deactivated={disabledFormMode}
+                        />
+                        <TextFieldControlled<IContactAddressForm>
+                            name="address_3"
+                            label={t("contacts.address.address-3")}
+                            deactivated={disabledFormMode}
+                        />
+                        <TextFieldControlled<IContactAddressForm>
+                            name="address_4"
+                            label={t("contacts.address.address-4")}
+                            deactivated={disabledFormMode}
+                        />
+                    </Stack>
+                    <Box sx={{display: 'flex', gap: 1}}>
+                        <TextFieldControlled<IContactAddressForm>
+                            name={"zip_code"}
+                            label={t("contacts.address.cap")}
+                            deactivated={disabledFormMode}
+                        />
+                        <SelectFieldControlled<IContactAddressForm>
+                            name={"nation_id"}
+                            label={t("nations.name")}
+                            options={nations?.map((x) => ({
+                                value: x.id,
+                                label: x.name
+                            })) || []}
+                            onNoOptionsMatch={(input) => {
+                                addSelectPanel({
+                                    initialValue: input,
+                                    menu: {
+                                        component: "nations",
+                                        i18nKey: "menu.contacts.nations"
+                                    }
+                                })
+                            }}
+                            required={!disabledFormMode}
+                            deactivated={disabledFormMode}
+                        />
+                    </Box>
+                    <FlagCheckBoxFieldControlled<IContactAddressForm>
+                        name="default_address"
+                        label={t("contacts.address.default")}
+                        disabled={disabledFormMode}
+                    />
+                </>
+
             )}
         </>
     )

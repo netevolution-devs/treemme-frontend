@@ -15,5 +15,6 @@ export interface IContactAddress {
     // contact_id?: number;
     // weight?: number;
     different_destination: IContactAddress | null;
+    different_destination_id: number | null;
     contact: IContact;
 }
