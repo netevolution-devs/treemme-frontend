@@ -81,8 +81,8 @@ export const useDefaultMrtOptions = <TData extends MRT_RowData>(
         muiTopToolbarProps: () => getMrtTopToolbarProps(),
 
         defaultColumn: {
-            muiTableHeadCellProps: () => getMrtTableHeadCellProps(),
-            muiTableBodyCellProps: () => getMrtTableBodyCellProps(),
+            muiTableHeadCellProps: () => getMrtTableHeadCellProps(theme),
+            muiTableBodyCellProps: () => getMrtTableBodyCellProps(theme),
         },
 
         muiTableBodyRowProps: ({table, row, staticRowIndex, isDetailPanel}) =>

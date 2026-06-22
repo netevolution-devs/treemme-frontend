@@ -127,11 +127,11 @@ const GenericList = <TData extends BaseEntity>({
     return (
         <>
             {!disableBorder ? (
-                <Card variant={"outlined"} sx={{minHeight: _minHeight, maxHeight: maxHeight}}>
+                <Card variant={"outlined"} sx={{bgcolor: "background.card.default", minHeight: _minHeight, maxHeight: maxHeight}}>
                     {content()}
                 </Card>
             ) : (
-                <Box sx={{bgcolor: 'grey.100', border: "1px solid", borderColor: 'grey.300', borderRadius: 1, p: 1}}>
+                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: 'divider', borderRadius: 1, p: 1}}>
                     {content()}
                 </Box>
             )}

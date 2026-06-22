@@ -330,10 +330,10 @@ const lightTheme: Theme = createTheme({
             paper: '#ffffff',
             topBar: '#ffffff',
             card: {
-                default: '#ffffff',
-                notSelected: '#ececec'
+                default: '#f0f2f5',
+                notSelected: '#e4e6e9'
             },
-            panel: "#E4EBEE"
+            panel: "#f2f4f7"
         },
         text: {
             primary: '#0f172a',
@@ -410,10 +410,10 @@ const darkTheme: Theme = createTheme({
             paper: '#151414',
             topBar: '#1b1f24',
             card: {
-                default: "#151414",
-                notSelected: "#080808"
+                default: "#0d0d0d",
+                notSelected: "#050505"
             },
-            panel: "#272727;"
+            panel: "#1c1c1e"
         },
         text: {
             primary: 'rgba(255,255,255,0.92)',
