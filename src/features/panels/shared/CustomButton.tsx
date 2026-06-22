@@ -89,13 +89,14 @@ interface PrintButtonProps {
     canPrint: boolean;
     isPending: boolean;
     onClick: () => void;
+    label?: string;
 }
 
-export const PrintButton = ({canPrint, isPending, onClick}: PrintButtonProps) => {
+export const PrintButton = ({canPrint, isPending, onClick, label}: PrintButtonProps) => {
     return (
         <CustomButton
-            label={""}
-            minWidth={60}
+            label={label ?? ""}
+            minWidth={label ? 200 : 60}
             color={"primary"}
             icon={<PrintRounded fontSize={"small"}/>}
             isEnable={canPrint && !isPending}

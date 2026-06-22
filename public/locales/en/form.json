@@ -157,5 +157,9 @@
   },
   "contacts": {
     "carrier-name": "Carrier"
+  },
+  "order-search": {
+    "production-report": "Orders to produce",
+    "order-row-report": "Order row report"
   }
 }
