@@ -1,6 +1,6 @@
-import type {TableCellProps as MUITableCellProps} from "@mui/material";
+import type {TableCellProps as MUITableCellProps, Theme} from "@mui/material";
 
-export const getMrtTableHeadCellProps = (): MUITableCellProps => ({
+export const getMrtTableHeadCellProps = (theme?: Theme): MUITableCellProps => ({
     sx: {
         margin: 0,
         paddingLeft: 1,
@@ -9,7 +9,7 @@ export const getMrtTableHeadCellProps = (): MUITableCellProps => ({
         fontWeight: 600,
         borderBottom: 'none',
         borderLeft: '1px solid',
-        borderLeftColor: 'grey.400',
+        borderLeftColor: theme?.palette.mode === 'light' ? 'grey.400' : 'divider',
         '&:first-of-type': {
             borderLeft: 'none',
         },
