@@ -37,7 +37,6 @@ const CustomerOrdersList = () => {
     const {data: customerOrders = [], isLoading, isFetching} = customerOrderApi.useGetList({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
-
     const columns = useMemo<MRT_ColumnDef<ICustomerOrder>[]>(() => [
         {
             accessorKey: "order_number",
@@ -82,6 +81,8 @@ const CustomerOrdersList = () => {
                                 onFilterChange={(value) => setFilters({filterOrderClientId: value as number})}
                             />,
                         ]}
+                        alignButtons={"flex-end"}
+                        sx={{mr: 1}}
                     />
                 )
             }}

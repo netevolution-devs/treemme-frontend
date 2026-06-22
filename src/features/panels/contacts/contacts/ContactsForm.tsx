@@ -22,6 +22,7 @@ import {
 } from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
+import {carrierApi} from "@features/panels/contacts/carriers/api/carrierApi";
 import {useEffect} from "react";
 
 export type IContactForm = Omit<IContact, 'id'
@@ -44,6 +45,7 @@ export type IContactForm = Omit<IContact, 'id'
     shipment_condition_id: number | null;
     contact_type_id: number | null;
     agent_percentage: number | null;
+    shipping_carrier_id: number | null;
 };
 
 const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IContactsStoreParams>) => {
@@ -97,6 +99,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 agent_percentage: null,
                 payment_id: null,
                 shipment_condition_id: null,
+                shipping_carrier_id: null,
             }}
             mapEntityToForm={(x) => ({
                 name: x.name,
@@ -111,6 +114,7 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 agent_percentage: x.agent_percentage,
                 payment_id: x.payment?.id || null,
                 shipment_condition_id: x.shipment_condition?.id || null,
+                shipping_carrier_id: x.shipping_carrier?.id || null,
             })}
             create={(payload) => createContact(payload)}
             onCreateSuccess={(id) => {
@@ -140,13 +144,13 @@ interface ContactsFormFieldsProps {
 const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
     const isClient = useWatch({name: 'client'});
-    const isAgent = useWatch({name: 'agent'});
     const isSupplier = useWatch({name: 'supplier'});
 
     // const {data: contactTitles} = contactsTitleApi.useGetList();
     const {data: contactTypes} = contactsTypeApi.useGetList();
     const {data: payments = []} = paymentApi.useGetList();
     const {data: shipmentConditions = []} = shipmentConditionApi.useGetList();
+    const {data: carriers = []} = carrierApi.useGetList();
 
     const {add: addSelectPanel} = useCallablePanel();
 
@@ -157,6 +161,10 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     useSubscribePanel<IContactForm>({
         formKey: "shipment_condition_id",
         dependencyKey: "shipmentConditions"
+    })
+    useSubscribePanel<IContactForm>({
+        formKey: "shipping_carrier_id",
+        dependencyKey: "carriers"
     })
 
     return (
@@ -293,6 +301,38 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             }}
                         />
                     </Box>
+                    <Box sx={{mt: 1, borderRadius: 1}}>
+                        <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
+                                    sx={{mb: 1}}>{t("contacts.agent")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <NumberFieldControlled<IContactForm>
+                                name="agent_percentage"
+                                label={t("contacts.agent_percentage")}
+                                precision={2}
+                                startAdornment={"%"}
+                            />
+                        </Box>
+                    </Box>
+                    <Box sx={{mt: 1, borderRadius: 1}}>
+                        <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
+                                    sx={{mb: 1}}>{t("contacts.carrier-name")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <SelectFieldControlled<ICustomerOrderForm>
+                                name={"shipping_carrier_id"}
+                                label={t("contacts.carrier-name")}
+                                options={carriers.map(p => ({value: p.id, label: p.name}))}
+                                onNoOptionsMatch={(input) => {
+                                    addSelectPanel({
+                                        initialValue: input,
+                                        menu: {
+                                            component: "carriers",
+                                            i18nKey: "menu.contacts.carriers"
+                                        }
+                                    })
+                                }}
+                            />
+                        </Box>
+                    </Box>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}
                         variant="subtitle1"
@@ -323,21 +363,6 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             name="client_shipment_note"
                             label={t("contacts.client_shipment_note")}
                             TextFieldProps={{multiline: true, rows: 2}}
-                        />
-                    </Box>
-                </Box>
-            )}
-
-            {isAgent && (
-                <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
-                                sx={{mb: 1}}>{t("contacts.agent")}</Typography>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <NumberFieldControlled<IContactForm>
-                            name="agent_percentage"
-                            label={t("contacts.agent_percentage")}
-                            precision={2}
-                            startAdornment={"%"}
                         />
                     </Box>
                 </Box>

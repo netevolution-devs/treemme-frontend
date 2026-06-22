@@ -6,6 +6,7 @@ import type {
     IShipmentCondition
 } from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
 import type {IWorking} from "@features/panels/production/workings/api/IWorking";
+import type {ICarrier} from "@features/panels/contacts/carriers/api/ICarrier";
 
 export interface IContact {
     id: number;
@@ -30,4 +31,5 @@ export interface IContact {
     payment: IPayment;
     shipment_condition: IShipmentCondition;
     different_destination_id?: number | null;
+    shipping_carrier?: ICarrier | null;
 }

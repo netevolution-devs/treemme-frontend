@@ -104,6 +104,9 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
             if (clientDetail.shipment_condition) {
                 setValue('shipment_condition_id', clientDetail.shipment_condition.id);
             }
+            if (clientDetail.shipping_carrier) {
+                setValue('shipping_carrier_id', clientDetail.shipping_carrier.id);
+            }
         }
     }, [clientId, clientDetail, setValue, control, selectedCustomerOrderId]);
 

@@ -18,6 +18,7 @@ import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
+import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -49,7 +50,8 @@ const SearchOrderRowsList = () => {
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
-    const {mutateAsync: getOrderRowPrint, isPending} = useGetClientOrderRowSummaryPrint();
+    const {mutateAsync: getOrderRowPrint, isPending: isOrderRowPrintPending} = useGetClientOrderRowSummaryPrint();
+    const {mutateAsync: getProductionReport, isPending: isProductionReportPending} = useGetProductionReportPdf();
 
     const canPrint = orderRows.length > 0;
 
@@ -232,8 +234,21 @@ const SearchOrderRowsList = () => {
                             ]}
                             buttons={[
                                 <PrintButton
+                                    label={t("order-search.production-report")}
                                     canPrint={canPrint}
-                                    isPending={isPending}
+                                    isPending={isProductionReportPending}
+                                    onClick={() => getProductionReport({
+                                        params: {
+                                            start_date: filterStartDate,
+                                            end_date: filterEndDate,
+                                            print_status: filterPrintStatus,
+                                        }
+                                    })}
+                                />,
+                                <PrintButton
+                                    label={t("order-search.order-row-report")}
+                                    canPrint={canPrint}
+                                    isPending={isOrderRowPrintPending}
                                     onClick={() => getOrderRowPrint({
                                         params: queryParams
                                     })}
