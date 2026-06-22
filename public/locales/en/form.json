@@ -154,5 +154,8 @@
     "ddt_rows": {
       "close_row": "Close DDT row"
     }
+  },
+  "contacts": {
+    "carrier-name": "Carrier"
   }
 }
