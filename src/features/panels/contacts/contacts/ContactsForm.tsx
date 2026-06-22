@@ -140,7 +140,6 @@ interface ContactsFormFieldsProps {
 const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
     const {t} = useTranslation(["form"]);
     const isClient = useWatch({name: 'client'});
-    const isAgent = useWatch({name: 'agent'});
     const isSupplier = useWatch({name: 'supplier'});
 
     // const {data: contactTitles} = contactsTitleApi.useGetList();
@@ -293,6 +292,18 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             }}
                         />
                     </Box>
+                    <Box sx={{mt: 1, borderRadius: 1}}>
+                        <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
+                                    sx={{mb: 1}}>{t("contacts.agent")}</Typography>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <NumberFieldControlled<IContactForm>
+                                name="agent_percentage"
+                                label={t("contacts.agent_percentage")}
+                                precision={2}
+                                startAdornment={"%"}
+                            />
+                        </Box>
+                    </Box>
                     <Typography
                         color={!isFormDisabled ? "text.primary" : "textDisabled"}
                         variant="subtitle1"
@@ -323,21 +334,6 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                             name="client_shipment_note"
                             label={t("contacts.client_shipment_note")}
                             TextFieldProps={{multiline: true, rows: 2}}
-                        />
-                    </Box>
-                </Box>
-            )}
-
-            {isAgent && (
-                <Box sx={{mt: 1, borderRadius: 1}}>
-                    <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
-                                sx={{mb: 1}}>{t("contacts.agent")}</Typography>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <NumberFieldControlled<IContactForm>
-                            name="agent_percentage"
-                            label={t("contacts.agent_percentage")}
-                            precision={2}
-                            startAdornment={"%"}
                         />
                     </Box>
                 </Box>
