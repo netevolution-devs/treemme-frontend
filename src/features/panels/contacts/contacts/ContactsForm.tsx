@@ -270,40 +270,38 @@ const ContactsFormFields = ({isFormDisabled}: ContactsFormFieldsProps) => {
                     >
                         {t("contacts.payment")}
                     </Typography>
-                    <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
-                        <SelectFieldControlled<ICustomerOrderForm>
-                            name={"payment_id"}
-                            label={t("orders.payment")}
-                            options={payments.map(p => ({value: p.id, label: p.name}))}
-                            required
-                            onNoOptionsMatch={(input) => {
-                                addSelectPanel({
-                                    initialValue: input,
-                                    menu: {
-                                        component: "paymentTypes",
-                                        i18nKey: "menu.commercial.payment-types"
-                                    }
-                                })
-                            }}
-                        />
-                        <SelectFieldControlled<ICustomerOrderForm>
-                            name={"shipment_condition_id"}
-                            label={t("orders.shipment-condition")}
-                            options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
-                            onNoOptionsMatch={(input) => {
-                                addSelectPanel({
-                                    initialValue: input,
-                                    menu: {
-                                        component: "shipmentConditions",
-                                        i18nKey: "menu.commercial.shipment-conditions"
-                                    }
-                                })
-                            }}
-                        />
-                    </Box>
-                    <Box sx={{mt: 1, borderRadius: 1}}>
-                        <Typography color={!isFormDisabled ? "text.primary" : "textDisabled"} variant="subtitle1"
-                                    sx={{mb: 1}}>{t("contacts.agent")}</Typography>
+                    <Box sx={{display: 'flex', flexDirection: 'column', gap: 1}}>
+                        <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+                            <SelectFieldControlled<ICustomerOrderForm>
+                                name={"payment_id"}
+                                label={t("orders.payment")}
+                                options={payments.map(p => ({value: p.id, label: p.name}))}
+                                required
+                                onNoOptionsMatch={(input) => {
+                                    addSelectPanel({
+                                        initialValue: input,
+                                        menu: {
+                                            component: "paymentTypes",
+                                            i18nKey: "menu.commercial.payment-types"
+                                        }
+                                    })
+                                }}
+                            />
+                            <SelectFieldControlled<ICustomerOrderForm>
+                                name={"shipment_condition_id"}
+                                label={t("orders.shipment-condition")}
+                                options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
+                                onNoOptionsMatch={(input) => {
+                                    addSelectPanel({
+                                        initialValue: input,
+                                        menu: {
+                                            component: "shipmentConditions",
+                                            i18nKey: "menu.commercial.shipment-conditions"
+                                        }
+                                    })
+                                }}
+                            />
+                        </Box>
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
                             <NumberFieldControlled<IContactForm>
                                 name="agent_percentage"
