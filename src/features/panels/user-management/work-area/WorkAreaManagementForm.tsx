@@ -42,6 +42,7 @@ const WorkAreaManagementForm = () => {
                 isSaving={isPosting || isPutting}
                 isDeleting={isDeleting}
                 onClearSelection={() => setUIState({selectedWorkAreaId: null})}
+                onSuccess={(workAreaCreated) => setUIState({selectedWorkAreaId: workAreaCreated.id})}
                 validateBeforeSave={(v) => !!v.name}
                 renderFields={() => (
                     <>
@@ -58,13 +59,12 @@ const WorkAreaManagementForm = () => {
                     </>
                 )}
             />
-            {selectedWorkAreaId && workArea && (
-                <WorkAreaPermissions
-                    workAreaId={selectedWorkAreaId}
-                    workAreaAsResource={workArea.name.toLowerCase() as ResourceName}
-                    groupRoleWorkAreas={workArea.group_role_work_areas ?? []}
-                />
-            )}
+            <WorkAreaPermissions
+                workAreaId={selectedWorkAreaId}
+                workAreaAsResource={workArea?.name.toLowerCase() as ResourceName}
+                groupRoleWorkAreas={workArea?.group_role_work_areas ?? []}
+                disabled={!selectedWorkAreaId || !workArea}
+            />
         </>
     );
 };

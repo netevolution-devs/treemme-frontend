@@ -2,6 +2,7 @@ import {useMemo, useState} from "react";
 import {useTranslation} from "react-i18next";
 import type {MRT_ColumnDef, MRT_Row} from "material-react-table";
 import {
+    Box,
     Button,
     Checkbox,
     CircularProgress,
@@ -34,10 +35,12 @@ const AccessCheckbox = ({
                             row,
                             field,
                             workAreaId,
+                            disabled = false,
                         }: {
     row: IWorkAreaGroupRoleAccess;
     field: BooleanField;
     workAreaId: number;
+    disabled?: boolean;
 }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [effectiveValue, setEffectiveValue] = useState(row[field]);
@@ -60,7 +63,7 @@ const AccessCheckbox = ({
             sx={{
                 "&.Mui-checked": {color: "text.secondary"},
             }}
-            disabled={isLoading}
+            disabled={disabled || isLoading}
             onChange={(e) => handleChange(e.target.checked)}
             onClick={(e) => e.stopPropagation()}
             icon={isLoading ? <CircularProgress size={16} /> : undefined}
@@ -70,12 +73,13 @@ const AccessCheckbox = ({
 };
 
 interface WorkAreaPermissionsSectionProps {
-    workAreaId: number;
+    workAreaId: number | null | undefined;
     workAreaAsResource: ResourceName;
     groupRoleWorkAreas: IWorkAreaGroupRoleAccess[];
+    disabled?: boolean;
 }
 
-const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas}: WorkAreaPermissionsSectionProps) => {
+const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas, disabled = false}: WorkAreaPermissionsSectionProps) => {
     const {t} = useTranslation(["form"]);
 
     const [groupId, setGroupId] = useState<number>(0);
@@ -84,8 +88,8 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
     const {data: groups = []} = groupManagementApi.useGetList();
     const {data: roles = []} = roleManagementApi.useGetList();
 
-    const {mutate: deleteAccess, isPending: isDeleting} = useDeleteGroupAccessForWorkArea(workAreaId);
-    const {mutate: assignAccess, isPending: isAssigning} = useAssignGroupAccessForWorkArea(workAreaId);
+    const {mutate: deleteAccess, isPending: isDeleting} = useDeleteGroupAccessForWorkArea(workAreaId!);
+    const {mutate: assignAccess, isPending: isAssigning} = useAssignGroupAccessForWorkArea(workAreaId!);
 
     const showCheckOrder = workAreaAsResource === "ordini - ordini clienti";
 
@@ -117,37 +121,37 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
             accessorKey: "can_get",
             header: t("form:access_management.can_get"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_get" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_get" workAreaId={workAreaId!} disabled={disabled}/>,
         },
         {
             accessorKey: "can_post",
             header: t("form:access_management.can_post"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_post" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_post" workAreaId={workAreaId!} disabled={disabled}/>,
         },
         {
             accessorKey: "can_put",
             header: t("form:access_management.can_put"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_put" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_put" workAreaId={workAreaId!} disabled={disabled}/>,
         },
         {
             accessorKey: "can_delete",
             header: t("form:access_management.can_delete"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_delete" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_delete" workAreaId={workAreaId!} disabled={disabled}/>,
         },
         ...(showCheckOrder ? [{
             accessorKey: "check_order",
             header: t("form:access_management.check_order"),
             size: 80, minSize: 80, maxSize: 80,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="check_order" workAreaId={workAreaId}/>,
+            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="check_order" workAreaId={workAreaId!} disabled={disabled}/>,
         }] : []),
-    ], [t, workAreaId, showCheckOrder]);
+    ], [t, workAreaId, showCheckOrder, disabled]);
 
     return (
         <Stack gap={1.5} sx={{mt: 1}}>
-            <Typography sx={{fontSize: 16, mt: 2}} variant={"h6"}>
+            <Typography variant={"h5"}>
                 Permessi
             </Typography>
 
@@ -155,7 +159,7 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
 
                 <Stack direction="row" gap={4} alignItems="start" justifyContent={"space-between"}>
                     <Stack gap={1}>
-                        <FormControl sx={{minWidth: 400}}>
+                        <FormControl sx={{minWidth: 400}} disabled={disabled}>
                             <InputLabel>{t("form:access_management.group_id")}</InputLabel>
                             <Select
                                 size="medium"
@@ -168,7 +172,7 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
                                 ))}
                             </Select>
                         </FormControl>
-                        <FormControl sx={{minWidth: 400}}>
+                        <FormControl sx={{minWidth: 400}} disabled={disabled}>
                             <InputLabel>{t("form:access_management.role_id")}</InputLabel>
                             <Select
                                 value={roleId || ""}
@@ -183,7 +187,7 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
                     </Stack>
                     <Button
                         variant={"outlined"}
-                        disabled={!groupId || !roleId || isAssigning}
+                        disabled={disabled || !groupId || !roleId || isAssigning}
                         onClick={handleAdd}
                     >
                         Aggiungi
@@ -199,16 +203,18 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
                     additionalOptions={{
                         enableRowActions: true,
                         renderRowActions: ({row}) => (
-                            <IconButton
-                                size="small"
-                                disabled={isDeleting}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteAccess(row.original.id);
-                                }}
-                            >
-                                <DeleteIcon fontSize="small"/>
-                            </IconButton>
+                            <Box sx={{p: 1}}>
+                                <IconButton
+                                    size="small"
+                                    disabled={disabled || isDeleting}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteAccess(row.original.id);
+                                    }}
+                                >
+                                    <DeleteIcon fontSize="small"/>
+                                </IconButton>
+                            </Box>
                         ),
                     }}
                 />
