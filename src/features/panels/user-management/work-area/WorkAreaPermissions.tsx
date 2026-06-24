@@ -4,6 +4,7 @@ import type {MRT_ColumnDef, MRT_Row} from "material-react-table";
 import {
     Button,
     Checkbox,
+    CircularProgress,
     FormControl,
     IconButton,
     InputLabel,
@@ -38,15 +39,32 @@ const AccessCheckbox = ({
     field: BooleanField;
     workAreaId: number;
 }) => {
-    const {mutate, isPending} = useUpdateGroupAccessInWorkArea(workAreaId);
+    const [isLoading, setIsLoading] = useState(false);
+    const [effectiveValue, setEffectiveValue] = useState(row[field]);
+    const {mutateAsync: updatingPerm} = useUpdateGroupAccessInWorkArea(workAreaId);
+
+    const handleChange = async (checked: boolean) => {
+        setIsLoading(true);
+        try {
+            await updatingPerm({id: row.id, field, value: checked});
+            setEffectiveValue(checked);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <Checkbox
             size="small"
-            checked={row[field]}
-            sx={{"&.Mui-checked": {color: "text.secondary"}}}
-            disabled={isPending}
-            onChange={(e) => mutate({id: row.id, field, value: e.target.checked})}
+            checked={effectiveValue}
+            sx={{
+                "&.Mui-checked": {color: "text.secondary"},
+            }}
+            disabled={isLoading}
+            onChange={(e) => handleChange(e.target.checked)}
             onClick={(e) => e.stopPropagation()}
+            icon={isLoading ? <CircularProgress size={16} /> : undefined}
+            checkedIcon={isLoading ? <CircularProgress size={16} /> : undefined}
         />
     );
 };
