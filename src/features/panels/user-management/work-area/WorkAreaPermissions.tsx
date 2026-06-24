@@ -2,8 +2,10 @@ import {useMemo, useState} from "react";
 import {useTranslation} from "react-i18next";
 import type {MRT_ColumnDef, MRT_Row} from "material-react-table";
 import {
+    Box,
     Button,
     Checkbox,
+    CircularProgress,
     FormControl,
     IconButton,
     InputLabel,
@@ -33,31 +35,56 @@ const AccessCheckbox = ({
                             row,
                             field,
                             workAreaId,
+                            disabled = false,
                         }: {
     row: IWorkAreaGroupRoleAccess;
     field: BooleanField;
     workAreaId: number;
+    disabled?: boolean;
 }) => {
-    const {mutate, isPending} = useUpdateGroupAccessInWorkArea(workAreaId);
+    const [isLoading, setIsLoading] = useState(false);
+    const [effectiveValue, setEffectiveValue] = useState(row[field]);
+    const {mutateAsync: updatingPerm} = useUpdateGroupAccessInWorkArea(workAreaId);
+
+    const handleChange = async (checked: boolean) => {
+        setIsLoading(true);
+        try {
+            await updatingPerm({id: row.id, field, value: checked});
+            setEffectiveValue(checked);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <Checkbox
             size="small"
-            checked={row[field]}
-            sx={{"&.Mui-checked": {color: "text.secondary"}}}
-            disabled={isPending}
-            onChange={(e) => mutate({id: row.id, field, value: e.target.checked})}
+            checked={effectiveValue}
+            sx={{
+                "&.Mui-checked": {color: "text.secondary"},
+            }}
+            disabled={disabled || isLoading}
+            onChange={(e) => handleChange(e.target.checked)}
             onClick={(e) => e.stopPropagation()}
+            icon={isLoading ? <CircularProgress size={16}/> : undefined}
+            checkedIcon={isLoading ? <CircularProgress size={16}/> : undefined}
         />
     );
 };
 
 interface WorkAreaPermissionsSectionProps {
-    workAreaId: number;
+    workAreaId: number | null | undefined;
     workAreaAsResource: ResourceName;
     groupRoleWorkAreas: IWorkAreaGroupRoleAccess[];
+    disabled?: boolean;
 }
 
-const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas}: WorkAreaPermissionsSectionProps) => {
+const WorkAreaPermissions = ({
+                                 workAreaId,
+                                 workAreaAsResource,
+                                 groupRoleWorkAreas,
+                                 disabled = false
+                             }: WorkAreaPermissionsSectionProps) => {
     const {t} = useTranslation(["form"]);
 
     const [groupId, setGroupId] = useState<number>(0);
@@ -66,8 +93,8 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
     const {data: groups = []} = groupManagementApi.useGetList();
     const {data: roles = []} = roleManagementApi.useGetList();
 
-    const {mutate: deleteAccess, isPending: isDeleting} = useDeleteGroupAccessForWorkArea(workAreaId);
-    const {mutate: assignAccess, isPending: isAssigning} = useAssignGroupAccessForWorkArea(workAreaId);
+    const {mutate: deleteAccess, isPending: isDeleting} = useDeleteGroupAccessForWorkArea(workAreaId!);
+    const {mutate: assignAccess, isPending: isAssigning} = useAssignGroupAccessForWorkArea(workAreaId!);
 
     const showCheckOrder = workAreaAsResource === "ordini - ordini clienti";
 
@@ -99,48 +126,80 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
             accessorKey: "can_get",
             header: t("form:access_management.can_get"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_get" workAreaId={workAreaId}/>,
+            Cell: ({row}: { row: MRT_Row<IWorkAreaGroupRoleAccess> }) => <AccessCheckbox row={row.original}
+                                                                                         field="can_get"
+                                                                                         workAreaId={workAreaId!}
+                                                                                         disabled={disabled}/>,
         },
         {
             accessorKey: "can_post",
             header: t("form:access_management.can_post"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_post" workAreaId={workAreaId}/>,
+            Cell: ({row}: { row: MRT_Row<IWorkAreaGroupRoleAccess> }) => <AccessCheckbox row={row.original}
+                                                                                         field="can_post"
+                                                                                         workAreaId={workAreaId!}
+                                                                                         disabled={disabled}/>,
         },
         {
             accessorKey: "can_put",
             header: t("form:access_management.can_put"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_put" workAreaId={workAreaId}/>,
+            Cell: ({row}: { row: MRT_Row<IWorkAreaGroupRoleAccess> }) => <AccessCheckbox row={row.original}
+                                                                                         field="can_put"
+                                                                                         workAreaId={workAreaId!}
+                                                                                         disabled={disabled}/>,
         },
         {
             accessorKey: "can_delete",
             header: t("form:access_management.can_delete"),
             size: 60, minSize: 60, maxSize: 60,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="can_delete" workAreaId={workAreaId}/>,
+            Cell: ({row}: { row: MRT_Row<IWorkAreaGroupRoleAccess> }) => <AccessCheckbox row={row.original}
+                                                                                         field="can_delete"
+                                                                                         workAreaId={workAreaId!}
+                                                                                         disabled={disabled}/>,
         },
         ...(showCheckOrder ? [{
             accessorKey: "check_order",
             header: t("form:access_management.check_order"),
             size: 80, minSize: 80, maxSize: 80,
-            Cell: ({row}: {row: MRT_Row<IWorkAreaGroupRoleAccess>}) => <AccessCheckbox row={row.original} field="check_order" workAreaId={workAreaId}/>,
+            Cell: ({row}: { row: MRT_Row<IWorkAreaGroupRoleAccess> }) => <AccessCheckbox row={row.original}
+                                                                                         field="check_order"
+                                                                                         workAreaId={workAreaId!}
+                                                                                         disabled={disabled}/>,
         }] : []),
-    ], [t, workAreaId, showCheckOrder]);
+    ], [t, workAreaId, showCheckOrder, disabled]);
 
     return (
-        <Stack gap={1.5} sx={{mt: 1}}>
-            <Typography sx={{fontSize: 16, mt: 2}} variant={"h6"}>
+        <Box>
+            <Typography
+                variant="h6"
+                sx={{
+                    mt: 0.5,
+                    mb: 1,
+                    fontWeight: 600,
+                    color: disabled ? 'text.disabled' : 'text.primary'
+                }}
+            >
                 Permessi
             </Typography>
 
-            <Stack direction="row" gap={1} alignItems={"start"} flexWrap="wrap" justifyContent={"space-between"}>
-
-                <Stack direction="row" gap={4} alignItems="start" justifyContent={"space-between"}>
-                    <Stack gap={1}>
-                        <FormControl sx={{minWidth: 400}}>
+            <Stack direction="row" gap={2} alignItems="flex-start" flexWrap="wrap">
+                <Box sx={{
+                    bgcolor: "background.card.default",
+                    border: "1px solid",
+                    borderColor: 'divider',
+                    borderRadius: 1,
+                    p: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    height: "318px",
+                    width: "400px",
+                }}>
+                    <Stack gap={2} sx={{minWidth: 300}}>
+                        <FormControl fullWidth disabled={disabled}>
                             <InputLabel>{t("form:access_management.group_id")}</InputLabel>
                             <Select
-                                size="medium"
+                                size="small"
                                 value={groupId || ""}
                                 label={t("form:access_management.group_id")}
                                 onChange={(e) => setGroupId(Number(e.target.value))}
@@ -150,9 +209,10 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
                                 ))}
                             </Select>
                         </FormControl>
-                        <FormControl sx={{minWidth: 400}}>
+                        <FormControl fullWidth disabled={disabled}>
                             <InputLabel>{t("form:access_management.role_id")}</InputLabel>
                             <Select
+                                size="small"
                                 value={roleId || ""}
                                 label={t("form:access_management.role_id")}
                                 onChange={(e) => setRoleId(Number(e.target.value))}
@@ -162,40 +222,52 @@ const WorkAreaPermissions = ({workAreaId, workAreaAsResource, groupRoleWorkAreas
                                 ))}
                             </Select>
                         </FormControl>
+                        <Button
+                            sx={{mt: 0.5, boxShadow: "none"}}
+                            variant="contained"
+                            disabled={disabled || !groupId || !roleId || isAssigning}
+                            onClick={handleAdd}
+                            fullWidth
+                        >
+                            {isAssigning ? <CircularProgress size={20}/> : 'Aggiungi'}
+                        </Button>
                     </Stack>
-                    <Button
-                        variant={"outlined"}
-                        disabled={!groupId || !roleId || isAssigning}
-                        onClick={handleAdd}
-                    >
-                        Aggiungi
-                    </Button>
-                </Stack>
-                <GenericList<IWorkAreaGroupRoleAccess>
-                    disableBorder
-                    data={groupRoleWorkAreas}
-                    isLoading={false}
-                    columns={columns}
-                    maxHeight="260px"
-                    minHeight="260px"
-                    additionalOptions={{
-                        enableRowActions: true,
-                        renderRowActions: ({row}) => (
-                            <IconButton
-                                size="small"
-                                disabled={isDeleting}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteAccess(row.original.id);
-                                }}
-                            >
-                                <DeleteIcon fontSize="small"/>
-                            </IconButton>
-                        ),
-                    }}
-                />
+                </Box>
+
+                {/* Permissions Table */}
+                <Box sx={{flex: 1, minWidth: 600}}>
+                    <GenericList<IWorkAreaGroupRoleAccess>
+                        disableBorder
+                        data={groupRoleWorkAreas}
+                        isLoading={false}
+                        columns={columns}
+                        maxHeight="300px"
+                        minHeight="300px"
+                        additionalOptions={{
+                            enableRowActions: true,
+                            renderRowActions: ({row}) => (
+                                <IconButton
+                                    size="small"
+                                    disabled={disabled || isDeleting}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deleteAccess(row.original.id);
+                                    }}
+                                    sx={{
+                                        color: 'error.main',
+                                        '&:hover': {
+                                            backgroundColor: 'error.lighter',
+                                        },
+                                    }}
+                                >
+                                    <DeleteIcon fontSize="small"/>
+                                </IconButton>
+                            ),
+                        }}
+                    />
+                </Box>
             </Stack>
-        </Stack>
+        </Box>
     );
 };
 
