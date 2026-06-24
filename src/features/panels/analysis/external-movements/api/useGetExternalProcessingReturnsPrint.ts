@@ -8,7 +8,7 @@ interface IExternalProcessingReturnsPrintParams {
 }
 
 interface IMutateParams {
-    params: IExternalProcessingReturnsPrintParams;
+    params?: IExternalProcessingReturnsPrintParams;
 }
 
 const useGetExternalProcessingReturnsPrint = () => {
