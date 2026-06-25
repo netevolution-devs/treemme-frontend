@@ -8,7 +8,7 @@ interface IDDTNotReturnedPrintParams {
 }
 
 interface IMutateParams {
-    params: IDDTNotReturnedPrintParams;
+    params?: IDDTNotReturnedPrintParams;
 }
 
 const useGetDDTNotReturnedPrint = () => {

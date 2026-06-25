@@ -228,11 +228,10 @@ const ContactAddressFormFields = ({contactId, isAssociationMode, address}: {
             ) : (
                 <>
                     <Stack gap={1} sx={{mb: 1, pt: 2}}>
-                        <TextFieldControlled<IContactAddressForm>
-                            name="address_name"
+                        <SelectFieldControlled<IContactAddressForm>
                             label={t("contacts.address.name")}
-                            required={!disabledFormMode}
-                            deactivated={disabledFormMode}
+                            options={[{value: 'SEDE', label: 'SEDE'}, {value: 'DESTINAZIONE', label: 'DESTINAZIONE'}]}
+                            name={"address_name"}
                         />
                         <TextFieldControlled<IContactAddressForm>
                             name="address"
