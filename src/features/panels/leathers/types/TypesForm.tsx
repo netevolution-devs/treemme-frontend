@@ -12,7 +12,6 @@ import type {ICustomPanelFormProps} from "@ui/panel/store/ICustomPanelPropst";
 import {usePanelFormButtons} from "@features/panels/shared/hooks/usePanelFormButtons";
 import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
-import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 
 export type ITypeForm = Omit<ILeatherType, "id" | "thickness"> & {
@@ -72,7 +71,7 @@ const TypesFormFields = () => {
     const {data: thicknesses = []} = thicknessApi.useGetList();
 
     const {add: addSelectPanel} = useCallablePanel();
-    useSubscribePanel<ILeatherForm>({
+    useSubscribePanel<ITypeForm>({
         formKey: "thickness_id",
         dependencyKey: "thicknesses"
     });

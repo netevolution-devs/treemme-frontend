@@ -10,6 +10,9 @@ import dayjs from "dayjs";
 import GenericList from "@features/panels/shared/GenericList";
 import ListToolbar from "@features/panels/shared/ListToolbar";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import {PrintButton} from "@features/panels/shared/CustomButton";
+import useGetExternalProcessingReturnsPrint
+    from "@features/panels/analysis/external-movements/api/useGetExternalProcessingReturnsPrint";
 
 const MovementsList = () => {
     const {t} = useTranslation(["form"]);
@@ -28,6 +31,7 @@ const MovementsList = () => {
     ), [filterBatchCode]);
 
     const {data: movements = [], isLoading, isFetching} = warehouseMovementsApi.useGetList({queryParams});
+    const {mutateAsync: getReturnsPdf, isPending} = useGetExternalProcessingReturnsPrint();
 
     const columns = useMemo<MRT_ColumnDef<IWarehouseMovement>[]>(() => [
         {
@@ -86,6 +90,7 @@ const MovementsList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        alignButtons={"flex-end"}
                         filters={[
                             <TextFieldFilter
                                 key={"f-batch_code"}
@@ -93,6 +98,14 @@ const MovementsList = () => {
                                 value={filterBatchCode}
                                 onFilterChange={(val) => setFilters({filterBatchCode: val as string})}
                             />,
+                        ]}
+                        buttons={[
+                            <PrintButton
+                                key={"b-print"}
+                                canPrint={true}
+                                isPending={isPending}
+                                onClick={() => getReturnsPdf({})}
+                            />
                         ]}
                     />
                 )

@@ -3,7 +3,6 @@ import {usePanel} from "@ui/panel/PanelContext";
 import type {ILeathersStoreState, ILeatherStoreParams} from "@features/panels/leathers/leathers/LeathersPanel";
 import {leatherApi} from "@features/panels/leathers/leathers/api/leatherApi";
 import {speciesApi} from "@features/panels/leathers/species/api/speciesApi";
-import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 import {originApi} from "@features/panels/leathers/origins/api/originApi";
 import {tanningStageApi} from "@features/panels/leathers/tanning-stages/api/tanningStageApi";
 import {flayApi} from "@features/panels/leathers/flaying/api/flayApi";
@@ -23,7 +22,6 @@ import {useEffect} from "react";
 export type ILeatherForm = Omit<ILeather, "id"
     | "contact"
     | "weight"
-    | "thickness"
     | "flay"
     | "status"
     | "provenance"
@@ -45,7 +43,6 @@ export type ILeatherForm = Omit<ILeather, "id"
 > & {
     supplier_id: number | null;
     weight_id: number | null;
-    thickness_id: number | null;
     flay_id: number | null;
     status_id: number | null;
     provenance_id: number | null;
@@ -85,7 +82,6 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
                 supplier_id: null,
                 weight_id: null,
                 species_id: null,
-                thickness_id: null,
                 flay_id: null,
                 type_id: null,
                 provenance_id: null,
@@ -100,7 +96,6 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
                 supplier_id: x.supplier?.id || null,
                 weight_id: x.weight?.id || null,
                 species_id: x.species?.id || null,
-                thickness_id: x.thickness?.id || null,
                 flay_id: x.flay?.id || null,
                 type_id: x.type?.id || null,
                 provenance_id: x.provenance?.id || null,
@@ -117,7 +112,7 @@ const LeathersForm = ({extra}: ICustomPanelFormProps<ILeatherStoreParams>) => {
             isSaving={isPosting || isPutting}
             isDeleting={isDeleting}
             onClearSelection={() => setUIState({selectedLeatherId: null})}
-            validateBeforeSave={(v) => !!v.weight_id && !!v.species_id && !!v.thickness_id && !!v.flay_id && !!v.type_id && !!v.provenance_id && !!v.status_id}
+            validateBeforeSave={(v) => !!v.weight_id && !!v.species_id && !!v.flay_id && !!v.type_id && !!v.provenance_id && !!v.status_id}
             renderFields={() => (
                 <>
                     <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 1}}>
@@ -217,7 +212,6 @@ const LeatherSelects = () => {
     const {data: types = []} = leatherTypeApi.useGetList();
     const {data: tanningStages = []} = tanningStageApi.useGetList();
     const {data: weights = []} = weightApi.useGetList();
-    const {data: thicknesses = []} = thicknessApi.useGetList();
     const {data: flays = []} = flayApi.useGetList();
 
     const {add: addSelectPanel} = useCallablePanel();
@@ -245,10 +239,6 @@ const LeatherSelects = () => {
     useSubscribePanel<ILeatherForm>({
         formKey: "weight_id",
         dependencyKey: "weights"
-    });
-    useSubscribePanel<ILeatherForm>({
-        formKey: "thickness_id",
-        dependencyKey: "thicknesses"
     });
     useSubscribePanel<ILeatherForm>({
         formKey: "flay_id",
@@ -367,24 +357,6 @@ const LeatherSelects = () => {
                             menu: {
                                 component: "weights",
                                 i18nKey: "menu.leathers.weights"
-                            }
-                        })
-                    }}
-                />
-                <SelectFieldControlled<ILeatherForm>
-                    name={"thickness_id"}
-                    label={t("leathers.leather.thickness")}
-                    options={thicknesses.map((x) => ({
-                        label: `${x.name}`,
-                        value: x.id
-                    }))}
-                    required
-                    onNoOptionsMatch={(input) => {
-                        addSelectPanel({
-                            initialValue: input,
-                            menu: {
-                                component: "thicknesses",
-                                i18nKey: "menu.leathers.thicknesses",
                             }
                         })
                     }}

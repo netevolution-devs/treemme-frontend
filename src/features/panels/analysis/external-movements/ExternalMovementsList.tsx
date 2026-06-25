@@ -16,10 +16,10 @@ import DateFieldRangeFilter from "@ui/form/filters/DateFieldRangeFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import dayjs from "dayjs";
-import useGetExternalProcessingReturnsPrint
-    from "@features/panels/analysis/external-movements/api/useGetExternalProcessingReturnsPrint";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import useGetDDTNotReturnedPrint
+    from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturnedPrint";
 
 const ExternalMovementsList = () => {
     const {t} = useTranslation(["form"]);
@@ -44,7 +44,7 @@ const ExternalMovementsList = () => {
 
     const {data: movements = [], isLoading, isFetching} = useGetExternalProcessingMovements({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
-    const {mutateAsync: getReturnsPdf, isPending} = useGetExternalProcessingReturnsPrint();
+    const {mutateAsync: getDdtNotReturnedPdf, isPending} = useGetDDTNotReturnedPrint();
 
     const canPrint = movements.length > 0;
 
@@ -129,7 +129,7 @@ const ExternalMovementsList = () => {
                                 key={"print-returns"}
                                 canPrint={canPrint}
                                 isPending={isPending}
-                                onClick={() => getReturnsPdf({
+                                onClick={() => getDdtNotReturnedPdf({
                                     params: {
                                         start_date: queryParams.start_date as string,
                                         end_date: queryParams.end_date as string,

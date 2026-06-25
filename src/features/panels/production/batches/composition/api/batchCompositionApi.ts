@@ -6,7 +6,6 @@ export interface IBatchCompositionPayload {
     father_batch_id: number;
     batch_selection_id: number;
     father_batch_piece: number;
-    father_batch_quantity: number;
     date: string;
     composition_note?: string;
 }
