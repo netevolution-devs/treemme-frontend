@@ -114,11 +114,6 @@ const BatchCompositionForm = ({
                 batch_id: batchId
             })}
             create={(data) => {
-                const fatherBatch = batchesAvailability.find(b => b.id === data.father_batch_id);
-                const selection = fatherBatch?.batch_selections.find(s => s.id === data.batch_selection_id);
-                const quantityPerPiece = (selection && selection.pieces > 0) ? selection.quantity / selection.pieces : 0;
-                const calculatedQuantity = (data.father_batch_piece || 0) * quantityPerPiece;
-
                 return createComposition({
                     batch_id: batchId,
                     father_batch_id: data.father_batch_id as number,
@@ -126,15 +121,9 @@ const BatchCompositionForm = ({
                     date: data.date as string,
                     composition_note: data.composition_note as string,
                     father_batch_piece: data.father_batch_piece as number,
-                    father_batch_quantity: calculatedQuantity
                 });
             }}
             update={(_, payload) => {
-                const fatherBatch = batches.find(b => b.id === payload.father_batch_id);
-                const selection = fatherBatch?.batch_selections.find(s => s.id === payload.batch_selection_id);
-                const quantityPerPiece = (selection && selection.pieces > 0) ? selection.quantity / selection.pieces : 0;
-                const calculatedQuantity = (payload.father_batch_piece || 0) * quantityPerPiece;
-
                 return updateComposition({
                     id: selectedBatchCompositionId as number,
                     payload: {
@@ -144,7 +133,6 @@ const BatchCompositionForm = ({
                         date: payload.date as string,
                         composition_note: payload.composition_note as string,
                         father_batch_piece: payload.father_batch_piece as number,
-                        father_batch_quantity: calculatedQuantity
                     }
                 });
             }}
