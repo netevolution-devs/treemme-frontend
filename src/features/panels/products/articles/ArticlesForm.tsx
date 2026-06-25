@@ -6,7 +6,6 @@ import GenericForm from "@features/panels/shared/GenericForm";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle";
 import TextFieldControlled from "@ui/form/controlled/TextFieldControlled";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
-import FlagCheckBoxFieldControlled from "@ui/form/controlled/FlagCheckBoxFieldControlled";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {articleTypeApi} from "@features/panels/products/article-types/api/articleTypeApi";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
@@ -24,7 +23,6 @@ import {usePanelFormLogic} from "@ui/panel/usePanelFormLogin";
 
 export type IArticleForm = {
     code: string;
-    full_grain: boolean;
     client_id: number | null;
     article_type_id: number | null;
     // article_variation: string;
@@ -84,7 +82,6 @@ const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IAr
             entity={article}
             emptyValues={{
                 code: '',
-                full_grain: false,
                 client_id: extra?.clientId ?? null,
                 article_type_id: null,
                 // article_variation: '',
@@ -97,7 +94,6 @@ const ArticlesForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IAr
             }}
             mapEntityToForm={(a) => ({
                 code: a.code,
-                full_grain: a.full_grain,
                 client_id: a.client?.id ?? null,
                 article_type_id: a.article_type?.id ?? null,
                 // article_variation: a.article_variation ?? '',
@@ -181,7 +177,7 @@ const ArticlesFormFields = ({
 
     return (
         <>
-            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
+            <Box sx={{display: 'flex', flexDirection: 'row', gap: 1, mb: 0.7}}>
                 {/*<TextFieldControlled<IArticleForm>*/}
                 {/*    name="code"*/}
                 {/*    label={t("products.articles.code")}*/}
@@ -196,10 +192,6 @@ const ArticlesFormFields = ({
                     label={t("products.articles.name")}
                     value={article?.name}
                     isFilled={!!selectedArticledId}
-                />
-                <FlagCheckBoxFieldControlled<IArticleForm>
-                    name="full_grain"
-                    label={t("products.articles.full_grain")}
                 />
             </Box>
             <Box sx={{display: 'flex', flexDirection: 'row', gap: 1}}>
