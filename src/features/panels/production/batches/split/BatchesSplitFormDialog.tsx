@@ -14,7 +14,6 @@ import NumberFieldControlled from "@ui/form/controlled/NumberFieldControlled";
 import DateFieldControlled from "@ui/form/controlled/DateFieldControlled";
 import dayjs from "dayjs";
 import SelectFieldControlled from "@ui/form/controlled/SelectFieldController";
-import type {ILeatherForm} from "@features/panels/leathers/leathers/LeathersForm";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import useCallablePanel from "@ui/panel/useCallablePanel";
 import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
@@ -104,7 +103,7 @@ const BatchesSplitFormDialogFields = ({selectedBatchId}: BatchesSplitFormDialogF
                 name={"date"}
                 label={t("production.date")}
             />
-            <SelectFieldControlled<ILeatherForm>
+            <SelectFieldControlled<ISplitForm>
                 name={"thickness_id"}
                 label={t("leathers.leather.thickness")}
                 options={thicknesses.map((x) => ({
