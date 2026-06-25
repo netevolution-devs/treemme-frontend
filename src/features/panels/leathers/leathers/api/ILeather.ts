@@ -13,7 +13,7 @@ export interface ILeather {
     species: ISpecies;
     contact: IContact;
     supplier: IContact;
-    thickness: IThickness;
+    thickness?: IThickness;
     flay: IFlay;
     type: ILeatherType;
     provenance: IOrigin;
