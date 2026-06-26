@@ -4,6 +4,7 @@ import {useFilteredRoutes} from "@features/routing/ProtectedRoutes";
 import LoginPage from "@features/auth/ui/LoginPage";
 import OtpPage from "@features/auth/ui/setup-otp/OtpPage";
 import OtpSetupPage from "@features/auth/ui/setup-otp/OtpSetupPage";
+import LoginChangePasswordPage from "@features/auth/ui/LoginChangePasswordPage";
 import Layout from "@ui/layout/default/Layout";
 import {defaultProtectedRoutes} from "@features/routing/default/defaultProtectedRoutes";
 import useAxiosInstance from "@api/useAxiosInstance";
@@ -23,6 +24,7 @@ const RoutingDefault = () => {
                 <Route index element={<LoginPage/>}/>
                 <Route path="/login/otp" element={<OtpPage/>}/>
                 <Route path="/login/otp/setup" element={<OtpSetupPage/>}/>
+                <Route path="/login/change-password" element={<LoginChangePasswordPage/>}/>
             </Route>
 
             <Route element={<AuthUserGuard/>}>
