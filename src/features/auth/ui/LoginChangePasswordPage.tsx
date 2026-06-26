@@ -20,7 +20,7 @@ const LoginChangePasswordPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const {userCode, setUserCode} = useAuth();
-    const from = (location.state as {from?: {pathname: string; search: string}})?.from;
+    const from = (location.state as { from?: { pathname: string; search: string } })?.from;
 
     const methods = useForm<ILoginChangePasswordForm>({
         defaultValues: {
@@ -28,7 +28,8 @@ const LoginChangePasswordPage = () => {
             new_password: "",
             confirm_password: ""
         },
-        mode: "onChange"
+        mode: "onChange",
+        disabled: isPending,
     });
 
     const {handleSubmit, watch} = methods;
@@ -106,57 +107,58 @@ const LoginChangePasswordPage = () => {
                                 </Alert>
                             )}
                         </Box>
+                        {!isSuccess && (
+                            <FormProvider {...methods}>
+                                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                                    <Stack spacing={3}>
+                                        <PasswordField<ILoginChangePasswordForm>
+                                            name="old_password"
+                                            label={t("otp.password-change.old-password")}
+                                            required
+                                            autoComplete="current-password"
+                                        />
+                                        <PasswordField<ILoginChangePasswordForm>
+                                            name="new_password"
+                                            label={t("otp.password-change.new-password")}
+                                            required
+                                            autoComplete="new-password"
+                                            rules={{
+                                                validate: {
+                                                    different: (value, formValues) =>
+                                                        value !== formValues.old_password || t("otp.password-change.password-different")
+                                                }
+                                            }}
+                                        />
+                                        <PasswordField<ILoginChangePasswordForm>
+                                            name="confirm_password"
+                                            label={t("otp.password-change.confirm-password")}
+                                            required
+                                            autoComplete="new-password"
+                                            rules={{
+                                                validate: (value) =>
+                                                    value === newPassword || t("otp.password-change.not-equal")
+                                            }}
+                                        />
 
-                        <FormProvider {...methods}>
-                            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                                <Stack spacing={3}>
-                                    <PasswordField<ILoginChangePasswordForm>
-                                        name="old_password"
-                                        label={t("otp.password-change.old-password")}
-                                        required
-                                        autoComplete="current-password"
-                                    />
-                                    <PasswordField<ILoginChangePasswordForm>
-                                        name="new_password"
-                                        label={t("otp.password-change.new-password")}
-                                        required
-                                        autoComplete="new-password"
-                                        rules={{
-                                            validate: {
-                                                different: (value, formValues) =>
-                                                    value !== formValues.old_password || t("otp.password-change.password-different")
-                                            }
-                                        }}
-                                    />
-                                    <PasswordField<ILoginChangePasswordForm>
-                                        name="confirm_password"
-                                        label={t("otp.password-change.confirm-password")}
-                                        required
-                                        autoComplete="new-password"
-                                        rules={{
-                                            validate: (value) =>
-                                                value === newPassword || t("otp.password-change.not-equal")
-                                        }}
-                                    />
+                                        <Button
+                                            fullWidth
+                                            size="small"
+                                            variant="contained"
+                                            sx={{textTransform: 'none', fontWeight: 800, height: 35, boxShadow: "none"}}
+                                            type="submit"
+                                            disabled={isPending}
+                                        >
+                                            {isPending ? (
+                                                <CircularProgress size={20}/>
+                                            ) : (
+                                                <>{t("otp.password-change.button")}</>
+                                            )}
+                                        </Button>
 
-                                    <Button
-                                        fullWidth
-                                        size="small"
-                                        variant="contained"
-                                        sx={{textTransform: 'none', fontWeight: 800, height: 35, boxShadow: "none"}}
-                                        type="submit"
-                                        disabled={isPending}
-                                    >
-                                        {isPending ? (
-                                            <CircularProgress size={20}/>
-                                        ) : (
-                                            <>{t("otp.password-change.button")}</>
-                                        )}
-                                    </Button>
-
-                                </Stack>
-                            </Box>
-                        </FormProvider>
+                                    </Stack>
+                                </Box>
+                            </FormProvider>
+                        )}
                     </Card>
                 </Stack>
             </Grid>
