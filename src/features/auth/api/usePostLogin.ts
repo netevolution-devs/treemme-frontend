@@ -7,11 +7,12 @@ interface ILoginData {
     password: string;
 }
 
-interface ILoginResponse {
+export interface ILoginResponse {
     refresh_token?: string,
     error?: string;
     user_code?: string;
     requires_totp?: boolean;
+    requires_password_change?: boolean;
 }
 
 const usePostLogin = () => {

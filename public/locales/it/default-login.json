@@ -7,7 +7,9 @@
     "welcome": "Login",
     "subtitle": "Usa le tue credenziali",
     "button": "Accedi",
-    "forgotPassword": "Password dimenticata? Chiedi il recupero ad un amministratore"
+    "forgotPassword": "Password dimenticata? Chiedi il recupero ad un amministratore",
+    "passwordExpiring": "La tua password è scaduta. Cambiala ora per proteggere il tuo account.",
+    "changePasswordNow": "Cambia password ora"
   },
   "otp": {
     "login": {
@@ -23,6 +25,19 @@
       "confirm-password": "Conferma password",
       "button": "Cambia password",
       "loading": "Cambio in corso"
+    },
+    "password-change": {
+      "title": "Cambio Password Obbligatorio",
+      "description": "La tua password è scaduta (90 giorni). Inserisci la vecchia e la nuova password.",
+      "old-password": "Vecchia Password",
+      "new-password": "Nuova Password",
+      "confirm-password": "Conferma Nuova Password",
+      "button": "Cambia Password",
+      "loading": "Cambio in corso...",
+      "success": "Password cambiata con successo. Reindirizzamento al login...",
+      "error": "Errore durante il cambio password",
+      "not-equal": "Le password non coincidono",
+      "password-different": "La nuova password deve essere diversa dalla vecchia"
     },
     "setup": {
       "label": "Generazione codice QR...",
