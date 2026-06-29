@@ -542,7 +542,8 @@
       "return": "Rientra lotto",
       "massive_return": "Rientro massivo",
       "confirm_return": "Conferma rientro",
-      "close_row": "Chiudi riga ddt"
+      "close_row": "Chiudi riga ddt",
+      "ddt_number": "Numero DDT Terzista"
     }
   },
   "warehouse": {

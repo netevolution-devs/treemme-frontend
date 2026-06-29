@@ -77,7 +77,7 @@ const ChangePasswordPage = () => {
                     <Box sx={{mb: 2}}>
                         {isSuccess && (
                             <Alert severity="success">
-                                {t("common:form.success.save") || "Password cambiata con successo"}
+                                {t("common:form.success.save")}
                             </Alert>
                         )}
                         {isError && (

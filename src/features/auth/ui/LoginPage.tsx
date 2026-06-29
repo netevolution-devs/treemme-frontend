@@ -5,9 +5,11 @@ import {
     Typography,
     Card,
     CircularProgress,
-    useTheme, Grid
+    useTheme, Grid,
+    Link
 } from "@mui/material";
 import {useLocation, useNavigate} from "react-router";
+import {useState} from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {appNs} from "../../../i18n";
 import Splash from "./Splash";
@@ -17,6 +19,7 @@ import PasswordField from "../../../shared/ui/form/controlled/PasswordField";
 import usePostLogin from "../api/usePostLogin";
 import {useAuth} from "../model/AuthContext";
 import {useMenuStore} from "@ui/layout/default/layoutStore";
+import {useSnackbar} from "notistack";
 
 const backgroundSrc = "";
 
@@ -28,6 +31,8 @@ const LoginPage = () => {
     const {mutateAsync: loginMutation, isPending: loginIsPending} = usePostLogin();
     const {showMenu} = useMenuStore();
 
+    const { enqueueSnackbar } = useSnackbar();
+
     const {setUserCode} = useAuth();
     const from = (location.state as { from?: { pathname: string; search: string } })?.from;
 
@@ -36,11 +41,26 @@ const LoginPage = () => {
         disabled: loginIsPending
     });
 
+    const [passwordExpiring, setPasswordExpiring] = useState(false);
+
     const onSubmit = methods.handleSubmit(async ({email, password}) => {
         const response = await loginMutation({email, password});
+        console.log(response);
+
         if (response.error === "totp_required") {
             setUserCode(response.user_code as string);
             navigate("/login/otp", {replace: true, state: {from}});
+            return;
+        }
+        if (response.requires_password_change) {
+            setUserCode(response.user_code as string);
+            navigate("/login/change-password", {replace: true, state: {from}});
+            return;
+        }
+        if (response.error === "Password expiring" && response.user_code) {
+            setUserCode(response.user_code as string);
+            setPasswordExpiring(true);
+            enqueueSnackbar(t("form.passwordExpiring"), {variant: "error"});
             return;
         }
         const destination = from ? `${from.pathname}${from.search ?? ""}` : "/";
@@ -141,12 +161,26 @@ const LoginPage = () => {
                                 </Stack>
                             </Box>
                         </FormProvider>
+                        {passwordExpiring && (
+                            <Stack sx={{mt: 3, width: '100%', textAlign: 'center'}}>
+                                <Link
+                                    variant="body2"
+                                    onClick={() => {
+                                        setPasswordExpiring(false);
+                                        navigate("/login/change-password", {replace: true, state: {from}});
+                                    }}
+                                    sx={{cursor: 'pointer', fontWeight: 500}}
+                                >
+                                    {t("form.changePasswordNow")}
+                                </Link>
+                            </Stack>
+                        )}
                         <Stack
                             direction={"row"}
                             alignItems={"center"}
                             spacing={2}
                             sx={{
-                                mt: 4,
+                                mt: 3,
                                 justifyContent: 'center'
                             }}
                         >

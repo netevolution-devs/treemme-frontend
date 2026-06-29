@@ -7,6 +7,7 @@ interface ISubcontractingReturnPayload {
     pieces: number;
     note: string;
     closed?: boolean;
+    subcontractor_ddt_number?: string | null;
 }
 
 const usePostSubcontractingReturn = (batchId: number) => {
@@ -21,6 +22,7 @@ const usePostSubcontractingReturn = (batchId: number) => {
                 pieces: payload.pieces,
                 row_note: payload.note,
                 ...(payload.closed !== undefined && { closed: payload.closed }),
+                ...(payload.subcontractor_ddt_number !== undefined && { subcontractor_ddt_number: payload.subcontractor_ddt_number }),
             } as never);
             return response.data.data;
         },

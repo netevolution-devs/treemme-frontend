@@ -28,6 +28,7 @@ export type IDDTReturnForm = {
     date: string;
     pieces: number | null;
     note: string;
+    subcontractor_ddt_number: string | null;
     closed: boolean;
 }
 
@@ -56,6 +57,10 @@ const ReturnFormFields = ({selectedRow}: {selectedRow: IDDTRowNotReturned | unde
                     label={t("shipping.ddt_rows.close_row")}
                 />
             )}
+            <TextFieldControlled<IDDTReturnForm>
+                name="subcontractor_ddt_number"
+                label={t("shipping.ddt_rows.ddt_number")}
+            />
             <TextFieldControlled<IDDTReturnForm>
                 name="note"
                 label={t("contacts.notes")}
@@ -90,21 +95,24 @@ const DDTReturnFormDialog = forwardRef<IDialogActions, Props>((_props, ref) => {
                     date: dayjs().format("YYYY-MM-DD"),
                     pieces: null,
                     note: "",
-                    closed: false
+                    closed: false,
+                    subcontractor_ddt_number: ""
                 }}
                 emptyValues={{
                     date: dayjs().format("YYYY-MM-DD"),
                     pieces: null,
                     note: "",
-                    closed: false
+                    closed: false,
+                    subcontractor_ddt_number: ""
                 }}
-                mapEntityToForm={(x) => ({date: x.date, pieces: x.pieces, note: x.note, closed: x.closed})}
+                mapEntityToForm={(x) => ({date: x.date, pieces: x.pieces, note: x.note, closed: x.closed, subcontractor_ddt_number: x.subcontractor_ddt_number})}
                 create={(payload) => returnSubcontract({
                     ddtRowId: selectedId as number,
                     date: payload.date,
                     pieces: payload.pieces as number,
                     note: payload.note,
-                    closed: payload.closed
+                    closed: payload.closed,
+                    subcontractor_ddt_number: payload.subcontractor_ddt_number
                 })}
                 extraButtons={[
                     <CustomButton

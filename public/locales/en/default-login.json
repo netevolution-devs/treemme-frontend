@@ -7,7 +7,9 @@
     "welcome": "Welcome back",
     "subtitle": "Use your credentials.",
     "button": "Login",
-    "forgotPassword": "Forgot password? <outLink>Click here</outLink>"
+    "forgotPassword": "Forgot password? <outLink>Click here</outLink>",
+    "passwordExpiring": "Your password is about to expire",
+    "changePasswordNow": "Change password now"
   },
   "otp": {
     "login": {
@@ -24,6 +26,19 @@
       "button": "Change password",
       "not-equal": "Passwords do not match",
       "loading": "Changing password"
+    },
+    "password-change": {
+      "title": "Mandatory Password Change",
+      "description": "Your password has expired (90 days). Enter your old and new password.",
+      "old-password": "Old Password",
+      "new-password": "New Password",
+      "confirm-password": "Confirm New Password",
+      "button": "Change Password",
+      "loading": "Changing...",
+      "success": "Password changed successfully. Redirecting to login...",
+      "error": "Error during password change",
+      "not-equal": "Passwords do not match",
+      "password-different": "New password must be different from the old one"
     },
     "setup": {
       "label": "Generating QR code...",
