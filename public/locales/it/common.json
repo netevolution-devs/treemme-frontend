@@ -15,6 +15,9 @@
     "user": "User"
   },
   "form": {
+    "success": {
+      "save": "Password cambiata con successo"
+    },
     "field": {
       "email": "Email",
       "password": "Password"
