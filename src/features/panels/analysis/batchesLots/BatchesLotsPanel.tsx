@@ -20,7 +20,7 @@ const BatchesLotsPanel = () => {
         <GenericPanel<unknown, IBatchesLotsStoreState>
             kind={"batchesLots"}
             initialState={{uiState: initialUiState}}
-            listComponent={<BatchesList preselectedBatchTypeId={batchBaseTypeId as number}/>}
+            listComponent={<BatchesList preselectedBatchTypeId={batchBaseTypeId as number} disableExtraFilters/>}
         >
             <BatchesLotsContent/>
         </GenericPanel>

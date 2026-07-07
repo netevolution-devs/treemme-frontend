@@ -24,9 +24,10 @@ interface BatchesListProps {
     minHeight?: string;
     additionalOptions?: Partial<MRT_TableOptions<IBatch>>;
     preselectedBatchTypeId?: number;
+    disableExtraFilters?: boolean;
 }
 
-const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions, preselectedBatchTypeId}: BatchesListProps) => {
+const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions, preselectedBatchTypeId, disableExtraFilters = false}: BatchesListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -136,34 +137,50 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
                                 type={"year"}
                                 onFilterChange={(value) => setFilters({filterYear: value as number})}
                             />,
-                            <SelectFieldFilter
-                                key={"f-provenance"}
-                                label={t("production.batch.provenance")}
-                                value={filterProvenanceId}
-                                options={origins.map(s => ({value: s.id, label: `${s?.area?.name || ""} - ${s?.nation.name  || ""}`}))}
-                                onFilterChange={(value) => setFilters({filterProvenanceId: value as number})}
-                            />,
-                            <SelectFieldFilter
-                                key={"f-supplier"}
-                                label={t("production.batch.supplier")}
-                                value={filterSupplierId}
-                                options={suppliers.map(s => ({value: s.id, label: s.name}))}
-                                onFilterChange={(value) => setFilters({filterSupplierId: value as number})}
-                            />,
-                            <SelectFieldFilter
-                                key={"f-selection"}
-                                label={t("production.batch.selection")}
-                                value={filterSelectionId}
-                                options={selections.map(s => ({value: s.id, label: s.name}))}
-                                onFilterChange={(value) => setFilters({filterSelectionId: value as number})}
-                            />,
-                            <SelectFieldFilter
-                                key={"f-thickness"}
-                                label={t("production.batch.thickness")}
-                                value={filterThicknessId}
-                                options={thicknesses.map(s => ({value: s.id, label: s.name}))}
-                                onFilterChange={(value) => setFilters({filterThicknessId: value as number})}
-                            />,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-provenance"}
+                                        label={t("production.batch.provenance")}
+                                        value={filterProvenanceId}
+                                        options={origins.map(s => ({value: s.id, label: `${s?.area?.name || ""} - ${s?.nation.name  || ""}`}))}
+                                        onFilterChange={(value) => setFilters({filterProvenanceId: value as number})}
+                                    />
+                                )}
+                            </>,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-supplier"}
+                                        label={t("production.batch.supplier")}
+                                        value={filterSupplierId}
+                                        options={suppliers.map(s => ({value: s.id, label: s.name}))}
+                                        onFilterChange={(value) => setFilters({filterSupplierId: value as number})}
+                                    />
+                                )}
+                            </>,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-selection"}
+                                        label={t("production.batch.selection")}
+                                        value={filterSelectionId}
+                                        options={selections.map(s => ({value: s.id, label: s.name}))}
+                                        onFilterChange={(value) => setFilters({filterSelectionId: value as number})}
+                                    />
+                                )}
+                            </>,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-thickness"}
+                                        label={t("production.batch.thickness")}
+                                        value={filterThicknessId}
+                                        options={thicknesses.map(s => ({value: s.id, label: s.name}))}
+                                        onFilterChange={(value) => setFilters({filterThicknessId: value as number})}
+                                    />
+                                )}
+                            </>,
                         ]}
                     />
                 ),
