@@ -7,6 +7,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IBatchSelectionQuantityItem} from "@features/panels/analysis/batchesLots/api/IBatchDetailReport";
 import type {BaseEntity} from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 type IBatchSelectionQuantityRow = IBatchSelectionQuantityItem & BaseEntity;
 
@@ -62,6 +63,10 @@ const BatchesLotsSelectionsList = () => {
             isLoading={isLoading}
             isFetching={isFetching}
             columns={columns}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => <ListToolbar label={t("batches.tabs.selections")}/>
+            }}
         />
     )
 }
