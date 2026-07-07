@@ -39,7 +39,6 @@ const ArticleTypesForm = ({initialName, onSuccess}: ICustomPanelFormProps) => {
     const {mutateAsync: updateArticleType, isPending: isPutting} = usePut();
     const {mutateAsync: deleteArticleType, isPending: isDeleting} = useDelete();
 
-
     return (
         <GenericForm<IArticleTypeForm, IArticleType, IArticleTypesStoreState>
             resource="articoli - tipologie articoli"
@@ -80,7 +79,7 @@ const ArticleTypesFields = () => {
     // const {data: articleClasses = []} = articleClassApi.useGetList();
 
     const leatherTypeOptions = useMemo(() =>
-            leatherTypes.map(lt => ({value: lt.id, label: lt.name})),
+            leatherTypes.filter(x => x.code !== "P").map(lt => ({value: lt.id, label: lt.name})),
         [leatherTypes]);
 
     // const articleClassOptions = useMemo(() =>
