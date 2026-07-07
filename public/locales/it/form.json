@@ -5,7 +5,8 @@
       "movements": "Movimenti",
       "chronology": "Cronologia",
       "costs": "Costi",
-      "sales": "Vendite"
+      "sales": "Vendite",
+      "selections": "Scelte"
     },
     "costs": {
       "date": "Data",
@@ -21,6 +22,14 @@
       "quantity": "Quantità",
       "total_value": "Valore totale",
       "note": "Note"
+    },
+    "selections": {
+      "selection_name": "Scelta",
+      "total_pieces": "Pezzi Totali",
+      "total_quantity": "Quantità Totale",
+      "available_pieces": "Pezzi Disp.",
+      "available_quantity": "Quantità Disp.",
+      "quantity_ftsq": "Qtà PQ Disp."
     }
   },
   "subcontractor": {

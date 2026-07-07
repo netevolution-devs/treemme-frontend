@@ -5,6 +5,7 @@ import GenericTabContent from "@features/panels/shared/GenericTabContent";
 import BatchesForm from "@features/panels/production/batches/BatchesForm";
 import BatchesLotsCostsList from "@features/panels/analysis/batchesLots/BatchesLotsCostsList";
 import BatchesLotsSalesList from "@features/panels/analysis/batchesLots/BatchesLotsSalesList";
+import BatchesLotsSelectionsList from "@features/panels/analysis/batchesLots/BatchesLotsSelectionsList";
 
 import {useTranslation} from "react-i18next";
 import BatchesLotsResume from "@features/panels/analysis/batchesLots/BatchesLotsResume";
@@ -23,6 +24,7 @@ const BatchesLotsContent = () => {
                     {label: t("batches.tabs.batch"), component: <BatchesForm disableFunctions/>},
                     {label: t("batches.tabs.movements"), component: <WarehouseMovementsList/>},
                     {label: t("batches.tabs.chronology"), component: <BatchesChronology/>},
+                    {label: t("batches.tabs.selections"), component: <BatchesLotsSelectionsList/>},
                     {label: t("batches.tabs.costs"), component: <BatchesLotsCostsList/>},
                     {label: t("batches.tabs.sales"), component: <BatchesLotsSalesList/>}
                 ]}

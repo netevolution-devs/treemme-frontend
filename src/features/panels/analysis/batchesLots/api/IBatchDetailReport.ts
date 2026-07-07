@@ -66,6 +66,26 @@ export interface IBatchDetailReportObj {
     flower_cost_lire_pq: number;
 }
 
+export interface IBatchSelectionQuantityItem {
+    selection_id: number;
+    selection_name: string;
+    total: {
+        pieces: number;
+        quantity: number;
+    };
+    available: {
+        pieces: number;
+        quantity: number;
+        quantity_ftsq: number;
+    };
+}
+
+export interface IBatchSelectionQuantitiesResponse {
+    batch_id: number;
+    batch_code: string;
+    selections: IBatchSelectionQuantityItem[];
+}
+
 export interface IBatchDetailReport {
     id: number;
     code: string;
