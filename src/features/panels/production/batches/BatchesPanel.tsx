@@ -21,6 +21,10 @@ export interface IBatchesStoreFilter {
     filterBatchCode?: string;
     filterBatchTypeId?: number | null
     filterYear?: number | null;
+    filterProvenanceId?: number | null;
+    filterSupplierId?: number | null;
+    filterSelectionId?: number | null;
+    filterThicknessId?: number | null;
 }
 
 export interface IBatchesStoreParams {

@@ -4,7 +4,7 @@ import useApi from "@api/useApi";
 
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
-import type {IBatchDetailReport} from "@features/panels/analysis/batchesLots/api/IBatchDetailReport";
+import type {IBatchDetailReport, IBatchSelectionQuantitiesResponse} from "@features/panels/analysis/batchesLots/api/IBatchDetailReport";
 import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
 
 export interface IBatchesPayload extends Omit<IBatch, 'id'
@@ -120,6 +120,19 @@ export const batchApi = {
             onSuccess: (_, id) => {
                 void queryClient.invalidateQueries({queryKey: ["BATCH", "DETAIL", id]});
             }
+        });
+    },
+    useGetBatchSelectionQuantities: (batch_id: number) => {
+        const {get} = useApi();
+        return useQuery({
+            queryKey: ["BATCH", "SELECTION-QUANTITIES", batch_id],
+            queryFn: async () => {
+                const response = await get<IBatchSelectionQuantitiesResponse>(`/batch/${batch_id}/selections/quantities`);
+                const data = response.data.data;
+                if (!data || !Array.isArray(data.selections)) return [];
+                return data.selections;
+            },
+            enabled: !!batch_id,
         });
     },
 };
