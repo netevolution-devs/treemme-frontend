@@ -1,4 +1,5 @@
-import {Box, Link, Typography} from "@mui/material";
+import {Box, MenuItem, useTheme} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import GenericList from "@features/panels/shared/GenericList";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
@@ -15,9 +16,12 @@ type IBatchSelectionQuantityRow = IBatchSelectionQuantityItem & BaseEntity;
 
 const BatchesLotsSelectionsList = () => {
     const {t} = useTranslation(["form"]);
+    const theme = useTheme();
 
     const {useStore} = usePanel<unknown, IBatchesLotsStoreState>();
     const selectedBatchId = useStore(state => state.uiState.selectedBatchId);
+    const selectedBatchSelectionId = useStore(state => state.uiState.selectedBatchSelectionId);
+    const setUIState = useStore(state => state.setUIState);
 
     const addPanel = useDockviewStore(state => state.addPanel);
 
@@ -57,9 +61,15 @@ const BatchesLotsSelectionsList = () => {
 
     const handleOpenBatch = (batch: IBatchInSelection) => {
         addPanel({
-            id: `batches:${batch.id}`,
-            component: "batches",
-            params: {id: batch.id, batch_code: batch.code},
+            id: `batches:${crypto.randomUUID()}`,
+            title: t("menu:menu.production.batches"),
+            component: 'batches',
+            params: {
+                extra: {
+                    id: batch.id,
+                    batch_code: batch.code,
+                }
+            }
         });
     };
 
@@ -71,19 +81,19 @@ const BatchesLotsSelectionsList = () => {
             isLoading={isLoading}
             isFetching={isFetching}
             columns={columns}
+            selectedId={selectedBatchSelectionId}
+            onRowSelect={(id) => setUIState({selectedBatchSelectionId: id as number})}
             additionalOptions={{
                 enableTopToolbar: true,
                 renderTopToolbar: () => <ListToolbar label={t("batches.tabs.selections")}/>,
+                muiDetailPanelProps: {
+                    sx: {p: 0},
+                    style: {color: `${theme.palette.text.primary} !important`} as React.CSSProperties,
+                },
                 renderDetailPanel: ({row}) => {
                     const batches = row.original.batches;
                     if (!batches || batches.length === 0) {
-                        return (
-                            <Box sx={{pl: 4, py: 1}}>
-                                <Typography variant="body2" sx={{fontStyle: "italic"}}>
-                                    Nessun lotto associato
-                                </Typography>
-                            </Box>
-                        );
+                        return null;
                     }
 
                     const batchData = batches.map((batch, i) => ({
@@ -96,16 +106,6 @@ const BatchesLotsSelectionsList = () => {
                             accessorKey: "code",
                             header: "Codice Lotto",
                             size: 200,
-                            Cell: ({row: batchRow}) => (
-                                <Link
-                                    component="button"
-                                    variant="body2"
-                                    underline="hover"
-                                    onClick={() => handleOpenBatch(batchRow.original)}
-                                >
-                                    {batchRow.original.code}
-                                </Link>
-                            ),
                         },
                         {
                             accessorKey: "pieces",
@@ -115,15 +115,27 @@ const BatchesLotsSelectionsList = () => {
                     ];
 
                     return (
-                        <Box sx={{pl: 4, pr: 2, py: 1}}>
+                        <Box sx={{pl: 4, pb: 2}}>
                             <GenericList<(typeof batchData)[number]>
                                 disablePadding
                                 data={batchData}
                                 columns={batchColumns}
                                 disableBorder
-                                maxHeight={"200px"}
-                                minHeight={"100px"}
+                                maxHeight={"400px"}
+                                minHeight={"0px"}
                                 isLoading={false}
+                                additionalOptions={{
+                                    enableRowActions: true,
+                                    renderRowActionMenuItems: ({row, closeMenu}) => [
+                                        <MenuItem key={"view_batch"} onClick={() => {
+                                            handleOpenBatch(row.original);
+                                            closeMenu();
+                                        }}>
+                                            <VisibilityIcon color={"primary"} sx={{mr: 1}} />
+                                            {t("processes.view_batch")}
+                                        </MenuItem>,
+                                    ],
+                                }}
                             />
                         </Box>
                     );

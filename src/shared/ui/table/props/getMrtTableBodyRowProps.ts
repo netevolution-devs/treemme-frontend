@@ -26,11 +26,11 @@ export const getMrtTableBodyRowProps = <D extends MRT_RowData, >(
                     ? `${theme.palette.primary.main} !important`
                     : theme.palette.tableColors.hover)
                 : undefined,
-            "& .MuiTableCell-root": isSelected ? {
+            "& > .MuiTableCell-root": isSelected ? {
                 color: `${theme.palette.primary.contrastText} !important`,
             } : {},
         },
-        "& .MuiTableCell-root": isSelected ? {
+        "& > .MuiTableCell-root": isSelected ? {
             color: `${theme.palette.primary.contrastText} !important`,
         } : {},
         "& button.pending svg": {

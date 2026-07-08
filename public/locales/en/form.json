@@ -167,6 +167,9 @@
   "contacts": {
     "carrier-name": "Carrier"
   },
+  "processes": {
+    "view_batch": "View batch"
+  },
   "order-search": {
     "production-report": "Orders to produce",
     "order-row-report": "Order row report"

@@ -133,7 +133,7 @@ const GenericList = <TData extends BaseEntity>({
                     {content()}
                 </Card>
             ) : (
-                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: 'divider', borderRadius: 1, p: !disablePadding ? 1 : 0}}>
+                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: !disablePadding ? 'divider' : 'transparent', borderRadius: 1, p: !disablePadding ? 1 : 0}}>
                     {content()}
                 </Box>
             )}

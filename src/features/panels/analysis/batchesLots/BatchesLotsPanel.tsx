@@ -8,6 +8,7 @@ import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/b
 
 export interface IBatchesLotsStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
+    selectedBatchSelectionId?: number | null;
 }
 
 const BatchesLotsPanel = () => {
