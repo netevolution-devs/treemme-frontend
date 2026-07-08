@@ -86,6 +86,13 @@ const BatchesLotsSelectionsList = () => {
             additionalOptions={{
                 enableTopToolbar: true,
                 renderTopToolbar: () => <ListToolbar label={t("batches.tabs.selections")}/>,
+                muiExpandButtonProps: {
+                    sx: {
+                        '&.Mui-disabled': {
+                            opacity: 0.15,
+                        },
+                    },
+                },
                 muiDetailPanelProps: {
                     sx: {p: 0},
                     style: {color: `${theme.palette.text.primary} !important`} as React.CSSProperties,
