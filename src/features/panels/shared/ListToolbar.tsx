@@ -12,7 +12,7 @@ interface ListToolbarProps {
 
 const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'start'}: ListToolbarProps) => {
     return (
-        <Box sx={{display: 'flex', flexDirection: "row", gap: 0.5, minHeight: 32, mb: 1, alignItems: 'center', ...sx}}>
+        <Box sx={{display: 'flex', flexDirection: "row", flexWrap: 'wrap', gap: 0.5, minHeight: 32, mb: 1, alignItems: 'center', ...sx}}>
             {filters && filters.length > 0 && (
                 <Box sx={{display: 'flex', flexDirection: "row", gap: 1, alignItems: 'center', ml: 0.7}}>
                     <SearchIcon color={"primary"} fontSize={"medium"} sx={{mt: 0.8, mr: -0.5}}/>
@@ -28,7 +28,7 @@ const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'start'}: List
                     {label}
                 </Box>
             )}
-            <Box sx={{display: 'flex', justifyContent: alignButtons, gap: 0.8, width: '100%'}}>
+            <Box sx={{display: 'flex', justifyContent: alignButtons, gap: 0.8, flex: 1}}>
                 {buttons?.map((buttonComponent) => (
                     <>{buttonComponent}</>
                 ))}
