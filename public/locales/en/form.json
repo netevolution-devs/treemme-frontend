@@ -5,7 +5,8 @@
       "movements": "Movements",
       "chronology": "Chronology",
       "costs": "Costs",
-      "sales": "Sales"
+      "sales": "Sales",
+      "selections": "Selections"
     },
     "costs": {
       "date": "Date",
@@ -21,6 +22,14 @@
       "quantity": "Quantity",
       "total_value": "Total value",
       "note": "Note"
+    },
+    "selections": {
+      "selection_name": "Selection",
+      "total_pieces": "Total Pieces",
+      "total_quantity": "Total Quantity",
+      "available_pieces": "Available Pieces",
+      "available_quantity": "Available Quantity",
+      "quantity_ftsq": "Available PQ"
     }
   },
   "subcontractor": {
@@ -157,6 +166,9 @@
   },
   "contacts": {
     "carrier-name": "Carrier"
+  },
+  "processes": {
+    "view_batch": "View batch"
   },
   "order-search": {
     "production-report": "Orders to produce",

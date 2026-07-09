@@ -24,6 +24,7 @@ interface GenericListProps<TData extends BaseEntity> {
     maxHeight?: string;
     minHeight?: string;
     disableBorder?: boolean;
+    disablePadding?: boolean;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -38,7 +39,8 @@ const GenericList = <TData extends BaseEntity>({
                                                    overrideOptions: _overrideOptions,
                                                    maxHeight = '300px',
                                                    minHeight = '300px',
-                                                   disableBorder = false
+                                                   disableBorder = false,
+                                                   disablePadding = false,
                                                }: GenericListProps<TData>) => {
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
@@ -131,7 +133,7 @@ const GenericList = <TData extends BaseEntity>({
                     {content()}
                 </Card>
             ) : (
-                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: 'divider', borderRadius: 1, p: 1}}>
+                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: !disablePadding ? 'divider' : 'transparent', borderRadius: 1, p: !disablePadding ? 1 : 0}}>
                     {content()}
                 </Box>
             )}

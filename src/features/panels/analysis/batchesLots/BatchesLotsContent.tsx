@@ -9,6 +9,7 @@ import BatchesLotsSalesList from "@features/panels/analysis/batchesLots/BatchesL
 import {useTranslation} from "react-i18next";
 import BatchesLotsResume from "@features/panels/analysis/batchesLots/BatchesLotsResume";
 import {Box} from "@mui/material";
+import BatchesLotsSelectionsList from "@features/panels/analysis/batchesLots/BatchesLotsSelectionsList";
 
 const BatchesLotsContent = () => {
     const {t} = useTranslation(["form"]);
@@ -20,7 +21,12 @@ const BatchesLotsContent = () => {
                 value={tabIndex}
                 onChange={(_, newValue) => setTabIndex(newValue)}
                 tabs={[
-                    {label: t("batches.tabs.batch"), component: <BatchesForm disableFunctions/>},
+                    {label: t("batches.tabs.batch"), component:
+                        <Box sx={{display: "flex", flexDirection: "column", gap: 1}}>
+                            <BatchesForm disableFunctions/>
+                            <BatchesLotsSelectionsList/>
+                        </Box>
+                    },
                     {label: t("batches.tabs.movements"), component: <WarehouseMovementsList/>},
                     {label: t("batches.tabs.chronology"), component: <BatchesChronology/>},
                     {label: t("batches.tabs.costs"), component: <BatchesLotsCostsList/>},

@@ -19,6 +19,7 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
+import {Box} from "@mui/material";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -181,58 +182,60 @@ const SearchOrderRowsList = () => {
                                     value={filterClientId}
                                     options={clients.map(s => ({value: s.id, label: s.name}))}
                                     onFilterChange={(value) => setFilters({filterClientId: value as number})}
-                                />,
-                                <RadioGroupFieldFilter
-                                    key={"f-shipping-status-all"}
-                                    value={filterAll ?? ""}
-                                    onFilterChange={() => setFilters({
-                                        filterShippingStatus: undefined,
-                                        filterProductionStatus: undefined,
-                                        filterPrintStatus: undefined,
-                                        filterAll: "all"
-                                    })}
-                                    options={[
-                                        {label: t("order-search.all"), value: "all"},
-                                    ]}
-                                />,
-                                <RadioGroupFieldFilter
-                                    key={"f-shipping-status"}
-                                    value={filterShippingStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({
-                                        filterShippingStatus: (value === "" ? undefined : value) as "to_ship" | "shipped",
-                                        filterAll: undefined
-                                    })}
-                                    options={[
-                                        {label: t("order-search.to-ship"), value: "to_ship"},
-                                        {label: t("order-search.shipped"), value: "shipped"},
-                                    ]}
-                                />,
-                                <RadioGroupFieldFilter
-                                    key={"f-production-status"}
-                                    value={filterProductionStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({
-                                        filterProductionStatus: (value === "" ? undefined : value) as "to_produce" | "produced",
-                                        filterAll: undefined
-                                    })}
-                                    options={[
-                                        {label: t("order-search.to-produce"), value: "to_produce"},
-                                        {label: t("order-search.produced"), value: "produced"},
-                                    ]}
-                                />,
-                                <RadioGroupFieldFilter
-                                    key={"f-print-status"}
-                                    value={filterPrintStatus ?? ""}
-                                    onFilterChange={(value) => setFilters({
-                                        filterPrintStatus: (value === "" ? undefined : value) as "to_print" | "printed",
-                                        filterAll: undefined
-                                    })}
-                                    options={[
-                                        {label: t("order-search.to-print"), value: "to_print"},
-                                        {label: t("order-search.printed"), value: "printed"},
-                                    ]}
                                 />
                             ]}
                             buttons={[
+                                <Box sx={{display: 'flex'}}>
+                                    <RadioGroupFieldFilter
+                                        key={"f-shipping-status-all"}
+                                        value={filterAll ?? ""}
+                                        onFilterChange={() => setFilters({
+                                            filterShippingStatus: undefined,
+                                            filterProductionStatus: undefined,
+                                            filterPrintStatus: undefined,
+                                            filterAll: "all"
+                                        })}
+                                        options={[
+                                            {label: t("order-search.all"), value: "all"},
+                                        ]}
+                                    />
+                                    <RadioGroupFieldFilter
+                                        key={"f-shipping-status"}
+                                        value={filterShippingStatus ?? ""}
+                                        onFilterChange={(value) => setFilters({
+                                            filterShippingStatus: (value === "" ? undefined : value) as "to_ship" | "shipped",
+                                            filterAll: undefined
+                                        })}
+                                        options={[
+                                            {label: t("order-search.to-ship"), value: "to_ship"},
+                                            {label: t("order-search.shipped"), value: "shipped"},
+                                        ]}
+                                    />
+                                    <RadioGroupFieldFilter
+                                        key={"f-production-status"}
+                                        value={filterProductionStatus ?? ""}
+                                        onFilterChange={(value) => setFilters({
+                                            filterProductionStatus: (value === "" ? undefined : value) as "to_produce" | "produced",
+                                            filterAll: undefined
+                                        })}
+                                        options={[
+                                            {label: t("order-search.to-produce"), value: "to_produce"},
+                                            {label: t("order-search.produced"), value: "produced"},
+                                        ]}
+                                    />
+                                    <RadioGroupFieldFilter
+                                        key={"f-print-status"}
+                                        value={filterPrintStatus ?? ""}
+                                        onFilterChange={(value) => setFilters({
+                                            filterPrintStatus: (value === "" ? undefined : value) as "to_print" | "printed",
+                                            filterAll: undefined
+                                        })}
+                                        options={[
+                                            {label: t("order-search.to-print"), value: "to_print"},
+                                            {label: t("order-search.printed"), value: "printed"},
+                                        ]}
+                                    />
+                                </Box>,
                                 <PrintButton
                                     label={t("order-search.production-report")}
                                     canPrint={canPrint}

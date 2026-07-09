@@ -12,6 +12,10 @@ import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/batchTypeApi";
 import DateFieldFilter from "@ui/form/filters/DateFieldFilter";
+import {originApi} from "@features/panels/leathers/origins/api/originApi";
+import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
+import {selectionApi} from "@features/panels/products/selection/api/selectionApi";
+import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 
 interface BatchesListProps {
     disableBorder?: boolean;
@@ -20,9 +24,10 @@ interface BatchesListProps {
     minHeight?: string;
     additionalOptions?: Partial<MRT_TableOptions<IBatch>>;
     preselectedBatchTypeId?: number;
+    disableExtraFilters?: boolean;
 }
 
-const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions, preselectedBatchTypeId}: BatchesListProps) => {
+const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeight = "300px", additionalOptions, preselectedBatchTypeId, disableExtraFilters = false}: BatchesListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<IBatchesStoreFilter, IBatchesStoreState>();
@@ -32,6 +37,10 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
     const filterBatchTypeId = useStore(state => state.filters.filterBatchTypeId);
     const filterBatchCode = useStore(state => state.filters.filterBatchCode);
     const filterYear = useStore(state => state.filters.filterYear);
+    const filterProvenanceId = useStore(state => state.filters.filterProvenanceId);
+    const filterSupplierId = useStore(state => state.filters.filterSupplierId);
+    const filterSelectionId = useStore(state => state.filters.filterSelectionId);
+    const filterThicknessId = useStore(state => state.filters.filterThicknessId);
     const setFilters = useStore(state => state.setFilters);
 
 
@@ -40,11 +49,19 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
             code: filterBatchCode,
             type: filterBatchTypeId as number,
             year: filterYear as number,
+            provenance_id: filterProvenanceId as number,
+            supplier_id: filterSupplierId as number,
+            selection_id: filterSelectionId as number,
+            thickness_id: filterThicknessId as number,
         }
-    ), [filterBatchCode, filterBatchTypeId, filterYear]);
+    ), [filterBatchCode, filterBatchTypeId, filterYear, filterProvenanceId, filterSupplierId, filterSelectionId, filterThicknessId]);
 
     const {data: batches = [], isLoading, isFetching} = batchApi.useGetList({queryParams});
     const {data: batchTypes = []} = batchTypeApi.useGetList();
+    const {data: origins = []} = originApi.useGetList();
+    const {data: suppliers = []} = contactsApi.useGetList({queryParams: {type: "supplier"}});
+    const {data: selections = []} = selectionApi.useGetList();
+    const {data: thicknesses = []} = thicknessApi.useGetList();
 
     const batchesFetched = data ? data : batches;
 
@@ -120,6 +137,50 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
                                 type={"year"}
                                 onFilterChange={(value) => setFilters({filterYear: value as number})}
                             />,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-provenance"}
+                                        label={t("production.batch.provenance")}
+                                        value={filterProvenanceId}
+                                        options={origins.map(s => ({value: s.id, label: `${s?.area?.name || ""} - ${s?.nation.name  || ""}`}))}
+                                        onFilterChange={(value) => setFilters({filterProvenanceId: value as number})}
+                                    />
+                                )}
+                            </>,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-supplier"}
+                                        label={t("production.batch.supplier")}
+                                        value={filterSupplierId}
+                                        options={suppliers.map(s => ({value: s.id, label: s.name}))}
+                                        onFilterChange={(value) => setFilters({filterSupplierId: value as number})}
+                                    />
+                                )}
+                            </>,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-selection"}
+                                        label={t("production.batch.selection")}
+                                        value={filterSelectionId}
+                                        options={selections.map(s => ({value: s.id, label: s.name}))}
+                                        onFilterChange={(value) => setFilters({filterSelectionId: value as number})}
+                                    />
+                                )}
+                            </>,
+                            <>
+                                {!disableExtraFilters && (
+                                    <SelectFieldFilter
+                                        key={"f-thickness"}
+                                        label={t("production.batch.thickness")}
+                                        value={filterThicknessId}
+                                        options={thicknesses.map(s => ({value: s.id, label: s.name}))}
+                                        onFilterChange={(value) => setFilters({filterThicknessId: value as number})}
+                                    />
+                                )}
+                            </>,
                         ]}
                     />
                 ),

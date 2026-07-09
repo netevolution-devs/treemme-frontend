@@ -8,6 +8,7 @@ import {batchTypeApi} from "@features/panels/production/batches/api/batch-type/b
 
 export interface IBatchesLotsStoreState extends IPanelUIState {
     selectedBatchId?: number | null;
+    selectedBatchSelectionId?: number | null;
 }
 
 const BatchesLotsPanel = () => {
@@ -20,7 +21,7 @@ const BatchesLotsPanel = () => {
         <GenericPanel<unknown, IBatchesLotsStoreState>
             kind={"batchesLots"}
             initialState={{uiState: initialUiState}}
-            listComponent={<BatchesList preselectedBatchTypeId={batchBaseTypeId as number}/>}
+            listComponent={<BatchesList preselectedBatchTypeId={batchBaseTypeId as number} disableExtraFilters/>}
         >
             <BatchesLotsContent/>
         </GenericPanel>
