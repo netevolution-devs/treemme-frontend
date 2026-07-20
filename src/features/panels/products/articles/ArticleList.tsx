@@ -6,10 +6,12 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {IArticlesStoreState} from "@features/panels/products/articles/ArticlesPanel";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const ArticleList = () => {
     const {t} = useTranslation(["form"]);
     const {data: articles = [], isLoading, isFetching} = articleApi.useGetList();
+    const exportMutation = articleApi.useExport();
 
     const {useStore} = usePanel<unknown, IArticlesStoreState>();
     const {selectedArticledId} = useStore(state => state.uiState);
@@ -50,6 +52,15 @@ const ArticleList = () => {
             columns={columns}
             selectedId={selectedArticledId}
             onRowSelect={(id) => setUIState({selectedArticledId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

@@ -31,6 +31,7 @@ const ContactsList = () => {
     );
 
     const {data: contacts = [], isLoading, isFetching} = contactsApi.useGetList({queryParams});
+    const exportMutation = contactsApi.useExport(queryParams);
 
     const columns = useMemo<MRT_ColumnDef<IContact>[]>(() => [
         {
@@ -66,6 +67,8 @@ const ContactsList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <TextFieldFilter
                                 key="f-contact_name"

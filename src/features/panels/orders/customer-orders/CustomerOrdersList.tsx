@@ -35,6 +35,7 @@ const CustomerOrdersList = () => {
     ), [filterOrderCode, filterOrderClientId]);
 
     const {data: customerOrders = [], isLoading, isFetching} = customerOrderApi.useGetList({queryParams});
+    const exportMutation = customerOrderApi.useExport(queryParams);
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
     const columns = useMemo<MRT_ColumnDef<ICustomerOrder>[]>(() => [
@@ -66,6 +67,8 @@ const CustomerOrdersList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <TextFieldFilter
                                 key={"f-order_code"}

@@ -5,11 +5,13 @@ import {usePanel} from "@ui/panel/PanelContext";
 import type {IRoleManagement} from "@features/panels/user-management/organization/api/IRoleManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import type {IOrganizationManagementStoreState} from "@features/panels/user-management/organization/OrganizationManagementPanel";
 
 const RoleManagementList = () => {
     const {t} = useTranslation(["form"]);
     const {data: roles = [], isLoading} = roleManagementApi.useGetList();
+    const exportMutation = roleManagementApi.useExport();
 
     const {useStore} = usePanel<unknown, IOrganizationManagementStoreState>();
     const selectedRoleId = useStore(state => state.uiState.selectedRoleId);
@@ -29,6 +31,15 @@ const RoleManagementList = () => {
             columns={columns}
             selectedId={selectedRoleId}
             onRowSelect={(id) => setUIState({selectedRoleId: id as number})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

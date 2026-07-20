@@ -7,6 +7,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
 import {paymentApi} from "@features/panels/commercial/payment-types/api/paymentApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import type {IPayment} from "@features/panels/commercial/payment-types/api/IPayment";
 
 const PaymentTypesList = () => {
@@ -17,6 +18,7 @@ const PaymentTypesList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: paymentTypes = [], isLoading, isFetching} = paymentApi.useGetList();
+    const exportMutation = paymentApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IPayment>[]>(() => [
         {
@@ -33,6 +35,15 @@ const PaymentTypesList = () => {
             columns={columns}
             selectedId={selectedPaymentId}
             onRowSelect={(id) => setUIState({selectedPaymentId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

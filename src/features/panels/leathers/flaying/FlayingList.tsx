@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IFlay} from "@features/panels/leathers/flaying/api/IFlay";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const FlayingList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const FlayingList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: flays = [], isLoading, isFetching} = flayApi.useGetList();
+    const exportMutation = flayApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IFlay>[]>(() => [
         {
@@ -36,6 +38,15 @@ const FlayingList = () => {
             columns={columns}
             selectedId={selectedFlayId}
             onRowSelect={(id) => setUIState({selectedFlayId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

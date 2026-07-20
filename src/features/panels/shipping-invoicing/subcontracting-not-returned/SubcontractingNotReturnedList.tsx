@@ -35,6 +35,7 @@ import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {useState} from "react";
 import type {MRT_RowSelectionState} from "material-react-table";
+import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 
 const SubcontractingNotReturnedList = () => {
     const {t} = useTranslation(["form"]);
@@ -60,6 +61,7 @@ const SubcontractingNotReturnedList = () => {
     const {data: ddtRowsNotReturned = [], isLoading, isFetching} = useGetDDTNotReturned({queryParams});
     const {mutateAsync: getDdtNotReturnedPdf, isPending} = useGetDDTNotReturnedPrint();
     const {mutateAsync: massiveReturn, isPending: isMassiveReturnPending} = useGetMassiveReturn();
+    const exportMutation = useExportCSV('/ddt-row/subcontracting-not-returned', queryParams, 'subcontracting-not-returned-export.csv', 'DDT-NOT-RETURNED');
 
     const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
     const [multiSelectionEnabled, setMultiSelectionEnabled] = useState(false);
@@ -123,6 +125,8 @@ const SubcontractingNotReturnedList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                         <ListToolbar
+                            onExport={() => exportMutation.mutate()}
+                            exportLoading={exportMutation.isPending}
                             alignButtons={"flex-end"}
                             sx={{mr: 1}}
                             filters={[

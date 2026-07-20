@@ -44,6 +44,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disab
     ) as Record<string, string | number>
 
     const {data: leathers = [], isLoading, isFetching} = leatherApi.useGetList({queryParams});
+    const exportMutation = leatherApi.useExport(queryParams);
 
     const columns = useMemo<MRT_ColumnDef<ILeather>[]>(() => [
         {
@@ -148,6 +149,8 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disab
                 enableTopToolbar: enableFilters,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <TextFieldFilter
                                 key="f-leather_provenance"

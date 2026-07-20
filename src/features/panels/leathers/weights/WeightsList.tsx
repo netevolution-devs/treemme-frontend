@@ -1,4 +1,5 @@
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IWeightsStoreState} from "@features/panels/leathers/weights/WeightsPanel";
@@ -15,6 +16,7 @@ const WeightsList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: weights = [], isLoading, isFetching} = weightApi.useGetList();
+    const exportMutation = weightApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IWeight>[]>(() => [
         {
@@ -31,6 +33,15 @@ const WeightsList = () => {
             columns={columns}
             selectedId={selectedWeightId}
             onRowSelect={(id) => setUIState({ selectedWeightId: id })}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

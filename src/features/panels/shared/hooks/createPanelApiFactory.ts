@@ -1,5 +1,9 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 import useApi from "@api/useApi";
+import {useTranslation} from "react-i18next";
+import axios from "axios";
+
+const exportAxiosInstance = axios.create({withCredentials: true});
 
 interface ApiConfig {
     baseEndpoint: string;
@@ -11,6 +15,51 @@ export interface ApiOptions {
     staleTime?: number;
     invalidateQueries?: string[];
 }
+
+export const useExportCSV = (
+    baseEndpoint: string,
+    queryParams?: Record<string, string | number>,
+    fileName?: string,
+    mutationKey?: string
+) => {
+    const {i18n} = useTranslation();
+    const endpoint = import.meta.env.VITE_API;
+
+    return useMutation({
+        mutationFn: async () => {
+            const params: Record<string, string> = {};
+            params.lang = i18n.language || 'it';
+            params.export = 'csv';
+
+            if (queryParams) {
+                Object.entries(queryParams).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null && value !== '') {
+                        params[key] = String(value);
+                    }
+                });
+            }
+
+            const response = await exportAxiosInstance.get(endpoint + baseEndpoint, {
+                params,
+                responseType: 'blob',
+            });
+
+            const blob = new Blob([response.data as BlobPart], {
+                type: 'text/csv;charset=utf-8;',
+            });
+
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.setAttribute('download', fileName || 'export.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(blobUrl);
+        },
+        mutationKey: mutationKey ? [mutationKey, 'EXPORT'] : ['EXPORT-CSV', baseEndpoint],
+    });
+};
 
 export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) => {
     const {baseEndpoint, queryKey} = config;
@@ -87,6 +136,11 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     });
                 }
             });
+        },
+
+        // EXPORT CSV
+        useExport: (queryParams?: Record<string, string | number>) => {
+            return useExportCSV(baseEndpoint, queryParams, `${queryKey}-export.csv`, queryKey);
         },
 
         // DELETE

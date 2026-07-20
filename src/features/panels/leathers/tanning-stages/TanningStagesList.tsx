@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ITanningStage} from "@features/panels/leathers/tanning-stages/api/ITanningStage";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const TanningStagesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const TanningStagesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: tanningStages = [], isLoading, isFetching} = tanningStageApi.useGetList();
+    const exportMutation = tanningStageApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ITanningStage>[]>(() => [
         {
@@ -36,6 +38,15 @@ const TanningStagesList = () => {
             columns={columns}
             selectedId={selectedTanningStageId}
             onRowSelect={(id) => setUIState({selectedTanningStageId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

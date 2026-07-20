@@ -7,6 +7,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
 import {shipmentConditionApi} from "@features/panels/commercial/shipment-conditions/api/shipmentConditionApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import type {IShipmentCondition} from "@features/panels/commercial/shipment-conditions/api/IShipmentCondition";
 
 const ShipmentConditionsList = () => {
@@ -17,6 +18,7 @@ const ShipmentConditionsList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: shipmentConditions = [], isLoading, isFetching} = shipmentConditionApi.useGetList();
+    const exportMutation = shipmentConditionApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IShipmentCondition>[]>(() => [
         {
@@ -33,6 +35,15 @@ const ShipmentConditionsList = () => {
             columns={columns}
             selectedId={selectedConditionId}
             onRowSelect={(id) => setUIState({selectedConditionId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

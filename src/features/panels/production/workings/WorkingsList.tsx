@@ -2,6 +2,7 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IWorkingsStoreState} from "@features/panels/production/workings/WorkingsPanel";
 import {workingApi} from "@features/panels/production/workings/api/workingApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IWorking} from "@features/panels/production/workings/api/IWorking";
@@ -15,6 +16,7 @@ const WorkingsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: workings = [], isLoading, isFetching} = workingApi.useGetList();
+    const exportMutation = workingApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IWorking>[]>(() => [
         {
@@ -31,6 +33,15 @@ const WorkingsList = () => {
             isFetching={isFetching}
             selectedId={selectedWorkingId}
             onRowSelect={(id) => setUIState({selectedWorkingId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }
