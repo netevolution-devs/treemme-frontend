@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import useApi from "@api/useApi";
+import {useMutation} from "@tanstack/react-query";
+import {useTranslation} from "react-i18next";
 
 interface IClientOrderRowSummaryPrintParams {
     start_date?: string;
@@ -15,22 +15,20 @@ interface IMutateParams {
 }
 
 const useGetClientOrderRowSummaryPrint = () => {
-    const { get } = useApi();
+    const {i18n} = useTranslation();
 
     return useMutation({
-        mutationFn: async ({ params }: IMutateParams) => {
-            const endpoint = `/client/client-order-row-summary-print`;
-
-            const response = await get<Blob>(endpoint, {
-                params,
-                responseType: "blob",
-            });
-
-            const blob = new Blob([response.data as unknown as BlobPart], { type: "application/pdf" });
-            const url = window.URL.createObjectURL(blob);
-            window.open(url, "_blank");
-
-            return url;
+        mutationFn: async ({params}: IMutateParams) => {
+            const queryParams = new URLSearchParams();
+            queryParams.append('lang', i18n.language || 'it');
+            if (params) {
+                Object.entries(params).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null && value !== '') {
+                        queryParams.append(key, String(value));
+                    }
+                });
+            }
+            window.open(`${import.meta.env.VITE_API}/client/client-order-row-summary-print?${queryParams.toString()}`, "_blank");
         },
         mutationKey: ["CLIENT-ORDER-ROW-SUMMARY-PRINT"],
     });
