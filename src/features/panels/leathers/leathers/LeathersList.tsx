@@ -25,7 +25,7 @@ interface LeatherListProps {
     disableBorders?: boolean;
 }
 
-const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disableBorders = false}: LeatherListProps) => {
+const LeatherList = ({panelFilter, selectedQueryId, disableBorders = false}: LeatherListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<ILeatherStoreFilter, ILeathersStoreState>();
@@ -145,7 +145,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disab
             selectedId={selectedLeatherId}
             onRowSelect={(id) => setUIState({selectedLeatherId: id})}
             additionalOptions={{
-                enableTopToolbar: enableFilters,
+                enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
                         filters={[

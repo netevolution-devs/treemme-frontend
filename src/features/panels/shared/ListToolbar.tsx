@@ -33,12 +33,14 @@ const ListToolbar = ({label, buttons, filters, sx, alignButtons = 'start'}: List
                     {label}
                 </Box>
             )}
-            <Box sx={{display: 'flex', justifyContent: alignButtons, gap: 0.8, flex: 1}}>
+            <Box sx={{display: 'flex', justifyContent: alignButtons, gap: 0.8, flex: 1, alignItems: 'center'}}>
                 {buttons?.map((buttonComponent) => (
                     <>{buttonComponent}</>
                 ))}
                 {onExport && (
-                    <CustomButton label={"Export CSV"} onClick={onExport} color={"primary"} icon={<FileDownloadIcon fontSize={"small"}/>}/>
+                    <Box sx={{ml: 'auto', display: 'flex', alignItems: 'center'}}>
+                        <CustomButton label={"Export CSV"} onClick={onExport} color={"primary"} icon={<FileDownloadIcon fontSize={"small"}/>}/>
+                    </Box>
                 )}
             </Box>
         </Box>
