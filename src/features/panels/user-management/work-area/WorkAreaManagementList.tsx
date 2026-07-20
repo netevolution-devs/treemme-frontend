@@ -14,6 +14,7 @@ import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
 const WorkAreaManagementList = () => {
     const {t} = useTranslation(["form"]);
     const {data: workAreas = [], isLoading} = workAreaManagementApi.useGetList();
+    const exportMutation = workAreaManagementApi.useExport();
 
     const {useStore} = usePanel<unknown, IFunctionalityManagementStoreState>();
     const selectedWorkAreaId = useStore(state => state.uiState.selectedWorkAreaId);
@@ -61,6 +62,8 @@ const WorkAreaManagementList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <TextFieldFilter
                                 label={t("work_area_management.filter")}

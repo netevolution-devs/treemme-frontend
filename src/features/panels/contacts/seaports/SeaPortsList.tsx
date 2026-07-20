@@ -6,6 +6,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
 import type {ISeaPort} from "@features/panels/contacts/seaports/api/ISeaPort";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const SeaPortsList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const SeaPortsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: seaPorts = [], isLoading, isFetching} = seaPortApi.useGetList();
+    const exportMutation = seaPortApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ISeaPort>[]>(() => [
         {
@@ -31,6 +33,15 @@ const SeaPortsList = () => {
             columns={columns}
             selectedId={selectedSeaPortId}
             onRowSelect={(id) => setUIState({selectedSeaPortId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

@@ -6,11 +6,13 @@ import type {IUsersStoreState} from "@features/panels/user-management/users/User
 import type {IUserManagement} from "@features/panels/user-management/users/api/IUserManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import dayjs from "dayjs";
 
 const UsersList = () => {
     const {t} = useTranslation(["form"]);
     const {data: users = [], isLoading} = usersApi.useGetList();
+    const exportMutation = usersApi.useExport();
 
     const {useStore} = usePanel<unknown, IUsersStoreState>();
     const selectedUserId = useStore(state => state.uiState.selectedUserId);
@@ -42,6 +44,15 @@ const UsersList = () => {
             columns={columns}
             selectedId={selectedUserId}
             onRowSelect={(id) => setUIState({selectedUserId: id as number})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

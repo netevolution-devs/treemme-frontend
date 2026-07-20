@@ -5,11 +5,13 @@ import {usePanel} from "@ui/panel/PanelContext";
 import type {IGroupManagement} from "@features/panels/user-management/organization/api/IGroupManagement";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import type {IOrganizationManagementStoreState} from "@features/panels/user-management/organization/OrganizationManagementPanel";
 
 const GroupManagementList = () => {
     const {t} = useTranslation(["form"]);
     const {data: groups = [], isLoading} = groupManagementApi.useGetList();
+    const exportMutation = groupManagementApi.useExport();
 
     const {useStore} = usePanel<unknown, IOrganizationManagementStoreState>();
     const selectedGroupId = useStore(state => state.uiState.selectedGroupId);
@@ -34,6 +36,15 @@ const GroupManagementList = () => {
             columns={columns}
             selectedId={selectedGroupId}
             onRowSelect={(id) => setUIState({selectedGroupId: id as number})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

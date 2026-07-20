@@ -6,6 +6,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
 import type {IProductType} from "@features/panels/products/product-types/api/IProductType";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const ProductTypesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const ProductTypesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: productTypes = [], isLoading, isFetching} = productTypeApi.useGetList();
+    const exportMutation = productTypeApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IProductType>[]>(() => [
         {
@@ -35,6 +37,15 @@ const ProductTypesList = () => {
             columns={columns}
             selectedId={selectedProductTypeId}
             onRowSelect={(id) => setUIState({selectedProductTypeId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

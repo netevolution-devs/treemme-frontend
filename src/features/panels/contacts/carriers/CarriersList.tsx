@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ICarrier} from "@features/panels/contacts/carriers/api/ICarrier";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const CarriersList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const CarriersList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: carriers = [], isLoading, isFetching} = carrierApi.useGetList();
+    const exportMutation = carrierApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ICarrier>[]>(() => [
         {
@@ -31,6 +33,15 @@ const CarriersList = () => {
             columns={columns}
             selectedId={selectedCarrierId}
             onRowSelect={(id) => setUIState({selectedCarrierId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

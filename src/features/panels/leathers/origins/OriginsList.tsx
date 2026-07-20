@@ -1,5 +1,6 @@
 import type {IOrigin} from "@features/panels/leathers/origins/api/IOrigin";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IOriginsStoreState} from "@features/panels/leathers/origins/OriginsPanel";
@@ -15,6 +16,7 @@ const OriginsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: origins = [], isLoading, isFetching} = originApi.useGetList();
+    const exportMutation = originApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IOrigin>[]>(() => [
         {
@@ -39,6 +41,15 @@ const OriginsList = () => {
             columns={columns}
             selectedId={selectedOriginId}
             onRowSelect={(id) => setUIState({selectedOriginId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

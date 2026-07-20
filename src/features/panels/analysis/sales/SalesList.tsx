@@ -14,6 +14,7 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetDDTRowSoldClientPdf from "@features/panels/analysis/sales/api/useGetDDTRowSoldClientPdf";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
+import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 
 const SalesList = () => {
     const {t} = useTranslation(["form"]);
@@ -46,6 +47,7 @@ const SalesList = () => {
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
     const {mutateAsync: getDdtRowSoldPdf, isPending} = useGetDDTRowSoldClientPdf();
+    const exportMutation = useExportCSV('/ddt-row/sold', queryParams, 'sales-export.csv', 'SALES');
     const canPrint = ddtRowsSold.length > 0;
 
     const columns = useMemo<MRT_ColumnDef<IDDTRowSold>[]>(() => [
@@ -178,6 +180,8 @@ const SalesList = () => {
                                 })}
                             />
                         ]}
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         alignButtons={"flex-end"}
                         sx={{mr: 1}}
                     />

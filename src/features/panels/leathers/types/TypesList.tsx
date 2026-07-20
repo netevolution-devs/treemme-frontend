@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {ILeatherType} from "@features/panels/leathers/types/api/ILeatherType";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const TypesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const TypesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: types = [], isLoading, isFetching} = leatherTypeApi.useGetList();
+    const exportMutation = leatherTypeApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ILeatherType>[]>(() => [
         {
@@ -36,6 +38,15 @@ const TypesList = () => {
             columns={columns}
             selectedId={selectedTypeId}
             onRowSelect={(id) => setUIState({ selectedTypeId: id })}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

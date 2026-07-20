@@ -6,6 +6,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import {useMemo} from "react";
 import type {ISpecies} from "@features/panels/leathers/species/api/ISpecies";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const SpeciesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const SpeciesList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: species = [], isLoading, isFetching} = speciesApi.useGetList();
+    const exportMutation = speciesApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ISpecies>[]>(() => [
         {
@@ -36,6 +38,15 @@ const SpeciesList = () => {
             columns={columns}
             selectedId={selectedSpeciesId}
             onRowSelect={(id) => setUIState({selectedSpeciesId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

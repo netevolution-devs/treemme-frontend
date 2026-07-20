@@ -6,10 +6,12 @@ import type {INationsStoreState} from "@features/panels/contacts/nations/Nations
 import type {INation} from "@features/panels/contacts/nations/api/INation";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const NationsList = () => {
     const {t} = useTranslation(["form"]);
     const {data: nations = [], isLoading, isFetching} = nationsApi.useGetList();
+    const exportMutation = nationsApi.useExport();
 
     const {useStore} = usePanel<unknown, INationsStoreState>();
     const selectedNationId = useStore(state => state.uiState.selectedNationId);
@@ -30,6 +32,15 @@ const NationsList = () => {
             columns={columns}
             selectedId={selectedNationId}
             onRowSelect={(id) => setUIState({selectedNationId: id as number})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

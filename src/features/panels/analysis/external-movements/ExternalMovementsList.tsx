@@ -20,6 +20,7 @@ import {PrintButton} from "@features/panels/shared/CustomButton";
 import TextFieldFilter from "@ui/form/filters/TextFieldFilter";
 import useGetDDTNotReturnedPrint
     from "@features/panels/shipping-invoicing/subcontracting-not-returned/api/useGetDDTNotReturnedPrint";
+import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 
 const ExternalMovementsList = () => {
     const {t} = useTranslation(["form"]);
@@ -45,6 +46,7 @@ const ExternalMovementsList = () => {
     const {data: movements = [], isLoading, isFetching} = useGetExternalProcessingMovements({queryParams});
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
     const {mutateAsync: getDdtNotReturnedPdf, isPending} = useGetDDTNotReturnedPrint();
+    const exportMutation = useExportCSV('/ddt-row/external-processing-movements', queryParams, 'external-movements-export.csv', 'EXTERNAL-MOVEMENTS');
 
     const canPrint = movements.length > 0;
 
@@ -98,6 +100,8 @@ const ExternalMovementsList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         alignButtons={"flex-end"}
                         sx={{mr: 1}}
                         filters={[

@@ -37,6 +37,7 @@ const DeliveryNotesList = () => {
     ), [filterSubcontractorId, filterStartDate, filterEndDate]);
 
     const {data: deliveryNotes = [], isLoading, isFetching} = deliveryNoteApi.useGetList({queryParams});
+    const exportMutation = deliveryNoteApi.useExport(queryParams);
     const {data: subcontractors = []} = contactsApi.useGetList({queryParams: {type: "subcontractor"}});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
@@ -79,6 +80,8 @@ const DeliveryNotesList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <SelectFieldFilter
                                 key={"f-subcontractor"}

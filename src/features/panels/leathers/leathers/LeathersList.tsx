@@ -25,7 +25,7 @@ interface LeatherListProps {
     disableBorders?: boolean;
 }
 
-const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disableBorders = false}: LeatherListProps) => {
+const LeatherList = ({panelFilter, selectedQueryId, disableBorders = false}: LeatherListProps) => {
     const {t} = useTranslation(["form"]);
 
     const {useStore} = usePanel<ILeatherStoreFilter, ILeathersStoreState>();
@@ -44,6 +44,7 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disab
     ) as Record<string, string | number>
 
     const {data: leathers = [], isLoading, isFetching} = leatherApi.useGetList({queryParams});
+    const exportMutation = leatherApi.useExport(queryParams);
 
     const columns = useMemo<MRT_ColumnDef<ILeather>[]>(() => [
         {
@@ -145,9 +146,11 @@ const LeatherList = ({enableFilters = false, panelFilter, selectedQueryId, disab
             selectedId={selectedLeatherId}
             onRowSelect={(id) => setUIState({selectedLeatherId: id})}
             additionalOptions={{
-                enableTopToolbar: enableFilters,
+                enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <TextFieldFilter
                                 key="f-leather_provenance"

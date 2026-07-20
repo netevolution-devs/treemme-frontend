@@ -41,6 +41,7 @@ const ProcessesList = () => {
     );
 
     const {data: processes = [], isLoading, isFetching} = processApi.useGetList({queryParams});
+    const exportMutation = processApi.useExport(queryParams);
     const {mutate: getDailyPrint, isPending: isPrinting} = processApi.useGetDailyPrint();
 
     const canPrint = filterScheduledDate !== undefined && processes.length > 0;
@@ -116,6 +117,8 @@ const ProcessesList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <DateFieldFilter
                                 key={"f-date_filter"}

@@ -6,10 +6,12 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {ISelectionStoreState} from "@features/panels/products/selection/SelectionPanel";
 import type {ISelection} from "@features/panels/products/selection/api/ISelection";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const SelectionList = () => {
     const {t} = useTranslation(["form"]);
     const {data: selections = [], isLoading, isFetching} = selectionApi.useGetList();
+    const exportMutation = selectionApi.useExport();
 
     const {useStore} = usePanel<unknown, ISelectionStoreState>();
     const selectedSelectionId = useStore(state => state.uiState.selectedSelectionId);
@@ -33,6 +35,15 @@ const SelectionList = () => {
             columns={columns}
             selectedId={selectedSelectionId}
             onRowSelect={(id) => setUIState({selectedSelectionId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

@@ -6,10 +6,12 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {IArticleClassesStoreState} from "@features/panels/products/article-classes/ArticleClassesPanel";
 import type {IArticleClass} from "@features/panels/products/article-classes/api/IArticleClass";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const ArticleClassesList = () => {
     const {t} = useTranslation(["form"]);
     const {data: articleClasses = [], isLoading, isFetching} = articleClassApi.useGetList();
+    const exportMutation = articleClassApi.useExport();
 
     const {useStore} = usePanel<unknown, IArticleClassesStoreState>();
     const selectedArticleClassId = useStore(state => state.uiState.selectedArticleClassId);
@@ -37,6 +39,15 @@ const ArticleClassesList = () => {
             columns={columns}
             selectedId={selectedArticleClassId}
             onRowSelect={(id) => setUIState({selectedArticleClassId: id as number})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

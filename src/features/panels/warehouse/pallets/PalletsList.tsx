@@ -2,6 +2,7 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IPalletsStoreState} from "@features/panels/warehouse/pallets/PalletsPanel";
 import {palletApi} from "@features/panels/warehouse/pallets/api/palletApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IPallet} from "@features/panels/warehouse/pallets/api/IPallet";
@@ -15,6 +16,7 @@ const PalletsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: pallets = [], isLoading, isFetching} = palletApi.useGetList();
+    const exportMutation = palletApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IPallet>[]>(() => [
         {
@@ -39,6 +41,15 @@ const PalletsList = () => {
             columns={columns}
             selectedId={selectedPalletId}
             onRowSelect={(id) => setUIState({selectedPalletId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

@@ -7,6 +7,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
 import {currencyApi} from "@features/panels/shared/api/currency/currencyApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import type {ICurrency} from "@features/panels/shared/api/currency/ICurrency";
 
 const CurrenciesList = () => {
@@ -17,6 +18,7 @@ const CurrenciesList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: currencies = [], isLoading, isFetching} = currencyApi.useGetList();
+    const exportMutation = currencyApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ICurrency>[]>(() => [
         {
@@ -41,6 +43,15 @@ const CurrenciesList = () => {
             columns={columns}
             selectedId={selectedCurrencyId}
             onRowSelect={(id) => setUIState({selectedCurrencyId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }
