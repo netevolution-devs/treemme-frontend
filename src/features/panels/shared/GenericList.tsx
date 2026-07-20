@@ -6,6 +6,12 @@ import {
 } from "material-react-table";
 import {Box, Card, CircularProgress} from "@mui/material";
 import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions";
+import {useExportCSV} from "@features/panels/shared/hooks/useExportCSV";
+import {ExportCSVFnContext} from "@features/panels/shared/hooks/ExportCSVContext";
+import {useCallback, useMemo} from "react";
+import dayjs from "dayjs";
+import ListToolbar from "@features/panels/shared/ListToolbar";
+import {useOptionalPanelMeta} from "@ui/panel/PanelContext";
 
 export interface BaseEntity {
     id: string | number;
@@ -25,6 +31,7 @@ interface GenericListProps<TData extends BaseEntity> {
     minHeight?: string;
     disableBorder?: boolean;
     disablePadding?: boolean;
+    exportFilename?: string;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -41,11 +48,36 @@ const GenericList = <TData extends BaseEntity>({
                                                    minHeight = '300px',
                                                    disableBorder = false,
                                                    disablePadding = false,
+                                                   exportFilename,
                                                }: GenericListProps<TData>) => {
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
-    const filterHeight = additionalOptions?.enableTopToolbar ? 50 : 0;
+
+    const mergedOptions = useMemo((): Partial<MRT_TableOptions<TData>> => {
+        if (additionalOptions?.renderTopToolbar) return additionalOptions;
+        return {
+            ...additionalOptions,
+            enableTopToolbar: true,
+            renderTopToolbar: () => <ListToolbar />,
+        };
+    }, [additionalOptions]);
+
+    const filterHeight = mergedOptions?.enableTopToolbar ? 50 : 0;
     const _minHeight = calculateMin + filterHeight;
+
+    const panelMeta = useOptionalPanelMeta();
+    const panelKind = panelMeta?.kind;
+    const exportFactory = useExportCSV<TData>();
+    const filename = useMemo(() => {
+        const base = exportFilename || panelKind;
+        if (!base) return undefined;
+        const today = dayjs().format("YYYY-MM-DD");
+        return `${base}_exportazione_${today}.csv`;
+    }, [exportFilename, panelKind]);
+
+    const handleExport = useCallback(() => {
+        exportFactory(columns, data, filename);
+    }, [exportFactory, columns, data, filename]);
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
         muiTableContainerProps: {
@@ -71,7 +103,7 @@ const GenericList = <TData extends BaseEntity>({
         enableBottomToolbar: false,
         enableTopToolbar: false,
         ...defaultMrtOptions,
-        ...additionalOptions,
+        ...mergedOptions,
         displayColumnDefOptions: ({
             'mrt-row-actions': {
                 size: 50,
@@ -111,7 +143,7 @@ const GenericList = <TData extends BaseEntity>({
                     <Box sx={{
                         position: 'absolute',
                         right: 10,
-                        top: additionalOptions?.enableTopToolbar ? 50 : 5,
+                        top: mergedOptions?.enableTopToolbar ? 50 : 5,
                         zIndex: 1000
                     }}>
                         <CircularProgress size={20} thickness={5}/>
@@ -127,7 +159,7 @@ const GenericList = <TData extends BaseEntity>({
     }
 
     return (
-        <>
+        <ExportCSVFnContext.Provider value={handleExport}>
             {!disableBorder ? (
                 <Card variant={"outlined"} sx={{bgcolor: "background.card.default", minHeight: _minHeight, maxHeight: maxHeight}}>
                     {content()}
@@ -137,7 +169,7 @@ const GenericList = <TData extends BaseEntity>({
                     {content()}
                 </Box>
             )}
-        </>
+        </ExportCSVFnContext.Provider>
     );
 };
 

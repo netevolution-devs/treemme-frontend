@@ -114,6 +114,18 @@ export const usePanel = <F, U>() => {
 };
 
 /**
+ * Safe version of `usePanelMeta` that returns `undefined` instead of throwing
+ * when called outside a PanelProvider. Useful for generic components that may
+ * or may not be rendered inside a panel context.
+ */
+export const useOptionalPanelMeta = <F, U>() => {
+    const ctx = useContext(PanelContext) as PanelContextValue<F, U> | null;
+    if (!ctx) return undefined;
+    const {kind, uuid, panelId} = ctx;
+    return {kind, uuid, panelId};
+};
+
+/**
  * Hook that returns **only** the panel metadata.
  * It is separated from `usePanel` so the return type is always just the
  * metadata and does not get mixed with the store.
