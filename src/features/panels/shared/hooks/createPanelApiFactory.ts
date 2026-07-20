@@ -52,7 +52,7 @@ export const useExportCSV = (
             const blobUrl = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = blobUrl;
-            link.setAttribute('download', fileName ? `${fileName}_${currentDate}` : 'export.csv');
+            link.setAttribute('download', fileName ? `${fileName}_${currentDate}.csv` : 'export.csv');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
