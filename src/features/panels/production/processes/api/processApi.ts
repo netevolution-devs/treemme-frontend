@@ -1,7 +1,7 @@
 import {createPanelApi} from "@features/panels/shared/hooks/createPanelApiFactory";
 import type {IProcess} from "@features/panels/production/processes/api/IProcess";
-import useApi from "@api/useApi";
 import {useMutation} from "@tanstack/react-query";
+import {useTranslation} from "react-i18next";
 
 export const processApi = {
     ...createPanelApi<IProcess>({
@@ -9,18 +9,11 @@ export const processApi = {
         queryKey: "PROCESS"
     }),
     useGetDailyPrint: () => {
-        const {get} = useApi();
+        const {i18n} = useTranslation();
         return useMutation({
             mutationKey: ["DAILY-PRINT-PDF-PRINT"],
             mutationFn: async (date: string) => {
-                const response = await get<Blob>("/production/daily-print", {
-                    params: {date},
-                    responseType: "blob",
-                });
-                const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
-                const url = window.URL.createObjectURL(blob);
-                window.open(url, "_blank");
-                return url;
+                window.open(`${import.meta.env.VITE_API}/production/daily-print?lang=${i18n.language || 'it'}&date=${date}`, "_blank");
             }
         })
     },
