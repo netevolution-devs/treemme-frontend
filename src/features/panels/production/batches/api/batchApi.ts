@@ -3,6 +3,7 @@ import type {IBatch} from "@features/panels/production/batches/api/IBatch";
 import useApi from "@api/useApi";
 
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {useTranslation} from "react-i18next";
 import type {IBatchCost} from "@features/panels/production/batches/api/IBatchCost";
 import type {IBatchDetailReport, IBatchSelectionQuantitiesResponse} from "@features/panels/analysis/batchesLots/api/IBatchDetailReport";
 import type {IBatchComposition} from "@features/panels/production/batches/composition/api/IBatchComposition";
@@ -79,19 +80,13 @@ export const batchApi = {
         });
     },
     useGetPdf: () => {
-        const {get} = useApi();
+        const {i18n} = useTranslation();
         return useMutation({
             mutationFn: async ({id, batchCode}: IMutateParamsGetPdf) => {
                 const endpoint = batchCode.startsWith("TF")
                     ? `/batch/${id}/subcontractor-pdf`
                     : `/batch/${id}/pdf`;
-                const response = await get<Blob>(endpoint, {
-                    responseType: "blob",
-                });
-                const blob = new Blob([response.data as unknown as BlobPart], {type: "application/pdf"});
-                const url = window.URL.createObjectURL(blob);
-                window.open(url, "_blank");
-                return url;
+                window.open(`${import.meta.env.VITE_API}${endpoint}?lang=${i18n.language || 'it'}`, "_blank");
             },
             mutationKey: ["BATCH-PDF-PRINT"],
         });
