@@ -20,6 +20,7 @@ import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
 import {Box} from "@mui/material";
+import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -53,6 +54,7 @@ const SearchOrderRowsList = () => {
 
     const {mutateAsync: getOrderRowPrint, isPending: isOrderRowPrintPending} = useGetClientOrderRowSummaryPrint();
     const {mutateAsync: getProductionReport, isPending: isProductionReportPending} = useGetProductionReportPdf();
+    const exportMutation = useExportCSV('/client-order-row-report', queryParams, 'order-rows-export.csv', 'ORDER-ROWS-SEARCH');
 
     const canPrint = orderRows.length > 0;
 
@@ -257,6 +259,8 @@ const SearchOrderRowsList = () => {
                                     })}
                                 />
                             ]}
+                            onExport={() => exportMutation.mutate()}
+                            exportLoading={exportMutation.isPending}
                             alignButtons={"flex-end"}
                             sx={{mr: 1}}
                         />

@@ -3,6 +3,7 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {MRT_ColumnDef} from "material-react-table";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import {internalColorApi} from "@features/panels/products/article-internal-colors/api/internalColorApi";
 import type {IInternalColor} from "@features/panels/products/article-internal-colors/api/IInternalColor";
 import type {
@@ -17,6 +18,7 @@ const ArticleInternalColorsList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: colors = [], isLoading, isFetching} = internalColorApi.useGetList();
+    const exportMutation = internalColorApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IInternalColor>[]>(
         () => [
@@ -36,6 +38,15 @@ const ArticleInternalColorsList = () => {
             columns={columns}
             selectedId={selectedId}
             onRowSelect={(id) => setUIState({selectedInternalColorId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

@@ -34,6 +34,7 @@ const ArticleColorsList = () => {
 
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
     const {data: colors = [], isLoading, isFetching} = colorApi.useGetList({queryParams});
+    const exportMutation = colorApi.useExport(queryParams);
 
     const columns = useMemo<MRT_ColumnDef<IColor>[]>(
         () => [
@@ -76,6 +77,8 @@ const ArticleColorsList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <SelectFieldFilter
                                 key={"f-client"}

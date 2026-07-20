@@ -31,6 +31,7 @@ const MovementsList = () => {
     ), [filterBatchCode]);
 
     const {data: movements = [], isLoading, isFetching} = warehouseMovementsApi.useGetList({queryParams});
+    const exportMutation = warehouseMovementsApi.useExport(queryParams);
     const {mutateAsync: getReturnsPdf, isPending} = useGetExternalProcessingReturnsPrint();
 
     const columns = useMemo<MRT_ColumnDef<IWarehouseMovement>[]>(() => [
@@ -90,6 +91,8 @@ const MovementsList = () => {
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         alignButtons={"flex-end"}
                         filters={[
                             <TextFieldFilter

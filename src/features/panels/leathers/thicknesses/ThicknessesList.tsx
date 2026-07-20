@@ -6,6 +6,7 @@ import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const ThicknessesList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const ThicknessesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: thicknesses = [], isLoading, isFetching} = thicknessApi.useGetList();
+    const exportMutation = thicknessApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<IThickness>[]>(() => [
         {
@@ -37,6 +39,15 @@ const ThicknessesList = () => {
             columns={columns}
             selectedId={selectedThicknessId}
             onRowSelect={(id) => setUIState({selectedThicknessId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

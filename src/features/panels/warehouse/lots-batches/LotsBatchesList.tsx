@@ -2,6 +2,7 @@ import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import type {ILotsBatchesStoreState} from "@features/panels/warehouse/lots-batches/LotsBatchesPanel";
 import {selectionStockAvailableApi} from "@features/panels/warehouse/lots-batches/api/selectionStockAvailableApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import GenericList from "@features/panels/shared/GenericList";
 import {useMemo} from "react";
 import type {MRT_ColumnDef} from "material-react-table";
@@ -15,6 +16,7 @@ const LotsBatchesList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: selectionStocksAvailable = [], isLoading, isFetching} = selectionStockAvailableApi.useGetList();
+    const exportMutation = selectionStockAvailableApi.useExport();
 
     const columns = useMemo<MRT_ColumnDef<ISelectionStock>[]>(() => [
         {
@@ -35,6 +37,15 @@ const LotsBatchesList = () => {
             columns={columns}
             selectedId={selectedSelectionStockId}
             onRowSelect={(id) => setUIState({selectedSelectionStockId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     )
 }

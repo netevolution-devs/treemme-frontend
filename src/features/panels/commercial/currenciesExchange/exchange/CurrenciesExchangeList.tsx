@@ -24,6 +24,7 @@ const CurrenciesExchangeList = () => {
     const setUIState = useStore((state) => state.setUIState);
 
     const {data: currenciesExchange = [], isLoading, isFetching} = currencyChangeApi.useGetList({queryParams: {currency: selectedCurrencyId as number}});
+    const exportMutation = currencyChangeApi.useExport({currency: selectedCurrencyId as number});
 
     const columns = useMemo<MRT_ColumnDef<ICurrencyChange>[]>(() => [
         {
@@ -55,6 +56,8 @@ const CurrenciesExchangeList = () => {
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                         <ListToolbar
+                            onExport={() => exportMutation.mutate()}
+                            exportLoading={exportMutation.isPending}
                             buttons={[
                                 <NewButton
                                     isEnable={!!selectedCurrencyId}

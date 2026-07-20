@@ -6,10 +6,12 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {ICapStoreState} from "@features/panels/contacts/cap/CapPanel";
 import type {ICap} from "@features/panels/contacts/cap/api/ICap";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const CapList = () => {
     const {t} = useTranslation(["form"]);
     const {data: caps = [], isLoading, isFetching} = capApi.useGetList();
+    const exportMutation = capApi.useExport();
 
     const {useStore} = usePanel<unknown, ICapStoreState>();
     const {selectedCapId} = useStore(state => state.uiState);
@@ -41,6 +43,15 @@ const CapList = () => {
             columns={columns}
             selectedId={selectedCapId}
             onRowSelect={(id) => setUIState({selectedCapId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

@@ -2,6 +2,7 @@ import {useMemo} from "react";
 import {useTranslation} from "react-i18next";
 import {usePanel} from "@ui/panel/PanelContext";
 import {machineApi} from "@features/panels/production/machinery/api/machineApi";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IMachineryStoreState} from "@features/panels/production/machinery/MachineryPanel";
 import type {IMachine} from "@features/panels/production/machinery/api/IMachine";
@@ -10,6 +11,7 @@ import GenericList from "@features/panels/shared/GenericList";
 const MachineryList = () => {
     const {t} = useTranslation(["form"]);
     const {data: machines = [], isLoading, isFetching} = machineApi.useGetList();
+    const exportMutation = machineApi.useExport();
 
     const {useStore} = usePanel<unknown, IMachineryStoreState>();
     const {selectedMachineryId} = useStore(state => state.uiState);
@@ -37,6 +39,15 @@ const MachineryList = () => {
             columns={columns}
             selectedId={selectedMachineryId}
             onRowSelect={(id) => setUIState({selectedMachineryId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

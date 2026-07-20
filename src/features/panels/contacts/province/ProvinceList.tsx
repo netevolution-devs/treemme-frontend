@@ -6,6 +6,7 @@ import type {MRT_ColumnDef} from "material-react-table";
 import type {IProvinceStoreState} from "@features/panels/contacts/province/ProvincePanel";
 import type {IProvince} from "@features/panels/contacts/province/api/IProvince";
 import GenericList from "@features/panels/shared/GenericList";
+import ListToolbar from "@features/panels/shared/ListToolbar";
 
 const ProvinceList = () => {
     const {t} = useTranslation(["form"]);
@@ -15,6 +16,7 @@ const ProvinceList = () => {
     const setUIState = useStore(state => state.setUIState);
 
     const {data: provinces = [], isLoading, isFetching} = provinceApi.useGetList();
+    const exportMutation = provinceApi.useExport();
     const sortedProvinces = useMemo(() => provinces.sort((a, b) => a.acronym.localeCompare(b.acronym)), [provinces]);
 
     const columns = useMemo<MRT_ColumnDef<IProvince>[]>(() => [
@@ -36,6 +38,15 @@ const ProvinceList = () => {
             columns={columns}
             selectedId={selectedProvinceId}
             onRowSelect={(id) => setUIState({selectedProvinceId: id})}
+            additionalOptions={{
+                enableTopToolbar: true,
+                renderTopToolbar: () => (
+                    <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
+                    />
+                )
+            }}
         />
     );
 };

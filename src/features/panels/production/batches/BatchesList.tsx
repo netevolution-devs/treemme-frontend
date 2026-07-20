@@ -57,6 +57,7 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
     ), [filterBatchCode, filterBatchTypeId, filterYear, filterProvenanceId, filterSupplierId, filterSelectionId, filterThicknessId]);
 
     const {data: batches = [], isLoading, isFetching} = batchApi.useGetList({queryParams});
+    const exportMutation = batchApi.useExport(queryParams);
     const {data: batchTypes = []} = batchTypeApi.useGetList();
     const {data: origins = []} = originApi.useGetList();
     const {data: suppliers = []} = contactsApi.useGetList({queryParams: {type: "supplier"}});
@@ -116,6 +117,8 @@ const BatchesList = ({data, enableFilters = true, disableBorder = false, minHeig
                 enableTopToolbar: enableFilters,
                 renderTopToolbar: () => (
                     <ListToolbar
+                        onExport={() => exportMutation.mutate()}
+                        exportLoading={exportMutation.isPending}
                         filters={[
                             <TextFieldFilter
                                 key={"f-batch_code"}
