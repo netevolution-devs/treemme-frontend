@@ -232,6 +232,7 @@
       "flay": "Scuoiatura predefinita"
     },
     "leather": {
+      "provenance": "Provenienza",
       "code": "Codice",
       "name": "Nome",
       "contact": "Fornitore",
