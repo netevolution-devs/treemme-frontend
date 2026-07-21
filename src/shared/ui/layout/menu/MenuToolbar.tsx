@@ -48,7 +48,7 @@ function filterMenuEntries(entries: IMenuEntry[], accessControl: IAccessControl[
 
 const MenuToolbar = () => {
     const {t} = useTranslation(["menu"]);
-    const {hideMenu, isMenuVisible} = useMenuStore();
+    const {isMenuVisible} = useMenuStore();
     const navigate = useNavigate();
     const addPanel = useDockviewStore(state => state.addPanel);
     const {user} = useAuth();
@@ -64,9 +64,7 @@ const MenuToolbar = () => {
     }
 
     const handleProfileNavigation = () => {
-        // setShowTopBar(false);
         navigate("/profile");
-        hideMenu();
     }
 
     return isMenuVisible && (

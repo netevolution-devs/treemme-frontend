@@ -2,19 +2,21 @@ import {Outlet, useLocation} from "react-router";
 import {Box, Stack} from "@mui/material";
 import MenuToolbar from "@ui/layout/menu/MenuToolbar";
 import PanelContainerPage from "@features/panels/PanelContainerPage";
-import {useEffect} from "react";
+import {useLayoutEffect} from "react";
 import {useMenuStore} from "@ui/layout/default/layoutStore";
 
 const Layout = () => {
     const location = useLocation();
-    const {showMenu} = useMenuStore();
+    const {showMenu, hideMenu} = useMenuStore();
     const isAppRoute = location.pathname === "/app";
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (isAppRoute) {
             showMenu();
+        } else {
+            hideMenu();
         }
-    }, [isAppRoute, showMenu]);
+    }, [isAppRoute, showMenu, hideMenu]);
 
     return (
         <Box sx={{display: "flex", width: "100%"}}>
