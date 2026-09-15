@@ -19,11 +19,12 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
-import {Box} from "@mui/material";
+import {Box, useTheme} from "@mui/material";
 import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
+    const theme = useTheme();
 
     const {useStore} = usePanel<ISearchOrderRowsFilters, ISearchOrderRowsStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
@@ -58,14 +59,31 @@ const SearchOrderRowsList = () => {
 
     const canPrint = orderRows.length > 0;
 
+    const contentColumnWidths = useMemo(() => {
+        const context = document.createElement('canvas').getContext('2d');
+        if (!context) return {client: 300, articleCode: 300, product: 300};
+
+        context.font = `${theme.typography.body2.fontWeight} ${theme.typography.body2.fontSize} ${theme.typography.fontFamily}`;
+        const measure = (value: string | null | undefined) =>
+            Math.ceil(context.measureText((value ?? '').toUpperCase()).width) + 32;
+
+        return orderRows.reduce((widths, row) => ({
+            client: Math.max(widths.client, measure(row.client_order.client.name)),
+            articleCode: Math.max(widths.articleCode, measure(row.article?.code)),
+            product: Math.max(widths.product, measure(row.article?.name)),
+        }), {client: 160, articleCode: 110, product: 180});
+    }, [orderRows, theme.typography]);
+
     const columns = useMemo<MRT_ColumnDef<IOrderRowsSearch>[]>(() => [
         {
             accessorKey: "client_order.client.name",
             header: t("order-search.client"),
+            size: contentColumnWidths.client,
         },
         {
             accessorKey: "client_order.order_number",
             header: t("order-search.order"),
+            size: 90,
         },
         // {
         //     accessorKey: "id",
@@ -75,74 +93,90 @@ const SearchOrderRowsList = () => {
         {
             accessorKey: "client_order.order_date",
             header: t("order-search.date"),
+            size: 85,
             Cell: ({row}) => row.original.client_order.order_date ? dayjs(row.original.client_order.order_date).format("DD/MM/YYYY") : ""
         },
         {
             accessorKey: "client_order.client_order_number",
             header: t("order-search.client-order"),
+            size: 85,
         },
         {
             accessorKey: "client_order.client_order_date",
             header: t("order-search.client-date"),
+            size: 85,
             Cell: ({row}) => row.original.client_order.client_order_date ? dayjs(row.original.client_order.client_order_date).format("DD/MM/YYYY") : ""
         },
         {
             accessorKey: "client_order.agent_order_number",
             header: t("order-search.agent-order"),
+            size: 115,
         },
         {
             accessorKey: "client_order.agent_order_date",
             header: t("order-search.agent-date"),
+            size: 85,
             Cell: ({row}) => row.original.client_order.agent_order_date ? dayjs(row.original.client_order.agent_order_date).format("DD/MM/YYYY") : ""
         },
         {
             accessorKey: "article.code",
             header: t("order-search.code"),
+            size: contentColumnWidths.articleCode,
         },
         {
             accessorKey: "article.name",
             header: t("order-search.product"),
+            size: contentColumnWidths.product,
         },
         {
             accessorKey: "article.color.color",
             header: t("order-search.client-color"),
+            size: 120,
         },
         {
             accessorKey: "measurement_unit.prefix",
             header: t("order-search.um"),
-            size: 30,
+            enableSorting: false,
+            size: 65,
         },
         {
             accessorKey: "quantity",
             header: t("order-search.qta"),
+            size: 100,
         },
         {
             accessorKey: "currency.sign",
             header: t("order-search.v"),
-            size: 30,
+            enableSorting: false,
+            size: 65,
         },
         {
             accessorKey: "price",
             header: t("order-search.price"),
+            size: 100,
             Cell: ({cell}) => cell.getValue<number>()?.toFixed(4)
         },
         {
             accessorKey: "delivery_date_confirmed",
             header: t("order-search.delivery-date"),
+            size: 120,
             Cell: ({row}) => row.original.delivery_date_confirmed ? dayjs(row.original.delivery_date_confirmed).format("DD/MM/YYYY") : ""
         },
         {
             id: "qta_pro",
             header: t("order-search.qta-pro"),
+            size: 120,
             accessorFn: (row) => row.batch_orders?.batch?.quantity ?? 0,
         },
         {
             accessorKey: "production_schedule",
             header: t("order-search.scd-pro"),
+            size: 120,
         },
         {
             id: "qta_spe",
             header: t("order-search.qta-spe"),
+            size: 100,
             accessorFn: (row) => {
                 const ddtRows = row.batch_orders?.batch?.ddt_rows ?? [];
                 return ddtRows.reduce((acc, ddt) => acc + ddt.quantity, 0);
@@ -151,20 +185,30 @@ const SearchOrderRowsList = () => {
         {
             accessorKey: "shipment_schedule",
             header: t("order-search.scd-spe"),
+            size: 120,
         }
-    ], [t]);
+    ], [t, contentColumnWidths]);
 
     return (
         <>
             <GenericList<IOrderRowsSearch>
                 data={orderRows}
-                minHeight={"780px"}
+                fillHeight
                 isLoading={isLoading}
                 isFetching={isFetching}
                 columns={columns}
                 selectedId={selectedOrderRowId}
                 onRowSelect={(id) => setUIState({selectedOrderRowId: id as number})}
                 additionalOptions={{
+                    layoutMode: 'grid-no-grow',
+                    muiTableProps: {
+                        sx: {
+                            '& .MuiTableCell-root': {px: 0.75},
+                            '& .MuiTableHead-root .Mui-TableHeadCell-Content-Wrapper': {
+                                whiteSpace: 'normal',
+                            },
+                        },
+                    },
                     enableTopToolbar: true,
                     renderTopToolbar: () => (
                         <ListToolbar
