@@ -78,6 +78,7 @@ const CustomerOrdersList = () => {
                             />,
                             <SelectFieldFilter
                                 key={"f-client"}
+                                autoSelectFirstOption={false}
                                 label={t("orders.client")}
                                 value={filterOrderClientId}
                                 options={clients.map(s => ({value: s.id, label: s.name}))}
