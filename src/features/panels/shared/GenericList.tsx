@@ -25,6 +25,7 @@ interface GenericListProps<TData extends BaseEntity> {
     minHeight?: string;
     disableBorder?: boolean;
     disablePadding?: boolean;
+    fillHeight?: boolean;
 }
 
 const GenericList = <TData extends BaseEntity>({
@@ -41,6 +42,7 @@ const GenericList = <TData extends BaseEntity>({
                                                    minHeight = '300px',
                                                    disableBorder = false,
                                                    disablePadding = false,
+                                                   fillHeight = false,
                                                }: GenericListProps<TData>) => {
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
@@ -49,7 +51,9 @@ const GenericList = <TData extends BaseEntity>({
 
     const overrideOptions: Partial<MRT_TableOptions<TData>> = {
         muiTableContainerProps: {
-            sx: {maxHeight, minHeight},
+            sx: fillHeight
+                ? {flex: 1, minHeight: 0, maxHeight: 'none'}
+                : {maxHeight, minHeight},
         },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
@@ -72,6 +76,19 @@ const GenericList = <TData extends BaseEntity>({
         enableTopToolbar: false,
         ...defaultMrtOptions,
         ...additionalOptions,
+        ...(fillHeight && {
+            muiTablePaperProps: {
+                elevation: 0,
+                sx: {
+                    bgcolor: 'transparent',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    minHeight: 0,
+                },
+            },
+        }),
         displayColumnDefOptions: ({
             'mrt-row-actions': {
                 size: 50,
@@ -106,7 +123,8 @@ const GenericList = <TData extends BaseEntity>({
 
     const content = () => {
         return (
-            <Box sx={{width: '100%', position: 'relative', minHeight: _minHeight}}>
+            <Box sx={{width: '100%', position: 'relative', minHeight: fillHeight ? 0 : _minHeight,
+                ...(fillHeight && {height: '100%', display: 'flex', flexDirection: 'column'})}}>
                 {(isFetching && !isLoading) && (
                     <Box sx={{
                         position: 'absolute',
@@ -118,7 +136,7 @@ const GenericList = <TData extends BaseEntity>({
                     </Box>
                 )}
 
-                <Box sx={{overflowY: 'auto'}}>
+                <Box sx={fillHeight ? {flex: 1, minHeight: 0, overflow: 'hidden'} : {overflowY: 'auto'}}>
                     <MaterialReactTable table={table}/>
                 </Box>
             </Box>
@@ -129,11 +147,13 @@ const GenericList = <TData extends BaseEntity>({
     return (
         <>
             {!disableBorder ? (
-                <Card variant={"outlined"} sx={{bgcolor: "background.card.default", minHeight: _minHeight, maxHeight: maxHeight}}>
+                <Card variant={"outlined"} sx={{bgcolor: "background.card.default",
+                    ...(fillHeight ? {flex: 1, minHeight: 0, minWidth: 0} : {minHeight: _minHeight, maxHeight})}}>
                     {content()}
                 </Card>
             ) : (
-                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: !disablePadding ? 'divider' : 'transparent', borderRadius: 1, p: !disablePadding ? 1 : 0}}>
+                <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: !disablePadding ? 'divider' : 'transparent', borderRadius: 1, p: !disablePadding ? 1 : 0,
+                    ...(fillHeight && {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden'})}}>
                     {content()}
                 </Box>
             )}
