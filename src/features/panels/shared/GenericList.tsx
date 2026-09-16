@@ -65,7 +65,9 @@ const GenericList = <TData extends BaseEntity>({
             selected: row.original.id === selectedId,
             sx: {cursor: 'pointer'}
         }),
-        enableRowVirtualization: data.length > 50,
+        // Dockview visibility changes can leave virtual rows unmeasured and blank.
+        // MRT fixes this option at mount, so it must not depend on data.length.
+        enableRowVirtualization: false,
         ..._overrideOptions,
     };
 

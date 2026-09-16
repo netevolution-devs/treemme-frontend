@@ -1,5 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { useDockviewStore } from "@ui/panel/store/DockviewStore";
+import { usePanelMeta } from "@ui/panel/PanelContext";
 
 interface PanelFormLogicProps {
     initialName: string | undefined;
@@ -15,6 +16,7 @@ export const usePanelFormLogic = ({
                                       setFormState
                                   }: PanelFormLogicProps) => {
     const api = useDockviewStore(state => state.api);
+    const { panelId } = usePanelMeta();
 
     useEffect(() => {
         if (initialName && !selectedId) {
@@ -26,17 +28,17 @@ export const usePanelFormLogic = ({
         onSuccess?.(entity.id);
 
         if (api) {
-            const panels = api.panels;
-            const currentPanel = Object.values(panels).find(
-                p => (initialName && p.params?.initialName === initialName) || 
-                     (p.params?.extra?.panelId && p.params?.extra?.panelId === p.id && (p.api.isFocused || p.id === initialName))
-            );
+            // Resolve the submitting panel by identity: focus and names are not unique.
+            const currentPanel = api.getPanel(panelId);
 
-            if (currentPanel) {
+            if (currentPanel && (
+                (initialName && currentPanel.params?.initialName === initialName) ||
+                currentPanel.params?.extra?.panelId === panelId
+            )) {
                 currentPanel.api.close();
             }
         }
-    }, [onSuccess, initialName, api]);
+    }, [onSuccess, initialName, api, panelId]);
 
     return { handlePanelSuccess };
 };

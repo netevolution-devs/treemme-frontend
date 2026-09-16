@@ -14,27 +14,25 @@ interface SelectFieldFilterProps {
     options: SelectFieldOption[];
     label?: string;
     placeholder?: string;
+    autoSelectFirstOption?: boolean;
 }
 
 const defaultFilterOptions = createFilterOptions<SelectFieldOption>();
 
-const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder = "" }: SelectFieldFilterProps) => {
+const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder = "", autoSelectFirstOption = true }: SelectFieldFilterProps) => {
     const { t } = useTranslation(["common"]);
-    const [inputValue, setInputValue] = useState("");
+    const selectedOption = options.find(o => o.value === value) || null;
+    const selectedLabel = selectedOption?.label ?? "";
+    const [inputValue, setInputValue] = useState(selectedLabel);
     const filteredOptionsRef = useRef<SelectFieldOption[]>(options);
     const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const [previousSelection, setPreviousSelection] = useState({value, label: selectedLabel});
 
-    // Sync inputValue when external value changes
-    useEffect(() => {
-        if (value === undefined || value === null) {
-            setInputValue("");
-        } else {
-            const option = options.find(o => o.value === value);
-            if (option) {
-                setInputValue(option.label);
-            }
-        }
-    }, [value, options]);
+    // Sync external selections without resetting typed text when options are recreated.
+    if (previousSelection.value !== value || previousSelection.label !== selectedLabel) {
+        setPreviousSelection({value, label: selectedLabel});
+        setInputValue(selectedLabel);
+    }
 
     // Cleanup debounce timer on unmount
     useEffect(() => {
@@ -49,8 +47,6 @@ const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder 
         setInputValue("");
         onFilterChange(undefined);
     };
-
-    const selectedOption = options.find(o => o.value === value) || null;
 
     return (
         <Autocomplete<SelectFieldOption, false, false, false>
@@ -70,6 +66,8 @@ const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder 
                 setInputValue(newInputValue);
 
                 if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+
+                if (!autoSelectFirstOption) return;
 
                 if (newInputValue) {
                     debounceTimerRef.current = setTimeout(() => {

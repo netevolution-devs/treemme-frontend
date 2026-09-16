@@ -135,6 +135,11 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
     })
 
     useSubscribePanel<ICustomerOrderForm>({
+        formKey: "shipment_condition_id",
+        dependencyKey: "shipmentConditions"
+    })
+
+    useSubscribePanel<ICustomerOrderForm>({
         formKey: "shipping_carrier_id",
         dependencyKey: "carriers"
     })
@@ -251,6 +256,15 @@ const FormFields = ({clients, payments, shipmentConditions, order, selectedCusto
                     name={"shipment_condition_id"}
                     label={t("orders.shipment-condition")}
                     options={shipmentConditions.map(p => ({value: p.id, label: p.name}))}
+                    onNoOptionsMatch={(inputValue) => {
+                        addSelectPanel({
+                            initialValue: inputValue,
+                            menu: {
+                                component: "shipmentConditions",
+                                i18nKey: "menu.commercial.shipment-conditions"
+                            }
+                        })
+                    }}
                 />
             </Box>
 
