@@ -6,7 +6,7 @@ import type {
     ISearchOrderRowsStoreState
 } from "@features/panels/orders/search-order-rows/SearchOrderRowsPanel";
 import {usePanel} from "@ui/panel/PanelContext";
-import {useMemo} from "react";
+import {useMemo, useRef} from "react";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IOrderRowsSearch} from "@features/panels/orders/search-order-rows/api/IOrderRowsSearch";
@@ -19,8 +19,17 @@ import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
-import {Box, useTheme} from "@mui/material";
+import {Box, MenuItem, useTheme} from "@mui/material";
 import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
+import ColorLensIcon from '@mui/icons-material/ColorLens';
+import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
+import {openDialog} from "@ui/dialog/dialogHelper";
+import type {IDialogActions} from "@ui/dialog/IDialogActions";
+import DyeFormDialog from "@features/panels/orders/customer-orders/order-rows/dye/DyeFormDialog";
+import RefinementFormDialog from "@features/panels/orders/customer-orders/order-rows/refinement/RefinementFormDialog";
+import {useAuth} from "@features/auth/model/AuthContext";
+import {permissionEngine} from "@features/authz/permission.utils";
+import type {IAccessControl} from "@features/user/model/RoleInterfaces";
 
 const SearchOrderRowsList = () => {
     const {t} = useTranslation(["form"]);
@@ -29,6 +38,13 @@ const SearchOrderRowsList = () => {
     const {useStore} = usePanel<ISearchOrderRowsFilters, ISearchOrderRowsStoreState>();
     const selectedOrderRowId = useStore(state => state.uiState.selectedOrderRowId);
     const setUIState = useStore(state => state.setUIState);
+
+    const dyeDialogRef = useRef<IDialogActions | null>(null);
+    const refinementDialogRef = useRef<IDialogActions | null>(null);
+
+    const {user} = useAuth();
+    const engine = permissionEngine((user?.accessControl ?? []) as IAccessControl[]);
+    const canPost = engine.can("ordini - ordini clienti", 'post');
 
     const filterStartDate = useStore(state => state.filters.filterStartDate);
     const filterEndDate = useStore(state => state.filters.filterEndDate);
@@ -191,6 +207,9 @@ const SearchOrderRowsList = () => {
 
     return (
         <>
+            <DyeFormDialog ref={dyeDialogRef}/>
+            <RefinementFormDialog ref={refinementDialogRef}/>
+
             <GenericList<IOrderRowsSearch>
                 data={orderRows}
                 fillHeight
@@ -200,6 +219,25 @@ const SearchOrderRowsList = () => {
                 selectedId={selectedOrderRowId}
                 onRowSelect={(id) => setUIState({selectedOrderRowId: id as number})}
                 additionalOptions={{
+                    enableRowActions: canPost,
+                    renderRowActionMenuItems: ({row, closeMenu}) => [
+                        <MenuItem key="dye" onClick={() => {
+                            openDialog(dyeDialogRef)
+                            setUIState({selectedOrderRowId: row.original.id})
+                            closeMenu()
+                        }}>
+                            <ColorLensIcon color={"primary"} sx={{mr: 1}}/>
+                            {t("orders.row.dye")}
+                        </MenuItem>,
+                        <MenuItem key="refinishing" onClick={() => {
+                            openDialog(refinementDialogRef)
+                            setUIState({selectedOrderRowId: row.original.id})
+                            closeMenu()
+                        }}>
+                            <SettingsInputHdmiIcon color={"success"} sx={{mr: 1}}/>
+                            {t("orders.row.refinement")}
+                        </MenuItem>
+                    ],
                     layoutMode: 'grid-no-grow',
                     muiTableProps: {
                         sx: {
