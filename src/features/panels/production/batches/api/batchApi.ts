@@ -22,6 +22,7 @@ export interface IBatchesPayload extends Omit<IBatch, 'id'
     leather_id: number;
     batch_type_id: number;
     measurement_unit_id: number;
+    thickness_id?: number;
 }
 
 interface IMutateParamsGetPdf {

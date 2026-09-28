@@ -99,7 +99,17 @@
     "ddt-price": "DDT Price"
   },
   "movements": {
-    "contact": "Site",
+    "year": "Year",
+    "month": "Month",
+    "product": "Product",
+    "batch_code": "Batch",
+    "selection": "Selection",
+    "measurement_unit": "Measurement unit",
+    "quantity": "Quantity",
+    "price": "Unit price",
+    "total_value": "Total value",
+    "subcontractor_ddt_number": "Subcontractor DDT number",
+    "contact": "Contact",
     "date": "Date",
     "reason": "Reason",
     "piece": "Pieces",

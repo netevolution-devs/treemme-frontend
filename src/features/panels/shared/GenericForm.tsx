@@ -57,6 +57,7 @@ export interface GenericFormProps<TForm extends FieldValues, TEntity> {
     closePanelOnSave?: boolean;
     closePanelOnCancel?: boolean;
     selectedIdKey?: string;
+    readOnly?: boolean;
 }
 
 const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPanelUIState = IPanelUIState>(
@@ -89,7 +90,8 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
         resource,
         closePanelOnSave = true,
         disableCreateButton = false,
-        selectedIdKey
+        selectedIdKey,
+        readOnly = false
     }: GenericFormProps<TForm, TEntity>
 ) => {
     const dockviewApi = useDockviewStore(state => state.api);
@@ -111,7 +113,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     const [isUpdateClick, setIsUpdateClick] = React.useState(false);
 
     const methods = useForm<TForm>({
-        disabled: (!dialogMode && isFormDisabled) || isSaving,
+        disabled: readOnly || (!dialogMode && isFormDisabled) || isSaving,
         mode: "onSubmit",
         defaultValues: emptyValues as DefaultValues<TForm>,
     });
@@ -127,14 +129,16 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     }, [dialogRef]);
 
     const handleNew = React.useCallback(() => {
+        if (readOnly) return;
         if (dialogMode) return;
         setFormState('new');
-    }, [dialogMode, setFormState]);
+    }, [readOnly, dialogMode, setFormState]);
 
     const handleEdit = React.useCallback(() => {
+        if (readOnly) return;
         if (dialogMode) return;
         setFormState('edit');
-    }, [dialogMode, setFormState]);
+    }, [readOnly, dialogMode, setFormState]);
 
     const handleDelete = () => {
         openDialog(deleteRef);
@@ -153,7 +157,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     };
 
     const handleCancel = React.useCallback(() => {
-        if (selectedId && !isFormDisabled && entity) {
+        if (!readOnly && selectedId && !isFormDisabled && entity) {
             methods.reset(mapEntityToForm(entity));
             if (dialogMode) return;
             setFormState('selected');
@@ -164,7 +168,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
             if (dialogMode) return;
             setFormState('cancel');
         }
-    }, [selectedId, isFormDisabled, entity, methods, mapEntityToForm, dialogMode, setFormState, onClearSelection, emptyValues, handleCloseDialog]);
+    }, [readOnly, selectedId, isFormDisabled, entity, methods, mapEntityToForm, dialogMode, setFormState, onClearSelection, emptyValues, handleCloseDialog]);
 
     const handleUpdate = () => {
         setIsUpdateClick(true);
@@ -172,6 +176,7 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
     };
 
     const onSubmit = async (data: TForm) => {
+        if (readOnly) return;
         if (validateBeforeSave && !validateBeforeSave(data)) {
             setIsUpdateClick(false);
             return;
@@ -237,8 +242,12 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                 return;
             }
             setFormState('init');
+        } else if (readOnly) {
+            // Clear the previous detail while the newly selected entity loads.
+            methods.reset(emptyValues);
+            setFormState('selected');
         }
-    }, [selectedId, entity]);
+    }, [selectedId, entity, readOnly]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -307,11 +316,11 @@ const GenericForm = <TForm extends FieldValues, TEntity = TForm, TUI extends IPa
                             onDelete={handleDelete}
                             onCancel={handleCancel}
                             buttonState={buttonsState}
-                            hideNew={dialogMode || !canPost || disableCreateButton}
-                            hideEdit={dialogMode || !canPut || disableEditButton}
-                            hideDelete={(!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
-                            hideSave={disabledBasicButtons || (!canPost && !canPut) || disableSaveButton}
-                            hideUpdate={disableUpdateButton || !floatingPanelMode || !canPut}
+                            hideNew={readOnly || dialogMode || !canPost || disableCreateButton}
+                            hideEdit={readOnly || dialogMode || !canPut || disableEditButton}
+                            hideDelete={readOnly || (!selectedId && dialogMode) || disabledBasicButtons || !canDelete || disableDeleteButton}
+                            hideSave={readOnly || disabledBasicButtons || (!canPost && !canPut) || disableSaveButton}
+                            hideUpdate={readOnly || disableUpdateButton || !floatingPanelMode || !canPut}
                             onUpdate={handleUpdate}
                             overrideButtonState={dialogMode}
                             isLoading={isSaving}

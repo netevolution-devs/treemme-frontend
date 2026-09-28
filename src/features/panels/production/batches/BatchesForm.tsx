@@ -21,7 +21,10 @@ import CustomButton, {PrintButton} from "@features/panels/shared/CustomButton";
 import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
 import {openDialog} from "@ui/dialog/dialogHelper";
 import type {IDialogActions} from "@ui/dialog/IDialogActions";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
+import {useFormContext, useWatch} from "react-hook-form";
+import type {IBatchType} from "@features/panels/production/batches/api/batch-type/IBatchType";
+import {thicknessApi} from "@features/panels/leathers/thicknesses/api/thicknessApi";
 import BatchesReworkFormDialog from "@features/panels/production/batches/rework/BatchesReworkFormDialog";
 import BatchesSplitFormDialog from "@features/panels/production/batches/split/BatchesSplitFormDialog";
 import BatchesCompensationFormDialog
@@ -64,6 +67,7 @@ export type IBatchesForm = Omit<IBatch, 'id'
     leather_id: number | null;
     batch_type_id: number | null;
     measurement_unit_id: number | null;
+    thickness_id: number | null;
     quantity: number | null
     pieces: number | null;
 };
@@ -158,6 +162,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                 disableCreateButton={disableFunctions}
                 emptyValues={{
                     leather_id: null,
+                    thickness_id: null,
                     batch_type_id: batchTypes.find(x => x.name === "Lotto")?.id || null,
                     measurement_unit_id: measurementUnits.find(x => x.name === "Piedi quadrati")?.id || null,
                     completed: false,
@@ -174,6 +179,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                 }}
                 mapEntityToForm={(x) => ({
                     leather_id: x.leather?.id || null,
+                    thickness_id: null,
                     batch_type_id: x.batch_type?.id || null,
                     measurement_unit_id: x.measurement_unit?.id || null,
                     completed: x.completed,
@@ -188,7 +194,13 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                     check_note: x.check_note,
                     pieces: x.pieces,
                 })}
-                create={(payload) => createBatch(payload as IBatchesPayload)}
+                create={({thickness_id, ...payload}) => {
+                    const isSplit = batchTypes.find(x => x.id === payload.batch_type_id)?.name.trim().toUpperCase() === "SPACCATO";
+                    return createBatch({
+                        ...payload,
+                        ...(isSplit && thickness_id != null ? {thickness_id} : {}),
+                    } as IBatchesPayload);
+                }}
                 onCreateSuccess={(id) => {
                     setUIState({selectedBatchId: id})
                 }}
@@ -331,6 +343,10 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                                 options={measurementUnits.map(x => ({label: x.prefix, value: x.id}))}
                                 required
                             />
+                            <BatchesThicknessField
+                                batchTypes={batchTypes}
+                                isNewBatch={!selectedBatchId}
+                            />
                             {selectedBatchId && (
                                 <TextFieldValue
                                     label={t("production.batch.stock_items")}
@@ -412,6 +428,30 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
         </>
     )
 }
+
+const BatchesThicknessField = ({batchTypes, isNewBatch}: {batchTypes: IBatchType[]; isNewBatch: boolean}) => {
+    const {t} = useTranslation(["form"]);
+    const {control, unregister} = useFormContext<IBatchesForm>();
+    const batchTypeId = useWatch({control, name: "batch_type_id"});
+    const showThickness = isNewBatch
+        && batchTypes.find(x => x.id === batchTypeId)?.name.trim().toUpperCase() === "SPACCATO";
+    const {data: thicknesses = []} = thicknessApi.useGetList();
+
+    useEffect(() => {
+        if (!showThickness) unregister("thickness_id");
+    }, [showThickness, unregister]);
+
+    if (!showThickness) return null;
+
+    return (
+        <SelectFieldControlled<IBatchesForm>
+            name="thickness_id"
+            label={t("leathers.leather.thickness")}
+            options={thicknesses.map(x => ({label: x.name, value: x.id}))}
+            required
+        />
+    );
+};
 
 interface IBatchSelectLeatherProps {
     isEdit?: boolean;
