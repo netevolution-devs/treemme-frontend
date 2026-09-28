@@ -15,13 +15,16 @@ export interface IWarehouseMovementReason {
 
 export interface IWarehouseMovement {
     id: number;
+    date: string;
     batch: IBatch;
     reason: IWarehouseMovementReason;
-    date: string;
     piece: number;
     price: number | null;
+    quantity: number | null;
+    total_value: number | null;
     ddt_number: number | null;
     ddt_date: string | null;
     movement_note: string;
     contact: IContact;
+    subcontractor_ddt_number: number | null;
 }

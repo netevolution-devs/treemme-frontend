@@ -36,46 +36,72 @@ const MovementsList = () => {
 
     const columns = useMemo<MRT_ColumnDef<IWarehouseMovement>[]>(() => [
         {
-            accessorKey: "date",
-            header: t("date"),
-            Cell: ({row}) => (
-                dayjs(row.original.date).format("DD/MM/YYYY")
-            )
+            id: "year",
+            accessorFn: movement => movement.date ? dayjs(movement.date).year() : null,
+            header: t("movements.year"),
+            size: 80,
+            minSize: 80,
+            grow: false,
         },
         {
-            accessorKey: "batch.batch_code",
-            header: t("production.batch.batch_code"),
+            id: "month",
+            accessorFn: movement => movement.date ? dayjs(movement.date).month() + 1 : null,
+            header: t("movements.month"),
+            size: 80,
+            minSize: 80,
+            grow: false,
+        },
+        {
+            accessorKey: "date",
+            header: t("movements.date"),
+            size: 115,
+            minSize: 115,
+            grow: false,
+            Cell: ({row}) => row.original.date ? dayjs(row.original.date).format("DD/MM/YYYY") : "-",
         },
         {
             accessorKey: "reason.name",
             header: t("movements.reason"),
         },
         {
+            id: "product",
+            accessorFn: movement => movement.batch?.article?.name ?? movement.batch?.leather?.name ?? "-",
+            header: t("movements.product"),
+        },
+        {
             accessorKey: "piece",
             header: t("movements.piece"),
+            size: 85,
+            minSize: 85,
+            grow: false,
         },
         {
-            accessorKey: "price",
-            header: t("sales.ddt-price"),
-            Cell: ({row}) => row.original.price ? `${row.original.price} €` : "-"
+            accessorKey: "quantity",
+            header: t("movements.quantity"),
+            size: 105,
+            minSize: 105,
+            grow: false,
+            Cell: ({cell}) => cell.getValue<number | null>() ?? "-",
         },
         {
-            accessorKey: "ddt_number",
-            header: t("movements.ddt_number"),
+            accessorKey: "batch.batch_code",
+            header: t("movements.batch_code"),
+            size: 110,
+            minSize: 110,
+            grow: false,
         },
         {
-            accessorKey: "ddt_date",
-            header: t("movements.ddt_date"),
-            Cell: ({row}) => row.original.ddt_date ? dayjs(row.original.ddt_date).format("DD/MM/YYYY") : "-"
+            // The API does not currently identify the movement's selection.
+            id: "selection",
+            accessorFn: () => "-",
+            header: t("movements.selection"),
+            enableSorting: false,
+            enableColumnFilter: false,
         },
         {
             accessorKey: "contact.name",
             header: t("movements.contact"),
         },
-        {
-            accessorKey: "movement_note",
-            header: t("movements.movement_note"),
-        }
     ], [t]);
 
     return (
@@ -83,11 +109,11 @@ const MovementsList = () => {
             data={movements}
             isLoading={isLoading}
             isFetching={isFetching}
-            minHeight={"780px"}
             columns={columns}
             selectedId={selectedMovementId}
             onRowSelect={(id) => setUIState({selectedMovementId: id})}
             additionalOptions={{
+                layoutMode: "grid",
                 enableTopToolbar: true,
                 renderTopToolbar: () => (
                     <ListToolbar
