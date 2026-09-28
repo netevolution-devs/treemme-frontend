@@ -6,6 +6,7 @@ import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-mov
 import type {IBatchSelection} from "@features/panels/production/batches/selection/api/IBatchSelection";
 import type {IArticle} from "@features/panels/products/articles/api/IArticle";
 import type {IBatchProduction} from "@features/panels/production/batches/production/api/IBatchProduction";
+import type {IThickness} from "@features/panels/leathers/thicknesses/api/IThickness";
 
 export interface IFatcherBatchDetails {
     father_batch_pieces: number;
@@ -23,6 +24,7 @@ export interface IBatch {
     article: IArticle | null;
     batch_type: IBatchType;
     measurement_unit: IMeasurementUnit;
+    thickness?: IThickness | null;
     check_user: IUser;
     completed: boolean;
     checked: boolean;
