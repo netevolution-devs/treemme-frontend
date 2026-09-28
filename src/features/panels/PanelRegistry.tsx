@@ -157,7 +157,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     // warehouse
     lotsBatches:                () => <LotsBatchesPanel />,
     pallets:                    (props) => <PalletsPanel {...props}/>,
-    movements:                  () => <MovementsPanel/>,
+    movements:                  (props) => <MovementsPanel {...props}/>,
     // production
     batches:                    (props) => <BatchesPanel {...props}/>,
     machinery:                  (props) => <MachineryPanel {...props}/>,

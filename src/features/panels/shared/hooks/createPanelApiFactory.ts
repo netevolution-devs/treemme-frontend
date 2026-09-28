@@ -79,7 +79,7 @@ export const createPanelApi = <T, TPayload = Omit<T, 'id'>>(config: ApiConfig) =
                     const response = await get<T[]>(baseEndpoint, {params: options?.queryParams});
                     return response.data.data;
                 },
-                staleTime: options?.staleTime || Infinity,
+                staleTime: options?.staleTime ?? Infinity,
                 gcTime: Infinity,
             });
         },

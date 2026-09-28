@@ -2,7 +2,8 @@ import {warehouseMovementsApi} from "@features/panels/warehouse/movements/api/wa
 import {usePanel} from "@ui/panel/PanelContext";
 import type {IMovementsStoreState, IMovementStoreFilter} from "@features/panels/warehouse/movements/MovementsPanel";
 import {useTranslation} from "react-i18next";
-import {useMemo} from "react";
+import {useEffect, useMemo} from "react";
+import {useDockviewStore} from "@ui/panel/store/DockviewStore";
 import {cleanFilters} from "@ui/form/filters/useCleanFilters";
 import type {MRT_ColumnDef} from "material-react-table";
 import type {IWarehouseMovement} from "@features/panels/shared/api/warehouse-movement/IWarehouseMovement";
@@ -17,7 +18,7 @@ import useGetExternalProcessingReturnsPrint
 const MovementsList = () => {
     const {t} = useTranslation(["form"]);
 
-    const {useStore} = usePanel<IMovementStoreFilter, IMovementsStoreState>();
+    const {useStore, panelId} = usePanel<IMovementStoreFilter, IMovementsStoreState>();
     const selectedMovementId = useStore(state => state.uiState.selectedMovementId);
     const setUIState = useStore(state => state.setUIState);
 
@@ -30,7 +31,14 @@ const MovementsList = () => {
         }
     ), [filterBatchCode]);
 
-    const {data: movements = [], isLoading, isFetching} = warehouseMovementsApi.useGetList({queryParams});
+    const {data: movements = [], isLoading, isFetching, refetch} = warehouseMovementsApi.useGetList({queryParams, staleTime: 0});
+
+    useEffect(() => useDockviewStore.subscribe((state, previousState) => {
+        if (state.activePanelId === panelId && previousState.activePanelId !== panelId) {
+            void refetch({cancelRefetch: false});
+        }
+    }), [panelId, refetch]);
+
     const exportMutation = warehouseMovementsApi.useExport(queryParams);
     const {mutateAsync: getReturnsPdf, isPending} = useGetExternalProcessingReturnsPrint();
 
