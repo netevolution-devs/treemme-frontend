@@ -26,7 +26,7 @@ const MovementsList = () => {
 
     const queryParams = useMemo(() => cleanFilters(
         {
-            code: filterBatchCode,
+            batch_code: filterBatchCode,
         }
     ), [filterBatchCode]);
 
