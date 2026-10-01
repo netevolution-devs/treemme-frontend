@@ -9,7 +9,7 @@ import {
     Link
 } from "@mui/material";
 import {useLocation, useNavigate} from "react-router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Trans, useTranslation} from "react-i18next";
 import {appNs} from "../../../i18n";
 import Splash from "./Splash";
@@ -68,6 +68,12 @@ const LoginPage = () => {
 
         showMenu() //Make sure the menu is visible after login
     });
+
+    useEffect(() => {
+        if (passwordExpiring) {
+            navigate("/login/change-password", {replace: true, state: {from}});
+        }
+    }, [passwordExpiring])
 
     return (
         <Grid container sx={{minHeight: '100vh', gap: 0, justifyContent: 'center', alignItems: 'center'}}>
