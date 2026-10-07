@@ -24,6 +24,8 @@ import useCallablePanel from "@ui/panel/useCallablePanel";
 import useSubscribePanel from "@ui/panel/useSubscribePanel";
 import {carrierApi} from "@features/panels/contacts/carriers/api/carrierApi";
 import {useEffect} from "react";
+import {PrintButton} from "@features/panels/shared/CustomButton";
+import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 
 export type IContactForm = Omit<IContact, 'id'
     | 'contact_title'
@@ -49,6 +51,7 @@ export type IContactForm = Omit<IContact, 'id'
 };
 
 const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<IContactsStoreParams>) => {
+    const {t} = useTranslation(["form"]);
     const {useStore} = usePanel<unknown, IContactsStoreState>();
 
     const setUIState = useStore(state => state.setUIState);
@@ -72,6 +75,8 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
     const {mutateAsync: createContact, isPending: isPosting} = usePost();
     const {mutateAsync: updateContact, isPending: isPutting} = usePut();
     const {mutateAsync: deleteContact, isPending: isDeleting} = useDelete();
+    const {mutateAsync: getOrderRowPrint, isPending: isOrderRowPrintPending} = useGetClientOrderRowSummaryPrint();
+    const clientId = contact?.client && contact.id === selectedContactId ? contact.id : null;
 
     useEffect(() => {
         if (selectedContactId) {
@@ -116,6 +121,19 @@ const ContactsForm = ({initialName, onSuccess, extra}: ICustomPanelFormProps<ICo
                 shipment_condition_id: x.shipment_condition?.id || null,
                 shipping_carrier_id: x.shipping_carrier?.id || null,
             })}
+            extraButtons={[
+                <PrintButton
+                    key="order-row-report"
+                    label={t("order-search.order-row-report")}
+                    canPrint={clientId !== null}
+                    isPending={isOrderRowPrintPending}
+                    onClick={() => {
+                        if (clientId !== null) {
+                            return getOrderRowPrint({params: {client_id: clientId}});
+                        }
+                    }}
+                />
+            ]}
             create={(payload) => createContact(payload)}
             onCreateSuccess={(id) => {
                 setUIState({selectedContactId: id});

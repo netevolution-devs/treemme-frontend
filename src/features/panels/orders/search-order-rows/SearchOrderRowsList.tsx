@@ -17,7 +17,6 @@ import RadioGroupFieldFilter from "@ui/form/filters/RadioGroupFieldFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
-import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
 import {Box, MenuItem, useTheme} from "@mui/material";
 import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
@@ -69,7 +68,6 @@ const SearchOrderRowsList = () => {
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
-    const {mutateAsync: getOrderRowPrint, isPending: isOrderRowPrintPending} = useGetClientOrderRowSummaryPrint();
     const {mutateAsync: getProductionReport, isPending: isProductionReportPending} = useGetProductionReportPdf();
     const exportMutation = useExportCSV('/client-order-row-report', queryParams, 'order-rows-export.csv', 'ORDER-ROWS-SEARCH');
 
@@ -330,14 +328,6 @@ const SearchOrderRowsList = () => {
                                             end_date: filterEndDate,
                                             print_status: filterPrintStatus,
                                         }
-                                    })}
-                                />,
-                                <PrintButton
-                                    label={t("order-search.order-row-report")}
-                                    canPrint={canPrint}
-                                    isPending={isOrderRowPrintPending}
-                                    onClick={() => getOrderRowPrint({
-                                        params: queryParams
                                     })}
                                 />
                             ]}
