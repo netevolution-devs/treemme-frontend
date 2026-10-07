@@ -264,6 +264,7 @@ const SearchOrderRowsList = () => {
                                     key={"f-client"}
                                     label={t("orders.client")}
                                     value={filterClientId}
+                                    autoSelectFirstOption={false}
                                     options={clients.map(s => ({value: s.id, label: s.name}))}
                                     onFilterChange={(value) => setFilters({filterClientId: value as number})}
                                 />

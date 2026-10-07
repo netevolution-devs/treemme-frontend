@@ -19,7 +19,7 @@ interface SelectFieldFilterProps {
 
 const defaultFilterOptions = createFilterOptions<SelectFieldOption>();
 
-const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder = "", autoSelectFirstOption = true }: SelectFieldFilterProps) => {
+const SelectFieldFilter = ({ value, onFilterChange, options, label, placeholder = "", autoSelectFirstOption = false }: SelectFieldFilterProps) => {
     const { t } = useTranslation(["common"]);
     const selectedOption = options.find(o => o.value === value) || null;
     const selectedLabel = selectedOption?.label ?? "";
