@@ -25,6 +25,7 @@ interface GenericListProps<TData extends BaseEntity> {
     minHeight?: string;
     disableBorder?: boolean;
     disablePadding?: boolean;
+    fullHeight?: boolean;
     fillHeight?: boolean;
 }
 
@@ -42,7 +43,8 @@ const GenericList = <TData extends BaseEntity>({
                                                    minHeight = '300px',
                                                    disableBorder = false,
                                                    disablePadding = false,
-                                                   fillHeight = false,
+                                                   fullHeight = false,
+                                                   fillHeight = fullHeight,
                                                }: GenericListProps<TData>) => {
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
@@ -126,7 +128,7 @@ const GenericList = <TData extends BaseEntity>({
     const content = () => {
         return (
             <Box sx={{width: '100%', position: 'relative', minHeight: fillHeight ? 0 : _minHeight,
-                ...(fillHeight && {height: '100%', display: 'flex', flexDirection: 'column'})}}>
+                ...(fillHeight && {flex: 1, display: 'flex', flexDirection: 'column'})}}>
                 {(isFetching && !isLoading) && (
                     <Box sx={{
                         position: 'absolute',
@@ -150,12 +152,12 @@ const GenericList = <TData extends BaseEntity>({
         <>
             {!disableBorder ? (
                 <Card variant={"outlined"} sx={{bgcolor: "background.card.default",
-                    ...(fillHeight ? {flex: 1, minHeight: 0, minWidth: 0} : {minHeight: _minHeight, maxHeight})}}>
+                    ...(fillHeight ? {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column'} : {minHeight: _minHeight, maxHeight})}}>
                     {content()}
                 </Card>
             ) : (
                 <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: !disablePadding ? 'divider' : 'transparent', borderRadius: 1, p: !disablePadding ? 1 : 0,
-                    ...(fillHeight && {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden'})}}>
+                    ...(fillHeight && {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column'})}}>
                     {content()}
                 </Box>
             )}

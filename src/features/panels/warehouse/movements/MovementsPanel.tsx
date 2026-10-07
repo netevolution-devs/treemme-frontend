@@ -6,6 +6,8 @@ import MovementsList from "@features/panels/warehouse/movements/MovementsList";
 import MovementsForm from "@features/panels/warehouse/movements/MovementsForm";
 import type {IDockviewPanelProps} from "dockview";
 import type {ICustomPanelProps} from "@ui/panel/store/ICustomPanelPropst";
+import {usePanel} from "@ui/panel/PanelContext";
+import {Stack} from "@mui/material";
 
 export interface IMovementStoreFilter {
     filterBatchCode?: string;
@@ -23,10 +25,31 @@ const MovementsPanel = (props: IDockviewPanelProps<ICustomPanelProps>) => {
             kind={"movements"}
             uuid={props.api.id}
             initialState={{uiState: initialUiState}}
-            listComponent={<MovementsList/>}
-        >
-            <MovementsForm/>
-        </GenericPanel>
+            listComponent={<MovementsContent/>}
+        />
+    )
+}
+
+const MovementsContent = () => {
+    const {useStore} = usePanel<IMovementStoreFilter, IMovementsStoreState>();
+    const selectedMovementId = useStore(state => state.uiState.selectedMovementId);
+
+    return (
+        <Stack gap={1.5} sx={{flex: 1, minHeight: 0}}>
+            <MovementsList/>
+            {selectedMovementId != null && (
+                <Stack gap={0.5} sx={{
+                    flex: 1,
+                    borderTop: "3px solid",
+                    borderRadius: 1,
+                    borderColor: "primary.main",
+                    backgroundColor: "background.paper",
+                    p: 1,
+                }}>
+                    <MovementsForm/>
+                </Stack>
+            )}
+        </Stack>
     )
 }
 
