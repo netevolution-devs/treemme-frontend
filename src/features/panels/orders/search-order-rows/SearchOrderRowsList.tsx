@@ -18,6 +18,7 @@ import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
+import useGetProductionToSendPdf from "@features/panels/orders/customer-orders/api/useGetProductionToSendPdf";
 import {Box, MenuItem, useTheme} from "@mui/material";
 import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
@@ -69,6 +70,7 @@ const SearchOrderRowsList = () => {
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
     const {mutateAsync: getProductionReport, isPending: isProductionReportPending} = useGetProductionReportPdf();
+    const {mutateAsync: getProductionToSend, isPending: isProductionToSendPending} = useGetProductionToSendPdf();
     const exportMutation = useExportCSV('/client-order-row-report', queryParams, 'order-rows-export.csv', 'ORDER-ROWS-SEARCH');
 
     const canPrint = orderRows.length > 0;
@@ -327,6 +329,17 @@ const SearchOrderRowsList = () => {
                                             start_date: filterStartDate,
                                             end_date: filterEndDate,
                                             print_status: filterPrintStatus,
+                                        }
+                                    })}
+                                />,
+                                <PrintButton
+                                    label={t("order-search.production-to-send")}
+                                    canPrint={canPrint}
+                                    isPending={isProductionToSendPending}
+                                    onClick={() => getProductionToSend({
+                                        params: {
+                                            start_date: filterStartDate,
+                                            end_date: filterEndDate,
                                         }
                                     })}
                                 />

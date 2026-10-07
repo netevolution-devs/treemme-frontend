@@ -674,6 +674,7 @@
     "printed": "Stampato",
     "all": "Tutti",
     "production-report": "Ordini da produrre",
+    "production-to-send": "Ordini da spedire",
     "order-row-report": "Report righe ordini"
   }
 }
