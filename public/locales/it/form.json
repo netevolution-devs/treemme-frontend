@@ -558,6 +558,7 @@
       "warehouse_movement_reason": "Causale magazzino"
     },
     "ddt_rows": {
+      "kg_weight": "Peso KG",
       "transfer": "Trasferisci lotto",
       "row": "Righe DDT",
       "half_piece": "Mezze",

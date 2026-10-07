@@ -237,6 +237,11 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
     const watchedCurrencyValue = useWatch<IDeliveryNoteRowForm>({name: "currency_exchange"});
 
     const {data: batch} = batchApi.useGetDetail(watchedBatchId as number);
+    const selectedBatch = batch?.id === watchedBatchId
+        ? batch
+        : batchesList.find(b => b.id === watchedBatchId);
+    const isCrosta = [selectedBatch?.article?.name, selectedBatch?.leather?.name]
+        .some(name => name?.toUpperCase().includes("CROSTA"));
 
     const productName = deliveryNoteRow?.batch.article?.name || deliveryNoteRow?.batch.leather?.name || batch?.leather?.name || batch?.article?.name ||  batch?.article?.code;
     const {setValue} = useFormContext<IDeliveryNoteRowForm>();
@@ -290,6 +295,13 @@ const DeliverNotesRowsFormFields = ({ddtId, ddtRowId}: { ddtId: number, ddtRowId
                     enforceStep
                     deactivated={!watchedBatchId || !!deliveryNoteRow?.pieces}
                 />
+                {isCrosta && (
+                    <NumberFieldControlled<IDeliveryNoteRowForm>
+                        name="kg_weight"
+                        label={t("shipping.ddt_rows.kg_weight")}
+                        precision={2}
+                    />
+                )}
             </Box>
 
             {!isSell && (

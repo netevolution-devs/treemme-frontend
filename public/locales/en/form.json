@@ -171,6 +171,7 @@
   },
   "shipping": {
     "ddt_rows": {
+      "kg_weight": "Weight KG",
       "close_row": "Close DDT row"
     }
   },
