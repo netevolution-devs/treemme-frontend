@@ -114,6 +114,7 @@ const MovementsList = () => {
 
     return (
         <GenericList<IWarehouseMovement>
+            fullHeight={selectedMovementId == null}
             data={movements}
             isLoading={isLoading}
             isFetching={isFetching}

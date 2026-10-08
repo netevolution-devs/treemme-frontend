@@ -17,8 +17,8 @@ import RadioGroupFieldFilter from "@ui/form/filters/RadioGroupFieldFilter";
 import SelectFieldFilter from "@ui/form/filters/SelectFieldFilter";
 import {contactsApi} from "@features/panels/contacts/contacts/api/contactsApi";
 import {PrintButton} from "@features/panels/shared/CustomButton";
-import useGetClientOrderRowSummaryPrint from "@features/panels/orders/search-order-rows/api/useGetOrderSearchClientPdf";
 import useGetProductionReportPdf from "@features/panels/orders/customer-orders/api/useGetProductionReportPdf";
+import useGetProductionToSendPdf from "@features/panels/orders/customer-orders/api/useGetProductionToSendPdf";
 import {Box, MenuItem, useTheme} from "@mui/material";
 import {useExportCSV} from "@features/panels/shared/hooks/createPanelApiFactory";
 import ColorLensIcon from '@mui/icons-material/ColorLens';
@@ -69,8 +69,8 @@ const SearchOrderRowsList = () => {
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
 
-    const {mutateAsync: getOrderRowPrint, isPending: isOrderRowPrintPending} = useGetClientOrderRowSummaryPrint();
     const {mutateAsync: getProductionReport, isPending: isProductionReportPending} = useGetProductionReportPdf();
+    const {mutateAsync: getProductionToSend, isPending: isProductionToSendPending} = useGetProductionToSendPdf();
     const exportMutation = useExportCSV('/client-order-row-report', queryParams, 'order-rows-export.csv', 'ORDER-ROWS-SEARCH');
 
     const canPrint = orderRows.length > 0;
@@ -264,6 +264,7 @@ const SearchOrderRowsList = () => {
                                     key={"f-client"}
                                     label={t("orders.client")}
                                     value={filterClientId}
+                                    autoSelectFirstOption={false}
                                     options={clients.map(s => ({value: s.id, label: s.name}))}
                                     onFilterChange={(value) => setFilters({filterClientId: value as number})}
                                 />
@@ -333,11 +334,14 @@ const SearchOrderRowsList = () => {
                                     })}
                                 />,
                                 <PrintButton
-                                    label={t("order-search.order-row-report")}
+                                    label={t("order-search.production-to-send")}
                                     canPrint={canPrint}
-                                    isPending={isOrderRowPrintPending}
-                                    onClick={() => getOrderRowPrint({
-                                        params: queryParams
+                                    isPending={isProductionToSendPending}
+                                    onClick={() => getProductionToSend({
+                                        params: {
+                                            start_date: filterStartDate,
+                                            end_date: filterEndDate,
+                                        }
                                     })}
                                 />
                             ]}

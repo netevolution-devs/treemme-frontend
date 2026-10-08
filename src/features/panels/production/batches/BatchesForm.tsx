@@ -171,6 +171,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                     quantity: null,
                     selection_note: '',
                     batch_note: '',
+                    production_note: '',
                     sampling: false,
                     split_selected: false,
                     check_date: '',
@@ -188,6 +189,7 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                     quantity: x.quantity,
                     selection_note: x.selection_note,
                     batch_note: x.batch_note,
+                    production_note: x.production_note ?? '',
                     sampling: x.sampling,
                     split_selected: x.split_selected,
                     check_date: x.check_date,
@@ -399,6 +401,11 @@ const BatchesForm = ({disableFunctions = false}: IBatchesFormProps) => {
                             <TextFieldControlled<IBatchesForm>
                                 name="selection_note"
                                 label={t("production.batch.selection_note")}
+                                TextFieldProps={{multiline: true, rows: 2}}
+                            />
+                            <TextFieldControlled<IBatchesForm>
+                                name="production_note"
+                                label={t("production.batch.production_note")}
                                 TextFieldProps={{multiline: true, rows: 2}}
                             />
                         </Box>

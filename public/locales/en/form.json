@@ -171,6 +171,7 @@
   },
   "shipping": {
     "ddt_rows": {
+      "kg_weight": "Weight KG",
       "close_row": "Close DDT row"
     }
   },
@@ -182,6 +183,7 @@
   },
   "order-search": {
     "production-report": "Orders to produce",
+    "production-to-send": "Orders to ship",
     "order-row-report": "Order row report"
   }
 }

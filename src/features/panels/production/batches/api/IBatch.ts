@@ -36,6 +36,7 @@ export interface IBatch {
     stock_quantity: number;
     selection_note: string;
     batch_note: string;
+    production_note: string;
     sampling: boolean;
     split_selected: boolean;
     sq_ft_average_expected: number;

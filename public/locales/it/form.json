@@ -558,6 +558,7 @@
       "warehouse_movement_reason": "Causale magazzino"
     },
     "ddt_rows": {
+      "kg_weight": "Peso KG",
       "transfer": "Trasferisci lotto",
       "row": "Righe DDT",
       "half_piece": "Mezze",
@@ -674,6 +675,7 @@
     "printed": "Stampato",
     "all": "Tutti",
     "production-report": "Ordini da produrre",
+    "production-to-send": "Ordini da spedire",
     "order-row-report": "Report righe ordini"
   }
 }

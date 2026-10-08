@@ -6,6 +6,7 @@ import {
 } from "material-react-table";
 import {Box, Card, CircularProgress} from "@mui/material";
 import {useDefaultMrtOptions} from "@ui/table/useDefaultMrtOptions";
+import {useEffect, useMemo, useState} from "react";
 
 export interface BaseEntity {
     id: string | number;
@@ -25,6 +26,7 @@ interface GenericListProps<TData extends BaseEntity> {
     minHeight?: string;
     disableBorder?: boolean;
     disablePadding?: boolean;
+    fullHeight?: boolean;
     fillHeight?: boolean;
 }
 
@@ -38,12 +40,20 @@ const GenericList = <TData extends BaseEntity>({
                                                    onRowDoubleClick,
                                                    additionalOptions,
                                                    overrideOptions: _overrideOptions,
-                                                   maxHeight = '300px',
-                                                   minHeight = '300px',
+                                                   maxHeight = '500px',
+                                                   minHeight = '500px',
                                                    disableBorder = false,
                                                    disablePadding = false,
-                                                   fillHeight = false,
+                                                   fullHeight = false,
+                                                   fillHeight = fullHeight,
                                                }: GenericListProps<TData>) => {
+    const [skeletonRowCount, setSkeletonRowCount] = useState(15);
+    const showSkeletons = additionalOptions?.state?.showSkeletons !== false &&
+        ((additionalOptions?.state?.isLoading ?? isLoading) || additionalOptions?.state?.showSkeletons);
+    const skeletonData = useMemo(() => Array.from({length: skeletonRowCount}, (_, index) => ({
+        ...Object.fromEntries(columns.map(column => [column.accessorKey ?? column.id ?? '', null])),
+        id: `skeleton-${index}`,
+    } as TData)), [columns, skeletonRowCount]);
 
     const calculateMin = parseInt(minHeight.split('px')[0]);
     const filterHeight = additionalOptions?.enableTopToolbar ? 50 : 0;
@@ -57,9 +67,11 @@ const GenericList = <TData extends BaseEntity>({
         },
         muiTableBodyRowProps: ({row}) => ({
             onDoubleClick: () => {
+                if (showSkeletons) return;
                 onRowDoubleClick?.(row.original.id);
             },
             onClick: () => {
+                if (showSkeletons) return;
                 onRowSelect?.(row.original.id);
             },
             selected: row.original.id === selectedId,
@@ -77,6 +89,9 @@ const GenericList = <TData extends BaseEntity>({
         enableBottomToolbar: false,
         enableTopToolbar: false,
         ...defaultMrtOptions,
+        muiSkeletonProps: {
+            height: 24,
+        },
         ...additionalOptions,
         ...(fillHeight && {
             muiTablePaperProps: {
@@ -116,17 +131,35 @@ const GenericList = <TData extends BaseEntity>({
             },
         }),
         columns,
-        data: data || [],
+        data: showSkeletons && !data.length ? skeletonData : data,
         state: {
             isLoading: isLoading,
             ...additionalOptions?.state
         },
     });
 
+    useEffect(() => {
+        if (!showSkeletons || data.length) return;
+        const container = table.refs.tableContainerRef.current;
+        if (!container) return;
+
+        const updateRowCount = () => {
+            const headerHeight = table.refs.tableHeadRef.current?.getBoundingClientRect().height ?? 0;
+            const footerHeight = table.refs.tableFooterRef.current?.getBoundingClientRect().height ?? 0;
+            const rowHeight = container.querySelector('tbody tr')?.getBoundingClientRect().height || 32;
+            setSkeletonRowCount(Math.max(1, Math.ceil((container.clientHeight - headerHeight - footerHeight) / rowHeight)));
+        };
+        updateRowCount();
+        const observer = new ResizeObserver(updateRowCount);
+        observer.observe(container);
+        if (table.refs.tableHeadRef.current) observer.observe(table.refs.tableHeadRef.current);
+        return () => observer.disconnect();
+    }, [showSkeletons, data.length, table]);
+
     const content = () => {
         return (
             <Box sx={{width: '100%', position: 'relative', minHeight: fillHeight ? 0 : _minHeight,
-                ...(fillHeight && {height: '100%', display: 'flex', flexDirection: 'column'})}}>
+                ...(fillHeight && {flex: 1, display: 'flex', flexDirection: 'column'})}}>
                 {(isFetching && !isLoading) && (
                     <Box sx={{
                         position: 'absolute',
@@ -150,12 +183,12 @@ const GenericList = <TData extends BaseEntity>({
         <>
             {!disableBorder ? (
                 <Card variant={"outlined"} sx={{bgcolor: "background.card.default",
-                    ...(fillHeight ? {flex: 1, minHeight: 0, minWidth: 0} : {minHeight: _minHeight, maxHeight})}}>
+                    ...(fillHeight ? {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column'} : {minHeight: _minHeight, maxHeight})}}>
                     {content()}
                 </Card>
             ) : (
                 <Box sx={{bgcolor: "background.card.default", border: "1px solid", borderColor: !disablePadding ? 'divider' : 'transparent', borderRadius: 1, p: !disablePadding ? 1 : 0,
-                    ...(fillHeight && {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden'})}}>
+                    ...(fillHeight && {flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column'})}}>
                     {content()}
                 </Box>
             )}
