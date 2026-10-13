@@ -182,6 +182,10 @@
     "view_batch": "View batch"
   },
   "order-search": {
+    "request-type": "Order type",
+    "normal-requests": "Customer orders",
+    "internal-requests": "Internal orders",
+    "all-requests": "All",
     "production-report": "Orders to produce",
     "production-to-send": "Orders to ship",
     "order-row-report": "Order row report"

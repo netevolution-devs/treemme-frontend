@@ -642,6 +642,10 @@
     "borne_by_customer": "A carico del cliente"
   },
   "order-search": {
+    "request-type": "Tipologia ordini",
+    "normal-requests": "Ordini clienti",
+    "internal-requests": "Ordini interni",
+    "all-requests": "Tutti",
     "client": "Cliente",
     "order": "Ordine",
     "r": "Riga",
