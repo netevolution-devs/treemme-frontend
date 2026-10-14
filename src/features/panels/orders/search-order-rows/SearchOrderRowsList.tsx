@@ -52,6 +52,7 @@ const SearchOrderRowsList = () => {
     const filterProductionStatus = useStore(state => state.filters.filterProductionStatus);
     const filterPrintStatus = useStore(state => state.filters.filterPrintStatus);
     const filterClientId = useStore(state => state.filters.filterClientId);
+    const filterInternal = useStore(state => state.filters.filterInternal ?? "false");
     const filterAll = useStore(state => state.filters.filterAll);
     const setFilters = useStore(state => state.setFilters);
 
@@ -63,8 +64,9 @@ const SearchOrderRowsList = () => {
             production_status: filterProductionStatus as "to_produce" | "produced",
             print_status: filterPrintStatus as "to_print" | "printed",
             client_id: filterClientId as number,
+            internal: filterInternal,
         }
-    ), [filterStartDate, filterEndDate, filterShippingStatus, filterProductionStatus, filterPrintStatus, filterClientId])
+    ), [filterStartDate, filterEndDate, filterShippingStatus, filterProductionStatus, filterPrintStatus, filterClientId, filterInternal])
 
     const {data: orderRows = [], isLoading, isFetching} = useGetSearchOrderRows({queryParams});
     const {data: clients = []} = contactsApi.useGetList({queryParams: {type: "client"}});
@@ -267,6 +269,19 @@ const SearchOrderRowsList = () => {
                                     autoSelectFirstOption={false}
                                     options={clients.map(s => ({value: s.id, label: s.name}))}
                                     onFilterChange={(value) => setFilters({filterClientId: value as number})}
+                                />,
+                                <SelectFieldFilter
+                                    key={"f-internal"}
+                                    label={t("order-search.request-type")}
+                                    value={filterInternal}
+                                    options={[
+                                        {label: t("order-search.normal-requests"), value: "false"},
+                                        {label: t("order-search.internal-requests"), value: "true"},
+                                        {label: t("order-search.all-requests"), value: "all"},
+                                    ]}
+                                    onFilterChange={(value) => setFilters({
+                                        filterInternal: value === "true" || value === "all" ? value : "false"
+                                    })}
                                 />
                             ]}
                             buttons={[

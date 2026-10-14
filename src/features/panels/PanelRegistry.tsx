@@ -51,6 +51,7 @@ import SearchOrderRowsPanel from "@features/panels/orders/search-order-rows/Sear
 import ContactsAddressPanel from "@features/panels/contacts/contacts/address/ContactsAddressPanel";
 import ContactsDetailPanel from "@features/panels/contacts/contacts/detail/ContactsDetailPanel";
 import SalesPanel from "@features/panels/analysis/sales/SalesPanel";
+import WeeklyOrdersPanel from "@features/panels/analysis/weekly-orders/WeeklyOrdersPanel";
 import ExternalMovementsPanel from "@features/panels/analysis/external-movements/ExternalMovementsPanel";
 import CarriersPanel from "@features/panels/contacts/carriers/CarriersPanel";
 import BatchesLotsPanel from "@features/panels/analysis/batchesLots/BatchesLotsPanel";
@@ -108,6 +109,7 @@ export type TPanelKind =
     | 'contactsAddress'
     | 'contactsDetail'
     | 'sales'
+    | 'weeklyOrders'
     | 'externalMovements'
     | 'carriers'
     | 'batchesLots'
@@ -175,6 +177,7 @@ export const PANEL_REGISTRY: DockviewComponents = {
     paymentTypes:               (props) => <PaymentTypesPanel {...props}/>,
     shipmentConditions:         (props) => <ShipmentConditionsPanel {...props}/>,
     // analysis
+    weeklyOrders:               (props) => <WeeklyOrdersPanel {...props}/>,
     sales:                      () => <SalesPanel/>,
     externalMovements:          () => <ExternalMovementsPanel />,
     batchesLots:                () => <BatchesLotsPanel />,
