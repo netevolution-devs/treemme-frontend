@@ -279,7 +279,7 @@ export const MenuEntries: IMenuEntry[] = [
         icon: "ANALYSIS",
         permissionCheck: {resource: "analisi", action: "get"},
         subMenu: [
-            // {i18nKey: "menu.analysis.orders"},
+            {i18nKey: "menu.analysis.weekly-orders", component: "weeklyOrders"},
             {i18nKey: "menu.analysis.sales", component: "sales" },
             {i18nKey: "menu.analysis.external-movements" , component: "externalMovements" },
             // {i18nKey: "menu.analysis.costs-revenues"},

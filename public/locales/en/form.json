@@ -181,6 +181,30 @@
   "processes": {
     "view_batch": "View batch"
   },
+  "weekly-orders": {
+    "class": "Class",
+    "currency": "Currency",
+    "quantity-pq": "Quantity sq ft",
+    "quantity-mq": "Quantity sq m",
+    "average-price-pq": "Average price / sq ft",
+    "average-price-mq": "Average price / sq m",
+    "rows-count": "Order rows",
+    "total-amount": "Total amount",
+    "total-currency-amount": "Total amount in currency",
+    "leather-code": "Leather code",
+    "currency-code": "Currency code",
+    "currency-sign": "Currency symbol",
+    "current-week": "Current week",
+    "refresh": "Refresh",
+    "date-field": "Filter by date",
+    "order-date": "Order date",
+    "delivery-date": "Confirmed delivery date",
+    "summary": "Overall summary",
+    "detail": "Details",
+    "select-row": "Select a row to view details for its class and currency.",
+    "not-specified": "Not specified",
+    "load-error": "Unable to load the weekly order analysis. Try Refresh."
+  },
   "order-search": {
     "request-type": "Order type",
     "normal-requests": "Customer orders",
