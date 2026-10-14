@@ -43,8 +43,6 @@ const WeeklyOrdersDetail = () => {
                         <TextFieldValue label={t("weekly-orders.currency")} value={selected.currency?.name ?? t("weekly-orders.not-specified")} isFilled/>
                         <TextFieldValue label={t("weekly-orders.currency-code")} value={selected.currency?.abbreviation ?? ""} isFilled/>
                         <TextFieldValue label={t("weekly-orders.currency-sign")} value={selected.currency?.sign ?? ""} isFilled/>
-                        <TextFieldValue label={t("weekly-orders.average-currency-price-pq")} value={prices.format(selected.avg_price_pq_currency)} isFilled/>
-                        <TextFieldValue label={t("weekly-orders.average-currency-price-mq")} value={prices.format(selected.avg_price_mq_currency)} isFilled/>
                     </Box>
                     {renderTotals(selected)}
                 </Stack>
