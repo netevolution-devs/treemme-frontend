@@ -12,18 +12,20 @@ const WeeklyOrdersDetail = () => {
     const selectedId = useStore(state => state.uiState.selectedAverageId);
     const {data, rows, isLoading, isError} = useWeeklyOrdersData();
     const selected = rows.find(row => row.id === selectedId);
-    const decimals = new Intl.NumberFormat(i18n.language, {maximumFractionDigits: 2});
+    const decimals = new Intl.NumberFormat(i18n.language, {maximumFractionDigits: 3});
+    const prices = new Intl.NumberFormat(i18n.language, {maximumFractionDigits: 4});
     const format = (value: number | null) =>
         value == null ? "-" : decimals.format(value);
 
     const renderTotals = (totals: IWeeklyOrderTotals) => (
         <Box sx={{display: "flex", flexWrap: "wrap", gap: 1}}>
             <TextFieldValue label={t("weekly-orders.rows-count")} value={totals.rows_count} isFilled/>
-            <TextFieldValue label={t("weekly-orders.total-amount")} value={format(totals.total_amount)} isFilled/>
             <TextFieldValue label={t("weekly-orders.quantity-pq")} value={format(totals.total_quantity_pq)} isFilled/>
             <TextFieldValue label={t("weekly-orders.quantity-mq")} value={format(totals.total_quantity_mq)} isFilled/>
-            <TextFieldValue label={t("weekly-orders.average-price-pq")} value={format(totals.avg_price_pq)} isFilled/>
-            <TextFieldValue label={t("weekly-orders.average-price-mq")} value={format(totals.avg_price_mq)} isFilled/>
+            <TextFieldValue label={t("weekly-orders.average-price-pq")} value={prices.format(totals.avg_price_pq)} isFilled/>
+            <TextFieldValue label={t("weekly-orders.average-price-mq")} value={prices.format(totals.avg_price_mq)} isFilled/>
+            <TextFieldValue label={t("weekly-orders.average-lire-price-pq")} value={prices.format(totals.avg_price_pq_lire)} isFilled/>
+            <TextFieldValue label={t("weekly-orders.average-lire-price-mq")} value={prices.format(totals.avg_price_mq_lire)} isFilled/>
         </Box>
     );
 
@@ -41,7 +43,8 @@ const WeeklyOrdersDetail = () => {
                         <TextFieldValue label={t("weekly-orders.currency")} value={selected.currency?.name ?? t("weekly-orders.not-specified")} isFilled/>
                         <TextFieldValue label={t("weekly-orders.currency-code")} value={selected.currency?.abbreviation ?? ""} isFilled/>
                         <TextFieldValue label={t("weekly-orders.currency-sign")} value={selected.currency?.sign ?? ""} isFilled/>
-                        <TextFieldValue label={t("weekly-orders.total-currency-amount")} value={format(selected.total_currency_amount)} isFilled/>
+                        <TextFieldValue label={t("weekly-orders.average-currency-price-pq")} value={prices.format(selected.avg_price_pq_currency)} isFilled/>
+                        <TextFieldValue label={t("weekly-orders.average-currency-price-mq")} value={prices.format(selected.avg_price_mq_currency)} isFilled/>
                     </Box>
                     {renderTotals(selected)}
                 </Stack>

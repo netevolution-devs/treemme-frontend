@@ -51,7 +51,8 @@ const WeeklyOrdersList = () => {
         setFilters(partial);
     };
 
-    const decimals = useMemo(() => new Intl.NumberFormat(i18n.language, {maximumFractionDigits: 2}), [i18n.language]);
+    const decimals = useMemo(() => new Intl.NumberFormat(i18n.language, {maximumFractionDigits: 3}), [i18n.language]);
+    const prices = useMemo(() => new Intl.NumberFormat(i18n.language, {maximumFractionDigits: 4}), [i18n.language]);
 
     const columns = useMemo<MRT_ColumnDef<IWeeklyOrderAverageRow>[]>(() => [
         {
@@ -73,24 +74,6 @@ const WeeklyOrdersList = () => {
             Cell: ({cell}) => cell.getValue<number | null>() ?? "-",
         },
         {
-            accessorKey: "total_amount",
-            header: t("weekly-orders.total-amount"),
-            size: 170,
-            Cell: ({cell}) => {
-                const value = cell.getValue<number | null>();
-                return value == null ? "-" : decimals.format(value);
-            },
-        },
-        {
-            accessorKey: "total_currency_amount",
-            header: t("weekly-orders.total-currency-amount"),
-            size: 190,
-            Cell: ({cell}) => {
-                const value = cell.getValue<number | null>();
-                return value == null ? "-" : decimals.format(value);
-            },
-        },
-        {
             accessorKey: "total_quantity_pq",
             header: t("weekly-orders.quantity-pq"),
             size: 170,
@@ -105,7 +88,16 @@ const WeeklyOrdersList = () => {
             size: 170,
             Cell: ({cell}) => {
                 const value = cell.getValue<number | null>();
-                return value == null ? "-" : decimals.format(value);
+                return value == null ? "-" : prices.format(value);
+            },
+        },
+        {
+            accessorKey: "avg_price_pq_lire",
+            header: t("weekly-orders.average-lire-price-pq"),
+            size: 190,
+            Cell: ({cell}) => {
+                const value = cell.getValue<number | null>();
+                return value == null ? "-" : prices.format(value);
             },
         },
         {
@@ -123,10 +115,19 @@ const WeeklyOrdersList = () => {
             size: 170,
             Cell: ({cell}) => {
                 const value = cell.getValue<number | null>();
-                return value == null ? "-" : decimals.format(value);
+                return value == null ? "-" : prices.format(value);
             },
         },
-    ], [t, decimals]);
+        {
+            accessorKey: "avg_price_mq_lire",
+            header: t("weekly-orders.average-lire-price-mq"),
+            size: 190,
+            Cell: ({cell}) => {
+                const value = cell.getValue<number | null>();
+                return value == null ? "-" : prices.format(value);
+            },
+        },
+    ], [t, decimals, prices]);
 
     return (
         <GenericList<IWeeklyOrderAverageRow>

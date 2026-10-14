@@ -1,10 +1,15 @@
 export interface IWeeklyOrderTotals {
     rows_count: number;
-    total_amount: number;
     total_quantity_mq: number;
     total_quantity_pq: number;
     avg_price_mq: number;
     avg_price_pq: number;
+    avg_price_pq_lire: number;
+    avg_price_mq_lire: number;
+}
+
+export interface IWeeklyOrderSummary extends IWeeklyOrderTotals {
+    total_amount: number;
 }
 
 export interface IWeeklyOrderAverage extends IWeeklyOrderTotals {
@@ -19,7 +24,6 @@ export interface IWeeklyOrderAverage extends IWeeklyOrderTotals {
         abbreviation: string | null;
         sign: string | null;
     } | null;
-    total_currency_amount: number;
 }
 
 export interface IWeeklyOrderAverageRow extends IWeeklyOrderAverage {
@@ -28,7 +32,7 @@ export interface IWeeklyOrderAverageRow extends IWeeklyOrderAverage {
 
 export interface IWeeklyOrderAveragesResponse {
     items: IWeeklyOrderAverage[];
-    summary: IWeeklyOrderTotals;
+    summary: IWeeklyOrderSummary;
     start_date: string | null;
     end_date: string | null;
     internal: boolean | null;
