@@ -100,7 +100,7 @@
     "analysis": {
       "self": "Analisi",
       "orders": "Analisi Ordini",
-      "weekly-orders": "Analisi Ordini Settimanale",
+      "weekly-orders": "Analisi Ordini",
       "sales": "Analisi Vendite",
       "costs-revenues": "Costi e Ricavi",
       "batches-lots": "Analisi Lotti",
